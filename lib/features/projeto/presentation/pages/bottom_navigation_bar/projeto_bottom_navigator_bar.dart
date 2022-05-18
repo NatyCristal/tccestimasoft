@@ -1,0 +1,218 @@
+import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
+import 'package:estimasoft/features/projeto/domain/entitie/projeto_entitie.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'contagem/estimativa_indicativa.dart';
+import 'home/index_home.dart';
+import 'home/store/store_projeto_index_menu.dart';
+
+class ProjetoMenuPage extends StatelessWidget {
+  final ProjetoEntitie projeto;
+  final StoreProjetosIndexMenu store = StoreProjetosIndexMenu();
+
+  ProjetoMenuPage({Key? key, required this.projeto}) : super(key: key);
+
+  _itemSelecionado(int index) {
+    store.index = index;
+  }
+
+  listaBottomNavigator(ProjetoEntitie projeto, StoreProjetosIndexMenu store) {
+    switch (store.index) {
+      case 0:
+        return IndexHome(
+          projeto: projeto,
+        );
+
+      case 1:
+        return const Text("Index 1: Estimativas");
+
+      case 2:
+        return const Text(
+          'Index 2: Perfil',
+        );
+      case 3:
+        return const Text("Resultados possível para compartilhamento");
+
+      default:
+        return const Text("Algo de errado aconteceu");
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Observer(builder: (context) {
+      return store.index == 1
+          ? Material(
+              child: DefaultTabController(
+                length: 3,
+                child: Scaffold(
+                    appBar: AppBar(
+                      backgroundColor: Colors.transparent,
+                      elevation: 0,
+                      title: Text(
+                        projeto.nomeProjeto,
+                        style: const TextStyle(
+                            fontSize: tamanhoSubtitulo, color: corTituloTexto),
+                      ),
+                      // shape: const Border(
+                      //   bottom: BorderSide(color: corDeLinhaAppBar, width: 1),
+                      // ),
+                      bottom: TabBar(
+                        indicatorWeight: 2,
+                        overlayColor: MaterialStateProperty.all(background),
+                        indicatorColor: corDeFundoBotaoSecundaria,
+                        tabs: const [
+                          Tab(
+                            text: "Indicativa",
+                            //  icon: Icon(Icons.call_missed_outgoing_rounded),
+                          ),
+                          Tab(
+                            text: "Estimada",
+                            //   icon: Icon(Icons.import_export_rounded),
+                          ),
+                          Tab(
+                            text: "Detalhada",
+                            //    icon: Icon(Icons.manage_search_rounded),
+                          ),
+                        ],
+                      ),
+                    ),
+                    body: const TabBarView(children: [
+                      EstimativaIndicativa(),
+                      Icon(Icons.directions_transit),
+                      Icon(Icons.directions_bike)
+                    ]),
+                    bottomNavigationBar: Observer(builder: (context) {
+                      return BottomNavigationBar(
+                        type: BottomNavigationBarType.fixed,
+                        currentIndex: store.index,
+                        selectedItemColor: corDeAcao,
+                        onTap: _itemSelecionado,
+                        items: const [
+                          BottomNavigationBarItem(
+                            label: "Home",
+                            icon: Icon(Icons.home),
+                          ),
+                          BottomNavigationBarItem(
+                              label: "Contagem",
+                              icon: Icon(Icons.auto_graph_outlined)),
+                          BottomNavigationBarItem(
+                              label: "Estimativas",
+                              icon: Icon(Icons.bar_chart_rounded)),
+                          BottomNavigationBarItem(
+                              label: "Resultado",
+                              icon: Icon(Icons.checklist_rtl_rounded)),
+                        ],
+                      );
+                    })),
+              ),
+            )
+          : store.index == 2
+              ? Material(
+                  child: DefaultTabController(
+                    length: 3,
+                    child: Scaffold(
+                        appBar: AppBar(
+                          backgroundColor: Colors.transparent,
+                          elevation: 0,
+                          title: Text(
+                            projeto.nomeProjeto,
+                            style: const TextStyle(
+                                fontSize: tamanhoSubtitulo,
+                                color: corTituloTexto),
+                          ),
+                          bottom: TabBar(
+                            indicatorWeight: 2,
+                            overlayColor: MaterialStateProperty.all(background),
+                            indicatorColor: corDeFundoBotaoSecundaria,
+                            tabs: const [
+                              Tab(
+                                text: "Prazo",
+                                //  icon: Icon(Icons.call_missed_outgoing_rounded),
+                              ),
+                              Tab(
+                                text: "Equipe",
+                                //   icon: Icon(Icons.import_export_rounded),
+                              ),
+                              Tab(
+                                text: "Custo",
+                                //    icon: Icon(Icons.manage_search_rounded),
+                              ),
+                            ],
+                          ),
+                        ),
+                        body: const TabBarView(children: [
+                          Icon(Icons.assessment_rounded),
+                          Icon(Icons.directions_transit),
+                          Icon(Icons.directions_bike)
+                        ]),
+                        bottomNavigationBar: Observer(builder: (context) {
+                          return BottomNavigationBar(
+                            type: BottomNavigationBarType.fixed,
+                            currentIndex: store.index,
+                            selectedItemColor: corDeAcao,
+                            onTap: _itemSelecionado,
+                            items: const [
+                              BottomNavigationBarItem(
+                                label: "Home",
+                                icon: Icon(Icons.home),
+                              ),
+                              BottomNavigationBarItem(
+                                  label: "Contagem",
+                                  icon: Icon(Icons.auto_graph_outlined)),
+                              BottomNavigationBarItem(
+                                  label: "Estimativas",
+                                  icon: Icon(Icons.bar_chart_rounded)),
+                              BottomNavigationBarItem(
+                                  label: "Resultado",
+                                  icon: Icon(Icons.checklist_rtl_rounded)),
+                            ],
+                          );
+                        })),
+                  ),
+                )
+              : Scaffold(
+                  appBar: AppBar(
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
+                    title: Text(
+                      projeto.nomeProjeto,
+                      style: const TextStyle(
+                          fontSize: tamanhoSubtitulo, color: corTituloTexto),
+                    ),
+                    shape: const Border(
+                      bottom: BorderSide(color: corDeLinhaAppBar, width: 1),
+                    ),
+                  ),
+                  body: Observer(builder: (context) {
+                    return Center(
+                      child: listaBottomNavigator(projeto, store),
+                    );
+                  }),
+                  bottomNavigationBar: Observer(builder: (context) {
+                    return BottomNavigationBar(
+                      type: BottomNavigationBarType.fixed,
+                      currentIndex: store.index,
+                      selectedItemColor: corDeAcao,
+                      onTap: _itemSelecionado,
+                      items: const [
+                        BottomNavigationBarItem(
+                          label: "Home",
+                          icon: Icon(Icons.home),
+                        ),
+                        BottomNavigationBarItem(
+                            label: "Contagem",
+                            icon: Icon(Icons.auto_graph_outlined)),
+                        BottomNavigationBarItem(
+                            label: "Estimativas",
+                            icon: Icon(Icons.bar_chart_rounded)),
+                        BottomNavigationBarItem(
+                            label: "Resultado",
+                            icon: Icon(Icons.checklist_rtl_rounded)),
+                      ],
+                    );
+                  }),
+                );
+    });
+  }
+}
