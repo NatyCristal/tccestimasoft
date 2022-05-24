@@ -8,81 +8,19 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:932105507143:android:fd17c524b8aef1dfc03c62",
+        "mobilesdk_app_id": "1:932105507143:android:1e5d9c7464978c02c03c62",
         "android_client_info": {
           "package_name": "com.example.estimasoft"
         }
       },
       "oauth_client": [
         {
-          "client_id": "932105507143-8qkr3pmni0m43o1n72i59nscbf1kb1gt.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDsuDY0FmjGM-4z6g6qj6CGK0mS9gpapcw"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "932105507143-8qkr3pmni0m43o1n72i59nscbf1kb1gt.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:932105507143:android:1b4aedf6e8dbbbeec03c62",
-        "android_client_info": {
-          "package_name": "com.example.login"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "932105507143-8qkr3pmni0m43o1n72i59nscbf1kb1gt.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDsuDY0FmjGM-4z6g6qj6CGK0mS9gpapcw"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "932105507143-8qkr3pmni0m43o1n72i59nscbf1kb1gt.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:932105507143:android:abb30c285547677cc03c62",
-        "android_client_info": {
-          "package_name": "com.natalia.estimasoft"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "932105507143-f21q9tn8hrqo8acfd64llb3bitmebkrc.apps.googleusercontent.com",
+          "client_id": "932105507143-q2mqu45hh9fn84cuk4ldh00msmjr0bie.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.natalia.estimasoft",
-            "certificate_hash": "e83b0b20495385c1b1a96d66ca91c0749df13ace"
+            "package_name": "com.example.estimasoft",
+            "certificate_hash": "cafabf064a2b0953c90e38f86efb54476ca5a12d"
           }
-        },
-        {
-          "client_id": "932105507143-8qkr3pmni0m43o1n72i59nscbf1kb1gt.apps.googleusercontent.com",
-          "client_type": 3
         }
       ],
       "api_key": [
@@ -92,12 +30,7 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "932105507143-8qkr3pmni0m43o1n72i59nscbf1kb1gt.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

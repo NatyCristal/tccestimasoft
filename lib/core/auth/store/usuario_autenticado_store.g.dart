@@ -77,6 +77,17 @@ mixin _$UsuarioAutenticadoStore on UsuarioAutenticadoStoreBase, Store {
       ActionController(name: 'UsuarioAutenticadoStoreBase', context: context);
 
   @override
+  dynamic usuario(UsuarioEntitie usuario) {
+    final _$actionInfo = _$UsuarioAutenticadoStoreBaseActionController
+        .startAction(name: 'UsuarioAutenticadoStoreBase.usuario');
+    try {
+      return super.usuario(usuario);
+    } finally {
+      _$UsuarioAutenticadoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic limparDados() {
     final _$actionInfo = _$UsuarioAutenticadoStoreBaseActionController
         .startAction(name: 'UsuarioAutenticadoStoreBase.limparDados');

@@ -21,7 +21,7 @@ class _SplashPageState extends State<SplashPage> {
       if (usuarioAutenticado.store.uid == "") {
         Modular.to.pushReplacementNamed('/login/');
       } else {
-        Modular.to.pushReplacementNamed('/login/');
+        Modular.to.pushReplacementNamed('/projeto/');
       }
     });
   }

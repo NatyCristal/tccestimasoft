@@ -1,14 +1,16 @@
 import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
 import 'package:estimasoft/features/projeto/domain/entitie/projeto_entitie.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_indicativa.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/home/store/store_projeto_index_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'contagem/estimativa_indicativa.dart';
+import '../tab_bar/contagem/contagem_indicativa.dart';
 import 'home/index_home.dart';
-import 'home/store/store_projeto_index_menu.dart';
 
 class ProjetoMenuPage extends StatelessWidget {
   final ProjetoEntitie projeto;
   final StoreProjetosIndexMenu store = StoreProjetosIndexMenu();
+  final StoreContagemIndicativa storeIndicativa = StoreContagemIndicativa();
 
   ProjetoMenuPage({Key? key, required this.projeto}) : super(key: key);
 
@@ -77,10 +79,12 @@ class ProjetoMenuPage extends StatelessWidget {
                         ],
                       ),
                     ),
-                    body: const TabBarView(children: [
-                      EstimativaIndicativa(),
-                      Icon(Icons.directions_transit),
-                      Icon(Icons.directions_bike)
+                    body: TabBarView(children: [
+                      ContagemIndicativa(
+                          store: storeIndicativa,
+                          projetoUid: projeto.uidProjeto),
+                      const Icon(Icons.directions_transit),
+                      const Icon(Icons.directions_bike)
                     ]),
                     bottomNavigationBar: Observer(builder: (context) {
                       return BottomNavigationBar(

@@ -21,12 +21,12 @@ class ProjetosPrincipalPage extends StatelessWidget {
   Widget build(BuildContext context) {
     String nomeProjeto = "";
     return Scaffold(
-      drawer: const Drawer(
+      drawer: Drawer(
         child: ProjetoDrawer(),
       ),
       body: FloatingSearchBar(
         backgroundColor: corDeFundoBotaoSecundaria,
-        hint: "Pesquise...",
+        hint: "Pesquise....",
         title: const Text(
           "Pesquise em Projetos",
           style: TextStyle(color: corCorpoTexto),

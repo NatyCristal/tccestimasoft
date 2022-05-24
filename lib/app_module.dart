@@ -1,6 +1,7 @@
 import 'package:estimasoft/core/splash_page.dart';
 import 'package:estimasoft/features/login/login_module.dart';
 import 'package:estimasoft/features/projeto/projeto_module.dart';
+import 'package:estimasoft/features/usuario/usuario_module.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:get/get.dart';
 import 'core/auth/usuario_autenticado.dart';
@@ -18,5 +19,6 @@ class AppModule extends Module {
             child: (context, args) => const SplashPage()),
         ModuleRoute('/login', module: LoginModule()),
         ModuleRoute('/projeto', module: ProjetoModule()),
+        ModuleRoute('/usuario', module: UsuarioModule())
       ];
 }

@@ -1,0 +1,63 @@
+import 'package:dartz/dartz.dart';
+import 'package:estimasoft/core/errors/falha.dart';
+
+import 'package:estimasoft/features/contagem/domain/entitie/contagem_indicativa_entitie.dart';
+import 'package:estimasoft/features/contagem/domain/repository/contagem_indicativa_repository.dart';
+import 'package:estimasoft/features/contagem/error/contagem_indicativa_erro.dart';
+
+class ContagemIndicativaUseCase {
+  final ContagemIndicativaRepository repository;
+
+  ContagemIndicativaUseCase(this.repository);
+
+  Future<Either<Falha, ContagemIndicativaEntitie>> salvarContagemIndicativa(
+      List<String> alis,
+      List<String> aies,
+      String uidProjeto,
+      String uidUsuario,
+      int totalPf) async {
+    var resultado =
+        await repository.salvar(alis, aies, uidProjeto, uidUsuario, totalPf);
+
+    var erro = "";
+    var retorno;
+
+    resultado.fold((l) {
+      erro = l;
+    }, (r) {
+      retorno = r;
+    });
+
+    if (resultado.isLeft()) {
+      return Left(
+        ContagemIndicativaErro(
+            mensagem: "Não foi possível salvar a função. O erro foi: $erro"),
+      );
+    }
+
+    return Right(retorno);
+  }
+
+  Future<Either<Falha, ContagemIndicativaEntitie>> recuperarContagemIndicativa(
+      String uidProjeto, String uidUsuario) async {
+    var resultado = await repository.recuperarContagem(uidProjeto, uidUsuario);
+
+    var erro = "";
+    var retorno;
+
+    resultado.fold((l) {
+      erro = l;
+    }, (r) {
+      retorno = r;
+    });
+
+    if (resultado.isLeft()) {
+      return Left(
+        ContagemIndicativaErro(
+            mensagem: "Não foi possível salvar a função. O erro foi: $erro"),
+      );
+    }
+
+    return Right(retorno);
+  }
+}

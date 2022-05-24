@@ -4,7 +4,7 @@ import 'package:estimasoft/features/login/domain/entities/login_entitie.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'usuario_datasource.dart';
 
-class PerfilFirebaseDataSource extends PerfilDatasource {
+class UsuarioFirebaseDataSource extends PerfilDatasource {
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
 
@@ -112,5 +112,22 @@ class PerfilFirebaseDataSource extends PerfilDatasource {
     }
 
     return usuarios;
+  }
+
+  @override
+  UsuarioEntitie usuarioLogado() {
+    User? currentUser = _auth.currentUser;
+    UsuarioEntitie usuario =
+        LoginUsuarioFirebaseModel(nome: "", email: "", uid: "", urlFoto: "");
+
+    if (currentUser != null) {
+      usuario = LoginUsuarioFirebaseModel(
+          nome: currentUser.displayName ?? "",
+          email: currentUser.email ?? "",
+          uid: currentUser.uid,
+          urlFoto: currentUser.photoURL ?? "");
+    }
+
+    return usuario;
   }
 }

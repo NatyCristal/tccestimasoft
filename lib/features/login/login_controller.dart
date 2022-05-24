@@ -13,8 +13,12 @@ class LoginController {
 
   StoreLogin store = StoreLogin();
 
-  LoginController(this._entrarLoginUsecase, this._entrarGoogleUsecase,
-      this._redefinirSenhaUsecase, this._registrarUsuarioUsecase);
+  LoginController(
+    this._entrarLoginUsecase,
+    this._entrarGoogleUsecase,
+    this._redefinirSenhaUsecase,
+    this._registrarUsuarioUsecase,
+  );
 
   redefinirSenha(String email) async {
     var result = await _redefinirSenhaUsecase.recuperarSenha(email);

@@ -61,9 +61,10 @@ class LoginFirebaseDatasource extends LoginDatasource {
   Future<LoginUsuarioFirebaseModel> realizarLoginGoogle() async {
     User? user;
 
-    GoogleSignIn googleSignIn = GoogleSignIn();
+    final GoogleSignIn googleSignIn = GoogleSignIn(scopes: ["email"]);
 
-    GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
+    final GoogleSignInAccount? googleSignInAccount =
+        await googleSignIn.signIn();
 
     if (googleSignInAccount != null) {
       final GoogleSignInAuthentication googleSignInAuthentication =

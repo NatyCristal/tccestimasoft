@@ -12,4 +12,6 @@ abstract class PerfilDatasource {
   Future<List<String>> recuperarListaDeProjetos(String uidUsuario);
 
   Future<List<UsuarioEntitie>> recuperarMembros(List<String> uidUsuarios);
+
+  UsuarioEntitie usuarioLogado();
 }

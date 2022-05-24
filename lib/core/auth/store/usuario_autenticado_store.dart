@@ -1,3 +1,4 @@
+import 'package:estimasoft/features/login/domain/entities/login_entitie.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mobx/mobx.dart';
 
@@ -15,6 +16,14 @@ abstract class UsuarioAutenticadoStoreBase with Store {
   String urlFoto = "";
   @observable
   String uid = "";
+
+  @action
+  usuario(UsuarioEntitie usuario) {
+    email = usuario.email;
+    nome = usuario.nome;
+    urlFoto = usuario.urlFoto;
+    uid = usuario.uid;
+  }
 
   @action
   limparDados() {

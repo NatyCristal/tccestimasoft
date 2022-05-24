@@ -34,7 +34,7 @@ dependencies:
   flutter_modular: ^4.5.1+1
   flutter_svg: ^1.0.3
   firebase_auth: ^3.2.0
-  google_sign_in: ^5.2.3
+  google_sign_in: ^5.3.1
   get: ^4.5.1
   mobx: ^2.0.6+1
   flutter_mobx: ^2.0.3+2
