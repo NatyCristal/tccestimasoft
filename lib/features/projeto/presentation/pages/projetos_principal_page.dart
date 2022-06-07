@@ -15,16 +15,108 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 class ProjetosPrincipalPage extends StatelessWidget {
   final StoreProjetos store = StoreProjetos();
   final ProjetoController controller = Modular.get<ProjetoController>();
+  final ScrollController scroll = ScrollController();
   ProjetosPrincipalPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    String nomeProjeto = "";
     return Scaffold(
       drawer: Drawer(
         child: ProjetoDrawer(),
       ),
       body: FloatingSearchBar(
+        actions: [
+          const Icon(Icons.search),
+          const SizedBox(
+            width: 10,
+          ),
+          GestureDetector(
+              onTap: () {
+                Alert(
+                  closeFunction: () => {
+                    Navigator.of(context, rootNavigator: true).pop(),
+                    store.erroCodEntrarProjeto = "",
+                  },
+                  context: context,
+                  title: "Digite o código do projeto que deseja entrar",
+                  style: const AlertStyle(
+                    titleStyle: TextStyle(color: corTituloTexto, fontSize: 18),
+                  ),
+                  content: Column(
+                    children: [
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Observer(builder: (context) {
+                        return store.erroCodEntrarProjeto == ""
+                            ? TextField(
+                                onChanged: (value) {
+                                  store.codEntrarProjeto = value.toString();
+                                  store.validarCodProjeto();
+                                },
+                                decoration: const InputDecoration(
+                                  icon: Icon(Icons.account_tree_rounded),
+                                  labelText: 'Código Projeto',
+                                ),
+                              )
+                            : TextField(
+                                onChanged: (value) {
+                                  store.codEntrarProjeto = value.toString();
+                                  store.validarCodProjeto();
+                                },
+                                decoration: InputDecoration(
+                                  errorText: store.erroCodEntrarProjeto,
+                                  icon: const Icon(Icons.account_tree_rounded),
+                                  labelText: 'Código Projeto',
+                                ),
+                              );
+                      }),
+                    ],
+                  ),
+                  buttons: [
+                    DialogButton(
+                      color: corDeFundoBotaoSecundaria,
+                      child: const Text(
+                        "Salvar",
+                        style: TextStyle(
+                            fontWeight: Fontes.weightTextoNormal,
+                            color: corDeTextoBotaoSecundaria,
+                            fontSize: 14),
+                      ),
+                      onPressed: () async {
+                        if (store.validarNomeProjeto()) {
+                          var resultado =
+                              await controller.criarProjeto(store.nomeProjeto);
+                          Navigator.of(context, rootNavigator: true).pop();
+                          AlertaSnack.exbirSnackBar(context, resultado);
+                        }
+                      },
+                      width: 120,
+                    ),
+                    DialogButton(
+                      color: Colors.indigo,
+                      child: const Text(
+                        "Cancelar",
+                        style: TextStyle(
+                          fontWeight: Fontes.weightTextoNormal,
+                          color: corTextoSobCorPrimaria,
+                          fontSize: 14,
+                        ),
+                      ),
+                      onPressed: () => {
+                        Navigator.of(context, rootNavigator: true).pop(),
+                        store.nomeProjetoErro = "",
+                      },
+                      width: 120,
+                    )
+                  ],
+                ).show();
+              },
+              child: const Icon(Icons.group_add_rounded))
+        ],
+        transitionCurve: Curves.linear,
+        scrollPadding: const EdgeInsets.only(top: 16, bottom: 56),
+        isScrollControlled: false,
         backgroundColor: corDeFundoBotaoSecundaria,
         hint: "Pesquise....",
         title: const Text(
@@ -34,6 +126,7 @@ class ProjetosPrincipalPage extends StatelessWidget {
         borderRadius: arredondamentoBordas,
         body: FloatingSearchBarScrollNotifier(
           child: SingleChildScrollView(
+            controller: scroll,
             physics: const BouncingScrollPhysics(),
             child: Container(
               height: TamanhoTela.height(context, 1),
@@ -41,22 +134,10 @@ class ProjetosPrincipalPage extends StatelessWidget {
               child: Column(
                 children: [
                   const SizedBox(
-                    height: 80,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      Text(
-                        "Lista de Projetos",
-                        style: TextStyle(
-                            color: corCorpoTexto,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600),
-                      ),
-                    ],
+                    height: 30,
                   ),
                   Expanded(
-                    child: ProjetosConteudo(),
+                    child: ProjetosConteudo(store: store, scroll: scroll),
                   ),
                 ],
               ),

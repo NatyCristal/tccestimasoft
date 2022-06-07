@@ -87,13 +87,23 @@ class ProjetoController {
       case "Indicativa":
         return await contagemController.recuperarContagemIndicativa(
             uidProjeto, usuarioLogado.store.uid);
-
+      case "Estimada":
+        return await contagemController.recuperarContagemEstimada(
+            uidProjeto, usuarioLogado.store.uid);
       default:
+        break;
     }
   }
 
-  Future salvarContagem(String nomeContagem, List<String> alis,
-      List<String> aies, String uidProjeto, int totalPF) async {
+  Future salvarContagem(
+      String nomeContagem,
+      List<String> alis,
+      List<String> aies,
+      List<String> ce,
+      List<String> ee,
+      List<String> se,
+      String uidProjeto,
+      int totalPF) async {
     final usuarioLogado = Modular.get<UsuarioAutenticado>();
 
     var resultado;
@@ -102,7 +112,10 @@ class ProjetoController {
       case "Indicativa":
         resultado = await contagemController.salvarContagemIndicativa(
             alis, aies, totalPF, uidProjeto, usuarioLogado.store.uid);
-
+        break;
+      case "Estimada":
+        resultado = await contagemController.salvarContagemEstimada(
+            ce, ee, se, totalPF, uidProjeto, usuarioLogado.store.uid);
         break;
       default:
         resultado = "Algo aconteceu";

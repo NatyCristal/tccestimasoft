@@ -38,30 +38,6 @@ class ContagemIndicativaFirebase extends ContagemIndicativaDatasource {
     return contagem;
   }
 
-  // recuperarFuncoesAli(String uidProjeto, String uidUsuario) async {
-  //   List<String> alis = [];
-
-  //   await firestore
-  //       .collection("Contagem")
-  //       .doc(uidProjeto)
-  //       .collection(uidUsuario)
-  //       .doc("Indicativa")
-  //       .get()
-  //       .then((value) async {
-  //     if (value.exists) {
-  //       Map<String, dynamic>? dados = value.data();
-  //       if (dados?["ALI"] != null) {
-  //         List<dynamic> lista = dados?["ALI"];
-  //         for (var element in lista) {
-  //           alis.add(element.toString());
-  //         }
-  //       }
-  //     }
-  //   });
-
-  //   return alis;
-  // }
-
   @override
   Future<ContagemIndicativaEntitie> recuperarContagem(
       String uidProjeto, String uidUsuario) async {
@@ -85,40 +61,4 @@ class ContagemIndicativaFirebase extends ContagemIndicativaDatasource {
 
     return contagem;
   }
-
-  // recuperarFuncoes(String tipoDaFuncao, uidProjeto, iudUsuario) async {
-  //   if (tipoDaFuncao == "ALI") {
-  //     return await recuperarFuncoesAli(uidProjeto, iudUsuario);
-  //   } else if (tipoDaFuncao == "AIE") {
-  //     return await recuperarFuncoesAie(uidProjeto, iudUsuario);
-  //   }
-  // }
-
-  // recuperarFuncoesAie(
-  //   String uidProjeto,
-  //   String uidUsuario,
-  // ) async {
-  //   List<String> aies = [];
-
-  //   await firestore
-  //       .collection("Contagem")
-  //       .doc(uidProjeto)
-  //       .collection(uidUsuario)
-  //       .doc("Indicativa")
-  //       .get()
-  //       .then((value) async {
-  //     if (value.exists) {
-  //       Map<String, dynamic>? dados = value.data();
-  //       if (dados?["AIE"] != null) {
-  //         List<dynamic> lista = dados?["AIE"];
-  //         for (var element in lista) {
-  //           aies.add(element.toString());
-  //         }
-  //       }
-  //     }
-  //   });
-
-  //   return aies;
-  // }
-
 }

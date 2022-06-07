@@ -1,23 +1,23 @@
 import 'package:dartz/dartz.dart';
 import 'package:estimasoft/core/errors/falha.dart';
-
-import 'package:estimasoft/features/contagem/domain/entitie/contagem_indicativa_entitie.dart';
-import 'package:estimasoft/features/contagem/domain/repository/contagem_indicativa_repository.dart';
+import 'package:estimasoft/features/contagem/domain/entitie/contagem_estimada_entitie.dart';
+import 'package:estimasoft/features/contagem/domain/repository/contagem_estimada_repository.dart';
 import 'package:estimasoft/features/contagem/error/contagem_erro.dart';
 
-class ContagemIndicativaUseCase {
-  final ContagemIndicativaRepository repository;
+class ContagemEstimadaUsecase {
+  final ContagemEstimadaRepository repository;
 
-  ContagemIndicativaUseCase(this.repository);
+  ContagemEstimadaUsecase(this.repository);
 
-  Future<Either<Falha, ContagemIndicativaEntitie>> salvarContagemIndicativa(
-      List<String> alis,
-      List<String> aies,
+  Future<Either<Falha, ContagemEstimadaEntitie>> salvarContagemEstimada(
+      List<String> ce,
+      List<String> ee,
+      List<String> se,
       String uidProjeto,
       String uidUsuario,
       int totalPf) async {
     var resultado =
-        await repository.salvar(alis, aies, uidProjeto, uidUsuario, totalPf);
+        await repository.salvar(ce, ee, se, uidProjeto, uidUsuario, totalPf);
 
     var erro = "";
     var retorno;
@@ -30,7 +30,7 @@ class ContagemIndicativaUseCase {
 
     if (resultado.isLeft()) {
       return Left(
-        ContagemIndicativaErro(
+        ContagemEstimadaErro(
             mensagem: "Não foi possível salvar a função. O erro foi: $erro"),
       );
     }
@@ -38,7 +38,7 @@ class ContagemIndicativaUseCase {
     return Right(retorno);
   }
 
-  Future<Either<Falha, ContagemIndicativaEntitie>> recuperarContagemIndicativa(
+  Future<Either<Falha, ContagemEstimadaEntitie>> recuperarContagemEstimada(
       String uidProjeto, String uidUsuario) async {
     var resultado = await repository.recuperarContagem(uidProjeto, uidUsuario);
 
@@ -53,7 +53,7 @@ class ContagemIndicativaUseCase {
 
     if (resultado.isLeft()) {
       return Left(
-        ContagemIndicativaErro(
+        ContagemEstimadaErro(
             mensagem: "Não foi possível salvar a função. O erro foi: $erro"),
       );
     }

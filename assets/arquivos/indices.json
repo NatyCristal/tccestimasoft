@@ -1,0 +1,322 @@
+{
+    "access": {
+        "baixa": "10",
+        "media": "11",
+        "alta": "6"
+    },
+    "asp": {
+        "baixa": "16",
+        "media": "11",
+        "alta": "6"
+    },
+    "apsnet": {
+        "baixa": "11",
+        "media": "8",
+        "alta": "5"
+    },
+    "assembler": {
+        "baixa": "18",
+        "media": "12",
+        "alta": "8"
+    },
+    "basic": {
+        "baixa": "18",
+        "media": "12",
+        "alta": "8"
+    },
+    "c": {
+        "baixa": "24",
+        "media": "18",
+        "alta": "12"
+    },
+    "c#": {
+        "baixa": "17",
+        "media": "12",
+        "alta": "7"
+    },
+    "c++": {
+        "baixa": "18",
+        "media": "12",
+        "alta": "8"
+    },
+    "ckan": {
+        "baixa": "18",
+        "media": "14",
+        "alta": "8"
+    },
+    "clipper": {
+        "baixa": "12",
+        "media": "8",
+        "alta": "6"
+    },
+    "cobol": {
+        "baixa": "14",
+        "media": "10",
+        "alta": "6"
+    },
+    "componente - código proprietário": {
+        "baixa": "26",
+        "media": "29",
+        "alta": "12"
+    },
+    "componente": {
+        "baixa": "26",
+        "media": "29",
+        "alta": "12"
+    },
+    "csp": {
+        "baixa": "16",
+        "media": "10",
+        "alta": "8"
+    },
+    "dart": {
+        "baixa": "18",
+        "media": "14",
+        "alta": "12"
+    },
+    "data discovery": {
+        "baixa": "16",
+        "media": "12",
+        "alta": "6"
+    },
+    "delphy": {
+        "baixa": "12",
+        "media": "8",
+        "alta": "5"
+    },
+    "dot net": {
+        "baixa": "14",
+        "media": "12",
+        "alta": "10"
+    },
+    "dw outras (apenas OLAP)": {
+        "baixa": "14",
+        "media": "10",
+        "alta": "5"
+    },
+    "dw outras (extração e OLAP)": {
+        "baixa": "16",
+        "media": "12",
+        "alta": "6"
+    },
+    "dw pentaho (apenas OLAP)": {
+        "baixa": "16",
+        "media": "10",
+        "alta": "6"
+    },
+    "dw pentaho (extração OLAP)": {
+        "baixa": "18",
+        "media": "12",
+        "alta": "8"
+    },
+    "excel": {
+        "baixa": "6",
+        "media": "5",
+        "alta": "4"
+    },
+    "forms/reports/oracle": {
+        "baixa": "16",
+        "media": "12",
+        "alta": "6"
+    },
+    "html": {
+        "baixa": "10",
+        "media": "8",
+        "alta": "4"
+    },
+    "java": {
+        "baixa": "14",
+        "media": "10",
+        "alta": "6"
+    },
+    "java androMDA": {
+        "baixa": "15",
+        "media": "10",
+        "alta": "5"
+    },
+    "java demoiselle v1.0": {
+        "baixa": "16",
+        "media": "11",
+        "alta": "6"
+    },
+    "java demoiselle v2.0": {
+        "baixa": "19",
+        "media": "13",
+        "alta": "7"
+    },
+    "java flex": {
+        "baixa": "15",
+        "media": "12",
+        "alta": "8"
+    },
+    "java script": {
+        "baixa": "16",
+        "media": "12",
+        "alta": "8"
+    },
+    "java web não distribuida": {
+        "baixa": "16",
+        "media": "11",
+        "alta": "6"
+    },
+    "jcupim": {
+        "baixa": "41",
+        "media": "28",
+        "alta": "15"
+    },
+    "joomla": {
+        "baixa": "18",
+        "media": "14",
+        "alta": "8"
+    },
+    "laser xerox": {
+        "baixa": "30",
+        "media": "20",
+        "alta": "16"
+    },
+    "liferay": {
+        "baixa": "16",
+        "media": "12",
+        "alta": "8"
+    },
+    "lightbase": {
+        "baixa": "18",
+        "media": "12",
+        "alta": "6"
+    },
+    "lotus": {
+        "baixa": "8",
+        "media": "6",
+        "alta": "4"
+    },
+    "ltd": {
+        "baixa": "18",
+        "media": "13",
+        "alta": "8"
+    },
+    "middleware": {
+        "baixa": "26",
+        "media": "19",
+        "alta": "12"
+    },
+    "mobile - android": {
+        "baixa": "18",
+        "media": "14",
+        "alta": "12"
+    },
+    "mobile - android e ios": {
+        "baixa": "18",
+        "media": "14",
+        "alta": "12"
+    },
+    "mobile - html e jquery mobile": {
+        "baixa": "18",
+        "media": "14",
+        "alta": "12"
+    },
+    "mobile - ios": {
+        "baixa": "18",
+        "media": "14",
+        "alta": "12"
+    },
+    "mobile - phonegap": {
+        "baixa": "18",
+        "media": "14",
+        "alta": "12"
+    },
+    "mobile - windows phone": {
+        "baixa": "18",
+        "media": "14",
+        "alta": "12"
+    },
+    "natural (batch e on-line)": {
+        "baixa": "12",
+        "media": "10",
+        "alta": "8"
+    },
+    "oracle designer 2000": {
+        "baixa": "12",
+        "media": "6",
+        "alta": "4"
+    },
+    "pentaho (projetos pentaho não bi)": {
+        "baixa": "7",
+        "media": "6",
+        "alta": "5"
+    },
+    "php": {
+        "baixa": "18",
+        "media": "14",
+        "alta": "12"
+    },
+    "pl/sql de demais sgbds": {
+        "baixa": "11",
+        "media": "9",
+        "alta": "7"
+    },
+    "projetos de geoprocessamento": {
+        "baixa": "27",
+        "media": "19",
+        "alta": "11"
+    },
+    "projetos de georeferenciamento": {
+        "baixa": "27",
+        "media": "19",
+        "alta": "11"
+    },
+    "projetos de workflow": {
+        "baixa": "24",
+        "media": "18",
+        "alta": "16"
+    },
+    "phyton": {
+        "baixa": "18",
+        "media": "14",
+        "alta": "8"
+    },
+    "ruby ob rails": {
+        "baixa": "18",
+        "media": "14",
+        "alta": "8"
+    },
+    "unix shell scripts": {
+        "baixa": "18",
+        "media": "14",
+        "alta": "8"
+    },
+    "vb-script": {
+        "baixa": "16",
+        "media": "14",
+        "alta": "8"
+    },
+    "visual basic/crystal reports": {
+        "baixa": "12",
+        "media": "8",
+        "alta": "6"
+    },
+    "visual c++": {
+        "baixa": "16",
+        "media": "14",
+        "alta": "7"
+    },
+    "visual gen": {
+        "baixa": "10",
+        "media": "8",
+        "alta": "6"
+    },
+    "visual interdev": {
+        "baixa": "24",
+        "media": "14",
+        "alta": "8"
+    },
+    "webservice": {
+        "baixa": "25",
+        "media": "19",
+        "alta": "12"
+    },
+    "zope plone": {
+        "baixa": "17",
+        "media": "11",
+        "alta": "5"
+    }
+}

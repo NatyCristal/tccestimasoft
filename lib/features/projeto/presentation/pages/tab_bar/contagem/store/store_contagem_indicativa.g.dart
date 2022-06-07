@@ -27,6 +27,22 @@ mixin _$StoreContagemIndicativa on StoreContagemIndicativaBase, Store {
     });
   }
 
+  late final _$carregouBotaoAtom =
+      Atom(name: 'StoreContagemIndicativaBase.carregouBotao', context: context);
+
+  @override
+  bool get carregouBotao {
+    _$carregouBotaoAtom.reportRead();
+    return super.carregouBotao;
+  }
+
+  @override
+  set carregouBotao(bool value) {
+    _$carregouBotaoAtom.reportWrite(value, super.carregouBotao, () {
+      super.carregouBotao = value;
+    });
+  }
+
   late final _$alteracoesAtom =
       Atom(name: 'StoreContagemIndicativaBase.alteracoes', context: context);
 
@@ -91,38 +107,6 @@ mixin _$StoreContagemIndicativa on StoreContagemIndicativaBase, Store {
     });
   }
 
-  late final _$alisAtom =
-      Atom(name: 'StoreContagemIndicativaBase.alis', context: context);
-
-  @override
-  List<String> get alis {
-    _$alisAtom.reportRead();
-    return super.alis;
-  }
-
-  @override
-  set alis(List<String> value) {
-    _$alisAtom.reportWrite(value, super.alis, () {
-      super.alis = value;
-    });
-  }
-
-  late final _$aiesAtom =
-      Atom(name: 'StoreContagemIndicativaBase.aies', context: context);
-
-  @override
-  List<String> get aies {
-    _$aiesAtom.reportRead();
-    return super.aies;
-  }
-
-  @override
-  set aies(List<String> value) {
-    _$aiesAtom.reportWrite(value, super.aies, () {
-      super.aies = value;
-    });
-  }
-
   late final _$totalPfAtom =
       Atom(name: 'StoreContagemIndicativaBase.totalPf', context: context);
 
@@ -175,11 +159,11 @@ mixin _$StoreContagemIndicativa on StoreContagemIndicativaBase, Store {
       ActionController(name: 'StoreContagemIndicativaBase', context: context);
 
   @override
-  dynamic adicionarFuncao(dynamic context) {
+  dynamic adicionarFuncao(dynamic context, String funcao) {
     final _$actionInfo = _$StoreContagemIndicativaBaseActionController
         .startAction(name: 'StoreContagemIndicativaBase.adicionarFuncao');
     try {
-      return super.adicionarFuncao(context);
+      return super.adicionarFuncao(context, funcao);
     } finally {
       _$StoreContagemIndicativaBaseActionController.endAction(_$actionInfo);
     }
@@ -222,12 +206,11 @@ mixin _$StoreContagemIndicativa on StoreContagemIndicativaBase, Store {
   String toString() {
     return '''
 nomeDaFuncaoController: ${nomeDaFuncaoController},
+carregouBotao: ${carregouBotao},
 alteracoes: ${alteracoes},
 carregou: ${carregou},
 nomeDafuncao: ${nomeDafuncao},
 tipoFuncao: ${tipoFuncao},
-alis: ${alis},
-aies: ${aies},
 totalPf: ${totalPf},
 tamanhoListaALI: ${tamanhoListaALI},
 tamanhoListaAIE: ${tamanhoListaAIE}

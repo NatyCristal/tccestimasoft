@@ -3,12 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 class Carregando extends StatelessWidget {
-  const Carregando({Key? key}) : super(key: key);
+  //final Color cordeFundo;
+  const Carregando({
+    Key? key,
+    //  this.cordeFundo = Colors.black12,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.black12.withOpacity(0.1),
+      color: Colors.transparent,
       child: SizedBox(
         height: TamanhoTela.height(context, 0.9),
         width: TamanhoTela.width(context, 1),

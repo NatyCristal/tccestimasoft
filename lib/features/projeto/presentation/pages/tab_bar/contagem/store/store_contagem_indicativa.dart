@@ -1,6 +1,6 @@
 import 'package:estimasoft/core/shared/utils/snackbar.dart';
 import 'package:estimasoft/features/contagem/domain/entitie/contagem_indicativa_entitie.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
 import 'package:mobx/mobx.dart';
 
 part 'store_contagem_indicativa.g.dart';
@@ -11,6 +11,9 @@ class StoreContagemIndicativa = StoreContagemIndicativaBase
 abstract class StoreContagemIndicativaBase with Store {
   @observable
   TextEditingController nomeDaFuncaoController = TextEditingController();
+
+  @observable
+  bool carregouBotao = false;
 
   @observable
   bool alteracoes = false;
@@ -24,10 +27,8 @@ abstract class StoreContagemIndicativaBase with Store {
   @observable
   String tipoFuncao = "ALI";
 
-  @observable
   List<String> alis = [];
 
-  @observable
   List<String> aies = [];
 
   @observable
@@ -40,7 +41,7 @@ abstract class StoreContagemIndicativaBase with Store {
   int tamanhoListaAIE = 0;
 
   @action
-  adicionarFuncao(context) {
+  adicionarFuncao(context, String funcao) {
     bool temIgual = false;
 
     for (var element in alis) {
@@ -52,6 +53,10 @@ abstract class StoreContagemIndicativaBase with Store {
       if (element == nomeDafuncao) {
         temIgual = true;
       }
+    }
+
+    if (temIgual) {
+      return AlertaSnack.exbirSnackBar(context, "Nome de função já cadastrada");
     }
 
     switch (tipoFuncao) {
@@ -72,11 +77,9 @@ abstract class StoreContagemIndicativaBase with Store {
         }
         break;
       default:
+        break;
     }
 
-    if (temIgual) {
-      AlertaSnack.exbirSnackBar(context, "Nome de função já cadastrada");
-    }
     nomeDafuncao = "";
     nomeDaFuncaoController.text = "";
     tipoFuncao = "ALI";
@@ -89,11 +92,13 @@ abstract class StoreContagemIndicativaBase with Store {
         alis.remove(nomeDaFuncao);
         tamanhoListaALI = alis.length;
         totalPf -= 35;
+        alteracoes = true;
         break;
       case "AIE":
         aies.remove(nomeDaFuncao);
         tamanhoListaAIE = aies.length;
         totalPf -= 15;
+        alteracoes = true;
         break;
       default:
     }
@@ -106,11 +111,13 @@ abstract class StoreContagemIndicativaBase with Store {
         alis.remove(nomeDaFuncao);
         tamanhoListaALI = alis.length;
         totalPf -= 35;
+        alteracoes = true;
         break;
       case "AIE":
         aies.remove(nomeDaFuncao);
         tamanhoListaAIE = aies.length;
         totalPf -= 15;
+        alteracoes = true;
         break;
       default:
     }
