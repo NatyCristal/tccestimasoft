@@ -28,6 +28,6 @@ class UsuarioModule extends Module {
         ChildRoute('/',
             transition: TransitionType.rightToLeft,
             guards: [AutorizadoGuard()],
-            child: (context, args) => const EditarDadosUsuario()),
+            child: (context, args) => EditarDadosUsuario()),
       ];
 }

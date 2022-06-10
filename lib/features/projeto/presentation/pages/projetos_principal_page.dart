@@ -84,9 +84,9 @@ class ProjetosPrincipalPage extends StatelessWidget {
                             fontSize: 14),
                       ),
                       onPressed: () async {
-                        if (store.validarNomeProjeto()) {
-                          var resultado =
-                              await controller.criarProjeto(store.nomeProjeto);
+                        if (store.validarCodProjeto()) {
+                          var resultado = await controller
+                              .entrarProjetos(store.codEntrarProjeto);
                           Navigator.of(context, rootNavigator: true).pop();
                           AlertaSnack.exbirSnackBar(context, resultado);
                         }
@@ -123,6 +123,10 @@ class ProjetosPrincipalPage extends StatelessWidget {
           "Pesquise em Projetos",
           style: TextStyle(color: corCorpoTexto),
         ),
+        // onFocusChanged: (value) {},
+        // onQueryChanged: (value) {
+        //   store.pesquisa = value.toString();
+        // },
         borderRadius: arredondamentoBordas,
         body: FloatingSearchBarScrollNotifier(
           child: SingleChildScrollView(
@@ -145,7 +149,9 @@ class ProjetosPrincipalPage extends StatelessWidget {
           ),
         ),
         builder: (BuildContext context, Animation<double> transition) {
-          return const SingleChildScrollView(child: SizedBox());
+          return SingleChildScrollView(
+              child:
+                  SizedBox()); //ProjetosConteudoPesquisa(scroll: scroll, store: store));
         },
       ),
       floatingActionButton: FloatingActionButton(

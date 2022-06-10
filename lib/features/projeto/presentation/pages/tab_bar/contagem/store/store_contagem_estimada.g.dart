@@ -171,50 +171,50 @@ mixin _$StoreContagemEstimada on StoreContagemEstimadaBase, Store {
     });
   }
 
-  late final _$EEAtom =
-      Atom(name: 'StoreContagemEstimadaBase.EE', context: context);
+  late final _$eeAtom =
+      Atom(name: 'StoreContagemEstimadaBase.ee', context: context);
 
   @override
   List<String> get ee {
-    _$EEAtom.reportRead();
+    _$eeAtom.reportRead();
     return super.ee;
   }
 
   @override
   set ee(List<String> value) {
-    _$EEAtom.reportWrite(value, super.ee, () {
+    _$eeAtom.reportWrite(value, super.ee, () {
       super.ee = value;
     });
   }
 
-  late final _$SEAtom =
-      Atom(name: 'StoreContagemEstimadaBase.SE', context: context);
+  late final _$seAtom =
+      Atom(name: 'StoreContagemEstimadaBase.se', context: context);
 
   @override
   List<String> get se {
-    _$SEAtom.reportRead();
+    _$seAtom.reportRead();
     return super.se;
   }
 
   @override
   set se(List<String> value) {
-    _$SEAtom.reportWrite(value, super.se, () {
+    _$seAtom.reportWrite(value, super.se, () {
       super.se = value;
     });
   }
 
-  late final _$CEAtom =
-      Atom(name: 'StoreContagemEstimadaBase.CE', context: context);
+  late final _$ceAtom =
+      Atom(name: 'StoreContagemEstimadaBase.ce', context: context);
 
   @override
   List<String> get ce {
-    _$CEAtom.reportRead();
+    _$ceAtom.reportRead();
     return super.ce;
   }
 
   @override
   set ce(List<String> value) {
-    _$CEAtom.reportWrite(value, super.ce, () {
+    _$ceAtom.reportWrite(value, super.ce, () {
       super.ce = value;
     });
   }
@@ -295,9 +295,9 @@ totalPf: ${totalPf},
 tamanhoListaEE: ${tamanhoListaEE},
 tamanhoListaSE: ${tamanhoListaSE},
 tamanhoListaCE: ${tamanhoListaCE},
-EE: ${ee},
-SE: ${se},
-CE: ${ce},
+ee: ${ee},
+se: ${se},
+ce: ${ce},
 totalIndicativa: ${totalIndicativa}
     ''';
   }

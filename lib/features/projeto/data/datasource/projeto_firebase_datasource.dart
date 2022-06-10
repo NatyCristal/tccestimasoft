@@ -34,7 +34,7 @@ class ProjetoFirebaseDatasource extends ProjetoDatasource {
         email: "", nome: "", uid: uidUsuario, urlFoto: ""));
 
     ProjetoFirebaseModel novoProjeto = ProjetoFirebaseModel(
-        uidProjeto: "",
+        uidProjeto: uidProjeto,
         admin: uidUsuario,
         dataCriacao: dateTime.toString(),
         nomeProjeto: nomeProjeto,
@@ -50,9 +50,50 @@ class ProjetoFirebaseDatasource extends ProjetoDatasource {
   }
 
   @override
-  Future entrarEmProjeto(String uidProjeto) {
-    // TODO: implement entrarEmProjeto
-    throw UnimplementedError();
+  Future<ProjetoEntitie> entrarEmProjeto(
+      String uidUsuario, String uidProjeto) async {
+    List<UsuarioEntitie> membros = [];
+    List<String> listaMembros = [];
+
+    ProjetoFirebaseModel novoProjeto = ProjetoFirebaseModel(
+        uidProjeto: "",
+        admin: "",
+        dataCriacao: "",
+        nomeProjeto: "",
+        membros: membros);
+    try {
+      await firestore
+          .collection("Projetos")
+          .doc(uidProjeto)
+          .get()
+          .then((value) async {
+        if (value.exists) {
+          Map<String, dynamic>? valor = value.data();
+          if (valor != null) {
+            List<dynamic> lista = valor["membros"];
+
+            for (var element in lista) {
+              if (element != uidUsuario) {
+                listaMembros.add(element);
+              }
+            }
+
+            novoProjeto = (ProjetoFirebaseModel.fromMap(valor, uidProjeto));
+            await usuarioDatasource.vincularProjetoUsuario(
+                uidProjeto, uidUsuario);
+          }
+        }
+      });
+
+      listaMembros.add(uidUsuario);
+      Map<String, List<String>> mapFinal;
+      mapFinal = {"membros": listaMembros};
+      await firestore.collection("Projetos").doc(uidProjeto).update(mapFinal);
+
+      return novoProjeto;
+    } catch (e) {
+      throw Exception("Projeto não encontrado");
+    }
   }
 
   @override

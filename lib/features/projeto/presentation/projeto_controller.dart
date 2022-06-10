@@ -2,6 +2,7 @@ import 'package:estimasoft/core/auth/usuario_autenticado.dart';
 import 'package:estimasoft/features/contagem/contagem_controller.dart';
 import 'package:estimasoft/features/login/domain/entities/login_entitie.dart';
 import 'package:estimasoft/features/projeto/domain/entitie/projeto_entitie.dart';
+import 'package:estimasoft/features/projeto/domain/usecase/entrar_projeto_usecase.dart';
 import 'package:estimasoft/features/projeto/domain/usecase/recuperar_membros_usecase.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import '../../usuario/presentation/usuario_controller.dart';
@@ -21,26 +22,45 @@ class ProjetoController {
   final RecuperarMembrosUsecase _recuperarMembrosUsecase;
   final RecuperarProjetosUsecase _recuperarProjetosUsecase;
   final CriarProjetoUsecase _criarProjetoUsecase;
+  final EntraProjetoUsecase _entraProjetoUsecase;
 
   ProjetoController(this._criarProjetoUsecase, this._recuperarProjetosUsecase,
-      this._recuperarMembrosUsecase);
+      this._recuperarMembrosUsecase, this._entraProjetoUsecase);
 
   criarProjeto(String nomeProjeto) async {
     final usuarioLogado = Modular.get<UsuarioAutenticado>();
-
     var resultado = await _criarProjetoUsecase.criarProjeto(
         usuarioLogado.store.uid, nomeProjeto);
-
     var retorno = "";
 
     resultado.fold((l) {
       retorno = l.mensagem;
     }, (r) {
       projetos.add(r);
-
       retorno = "Projeto cadastrado com sucesso!";
     });
 
+    return retorno;
+  }
+
+  Future entrarProjetos(String uidProjeto) async {
+    final usuarioLogado = Modular.get<UsuarioAutenticado>();
+    var resultado = await _entraProjetoUsecase.entrarEmProjeto(
+        usuarioLogado.store.uid, uidProjeto);
+    var retorno = "";
+    resultado.fold((l) {
+      retorno = l.mensagem;
+    }, (r) {
+      bool igual = false;
+      for (var element in projetos) {
+        if (element.uidProjeto == r.uidProjeto) {
+          igual = true;
+        }
+      }
+
+      !igual ? projetos.add(r) : projetos;
+      retorno = "Entrou no projeto!";
+    });
     return retorno;
   }
 
@@ -124,7 +144,18 @@ class ProjetoController {
     return resultado;
   }
 
+  usuarioEditarNome(String nome) async {
+    return await usuarioController.alterarNome(nome);
+  }
+
+  usuarioEditarEmail(String email) async {
+    return await usuarioController.alterarEmail(email);
+  }
+
   usuarioDeslogar() async {
+    projetos = [];
+
     return await usuarioController.deslogar();
+    // Modular.to.popAndPushNamed("/login/");
   }
 }

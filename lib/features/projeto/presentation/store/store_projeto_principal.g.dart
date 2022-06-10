@@ -9,6 +9,54 @@ part of 'store_projeto_principal.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$StoreProjetos on StoreProjetosBase, Store {
+  late final _$pesquisaAtom =
+      Atom(name: 'StoreProjetosBase.pesquisa', context: context);
+
+  @override
+  String get pesquisa {
+    _$pesquisaAtom.reportRead();
+    return super.pesquisa;
+  }
+
+  @override
+  set pesquisa(String value) {
+    _$pesquisaAtom.reportWrite(value, super.pesquisa, () {
+      super.pesquisa = value;
+    });
+  }
+
+  late final _$projetosAtom =
+      Atom(name: 'StoreProjetosBase.projetos', context: context);
+
+  @override
+  List<ProjetoEntitie> get projetos {
+    _$projetosAtom.reportRead();
+    return super.projetos;
+  }
+
+  @override
+  set projetos(List<ProjetoEntitie> value) {
+    _$projetosAtom.reportWrite(value, super.projetos, () {
+      super.projetos = value;
+    });
+  }
+
+  late final _$projetosPesquisaAtom =
+      Atom(name: 'StoreProjetosBase.projetosPesquisa', context: context);
+
+  @override
+  List<ProjetoEntitie> get projetosPesquisa {
+    _$projetosPesquisaAtom.reportRead();
+    return super.projetosPesquisa;
+  }
+
+  @override
+  set projetosPesquisa(List<ProjetoEntitie> value) {
+    _$projetosPesquisaAtom.reportWrite(value, super.projetosPesquisa, () {
+      super.projetosPesquisa = value;
+    });
+  }
+
   late final _$tamanhoProjetosAtom =
       Atom(name: 'StoreProjetosBase.tamanhoProjetos', context: context);
 
@@ -137,8 +185,22 @@ mixin _$StoreProjetos on StoreProjetosBase, Store {
   }
 
   @override
+  dynamic pesquisarProjetos() {
+    final _$actionInfo = _$StoreProjetosBaseActionController.startAction(
+        name: 'StoreProjetosBase.pesquisarProjetos');
+    try {
+      return super.pesquisarProjetos();
+    } finally {
+      _$StoreProjetosBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
+pesquisa: ${pesquisa},
+projetos: ${projetos},
+projetosPesquisa: ${projetosPesquisa},
 tamanhoProjetos: ${tamanhoProjetos},
 carregou: ${carregou},
 exibirDrawer: ${exibirDrawer},

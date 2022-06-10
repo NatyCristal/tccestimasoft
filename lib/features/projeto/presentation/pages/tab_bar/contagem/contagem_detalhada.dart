@@ -2,6 +2,7 @@ import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
 import 'package:estimasoft/core/shared/widgets/botao.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_estimada.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_indicativa.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/widgets/cards/card_contagem_detalhada.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/widgets/conteudo/conteudo_contagem_estimada.dart';
 import 'package:estimasoft/features/projeto/presentation/projeto_controller.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ class ContagemDetalhada extends StatelessWidget {
   final ProjetoController controller = Modular.get<ProjetoController>();
   final StoreContagemEstimada store;
   final ScrollController scrollController = ScrollController();
+  final ScrollController scrollControllerLateral = ScrollController();
   ContagemDetalhada(
       {Key? key,
       required this.projetoUid,
@@ -136,7 +138,7 @@ class ContagemDetalhada extends StatelessWidget {
                         },
                         icon: Icon(
                           Icons.info,
-                          size: 20,
+                          size: 24,
                           color: Colors.indigo.withOpacity(0.8),
                         ),
                       ),
@@ -161,12 +163,8 @@ class ContagemDetalhada extends StatelessWidget {
                     //   )
                     //const SizedBox(),
 
-                    Divider(
-                      color: corDeAcao.withOpacity(0.3),
-                      thickness: 1,
-                    ),
                     const SizedBox(
-                      height: 20,
+                      height: 5,
                     ),
 
                     Column(
@@ -176,12 +174,303 @@ class ContagemDetalhada extends StatelessWidget {
                           child: Text(
                             "Função de Dados",
                             textAlign: TextAlign.center,
-                            style: TextStyle(),
+                            style: TextStyle(fontSize: 16),
                           ),
                         ),
                       ],
                     ),
+                    const SizedBox(
+                      height: 20,
+                    ),
 
+                    storeIndicativa.tamanhoListaALI == 0
+                        ? SizedBox(
+                            height: 30,
+                            child: Text(
+                              "Não existe ALI cadastrado",
+                              style: TextStyle(
+                                  color: corCorpoTexto.withOpacity(0.5)),
+                            ),
+                          )
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              storeIndicativa.alis.isNotEmpty ||
+                                      storeIndicativa.aies.isNotEmpty
+                                  ? SizedBox(
+                                      width: TamanhoTela.width(context, 1),
+                                      child: SingleChildScrollView(
+                                        controller: scrollControllerLateral,
+                                        scrollDirection: Axis.horizontal,
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              children: const [
+                                                SizedBox(
+                                                  width: 120,
+                                                  child: Text(
+                                                    "Nome",
+                                                    style: TextStyle(
+                                                        color: corTituloTexto),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 80,
+                                                  child: Text(
+                                                    "Tipo",
+                                                    style: TextStyle(
+                                                        color: corTituloTexto),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 130,
+                                                  child: Text(
+                                                    " Quantidade de TR's",
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                        color: corTituloTexto),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 20,
+                                                ),
+                                                SizedBox(
+                                                  width: 130,
+                                                  child: Text(
+                                                    "Quantidade de TD's",
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                        color: corTituloTexto),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                              width: 20,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    )
+                                  : const SizedBox(),
+                              ListView.builder(
+                                controller: scrollControllerLateral,
+                                shrinkWrap: true,
+                                itemCount: storeIndicativa.tamanhoListaALI,
+                                itemBuilder: (context, index) {
+                                  String nomeFuncao =
+                                      storeIndicativa.alis[index];
+
+                                  return ContagemDetalhadaCard(
+                                    scrollController: scrollControllerLateral,
+                                    tipoFuncao: "ALI",
+                                    nomeDaFuncao: nomeFuncao,
+                                  );
+                                },
+                              )
+                            ],
+                          ),
+                    storeIndicativa.tamanhoListaAIE == 0
+                        ? SizedBox(
+                            height: 30,
+                            child: Text(
+                              "Não existe AIE cadastrado",
+                              style: TextStyle(
+                                  color: corCorpoTexto.withOpacity(0.5)),
+                            ),
+                          )
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ListView.builder(
+                                controller: scrollControllerLateral,
+                                shrinkWrap: true,
+                                itemCount: storeIndicativa.tamanhoListaAIE,
+                                itemBuilder: (context, index) {
+                                  String nomeFuncao =
+                                      storeIndicativa.aies[index];
+
+                                  return ContagemDetalhadaCard(
+                                    scrollController: scrollControllerLateral,
+                                    tipoFuncao: "AIE",
+                                    nomeDaFuncao: nomeFuncao,
+                                  );
+                                },
+                              )
+                            ],
+                          ),
+
+                    const Text("xx PF em Função de dados"),
+
+                    Column(
+                      children: const [
+                        SizedBox(
+                          height: 20,
+                        ),
+                        SizedBox(
+                          width: double.infinity,
+                          child: Text(
+                            "Função Transacional",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 16),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                      ],
+                    ),
+
+                    store.tamanhoListaCE == 0
+                        ? SizedBox(
+                            height: 30,
+                            child: Text(
+                              "Não existe CE cadastrado",
+                              style: TextStyle(
+                                  color: corCorpoTexto.withOpacity(0.5)),
+                            ),
+                          )
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              store.ce.isNotEmpty ||
+                                      store.ee.isNotEmpty ||
+                                      store.se.isNotEmpty
+                                  ? SizedBox(
+                                      width: TamanhoTela.width(context, 1),
+                                      child: SingleChildScrollView(
+                                        controller: scrollControllerLateral,
+                                        scrollDirection: Axis.horizontal,
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              children: const [
+                                                SizedBox(
+                                                  width: 120,
+                                                  child: Text(
+                                                    "Nome",
+                                                    style: TextStyle(
+                                                        color: corTituloTexto),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 80,
+                                                  child: Text(
+                                                    "Tipo",
+                                                    style: TextStyle(
+                                                        color: corTituloTexto),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 130,
+                                                  child: Text(
+                                                    " Quantidade de AR's",
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                        color: corTituloTexto),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 20,
+                                                ),
+                                                SizedBox(
+                                                  width: 130,
+                                                  child: Text(
+                                                    "Quantidade de TD's",
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                        color: corTituloTexto),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                              width: 20,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    )
+                                  : const SizedBox(),
+                              ListView.builder(
+                                controller: scrollControllerLateral,
+                                shrinkWrap: true,
+                                itemCount: store.tamanhoListaCE,
+                                itemBuilder: (context, index) {
+                                  String nomeFuncao = store.ce[index];
+
+                                  return ContagemDetalhadaCard(
+                                    scrollController: scrollControllerLateral,
+                                    tipoFuncao: "CE",
+                                    nomeDaFuncao: nomeFuncao,
+                                  );
+                                },
+                              )
+                            ],
+                          ),
+
+                    store.tamanhoListaEE == 0
+                        ? SizedBox(
+                            height: 30,
+                            child: Text(
+                              "Não existe EE cadastrado",
+                              style: TextStyle(
+                                  color: corCorpoTexto.withOpacity(0.5)),
+                            ),
+                          )
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ListView.builder(
+                                controller: scrollControllerLateral,
+                                shrinkWrap: true,
+                                itemCount: store.tamanhoListaEE,
+                                itemBuilder: (context, index) {
+                                  String nomeFuncao = store.ee[index];
+
+                                  return ContagemDetalhadaCard(
+                                    scrollController: scrollControllerLateral,
+                                    tipoFuncao: "EE",
+                                    nomeDaFuncao: nomeFuncao,
+                                  );
+                                },
+                              )
+                            ],
+                          ),
+
+                    store.tamanhoListaSE == 0
+                        ? SizedBox(
+                            height: 30,
+                            child: Text(
+                              "Não existe SE cadastrado",
+                              style: TextStyle(
+                                  color: corCorpoTexto.withOpacity(0.5)),
+                            ),
+                          )
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ListView.builder(
+                                controller: scrollControllerLateral,
+                                shrinkWrap: true,
+                                itemCount: store.tamanhoListaSE,
+                                itemBuilder: (context, index) {
+                                  String nomeFuncao = store.se[index];
+
+                                  return ContagemDetalhadaCard(
+                                    scrollController: scrollControllerLateral,
+                                    tipoFuncao: "SE",
+                                    nomeDaFuncao: nomeFuncao,
+                                  );
+                                },
+                              )
+                            ],
+                          ),
+
+                    const Text("xx PF em Função Transacional"),
+                    const SizedBox(
+                      height: 20,
+                    ),
                     BotaoPadrao(
                         corDeTextoBotao: corTextoSobCorPrimaria,
                         acao: () async {

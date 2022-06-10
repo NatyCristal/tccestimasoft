@@ -1,10 +1,20 @@
 import 'package:mobx/mobx.dart';
+import '../../domain/entitie/projeto_entitie.dart';
 
 part 'store_projeto_principal.g.dart';
 
 class StoreProjetos = StoreProjetosBase with _$StoreProjetos;
 
 abstract class StoreProjetosBase with Store {
+  @observable
+  String pesquisa = "";
+
+  @observable
+  List<ProjetoEntitie> projetos = [];
+
+  @observable
+  List<ProjetoEntitie> projetosPesquisa = [];
+
   @observable
   int tamanhoProjetos = 0;
 
@@ -53,5 +63,15 @@ abstract class StoreProjetosBase with Store {
 
     nomeProjetoErro = "";
     return true;
+  }
+
+  @action
+  pesquisarProjetos() {
+    for (var element in projetos) {
+      if (element.nomeProjeto.contains(nomeProjeto)) {
+        projetosPesquisa.add(element);
+      }
+    }
+    return projetosPesquisa.length;
   }
 }

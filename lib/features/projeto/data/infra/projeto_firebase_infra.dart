@@ -24,9 +24,16 @@ class ProjetoFirebaseInfra extends ProjetoRepository {
   }
 
   @override
-  Future<Either<Falha, ProjetoEntitie>> entrarEmProjeto(String uidProjeto) {
-    // TODO: implement entrarEmProjeto
-    throw UnimplementedError();
+  Future<Either<Falha, ProjetoEntitie>> entrarEmProjeto(
+      String uidUsuario, String uidProjeto) async {
+    try {
+      var resultado = await datasource.entrarEmProjeto(uidUsuario, uidProjeto);
+      return Right(resultado);
+    } on FirebaseException catch (e) {
+      return Left(throw Exception(e.code));
+    } on Exception catch (e) {
+      return Left(throw Exception(e));
+    }
   }
 
   @override

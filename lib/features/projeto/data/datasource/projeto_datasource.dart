@@ -11,7 +11,8 @@ abstract class ProjetoDatasource {
 
   Future sairProjeto(String uidUsuario, String uidProjeto);
 
-  Future entrarEmProjeto(
+  Future<ProjetoEntitie> entrarEmProjeto(
+    String uidUsuario,
     String uidProjeto,
   );
 

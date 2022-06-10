@@ -51,8 +51,11 @@ class UsuarioFirebaseDataSource extends PerfilDatasource {
 
         if (dados?["projetosUids"] != null) {
           List<dynamic> lista = dados?["projetosUids"];
+
           for (var element in lista) {
-            listaProjetos.add(element.toString());
+            if (element != uidProjeto) {
+              listaProjetos.add(element.toString());
+            }
           }
 
           mapFinal = {"projetosUids": listaProjetos};
@@ -63,10 +66,7 @@ class UsuarioFirebaseDataSource extends PerfilDatasource {
               .update(mapFinal);
         } else {
           mapFinal = {"projetosUids": listaProjetos};
-          await _firestore
-              .collection("Usuarios")
-              .doc(uidUsuario)
-              .update(mapFinal);
+          await _firestore.collection("Usuarios").doc(uidUsuario).set(mapFinal);
         }
       }
     });

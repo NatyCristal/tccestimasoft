@@ -3,6 +3,7 @@ import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
 import 'package:estimasoft/features/projeto/domain/entitie/projeto_entitie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class ProjetoCard extends StatelessWidget {
   final ProjetoEntitie projeto;
@@ -14,6 +15,7 @@ class ProjetoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onLongPress: () {},
       onTap: (() =>
           Modular.to.pushNamed("projeto-informacao", arguments: projeto)),
       child: Container(
@@ -27,16 +29,87 @@ class ProjetoCard extends StatelessWidget {
             borderRadius: arredondamentoBordas),
         margin: const EdgeInsets.all(5),
         height: 100,
-        width: 150,
+        // width: 150,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              projeto.nomeProjeto,
-              style: const TextStyle(
-                color: corTituloTexto,
-                fontWeight: Fontes.weightTextoNormal,
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(
+                  width: 160,
+                  child: Text(
+                    projeto.nomeProjeto,
+                    maxLines: 1,
+                    style: const TextStyle(
+                      color: corTituloTexto,
+                      fontWeight: Fontes.weightTextoNormal,
+                    ),
+                  ),
+                ),
+
+                GestureDetector(
+                    onTap: () {
+                      Alert(
+                        context: context,
+                        type: AlertType.warning,
+                        title: "Selecione uma das opções",
+                        style: const AlertStyle(
+                          titleStyle:
+                              TextStyle(color: corTituloTexto, fontSize: 18),
+                        ),
+                        content: Column(
+                          children: [
+                            Checkbox(value: (false), onChanged: (value) {}),
+                          ],
+                        ),
+                        buttons: [
+                          DialogButton(
+                            color: corDeFundoBotaoSecundaria,
+                            child: const Text(
+                              "SIM",
+                              style: TextStyle(
+                                  fontWeight: Fontes.weightTextoNormal,
+                                  color: corDeTextoBotaoSecundaria,
+                                  fontSize: 14),
+                            ),
+                            onPressed: () async {
+                              // var retorno = await controller.usuarioDeslogar();
+                              // AlertaSnack.exbirSnackBar(context, retorno);
+                              Navigator.of(context, rootNavigator: true).pop();
+                            },
+                            width: 120,
+                          ),
+                          DialogButton(
+                            color: Colors.indigo,
+                            child: const Text(
+                              "NÃO",
+                              style: TextStyle(
+                                fontWeight: Fontes.weightTextoNormal,
+                                color: corTextoSobCorPrimaria,
+                                fontSize: 14,
+                              ),
+                            ),
+                            onPressed: () =>
+                                Navigator.of(context, rootNavigator: true)
+                                    .pop(),
+                            width: 120,
+                          )
+                        ],
+                      ).show();
+                    },
+                    child: Container(
+                      width: 30,
+                      height: 20,
+                      child: const Icon(
+                        Icons.more_vert_rounded,
+                        size: 30,
+                        color: corCorpoTexto,
+                      ),
+                    ))
+
+                //  Text("oie")
+              ],
             ),
             const SizedBox(height: 10),
             Text(projeto.dataCriacao,

@@ -13,14 +13,14 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import '../../../../../../core/auth/usuario_autenticado.dart';
 
 class ProjetoDrawer extends StatelessWidget {
-  ProjetoController controller = Modular.get<ProjetoController>();
+  final ProjetoController controller = Modular.get<ProjetoController>();
   ProjetoDrawer({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final usuarioLogado = Modular.get<UsuarioAutenticado>();
     return Container(
-      color: Colors.white,
+      color: background,
       height: TamanhoTela.height(context, 1),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -28,6 +28,7 @@ class ProjetoDrawer extends StatelessWidget {
           Column(
             children: [
               Container(
+                  margin: const EdgeInsets.only(top: 76),
                   padding: paddingPagePrincipal,
                   width: double.infinity,
                   color: background,
@@ -39,58 +40,65 @@ class ProjetoDrawer extends StatelessWidget {
                       AvatarUsuario(),
                     ],
                   )),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Container(
-                  padding: paddingPagePrincipal,
-                  // height: 100,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          Text(
-                            usuarioLogado.store.nome,
-                            style: const TextStyle(
-                                fontSize: tamanhoTextoCorpoTexto,
-                                color: corCorpoTexto,
-                                fontWeight: Fontes.weightTextoNormal),
-                          ),
-                          const SizedBox(
-                            height: 2,
-                          ),
-                          Text(
-                            usuarioLogado.store.email,
-                            style: const TextStyle(
-                                fontSize: tamanhoTextoCorpoTexto,
-                                color: corCorpoTexto,
-                                fontWeight: Fontes.weightTextoNormal),
-                          )
-                        ],
-                      ),
-                      IconButton(
-                          onPressed: () {},
-                          icon: Container(
-                            decoration: BoxDecoration(
-                                color: corDeAcao.withOpacity(0.2),
-                                borderRadius: BorderRadius.circular(8)),
-                            height: 25,
-                            width: 25,
-                            child: const Icon(
-                              Icons.edit,
-                              color: corDeAcao,
-                              size: 18,
+              Container(
+                color: Colors.white,
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Container(
+                    padding: paddingPagePrincipal,
+                    // height: 100,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(
+                              height: 8,
                             ),
-                          ))
-                    ],
+                            Text(
+                              usuarioLogado.store.nome,
+                              style: const TextStyle(
+                                  fontSize: tamanhoTextoCorpoTexto,
+                                  color: corCorpoTexto,
+                                  fontWeight: Fontes.weightTextoNormal),
+                            ),
+                            const SizedBox(
+                              height: 2,
+                            ),
+                            Text(
+                              usuarioLogado.store.email,
+                              style: const TextStyle(
+                                  fontSize: tamanhoTextoCorpoTexto,
+                                  color: corCorpoTexto,
+                                  fontWeight: Fontes.weightTextoNormal),
+                            )
+                          ],
+                        ),
+                        IconButton(
+                            onPressed: () {
+                              Modular.to.pushNamed("/usuario");
+                            },
+                            icon: Container(
+                              decoration: BoxDecoration(
+                                  color: corDeAcao.withOpacity(0.2),
+                                  borderRadius: BorderRadius.circular(8)),
+                              height: 25,
+                              width: 25,
+                              child: const Icon(
+                                Icons.edit,
+                                color: corDeAcao,
+                                size: 18,
+                              ),
+                            ))
+                      ],
+                    ),
                   ),
                 ),
               ),
-              const ListaDrawer()
+              ListaDrawer(
+                controller: controller,
+              )
             ],
           ),
           GestureDetector(

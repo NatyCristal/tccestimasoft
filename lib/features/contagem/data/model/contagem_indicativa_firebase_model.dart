@@ -33,6 +33,6 @@ class ContagemIndicativaModelFirebase extends ContagemIndicativaEntitie {
     }
 
     return ContagemIndicativaModelFirebase(
-        aie: listaAIE, ali: listaAIE, totalPf: map["total"]);
+        aie: listaAIE, ali: listaALI, totalPf: map["total"]);
   }
 }

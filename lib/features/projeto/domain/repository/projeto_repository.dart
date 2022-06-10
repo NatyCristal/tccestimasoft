@@ -16,6 +16,7 @@ abstract class ProjetoRepository {
       String uidUsuario, String uidProjeto);
 
   Future<Either<Falha, ProjetoEntitie>> entrarEmProjeto(
+    String uidUsuario,
     String uidProjeto,
   );
 

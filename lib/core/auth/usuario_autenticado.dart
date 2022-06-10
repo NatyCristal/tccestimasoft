@@ -13,6 +13,10 @@ class UsuarioAutenticado {
     }
   }
 
+  limparDados() {
+    store.limparDados();
+  }
+
   verificarUsuario(User usuario) async {
     store.pegarUsuario(usuario);
   }
