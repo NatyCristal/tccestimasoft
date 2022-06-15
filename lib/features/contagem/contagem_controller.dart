@@ -26,18 +26,18 @@ class ContagemController {
       retorno = l.mensagem;
     }, (r) {
       retorno = "Contagem salva com sucesso!";
+      contagemIndicativa = r;
     });
     return retorno;
   }
 
   Future recuperarContagemIndicativa(
       String uidProjeto, String uidUsuario) async {
-    // ignore: prefer_typing_uninitialized_variables
     var resultado;
-    await Future.delayed(const Duration(seconds: 3)).then((_) async {
-      resultado = await _contagemIndicativaUseCase.recuperarContagemIndicativa(
-          uidProjeto, uidUsuario);
-    });
+
+    resultado = await _contagemIndicativaUseCase.recuperarContagemIndicativa(
+        uidProjeto, uidUsuario);
+
     var retorno = "";
 
     resultado.fold((l) {
@@ -49,7 +49,6 @@ class ContagemController {
   }
 
   Future recuperarContagemEstimada(String uidProjeto, String uidUsuario) async {
-    // ignore: prefer_typing_uninitialized_variables
     var resultado;
     await Future.delayed(const Duration(seconds: 3)).then((_) async {
       resultado = await _contagemEstimadaUseCase.recuperarContagemEstimada(
@@ -78,8 +77,16 @@ class ContagemController {
     resultado.fold((l) {
       retorno = l.mensagem;
     }, (r) {
+      contagemEstimada = r;
       retorno = "Contagem salva com sucesso!";
     });
     return retorno;
+  }
+
+  carregar(String uidProjeto, String uidUsuario) async {
+    contagemIndicativa =
+        await recuperarContagemIndicativa(uidProjeto, uidUsuario);
+    contagemIndicativa =
+        await recuperarContagemEstimada(uidProjeto, uidUsuario);
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:estimasoft/core/errors/falha.dart';
 import 'package:dartz/dartz.dart';
 import 'package:estimasoft/features/login/domain/entities/login_entitie.dart';
@@ -5,7 +7,7 @@ import 'package:estimasoft/features/projeto/data/datasource/projeto_datasource.d
 import 'package:estimasoft/features/projeto/domain/entitie/projeto_entitie.dart';
 import 'package:estimasoft/features/projeto/domain/repository/projeto_repository.dart';
 import 'package:estimasoft/features/projeto/error/projeto_erro.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class ProjetoFirebaseInfra extends ProjetoRepository {
   final ProjetoDatasource datasource;
@@ -71,6 +73,50 @@ class ProjetoFirebaseInfra extends ProjetoRepository {
     } on FirebaseException catch (e) {
       return Left(ErroProjeto(
           mensagem: "Aconteceu um erro aqui em recuperar membros" + e.code));
+    }
+  }
+
+  @override
+  Either<Falha, UploadTask> uparArquivos(String uidProjeto, File file) {
+    try {
+      var resultado = datasource.uparArquivo(uidProjeto, file);
+      return Right(resultado);
+    } on FirebaseException catch (e) {
+      return Left(ErroProjeto(
+          mensagem: "Aconteceu um erro aqui em recuperar membros" + e.code));
+    }
+  }
+
+  @override
+  Future<Either<Falha, ListResult>> recuperarArquivos(String uidProjeto) async {
+    try {
+      var resultado = await datasource.recuperarArquivos(uidProjeto);
+      return Right(resultado);
+    } on FirebaseException catch (e) {
+      return Left(ErroProjeto(
+          mensagem: "Aconteceu um erro em recuperar os arquivos" + e.code));
+    }
+  }
+
+  @override
+  Future removerArquivo(String uidProjeto, String nomeArquivo) async {
+    try {
+      await datasource.excluirArquivo(uidProjeto, nomeArquivo);
+    } on FirebaseException catch (e) {
+      return Left(throw Exception(e.code));
+    } on Exception catch (e) {
+      return Left(throw Exception(e));
+    }
+  }
+
+  @override
+  Future realizarLoginArquivo(String uidProjeto, String nomeArquivo) async {
+    try {
+      await datasource.realizarDownloadArquivo(uidProjeto, nomeArquivo);
+    } on FirebaseException catch (e) {
+      return Left(throw Exception(e.code));
+    } on Exception catch (e) {
+      return Left(throw Exception(e));
     }
   }
 }

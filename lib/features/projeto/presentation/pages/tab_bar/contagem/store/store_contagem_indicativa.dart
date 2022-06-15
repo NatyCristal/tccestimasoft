@@ -1,6 +1,9 @@
 import 'package:estimasoft/core/shared/utils/snackbar.dart';
+import 'package:estimasoft/features/contagem/data/model/contagem_indicativa_firebase_model.dart';
 import 'package:estimasoft/features/contagem/domain/entitie/contagem_indicativa_entitie.dart';
+import 'package:estimasoft/features/projeto/presentation/projeto_controller.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
 part 'store_contagem_indicativa.g.dart';
@@ -9,6 +12,14 @@ class StoreContagemIndicativa = StoreContagemIndicativaBase
     with _$StoreContagemIndicativa;
 
 abstract class StoreContagemIndicativaBase with Store {
+  @observable
+  ContagemIndicativaEntitie contagemIndicativaValida =
+      ContagemIndicativaModelFirebase(
+    aie: [],
+    ali: [],
+    totalPf: 0,
+  );
+
   @observable
   TextEditingController nomeDaFuncaoController = TextEditingController();
 
@@ -134,5 +145,13 @@ abstract class StoreContagemIndicativaBase with Store {
     tamanhoListaAIE = contagemRecuperadaFirebase.aie.length;
     alis = contagemRecuperadaFirebase.ali;
     tamanhoListaALI = contagemRecuperadaFirebase.ali.length;
+
+    contagemIndicativaValida =
+        Modular.get<ProjetoController>().contagemController.contagemIndicativa;
+  }
+
+  @action
+  salvar(ContagemIndicativaEntitie novaContagem) {
+    //   contagemIndicativaValida = novaContagem;
   }
 }

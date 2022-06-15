@@ -1,6 +1,8 @@
+import 'dart:io';
 import 'package:estimasoft/features/login/domain/entities/login_entitie.dart';
 import 'package:estimasoft/features/projeto/data/model/projeto_firebase_model.dart';
 import 'package:estimasoft/features/projeto/domain/entitie/projeto_entitie.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 abstract class ProjetoDatasource {
   Future<List<ProjetoFirebaseModel>> recuperarProjetos(String uid);
@@ -17,4 +19,12 @@ abstract class ProjetoDatasource {
   );
 
   Future<List<UsuarioEntitie>> recuperarMembrosProjeto(String uidProjeto);
+
+  uparArquivo(String uidProjeto, File file);
+
+  Future<ListResult> recuperarArquivos(String uidProjeto);
+
+  Future excluirArquivo(String uidProjeto, String nomeArquivo);
+
+  Future realizarDownloadArquivo(String uidProjeto, String caminhoDocumento);
 }

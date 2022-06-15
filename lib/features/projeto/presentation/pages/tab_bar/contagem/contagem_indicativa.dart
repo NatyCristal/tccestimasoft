@@ -4,13 +4,13 @@ import 'package:estimasoft/core/shared/utils/snackbar.dart';
 import 'package:estimasoft/core/shared/utils/tamanho_tela.dart';
 import 'package:estimasoft/core/shared/widgets/botao.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/widgets/cards/card_adicao_contagem.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/widgets/conteudo/conteudo_contagem_indicativa.dart';
 import 'package:estimasoft/features/projeto/presentation/projeto_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'store/store_contagem_indicativa.dart';
-import 'widgets/conteudo/conteudo_contagem_indicativa.dart';
 
 class ContagemIndicativa extends StatelessWidget {
   final String projetoUid;
@@ -22,6 +22,11 @@ class ContagemIndicativa extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (!store.carregou) {
+      store.iniciarSessao(controller.contagemController.contagemIndicativa);
+      store.carregou = true;
+    }
+
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Container(

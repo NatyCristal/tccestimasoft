@@ -1,9 +1,16 @@
+// ignore_for_file: prefer_typing_uninitialized_variables, unused_local_variable
+
+import 'dart:io';
 import 'package:estimasoft/core/auth/usuario_autenticado.dart';
 import 'package:estimasoft/features/contagem/contagem_controller.dart';
+import 'package:estimasoft/features/estimativas/domain/entitie/esforco_entitie.dart';
+import 'package:estimasoft/features/estimativas/presentation/estimativas_controller.dart';
 import 'package:estimasoft/features/login/domain/entities/login_entitie.dart';
 import 'package:estimasoft/features/projeto/domain/entitie/projeto_entitie.dart';
 import 'package:estimasoft/features/projeto/domain/usecase/entrar_projeto_usecase.dart';
 import 'package:estimasoft/features/projeto/domain/usecase/recuperar_membros_usecase.dart';
+import 'package:estimasoft/features/projeto/domain/usecase/arquivo_usecase.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import '../../usuario/presentation/usuario_controller.dart';
 import '../domain/usecase/criar_projeto_usecase.dart';
@@ -14,18 +21,26 @@ class ProjetoController {
   final UsuarioController usuarioController = Modular.get<UsuarioController>();
   final ContagemController contagemController =
       Modular.get<ContagemController>();
+  final EstimativasController estimativasController =
+      Modular.get<EstimativasController>();
 
   //referente a projetos
 
   List<ProjetoEntitie> projetos = [];
   List<UsuarioEntitie> membrosProjetoAtual = [];
+  late ListResult arquivos;
   final RecuperarMembrosUsecase _recuperarMembrosUsecase;
   final RecuperarProjetosUsecase _recuperarProjetosUsecase;
   final CriarProjetoUsecase _criarProjetoUsecase;
   final EntraProjetoUsecase _entraProjetoUsecase;
+  final ArquivoUsecase _arquivosUsecase;
 
-  ProjetoController(this._criarProjetoUsecase, this._recuperarProjetosUsecase,
-      this._recuperarMembrosUsecase, this._entraProjetoUsecase);
+  ProjetoController(
+      this._criarProjetoUsecase,
+      this._recuperarProjetosUsecase,
+      this._recuperarMembrosUsecase,
+      this._entraProjetoUsecase,
+      this._arquivosUsecase);
 
   criarProjeto(String nomeProjeto) async {
     final usuarioLogado = Modular.get<UsuarioAutenticado>();
@@ -100,16 +115,62 @@ class ProjetoController {
     return projetos;
   }
 
+  Future fazerDownloadArquivos(
+      String uidProjeto, String caminhoDocumento) async {
+    var resultado = await _arquivosUsecase.realizarDownloadArquivo(
+        uidProjeto, caminhoDocumento);
+  }
+
+  Future removerArquivoProjeto(
+      ProjetoEntitie projetoEntitie, String nomeArquivo) async {
+    if (projetoEntitie.admin == Modular.get<UsuarioAutenticado>().store.uid) {
+      await _arquivosUsecase.removerArquivos(
+          projetoEntitie.uidProjeto, nomeArquivo);
+
+      arquivos = await recuperarArquivos(projetoEntitie.uidProjeto);
+
+      return "Arquivo removido com sucesso!";
+    }
+
+    return "Apenas o adiministrador por deletar arquivos";
+  }
+
+  Future<ListResult> recuperarArquivos(String uidProjeto) async {
+    var resultado = await _arquivosUsecase.recuperarArquivos(uidProjeto);
+
+    //  var erro = "";
+    resultado.fold((l) {
+      // erro = l.mensagem;
+    }, (r) {
+      arquivos = r;
+    });
+
+    return arquivos;
+  }
+
+  uparArquivos(String uidProjeto, File file) {
+    // final usuarioLogado = Modular.get<UsuarioAutenticado>();
+    var resultado = _arquivosUsecase.uparArquivos(uidProjeto, file);
+
+    var retorno;
+
+    resultado.fold((l) {
+      retorno = l.mensagem;
+    }, (r) {
+      retorno = r;
+    });
+
+    return retorno;
+  }
+
   Future recuperarContagem(String nomeContagem, String uidProjeto) async {
     final usuarioLogado = Modular.get<UsuarioAutenticado>();
 
     switch (nomeContagem) {
       case "Indicativa":
-        return await contagemController.recuperarContagemIndicativa(
-            uidProjeto, usuarioLogado.store.uid);
+        return contagemController.contagemIndicativa;
       case "Estimada":
-        return await contagemController.recuperarContagemEstimada(
-            uidProjeto, usuarioLogado.store.uid);
+        return contagemController.contagemIndicativa;
       default:
         break;
     }
@@ -144,6 +205,7 @@ class ProjetoController {
     return resultado;
   }
 
+//Modulos externos
   usuarioEditarNome(String nome) async {
     return await usuarioController.alterarNome(nome);
   }
@@ -156,6 +218,29 @@ class ProjetoController {
     projetos = [];
 
     return await usuarioController.deslogar();
-    // Modular.to.popAndPushNamed("/login/");
+  }
+
+  salvarEsforco(EsforcoEntity esforco, String uidProjeto, String uidUsuario,
+      String tipoContagem) async {
+    return await estimativasController.salvarEsforco(
+        esforco, uidProjeto, uidUsuario, tipoContagem);
+  }
+
+  recuperarEstimativa(
+      String uidProjeto, String uidUsuario, String estimativa) async {
+    switch (estimativa) {
+      case "Esforco":
+        return await estimativasController.recuperarEsforcos(
+            uidProjeto, uidUsuario);
+
+      default:
+    }
+  }
+
+  carregarTodosDados(String uidProjeto, String uidUsuario) async {
+    await estimativasController.carregarEstimativas(uidProjeto, uidUsuario);
+    await contagemController.carregar(uidProjeto, uidUsuario);
+    await recuperarMembrosProjeto(uidProjeto);
+    return true;
   }
 }

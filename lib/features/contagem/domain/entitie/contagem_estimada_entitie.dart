@@ -1,4 +1,4 @@
-abstract class ContagemEstimadaEntitie {
+class ContagemEstimadaEntitie {
   final List<String> ee;
   final List<String> ce;
   final List<String> se;

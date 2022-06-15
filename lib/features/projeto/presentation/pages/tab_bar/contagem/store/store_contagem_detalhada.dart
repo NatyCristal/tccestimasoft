@@ -5,4 +5,7 @@ part 'store_contagem_detalhada.g.dart';
 class StoreContagemDetalhada = StoreContagemDetalhadaBase
     with _$StoreContagemDetalhada;
 
-abstract class StoreContagemDetalhadaBase with Store {}
+abstract class StoreContagemDetalhadaBase with Store {
+  @observable
+  int totalPf = 0;
+}

@@ -42,7 +42,7 @@ class UsuarioRepositoryData extends PerfilRepository {
   @override
   Future<Either<String, UsuarioEntitie>> usuarioLogado() async {
     try {
-      var result = await dataSource.usuarioLogado();
+      var result = dataSource.usuarioLogado();
       return Right(result);
     } on FirebaseAuthException catch (e) {
       return Left(e.code);

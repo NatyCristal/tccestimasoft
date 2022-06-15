@@ -1,6 +1,8 @@
+import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:estimasoft/core/errors/falha.dart';
 import 'package:estimasoft/features/login/domain/entities/login_entitie.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import '../entitie/projeto_entitie.dart';
 
 abstract class ProjetoRepository {
@@ -23,4 +25,11 @@ abstract class ProjetoRepository {
   Future<Either<Falha, List<UsuarioEntitie>>> recuperarMembros(
     String uidProjeto,
   );
+  Either<Falha, UploadTask> uparArquivos(String uidProjeto, File file);
+
+  Future<Either<Falha, ListResult>> recuperarArquivos(String uidProjeto);
+
+  Future removerArquivo(String uidProjeto, String nomeArquivo);
+
+  Future realizarLoginArquivo(String uidProjeto, String nomeArquivo);
 }

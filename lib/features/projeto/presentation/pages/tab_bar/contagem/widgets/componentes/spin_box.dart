@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 class SpinBox extends StatelessWidget {
   final String tipoFuncao;
   final ScrollController scrollController;
-  const SpinBox(
-      {Key? key, required this.scrollController, required this.tipoFuncao})
-      : super(key: key);
+  const SpinBox({
+    Key? key,
+    required this.scrollController,
+    required this.tipoFuncao,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -64,6 +66,7 @@ class SpinBox extends StatelessWidget {
                     onPressed: () {
                       valueController.text =
                           (int.parse(valueController.text) + 1).toString();
+                      //   valor = (int.parse(valueController.text) + 1).toString();
                     },
                     icon: const Icon(
                       Icons.add,

@@ -12,12 +12,12 @@ import 'widgets/cards/projeto_card.dart';
 class ExibicaoProjetosCompartilhadosPage extends StatelessWidget {
   final ProjetoController controller = Modular.get<ProjetoController>();
   final ScrollController scroll = ScrollController();
-  List<ProjetoEntitie> projetosCompartilhados = [];
 
   ExibicaoProjetosCompartilhadosPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    List<ProjetoEntitie> projetosCompartilhados = [];
     projetosCompartilhados = verificaQuantidadeDeProjetos(controller);
 
     return Scaffold(

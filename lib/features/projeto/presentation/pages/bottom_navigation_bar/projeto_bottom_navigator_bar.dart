@@ -2,8 +2,18 @@ import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
 import 'package:estimasoft/features/projeto/domain/entitie/projeto_entitie.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/home/store/store_projeto_index_menu.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/contagem_detalhada.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_detalhada.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_estimada.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_indicativa.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/custo_page.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/esforco_page.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/equipe_page.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/prazo_page.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_custo.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_equipe.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_esforco.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_prazo.dart';
+import 'package:estimasoft/features/projeto/presentation/projeto_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -13,10 +23,18 @@ import '../tab_bar/home/index_home.dart';
 
 class ProjetoMenuPage extends StatelessWidget {
   final ProjetoEntitie projeto;
+  //stores contagem
   final StoreProjetosIndexMenu store = StoreProjetosIndexMenu();
   final StoreContagemIndicativa storeIndicativa = StoreContagemIndicativa();
   final StoreContagemEstimada storeEstimada = StoreContagemEstimada();
+  final StoreContagemDetalhada storeDetalhada = StoreContagemDetalhada();
+  //stores Estimativas
 
+  final StoreEstimativaPrazo storeEstimativaPrazo = StoreEstimativaPrazo();
+  final StoreEstimativaEsforco storeEstimativaEsforco =
+      StoreEstimativaEsforco();
+  final StoreEstimativaEquipe storeEstimativaEquipe = StoreEstimativaEquipe();
+  final StoreEstimativaCusto storeEstimativaCusto = StoreEstimativaCusto();
   ProjetoMenuPage({Key? key, required this.projeto}) : super(key: key);
 
   _itemSelecionado(int index) {
@@ -27,6 +45,14 @@ class ProjetoMenuPage extends StatelessWidget {
     switch (store.index) {
       case 0:
         return IndexHome(
+          prazo: storeEstimativaPrazo,
+          indicativa: storeIndicativa,
+          estimada: storeEstimada,
+          esforco: storeEstimativaEsforco,
+          custo: storeEstimativaCusto,
+          detalhada: storeDetalhada,
+          equipe: storeEstimativaEquipe,
+          store: store,
           projeto: projeto,
         );
 
@@ -174,7 +200,7 @@ class ProjetoMenuPage extends StatelessWidget {
           : store.index == 2
               ? Material(
                   child: DefaultTabController(
-                    length: 3,
+                    length: 4,
                     child: Scaffold(
                         appBar: AppBar(
                           actions: [
@@ -247,6 +273,9 @@ class ProjetoMenuPage extends StatelessWidget {
                             indicatorColor: corDeFundoBotaoSecundaria,
                             tabs: const [
                               Tab(
+                                text: "Esforço",
+                              ),
+                              Tab(
                                 text: "Prazo",
                               ),
                               Tab(
@@ -258,10 +287,29 @@ class ProjetoMenuPage extends StatelessWidget {
                             ],
                           ),
                         ),
-                        body: const TabBarView(children: [
-                          Icon(Icons.assessment_rounded),
-                          Icon(Icons.directions_transit),
-                          Icon(Icons.directions_bike)
+                        body: TabBarView(children: [
+                          EstimativaEsforcoPage(
+                            projetoEntitie: projeto,
+                            storeEstimativaEsforco: storeEstimativaEsforco,
+                            storeIndicativa: storeIndicativa,
+                            storeContagemDetalhada: storeDetalhada,
+                            storeContagemEstimada: storeEstimada,
+                          ),
+                          EstimativaPrazo(
+                            store: storeEstimativaPrazo,
+                            storeIndicativa: storeIndicativa,
+                            storeContagemDetalhada: storeDetalhada,
+                            storeEstimada: storeEstimada,
+                          ),
+                          EstimativaEquipePage(
+                            storeEstimativaEquipe: storeEstimativaEquipe,
+                            storeEstimativaEsforco: storeEstimativaEsforco,
+                            storeEstimativaPrazo: storeEstimativaPrazo,
+                          ),
+                          EstimativaCustoPage(
+                            storeEstimativaEquipe: storeEstimativaEquipe,
+                            storeEstimativaCusto: storeEstimativaCusto,
+                          )
                         ]),
                         bottomNavigationBar: Observer(builder: (context) {
                           return BottomNavigationBar(

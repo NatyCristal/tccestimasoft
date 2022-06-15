@@ -6,5 +6,8 @@ class StoreProjetosIndexMenu = StoreProjetosIndexMenuBase
 
 abstract class StoreProjetosIndexMenuBase with Store {
   @observable
+  bool carregou = false;
+
+  @observable
   int index = 0;
 }

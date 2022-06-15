@@ -9,6 +9,24 @@ part of 'store_contagem_indicativa.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$StoreContagemIndicativa on StoreContagemIndicativaBase, Store {
+  late final _$contagemIndicativaValidaAtom = Atom(
+      name: 'StoreContagemIndicativaBase.contagemIndicativaValida',
+      context: context);
+
+  @override
+  ContagemIndicativaEntitie get contagemIndicativaValida {
+    _$contagemIndicativaValidaAtom.reportRead();
+    return super.contagemIndicativaValida;
+  }
+
+  @override
+  set contagemIndicativaValida(ContagemIndicativaEntitie value) {
+    _$contagemIndicativaValidaAtom
+        .reportWrite(value, super.contagemIndicativaValida, () {
+      super.contagemIndicativaValida = value;
+    });
+  }
+
   late final _$nomeDaFuncaoControllerAtom = Atom(
       name: 'StoreContagemIndicativaBase.nomeDaFuncaoController',
       context: context);
@@ -203,8 +221,20 @@ mixin _$StoreContagemIndicativa on StoreContagemIndicativaBase, Store {
   }
 
   @override
+  dynamic salvar(ContagemIndicativaEntitie novaContagem) {
+    final _$actionInfo = _$StoreContagemIndicativaBaseActionController
+        .startAction(name: 'StoreContagemIndicativaBase.salvar');
+    try {
+      return super.salvar(novaContagem);
+    } finally {
+      _$StoreContagemIndicativaBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
+contagemIndicativaValida: ${contagemIndicativaValida},
 nomeDaFuncaoController: ${nomeDaFuncaoController},
 carregouBotao: ${carregouBotao},
 alteracoes: ${alteracoes},

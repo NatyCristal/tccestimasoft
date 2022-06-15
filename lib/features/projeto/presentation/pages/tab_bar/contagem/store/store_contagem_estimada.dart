@@ -10,6 +10,14 @@ class StoreContagemEstimada = StoreContagemEstimadaBase
 
 abstract class StoreContagemEstimadaBase with Store {
   @observable
+  ContagemEstimadaEntitie contagemEstimadaValida = ContagemEstimadaEntitie(
+    ce: [],
+    ee: [],
+    se: [],
+    totalPF: 0,
+  );
+
+  @observable
   TextEditingController nomeDaFuncaoController = TextEditingController();
 
   @observable

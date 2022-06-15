@@ -9,13 +9,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class ExibicaoMeusProjetosPage extends StatelessWidget {
-  List<ProjetoEntitie> meusProjetos = [];
   final ScrollController scroll = ScrollController();
   final ProjetoController controller = Modular.get<ProjetoController>();
   ExibicaoMeusProjetosPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    List<ProjetoEntitie> meusProjetos = [];
     meusProjetos = verificaQuantidadeDeProjetos(
       controller,
     );

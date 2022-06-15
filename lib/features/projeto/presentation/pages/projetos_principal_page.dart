@@ -149,7 +149,7 @@ class ProjetosPrincipalPage extends StatelessWidget {
           ),
         ),
         builder: (BuildContext context, Animation<double> transition) {
-          return SingleChildScrollView(
+          return const SingleChildScrollView(
               child:
                   SizedBox()); //ProjetosConteudoPesquisa(scroll: scroll, store: store));
         },

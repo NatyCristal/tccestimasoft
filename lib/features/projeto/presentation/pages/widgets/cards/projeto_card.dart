@@ -98,10 +98,10 @@ class ProjetoCard extends StatelessWidget {
                         ],
                       ).show();
                     },
-                    child: Container(
+                    child: const SizedBox(
                       width: 30,
                       height: 20,
-                      child: const Icon(
+                      child: Icon(
                         Icons.more_vert_rounded,
                         size: 30,
                         color: corCorpoTexto,

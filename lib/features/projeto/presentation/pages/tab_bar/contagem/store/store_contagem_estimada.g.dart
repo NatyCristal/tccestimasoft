@@ -9,6 +9,24 @@ part of 'store_contagem_estimada.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$StoreContagemEstimada on StoreContagemEstimadaBase, Store {
+  late final _$contagemEstimadaValidaAtom = Atom(
+      name: 'StoreContagemEstimadaBase.contagemEstimadaValida',
+      context: context);
+
+  @override
+  ContagemEstimadaEntitie get contagemEstimadaValida {
+    _$contagemEstimadaValidaAtom.reportRead();
+    return super.contagemEstimadaValida;
+  }
+
+  @override
+  set contagemEstimadaValida(ContagemEstimadaEntitie value) {
+    _$contagemEstimadaValidaAtom
+        .reportWrite(value, super.contagemEstimadaValida, () {
+      super.contagemEstimadaValida = value;
+    });
+  }
+
   late final _$nomeDaFuncaoControllerAtom = Atom(
       name: 'StoreContagemEstimadaBase.nomeDaFuncaoController',
       context: context);
@@ -285,6 +303,7 @@ mixin _$StoreContagemEstimada on StoreContagemEstimadaBase, Store {
   @override
   String toString() {
     return '''
+contagemEstimadaValida: ${contagemEstimadaValida},
 nomeDaFuncaoController: ${nomeDaFuncaoController},
 carregouBotao: ${carregouBotao},
 alteracoes: ${alteracoes},

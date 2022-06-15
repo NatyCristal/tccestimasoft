@@ -19,42 +19,15 @@ class ListaMembros extends StatelessWidget {
           color: background.withOpacity(0.5),
           borderRadius: arredondamentoBordas),
       height: 60,
-      child: FutureBuilder(
-        future: controller.recuperarMembrosProjeto(projeto.uidProjeto),
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          // switch (snapshot.connectionState) {
-          //   case ConnectionState.done:
-          //     if (snapshot.hasError) {
-          //       return const Text("Erro");
-          //     } else if (snapshot.hasData) {
-          return ListView.builder(
-            shrinkWrap: false,
-            itemCount: controller.membrosProjetoAtual.length,
-            scrollDirection: Axis.horizontal,
-            // physics: const BouncingScrollPhysics(),
-            itemBuilder: (context, index) {
-              UsuarioEntitie membro = controller.membrosProjetoAtual[index];
-              // ProjetoEntitie projeto = controller.projetos[index];
-
-              return AvatarMembro(
-                membro: membro,
-              );
-
-              // return ProjetoCard(
-              //   projeto: projeto,
-              // );
-            },
+      child: ListView.builder(
+        shrinkWrap: false,
+        itemCount: controller.membrosProjetoAtual.length,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context, index) {
+          UsuarioEntitie membro = controller.membrosProjetoAtual[index];
+          return AvatarMembro(
+            membro: membro,
           );
-
-          //     break;
-          //   case ConnectionState.active:
-          //     return const Text("Carregando");
-          //   case ConnectionState.none:
-          //     return const Text("Erro");
-          //   case ConnectionState.waiting:
-          //     return const Text("Carregando");
-          // }
-          //  return const Text("Erro");
         },
       ),
     );
