@@ -1,4 +1,4 @@
-abstract class PrazoEntity {
+class PrazoEntity {
   String contagemPontoDeFuncao;
   String tipoSistema;
   double prazoTotal;

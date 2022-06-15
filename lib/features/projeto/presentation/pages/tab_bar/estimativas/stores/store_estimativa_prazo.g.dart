@@ -9,6 +9,72 @@ part of 'store_estimativa_prazo.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$StoreEstimativaPrazo on StoreEstimativaPrazoBase, Store {
+  late final _$valorTotalEmDiasAtom =
+      Atom(name: 'StoreEstimativaPrazoBase.valorTotalEmDias', context: context);
+
+  @override
+  String get valorTotalEmDias {
+    _$valorTotalEmDiasAtom.reportRead();
+    return super.valorTotalEmDias;
+  }
+
+  @override
+  set valorTotalEmDias(String value) {
+    _$valorTotalEmDiasAtom.reportWrite(value, super.valorTotalEmDias, () {
+      super.valorTotalEmDias = value;
+    });
+  }
+
+  late final _$valorEmDiasReagiaoDoImpossivelAtom = Atom(
+      name: 'StoreEstimativaPrazoBase.valorEmDiasReagiaoDoImpossivel',
+      context: context);
+
+  @override
+  String get valorEmDiasReagiaoDoImpossivel {
+    _$valorEmDiasReagiaoDoImpossivelAtom.reportRead();
+    return super.valorEmDiasReagiaoDoImpossivel;
+  }
+
+  @override
+  set valorEmDiasReagiaoDoImpossivel(String value) {
+    _$valorEmDiasReagiaoDoImpossivelAtom
+        .reportWrite(value, super.valorEmDiasReagiaoDoImpossivel, () {
+      super.valorEmDiasReagiaoDoImpossivel = value;
+    });
+  }
+
+  late final _$tamanhoListaPrazoAtom = Atom(
+      name: 'StoreEstimativaPrazoBase.tamanhoListaPrazo', context: context);
+
+  @override
+  int get tamanhoListaPrazo {
+    _$tamanhoListaPrazoAtom.reportRead();
+    return super.tamanhoListaPrazo;
+  }
+
+  @override
+  set tamanhoListaPrazo(int value) {
+    _$tamanhoListaPrazoAtom.reportWrite(value, super.tamanhoListaPrazo, () {
+      super.tamanhoListaPrazo = value;
+    });
+  }
+
+  late final _$prazosAtom =
+      Atom(name: 'StoreEstimativaPrazoBase.prazos', context: context);
+
+  @override
+  List<PrazoEntity> get prazos {
+    _$prazosAtom.reportRead();
+    return super.prazos;
+  }
+
+  @override
+  set prazos(List<PrazoEntity> value) {
+    _$prazosAtom.reportWrite(value, super.prazos, () {
+      super.prazos = value;
+    });
+  }
+
   late final _$alteracaoAtom =
       Atom(name: 'StoreEstimativaPrazoBase.alteracao', context: context);
 
@@ -127,6 +193,39 @@ mixin _$StoreEstimativaPrazo on StoreEstimativaPrazoBase, Store {
       ActionController(name: 'StoreEstimativaPrazoBase', context: context);
 
   @override
+  dynamic buscarListaPrazp(List<PrazoEntity> prazoEntity) {
+    final _$actionInfo = _$StoreEstimativaPrazoBaseActionController.startAction(
+        name: 'StoreEstimativaPrazoBase.buscarListaPrazp');
+    try {
+      return super.buscarListaPrazp(prazoEntity);
+    } finally {
+      _$StoreEstimativaPrazoBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic remover(PrazoEntity prazoEntity) {
+    final _$actionInfo = _$StoreEstimativaPrazoBaseActionController.startAction(
+        name: 'StoreEstimativaPrazoBase.remover');
+    try {
+      return super.remover(prazoEntity);
+    } finally {
+      _$StoreEstimativaPrazoBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic adicionarPrazo(dynamic context) {
+    final _$actionInfo = _$StoreEstimativaPrazoBaseActionController.startAction(
+        name: 'StoreEstimativaPrazoBase.adicionarPrazo');
+    try {
+      return super.adicionarPrazo(context);
+    } finally {
+      _$StoreEstimativaPrazoBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic buscarExpoenteT() {
     final _$actionInfo = _$StoreEstimativaPrazoBaseActionController.startAction(
         name: 'StoreEstimativaPrazoBase.buscarExpoenteT');
@@ -151,6 +250,10 @@ mixin _$StoreEstimativaPrazo on StoreEstimativaPrazoBase, Store {
   @override
   String toString() {
     return '''
+valorTotalEmDias: ${valorTotalEmDias},
+valorEmDiasReagiaoDoImpossivel: ${valorEmDiasReagiaoDoImpossivel},
+tamanhoListaPrazo: ${tamanhoListaPrazo},
+prazos: ${prazos},
 alteracao: ${alteracao},
 carregando: ${carregando},
 contagemPF: ${contagemPF},

@@ -55,9 +55,6 @@ class _EstimativaEsforcoPageState extends State<EstimativaEsforcoPage> {
 
   @override
   void initState() {
-    widget.storeEstimativaEsforco
-        .buscarListaEsforc(widget.controller.estimativasController.esforcos);
-
     carregarDados();
     super.initState();
   }
@@ -199,7 +196,8 @@ class _EstimativaEsforcoPageState extends State<EstimativaEsforcoPage> {
                                 corDeFundoBotaoSecundaria),
                           ),
                           onPressed: () {
-                            widget.storeEstimativaEsforco.adicionarEsforco();
+                            widget.storeEstimativaEsforco
+                                .adicionarEsforco(context);
                           },
                           child: const Text("Adicionar")),
                     ],
@@ -257,7 +255,7 @@ class _EstimativaEsforcoPageState extends State<EstimativaEsforcoPage> {
                                     .split(" - ")
                                     .first);
                           }
-
+                          widget.storeEstimativaEsforco.alteracores = false;
                           widget.storeEstimativaEsforco.carregando = false;
                           AlertaSnack.exbirSnackBar(context, "Esforço salvo!");
                         } else {

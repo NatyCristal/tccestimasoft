@@ -1,5 +1,6 @@
 import 'dart:math';
-
+import 'package:estimasoft/core/shared/utils/snackbar.dart';
+import 'package:estimasoft/features/estimativas/domain/entitie/prazo_entitie.dart';
 import 'package:mobx/mobx.dart';
 
 part 'store_estimativa_prazo.g.dart';
@@ -8,6 +9,18 @@ class StoreEstimativaPrazo = StoreEstimativaPrazoBase
     with _$StoreEstimativaPrazo;
 
 abstract class StoreEstimativaPrazoBase with Store {
+  @observable
+  String valorTotalEmDias = "0";
+
+  @observable
+  String valorEmDiasReagiaoDoImpossivel = "0";
+
+  @observable
+  int tamanhoListaPrazo = 0;
+
+  @observable
+  List<PrazoEntity> prazos = [];
+
   @observable
   bool alteracao = false;
 
@@ -38,6 +51,48 @@ abstract class StoreEstimativaPrazoBase with Store {
   String tipoSistemaSelecionado = "Sistema Comum - Mainframe";
 
   @action
+  buscarListaPrazp(List<PrazoEntity> prazoEntity) {
+    prazos = prazoEntity;
+    tamanhoListaPrazo = prazoEntity.length;
+  }
+
+  @action
+  remover(PrazoEntity prazoEntity) {
+    prazos.removeWhere((element) {
+      return element.contagemPontoDeFuncao == prazoEntity.contagemPontoDeFuncao;
+    });
+    alteracao = true;
+
+    tamanhoListaPrazo = prazos.length;
+  }
+
+  @action
+  adicionarPrazo(context) {
+    bool existe = false;
+    for (var element in prazos) {
+      if (element.contagemPontoDeFuncao == contagemPF ||
+          element.contagemPontoDeFuncao
+              .contains(contagemPF.split(" - ").first)) {
+        existe = true;
+        return AlertaSnack.exbirSnackBar(
+            context, "Existe uma extimativa com essa contagem");
+      }
+    }
+
+    if (contagemPF.isNotEmpty && !existe) {
+      PrazoEntity prazoEntity = PrazoEntity(
+          contagemPontoDeFuncao: contagemPF,
+          tipoSistema: tipoSistemaSelecionado,
+          prazoMinimo: valorEmDiasReagiaoDoImpossivel,
+          prazoTotal: double.parse(valorTotalEmDias));
+
+      prazos.add(prazoEntity);
+      tamanhoListaPrazo = prazos.length;
+      alteracao = true;
+    }
+  }
+
+  @action
   buscarExpoenteT() {
     if (tipoSistemaSelecionado != "") {
       switch (tipoSistemaSelecionado) {
@@ -63,18 +118,23 @@ abstract class StoreEstimativaPrazoBase with Store {
 
   @action
   validarContagem() {
-    contagemPF = "Indicativa - 45 PF";
     if (!contagemPF.contains(" 0 PF")) {
       // int produtividade = int.parse(produtividadeEquipe.split(" - ").last);
       String text = contagemPF.split(" - ").last.split(" PF").first;
       tamanhoPf = int.parse(text);
       if (tamanhoPf <= 110) {
-        prazoTotal = calcularTamanhoMinimo();
+        prazoTotal = calcularTamanhoComplexidadeMedia();
+        valorTotalEmDias = prazoTotal.toString();
+        regiaoDoImpossivel = calcularTamanhoMinimo();
+        valorEmDiasReagiaoDoImpossivel = regiaoDoImpossivel.toString();
       } else {
         prazoTotal = calcularPrazo();
-      }
+        valorTotalEmDias = (prazoTotal * 30).toStringAsFixed(2);
 
-      regiaoDoImpossivel = 0.75 * prazoTotal;
+        regiaoDoImpossivel = (0.75 * prazoTotal);
+        valorEmDiasReagiaoDoImpossivel =
+            (regiaoDoImpossivel * 30).toStringAsFixed(2);
+      }
     }
   }
 
@@ -101,6 +161,28 @@ abstract class StoreEstimativaPrazoBase with Store {
       return 70.0;
     } else if (tamanhoPf >= 86 && tamanhoPf <= 99) {
       return 79.0;
+    }
+  }
+
+  calcularTamanhoComplexidadeMedia() {
+    if (tamanhoPf <= 10) {
+      return 15.0;
+    } else if (tamanhoPf >= 11 && tamanhoPf <= 20) {
+      return 30.0;
+    } else if (tamanhoPf >= 21 && tamanhoPf <= 30) {
+      return 45.0;
+    } else if (tamanhoPf >= 31 && tamanhoPf <= 40) {
+      return 60.0;
+    } else if (tamanhoPf >= 41 && tamanhoPf <= 50) {
+      return 75.0;
+    } else if (tamanhoPf >= 51 && tamanhoPf <= 60) {
+      return 90.0;
+    } else if (tamanhoPf >= 61 && tamanhoPf <= 70) {
+      return 105.0;
+    } else if (tamanhoPf >= 71 && tamanhoPf <= 80) {
+      return 110.0;
+    } else if (tamanhoPf >= 86 && tamanhoPf <= 99) {
+      return 110.0;
     }
   }
 }

@@ -3,7 +3,7 @@ import 'package:estimasoft/features/estimativas/data/datasource/interfaces/estim
 import 'package:estimasoft/features/estimativas/data/models/estimativa_esforco_model_firebases.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/esforco_entitie.dart';
 
-class EstimativasFirebaseDatasource extends EstimativaEsforcoDatasource {
+class EstimativaFirebaseEsforcoDatasource extends EstimativaEsforcoDatasource {
   final firestore = FirebaseFirestore.instance;
 
   @override

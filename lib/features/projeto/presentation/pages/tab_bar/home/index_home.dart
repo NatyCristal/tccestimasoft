@@ -68,6 +68,8 @@ class IndexHome extends StatelessWidget {
                           controller.contagemController.contagemEstimada);
                       esforco.buscarListaEsforc(
                           controller.estimativasController.esforcos);
+                      prazo.buscarListaPrazp(
+                          controller.estimativasController.prazos);
 
                       store.carregou = true;
                     }

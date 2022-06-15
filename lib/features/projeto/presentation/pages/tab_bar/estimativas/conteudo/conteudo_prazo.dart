@@ -1,36 +1,35 @@
 import 'package:estimasoft/core/auth/usuario_autenticado.dart';
 import 'package:estimasoft/core/shared/anim/lotties.dart';
-import 'package:estimasoft/features/estimativas/domain/entitie/esforco_entitie.dart';
+import 'package:estimasoft/features/estimativas/domain/entitie/prazo_entitie.dart';
 import 'package:estimasoft/features/projeto/domain/entitie/projeto_entitie.dart';
-import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_esforco.dart';
-import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/widgets/cards/card_esforco.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_prazo.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/widgets/cards/card_prazo.dart';
 import 'package:estimasoft/features/projeto/presentation/projeto_controller.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-class ConteudoEsforco extends StatelessWidget {
+class ConteudoPrazo extends StatelessWidget {
+  final StoreEstimativaPrazo storeEstimativaPrazo;
   final ScrollController scrollController;
-  final StoreEstimativaEsforco storeEstimativaEsforco;
   final ProjetoEntitie projetoEntitie;
   final ProjetoController controller = Modular.get<ProjetoController>();
-  ConteudoEsforco(
+  ConteudoPrazo(
       {Key? key,
+      required this.scrollController,
       required this.projetoEntitie,
-      required this.storeEstimativaEsforco,
-      required this.scrollController})
+      required this.storeEstimativaPrazo})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: controller.recuperarEstimativa(projetoEntitie.uidProjeto,
-          Modular.get<UsuarioAutenticado>().store.uid, "Esforco"),
+          Modular.get<UsuarioAutenticado>().store.uid, "Prazo"),
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.done:
             if (snapshot.hasError) {
-              return const Text(
-                  "Não foi possível recuperar os esforços cadastrados");
+              return const Text("Não foi possível recuperar os prazos");
             } else if (snapshot.hasData) {
               if (controller.estimativasController.esforcos.isEmpty) {
                 return const Text("Vazio");
@@ -38,13 +37,12 @@ class ConteudoEsforco extends StatelessWidget {
                 return ListView.builder(
                   controller: scrollController,
                   shrinkWrap: true,
-                  itemCount: storeEstimativaEsforco.esforcos.length,
+                  itemCount: storeEstimativaPrazo.prazos.length,
                   itemBuilder: (context, index) {
-                    EsforcoEntity esforco =
-                        storeEstimativaEsforco.esforcos[index];
+                    PrazoEntity prazo = storeEstimativaPrazo.prazos[index];
 
-                    return CardEsforco(
-                        esforcoEntity: esforco, store: storeEstimativaEsforco);
+                    return CardPrazo(
+                        prazoEntity: prazo, store: storeEstimativaPrazo);
                   },
                 );
               }

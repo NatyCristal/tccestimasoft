@@ -296,6 +296,7 @@ class ProjetoMenuPage extends StatelessWidget {
                             storeContagemEstimada: storeEstimada,
                           ),
                           EstimativaPrazo(
+                            projetoEntitie: projeto,
                             store: storeEstimativaPrazo,
                             storeIndicativa: storeIndicativa,
                             storeContagemDetalhada: storeDetalhada,

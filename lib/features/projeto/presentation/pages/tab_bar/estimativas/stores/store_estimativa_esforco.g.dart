@@ -279,11 +279,11 @@ mixin _$StoreEstimativaEsforco on StoreEstimativaEsforcoBase, Store {
   }
 
   @override
-  dynamic adicionarEsforco() {
+  dynamic adicionarEsforco(dynamic context) {
     final _$actionInfo = _$StoreEstimativaEsforcoBaseActionController
         .startAction(name: 'StoreEstimativaEsforcoBase.adicionarEsforco');
     try {
-      return super.adicionarEsforco();
+      return super.adicionarEsforco(context);
     } finally {
       _$StoreEstimativaEsforcoBaseActionController.endAction(_$actionInfo);
     }

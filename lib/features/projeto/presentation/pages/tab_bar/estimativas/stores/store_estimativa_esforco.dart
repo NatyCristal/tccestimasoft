@@ -1,3 +1,4 @@
+import 'package:estimasoft/core/shared/utils/snackbar.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/esforco_entitie.dart';
 import 'package:mobx/mobx.dart';
 
@@ -72,11 +73,15 @@ abstract class StoreEstimativaEsforcoBase with Store {
   }
 
   @action
-  adicionarEsforco() {
+  adicionarEsforco(context) {
     bool existe = false;
     for (var element in esforcos) {
-      if (element.contagemPontoDeFuncao == contagemPF) {
+      if (element.contagemPontoDeFuncao == contagemPF ||
+          element.contagemPontoDeFuncao
+              .contains(contagemPF.split(" - ").first)) {
         existe = true;
+        return AlertaSnack.exbirSnackBar(
+            context, "Existe uma extimativa com essa contagem");
       }
     }
 
