@@ -315,8 +315,13 @@ class ContagemIndicativa extends StatelessWidget {
                                   projetoUid,
                                   store.totalPf,
                                 );
+
+                                store.salvar(controller
+                                    .contagemController.contagemIndicativa);
+
                                 store.carregouBotao = false;
                                 store.alteracoes = false;
+
                                 AlertaSnack.exbirSnackBar(context, retorno);
                               } else {
                                 AlertaSnack.exbirSnackBar(

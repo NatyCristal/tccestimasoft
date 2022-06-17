@@ -75,7 +75,7 @@ abstract class StoreEstimativaPrazoBase with Store {
               .contains(contagemPF.split(" - ").first)) {
         existe = true;
         return AlertaSnack.exbirSnackBar(
-            context, "Existe uma extimativa com essa contagem");
+            context, "Existe uma estimativa com essa contagem");
       }
     }
 
@@ -157,7 +157,7 @@ abstract class StoreEstimativaPrazoBase with Store {
       return 54.0;
     } else if (tamanhoPf >= 61 && tamanhoPf <= 70) {
       return 63.0;
-    } else if (tamanhoPf >= 71 && tamanhoPf <= 80) {
+    } else if (tamanhoPf >= 71 && tamanhoPf <= 85) {
       return 70.0;
     } else if (tamanhoPf >= 86 && tamanhoPf <= 99) {
       return 79.0;
@@ -179,7 +179,7 @@ abstract class StoreEstimativaPrazoBase with Store {
       return 90.0;
     } else if (tamanhoPf >= 61 && tamanhoPf <= 70) {
       return 105.0;
-    } else if (tamanhoPf >= 71 && tamanhoPf <= 80) {
+    } else if (tamanhoPf >= 71 && tamanhoPf <= 85) {
       return 110.0;
     } else if (tamanhoPf >= 86 && tamanhoPf <= 99) {
       return 110.0;

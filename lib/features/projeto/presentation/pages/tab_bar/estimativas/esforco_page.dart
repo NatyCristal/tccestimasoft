@@ -79,7 +79,7 @@ class _EstimativaEsforcoPageState extends State<EstimativaEsforcoPage> {
                     showSelectedItems: true,
                     items: [
                       "Indicativa - ${widget.storeIndicativa.contagemIndicativaValida.totalPf.toString()} PF",
-                      "Estimada - ${widget.storeContagemEstimada.totalPf.toString()} PF",
+                      "Estimada - ${widget.storeContagemEstimada.contagemEstimadaValida.totalPF.toString()} PF",
                       "Detalhada - ${widget.storeContagemDetalhada.totalPf.toString()} PF",
                     ],
                     dropdownSearchDecoration: const InputDecoration(
@@ -255,6 +255,8 @@ class _EstimativaEsforcoPageState extends State<EstimativaEsforcoPage> {
                                     .split(" - ")
                                     .first);
                           }
+                          widget.storeEstimativaEsforco.esforcosValidos =
+                              widget.controller.estimativasController.esforcos;
                           widget.storeEstimativaEsforco.alteracores = false;
                           widget.storeEstimativaEsforco.carregando = false;
                           AlertaSnack.exbirSnackBar(context, "Esforço salvo!");

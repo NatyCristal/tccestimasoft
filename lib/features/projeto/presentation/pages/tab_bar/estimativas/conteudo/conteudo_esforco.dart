@@ -22,44 +22,56 @@ class ConteudoEsforco extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: controller.recuperarEstimativa(projetoEntitie.uidProjeto,
-          Modular.get<UsuarioAutenticado>().store.uid, "Esforco"),
-      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-        switch (snapshot.connectionState) {
-          case ConnectionState.done:
-            if (snapshot.hasError) {
-              return const Text(
-                  "Não foi possível recuperar os esforços cadastrados");
-            } else if (snapshot.hasData) {
-              if (controller.estimativasController.esforcos.isEmpty) {
-                return const Text("Vazio");
-              } else {
-                return ListView.builder(
-                  controller: scrollController,
-                  shrinkWrap: true,
-                  itemCount: storeEstimativaEsforco.esforcos.length,
-                  itemBuilder: (context, index) {
-                    EsforcoEntity esforco =
-                        storeEstimativaEsforco.esforcos[index];
+    return ListView.builder(
+      controller: scrollController,
+      shrinkWrap: true,
+      itemCount: storeEstimativaEsforco.esforcos.length,
+      itemBuilder: (context, index) {
+        EsforcoEntity esforco = storeEstimativaEsforco.esforcos[index];
 
-                    return CardEsforco(
-                        esforcoEntity: esforco, store: storeEstimativaEsforco);
-                  },
-                );
-              }
-            }
-
-            break;
-          case ConnectionState.active:
-            return const Carregando();
-          case ConnectionState.none:
-            return const Text("Erro");
-          case ConnectionState.waiting:
-            return const Carregando();
-        }
-        return const Text("Erro");
+        return CardEsforco(
+            esforcoEntity: esforco, store: storeEstimativaEsforco);
       },
     );
+
+    // FutureBuilder(
+    //   future: controller.recuperarEstimativa(projetoEntitie.uidProjeto,
+    //       Modular.get<UsuarioAutenticado>().store.uid, "Esforco"),
+    //   builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+    //     switch (snapshot.connectionState) {
+    //       case ConnectionState.done:
+    //         if (snapshot.hasError) {
+    //           return const Text(
+    //               "Não foi possível recuperar os esforços cadastrados");
+    //         } else if (snapshot.hasData) {
+    //           if (controller.estimativasController.esforcos.isEmpty) {
+    //             return const Text("Vazio");
+    //           } else {
+    //             return ListView.builder(
+    //               controller: scrollController,
+    //               shrinkWrap: true,
+    //               itemCount: storeEstimativaEsforco.esforcos.length,
+    //               itemBuilder: (context, index) {
+    //                 EsforcoEntity esforco =
+    //                     storeEstimativaEsforco.esforcos[index];
+
+    //                 return CardEsforco(
+    //                     esforcoEntity: esforco, store: storeEstimativaEsforco);
+    //               },
+    //             );
+    //           }
+    //         }
+
+    //         break;
+    //       case ConnectionState.active:
+    //         return const Carregando();
+    //       case ConnectionState.none:
+    //         return const Text("Erro");
+    //       case ConnectionState.waiting:
+    //         return const Carregando();
+    //     }
+    //     return const Text("Erro");
+    //   },
+    // );
   }
 }

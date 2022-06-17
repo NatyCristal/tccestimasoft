@@ -152,6 +152,6 @@ abstract class StoreContagemIndicativaBase with Store {
 
   @action
   salvar(ContagemIndicativaEntitie novaContagem) {
-    //   contagemIndicativaValida = novaContagem;
+    contagemIndicativaValida = novaContagem;
   }
 }

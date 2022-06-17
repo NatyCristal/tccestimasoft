@@ -1,7 +1,7 @@
 class EquipeEntity {
   String esforco;
   String prazo;
-  double producaoDiaria;
+  String producaoDiaria;
   String equipeEstimada;
 
   EquipeEntity({

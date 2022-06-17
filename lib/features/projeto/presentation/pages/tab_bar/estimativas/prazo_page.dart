@@ -49,8 +49,8 @@ class EstimativaPrazo extends StatelessWidget {
                 mode: Mode.MENU,
                 showSelectedItems: true,
                 items: [
-                  "Indicativa - ${storeIndicativa.totalPf.toString()} PF",
-                  "Estimada - ${storeEstimada.totalPf.toString()} PF",
+                  "Indicativa - ${storeIndicativa.contagemIndicativaValida.totalPf.toString()} PF",
+                  "Estimada - ${storeEstimada.contagemEstimadaValida.totalPF.toString()} PF",
                   "Detalhada - ${storeContagemDetalhada.totalPf.toString()} PF",
                 ],
                 dropdownSearchDecoration: const InputDecoration(

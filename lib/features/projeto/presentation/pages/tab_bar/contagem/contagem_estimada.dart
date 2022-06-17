@@ -501,6 +501,9 @@ class ContagemEstimada extends StatelessWidget {
                         projetoUid,
                         store.totalPf,
                       );
+
+                      store.salvar(
+                          controller.contagemController.contagemEstimada);
                       store.alteracoes = false;
                       store.carregouBotao = false;
                       AlertaSnack.exbirSnackBar(context, retorno);

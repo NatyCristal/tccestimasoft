@@ -9,6 +9,9 @@ class StoreEstimativaEsforco = StoreEstimativaEsforcoBase
 
 abstract class StoreEstimativaEsforcoBase with Store {
   @observable
+  List<EsforcoEntity> esforcosValidos = [];
+
+  @observable
   bool alteracores = false;
 
   @observable
@@ -59,6 +62,9 @@ abstract class StoreEstimativaEsforcoBase with Store {
   buscarListaEsforc(List<EsforcoEntity> esforcoEntity) {
     esforcos = esforcoEntity;
     tamanhoListaEsforco = esforcos.length;
+    if (esforcosValidos.isEmpty) {
+      esforcosValidos = esforcoEntity;
+    }
   }
 
   @action
@@ -81,7 +87,7 @@ abstract class StoreEstimativaEsforcoBase with Store {
               .contains(contagemPF.split(" - ").first)) {
         existe = true;
         return AlertaSnack.exbirSnackBar(
-            context, "Existe uma extimativa com essa contagem");
+            context, "Existe uma estimativa com essa contagem");
       }
     }
 

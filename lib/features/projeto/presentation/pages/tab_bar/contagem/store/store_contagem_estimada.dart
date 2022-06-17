@@ -187,4 +187,9 @@ abstract class StoreContagemEstimadaBase with Store {
     se = contagemRecuperadaFirebase.se;
     tamanhoListaSE = contagemRecuperadaFirebase.se.length;
   }
+
+  @action
+  salvar(ContagemEstimadaEntitie novaContagem) {
+    contagemEstimadaValida = novaContagem;
+  }
 }

@@ -303,6 +303,7 @@ class ProjetoMenuPage extends StatelessWidget {
                             storeEstimada: storeEstimada,
                           ),
                           EstimativaEquipePage(
+                            projetoEntitie: projeto,
                             storeEstimativaEquipe: storeEstimativaEquipe,
                             storeEstimativaEsforco: storeEstimativaEsforco,
                             storeEstimativaPrazo: storeEstimativaPrazo,

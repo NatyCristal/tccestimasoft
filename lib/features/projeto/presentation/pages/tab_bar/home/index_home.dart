@@ -70,6 +70,8 @@ class IndexHome extends StatelessWidget {
                           controller.estimativasController.esforcos);
                       prazo.buscarListaPrazp(
                           controller.estimativasController.prazos);
+                      equipe.buscarListaEquipe(
+                          controller.estimativasController.equipe);
 
                       store.carregou = true;
                     }

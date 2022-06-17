@@ -301,6 +301,17 @@ mixin _$StoreContagemEstimada on StoreContagemEstimadaBase, Store {
   }
 
   @override
+  dynamic salvar(ContagemEstimadaEntitie novaContagem) {
+    final _$actionInfo = _$StoreContagemEstimadaBaseActionController
+        .startAction(name: 'StoreContagemEstimadaBase.salvar');
+    try {
+      return super.salvar(novaContagem);
+    } finally {
+      _$StoreContagemEstimadaBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 contagemEstimadaValida: ${contagemEstimadaValida},
