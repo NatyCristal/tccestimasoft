@@ -1,4 +1,9 @@
 import 'package:estimasoft/core/shared/utils/snackbar.dart';
+import 'package:estimasoft/features/estimativas/data/models/insumo_estimativa_custo.dart';
+import 'package:estimasoft/features/estimativas/domain/entitie/cadastro_insumo_custo_entity.dart';
+import 'package:estimasoft/features/estimativas/domain/entitie/custo_entity.dart';
+import 'package:estimasoft/features/estimativas/domain/entitie/equipe_entity.dart';
+import 'package:estimasoft/features/estimativas/domain/entitie/esforco_entitie.dart';
 import 'package:mobx/mobx.dart';
 
 part 'store_estimativa_custo.g.dart';
@@ -8,44 +13,27 @@ class StoreEstimativaCusto = StoreEstimativaCustoBase
 
 abstract class StoreEstimativaCustoBase with Store {
   @observable
+  bool alteracao = false;
+
+  @observable
+  List<CustoEntity> custos = [];
+
+  @observable
+  int tamanhoListaCustos = 0;
+
+  @observable
   int tamanhoEquipe = 0;
   @observable
   int tamanhoCustos = 0;
 
   @observable
-  String cargoMembro = "";
-  @observable
-  String salarioMembro = "";
-  @observable
-  bool temErroCargoMembro = false;
-  @observable
-  bool temErroSalarioMembro = false;
-  @observable
-  String textoErroCargoMembro = "";
-  @observable
-  String textoErroSalarioMembro = "";
-
-  @observable
-  String nomeCusto = "";
-  @observable
-  String valorCusto = "";
-  @observable
-  bool temErroNomeCusto = false;
-  @observable
-  bool temErroValorCusto = false;
-  @observable
-  String textoErroNomeCusto = "";
-  @observable
-  String textoErrovalorCusto = "";
-
-  @observable
   bool carregando = false;
 
   @observable
-  Map<String, String> equipe = <String, String>{};
+  List<InsumoEstimativaCustoModel> equipe = [];
 
   @observable
-  Map<String, String> custosVariaveis = <String, String>{};
+  List<InsumoEstimativaCustoModel> custosVariaveis = [];
 
   @observable
   double custoPF = 0;
@@ -71,54 +59,183 @@ abstract class StoreEstimativaCustoBase with Store {
   @observable
   double valorTotalProjeto = 0;
 
+  @observable
+  String tipoContagem = "";
+
+  @observable
+  EsforcoEntity esforcoEntitySelecionado = EsforcoEntity(
+      contagemPontoDeFuncao: "",
+      linguagem: "",
+      produtividadeEquipe: "",
+      esforcoTotal: "");
+
+  @observable
+  EquipeEntity equipeEntitySelecionado = EquipeEntity(
+      esforco: "", prazo: '', producaoDiaria: "", equipeEstimada: "");
+
   @action
-  removerEquipe(String chave, String valor, context) {
-    equipe.remove(chave);
-    tamanhoEquipe = equipe.length;
-    custoProjeto -= double.parse(valor);
-    validarValorTotalProjeto();
-    AlertaSnack.exbirSnackBar(context, "Membro $chave removido.");
+  exibirEsforcos(List<EsforcoEntity> esforcos) {
+    List<String> esforcosEstimadosExibicao = [];
+    for (var element in esforcos) {
+      esforcosEstimadosExibicao.add(
+          "${element.esforcoTotal} HH - ${element.contagemPontoDeFuncao.split(" - ").first}");
+    }
+
+    return esforcosEstimadosExibicao;
   }
 
   @action
-  removerCusto(String chave, String valor, context) {
-    custosVariaveis.remove(chave);
-    tamanhoCustos = custosVariaveis.length;
-    custoProjeto -= double.parse(valor);
+  exibirEquipe(List<EquipeEntity> equipes) {
+    List<String> esforcosEstimadosExibicao = [];
+    for (var element in equipes) {
+      esforcosEstimadosExibicao.add(
+          "${element.equipeEstimada} HH - ${element.esforco.split(" - ").last}");
+    }
+
+    return esforcosEstimadosExibicao;
+  }
+
+  @action
+  calcularDisponibiliadeEquipe() {
+    disponibilidadeEquipe = (21 *
+            double.parse(
+                equipeEntitySelecionado.producaoDiaria.split(" horas").first)) *
+        int.parse(
+            esforcoEntitySelecionado.produtividadeEquipe.split(" - ").last);
+
+    calcularCustoHora();
+    alteracao = true;
+  }
+
+  @action
+  validarCamposPreenchidos(context) {
+    if (tipoContagem == "") {
+      AlertaSnack.exbirSnackBar(context, "Escolha o tipo da contagem");
+      return false;
+    } else if (esforcoEntitySelecionado.contagemPontoDeFuncao == "") {
+      AlertaSnack.exbirSnackBar(context, "Escolha a estimativa de esforço");
+      return false;
+    } else if (equipeEntitySelecionado.equipeEstimada == "") {
+      AlertaSnack.exbirSnackBar(context, "Escolha a estimativa de equipe");
+      return false;
+    } else if (equipe.isEmpty) {
+      AlertaSnack.exbirSnackBar(context, "Adicione a equipe");
+      return false;
+    } else if (porcentagemLucro == 0) {
+      AlertaSnack.exbirSnackBar(context, "Adicione a porcentagem de lucro");
+      return false;
+    } else if (tipoContagem.split(" - ").first !=
+            esforcoEntitySelecionado.contagemPontoDeFuncao.split(" - ").first &&
+        tipoContagem.split(" - ").first !=
+            equipeEntitySelecionado.esforco.split(" - ").last) {
+      AlertaSnack.exbirSnackBar(
+          context, "Escolha estimativas com o mesmo tipo de contagem!");
+      return false;
+    }
+
+    return true;
+  }
+
+  @action
+  adicionarNovoCusto(CustoEntity custoEntity, context) {
+    bool existe = false;
+    for (var element in custos) {
+      if (element.tipoContagem == tipoContagem.split(" - ").first) {
+        existe = true;
+        return AlertaSnack.exbirSnackBar(
+            context, "Existe uma estimativa com essa contagem");
+      }
+    }
+    if (!existe) {
+      custos.add(custoEntity);
+      tamanhoListaCustos = custos.length;
+      calcularCustoHora();
+      alteracao = true;
+    }
+  }
+
+  @action
+  remover(CustoEntity custoEntity) {
+    custos.remove(custoEntity);
+    tamanhoListaCustos = custos.length;
+    calcularCustoHora();
+    alteracao = true;
+  }
+
+  @action
+  calcularCustoHora() {
+    if (equipeEntitySelecionado.equipeEstimada.isNotEmpty) {
+      custoHora = custoTotalMensal / disponibilidadeEquipe;
+
+      custoPF = double.parse(
+              esforcoEntitySelecionado.produtividadeEquipe.split(" - ").last) *
+          custoHora;
+
+      custoProjeto = (custoPF * int.parse("85")).ceilToDouble();
+      alteracao = true;
+    }
+  }
+
+  @action
+  calcularCustoPF() {}
+
+  @action
+  buscarListaCusto(List<CustoEntity> custoEntity) {
+    custos = custoEntity;
+    tamanhoListaCustos = custoEntity.length;
+  }
+
+  @action
+  removerEquipe(CadastroInsumoCustoEntity insumoCustoEntity, context) {
+    equipe.remove(insumoCustoEntity);
+    tamanhoEquipe = equipe.length;
+    custoTotalMensal -= double.parse(insumoCustoEntity.valor);
     validarValorTotalProjeto();
-    AlertaSnack.exbirSnackBar(context, "Custo $chave removido.");
+    AlertaSnack.exbirSnackBar(
+        context, "Membro ${insumoCustoEntity.nome} removido.");
+    calcularCustoHora();
+    alteracao = true;
+  }
+
+  @action
+  removerCusto(CadastroInsumoCustoEntity insumoCustoEntity, context) {
+    custosVariaveis.remove(insumoCustoEntity);
+    tamanhoCustos = custosVariaveis.length;
+    custoTotalMensal -= double.parse(insumoCustoEntity.valor);
+    validarValorTotalProjeto();
+    AlertaSnack.exbirSnackBar(
+        context, "Custo ${insumoCustoEntity.nome} removido.");
+    calcularCustoHora();
+    alteracao = true;
   }
 
   @action
   adicionarCusto(context) {
     if (validarAdicaoCusto()) {
-      custosVariaveis[nomeCusto] = valorCusto;
-      if (tamanhoCustos == custosVariaveis.length) {
-        AlertaSnack.exbirSnackBar(
-            context, "Custo com o mesmo nome já foi adicionado.");
-      } else {
-        custoProjeto += double.parse(valorCusto);
-        tamanhoCustos = custosVariaveis.length;
-        validarValorTotalProjeto();
-        AlertaSnack.exbirSnackBar(context, "Custo adicionado");
-      }
+      InsumoEstimativaCustoModel insumoCustoEntity =
+          InsumoEstimativaCustoModel(nome: nomeCusto, valor: valorCusto);
+      custosVariaveis.add(insumoCustoEntity);
+      custoTotalMensal += double.parse(valorCusto);
+      tamanhoCustos = custosVariaveis.length;
+      validarValorTotalProjeto();
+      AlertaSnack.exbirSnackBar(context, "Custo adicionado");
+      calcularCustoHora();
+      alteracao = true;
     }
   }
 
   @action
   adicionarEquipe(context) {
     if (validarAdicaoEquipe()) {
-      equipe[cargoMembro] = salarioMembro;
-
-      if (tamanhoEquipe == equipe.length) {
-        AlertaSnack.exbirSnackBar(
-            context, "Não pode cadastrar o mesmo membro dentro da equipe.");
-      } else {
-        custoProjeto += double.parse(salarioMembro);
-        tamanhoEquipe = equipe.length;
-        validarValorTotalProjeto();
-        AlertaSnack.exbirSnackBar(context, "Membro adicionado a equipe");
-      }
+      InsumoEstimativaCustoModel insumoCustoEntity =
+          InsumoEstimativaCustoModel(nome: cargoMembro, valor: salarioMembro);
+      equipe.add(insumoCustoEntity);
+      custoTotalMensal += double.parse(salarioMembro);
+      tamanhoEquipe = equipe.length;
+      validarValorTotalProjeto();
+      AlertaSnack.exbirSnackBar(context, "Membro adicionado a equipe");
+      calcularCustoHora();
+      alteracao = true;
     }
   }
 
@@ -126,7 +243,8 @@ abstract class StoreEstimativaCustoBase with Store {
   validarValorTotalProjeto() {
     if (porcentagemLucro > 0) {
       valorTotalProjeto =
-          custoProjeto + (custoProjeto * (porcentagemLucro / 100));
+          custoProjeto + (custoProjeto * (porcentagemLucro * 0.01));
+      alteracao = true;
     } else {
       valorTotalProjeto = custoProjeto;
     }
@@ -149,7 +267,7 @@ abstract class StoreEstimativaCustoBase with Store {
     textoErroNomeCusto = "";
     temErroCargoMembro = false;
 
-    if (valorCusto.isEmpty) {
+    if (valorCusto.isEmpty || valorCusto == "0.00") {
       textoErrovalorCusto = "valor não pode ser vazio";
       return false;
     }
@@ -177,7 +295,7 @@ abstract class StoreEstimativaCustoBase with Store {
     textoErroCargoMembro = "";
     temErroCargoMembro = false;
 
-    if (salarioMembro.isEmpty) {
+    if (salarioMembro.isEmpty || salarioMembro == "0.00") {
       textoErroSalarioMembro = "Salário não pode ser vazio";
       return false;
     }
@@ -187,4 +305,30 @@ abstract class StoreEstimativaCustoBase with Store {
 
     return true;
   }
+
+  @observable
+  String cargoMembro = "";
+  @observable
+  String salarioMembro = "";
+  @observable
+  bool temErroCargoMembro = false;
+  @observable
+  bool temErroSalarioMembro = false;
+  @observable
+  String textoErroCargoMembro = "";
+  @observable
+  String textoErroSalarioMembro = "";
+
+  @observable
+  String nomeCusto = "";
+  @observable
+  String valorCusto = "";
+  @observable
+  bool temErroNomeCusto = false;
+  @observable
+  bool temErroValorCusto = false;
+  @observable
+  String textoErroNomeCusto = "";
+  @observable
+  String textoErrovalorCusto = "";
 }

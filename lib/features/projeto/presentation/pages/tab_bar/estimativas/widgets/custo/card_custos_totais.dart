@@ -1,7 +1,8 @@
 import 'package:estimasoft/core/shared/utils.dart';
 import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_custo.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 class CardCustosTotais extends StatelessWidget {
@@ -11,10 +12,17 @@ class CardCustosTotais extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controllerCustoTotalProjeto = MoneyMaskedTextController(
+        decimalSeparator: ',', thousandSeparator: '.', leftSymbol: "R\$");
+
+    final controllerValorTotalProjeto = MoneyMaskedTextController(
+        decimalSeparator: ',', thousandSeparator: '.', leftSymbol: "R\$");
+
     return Container(
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-          color: corDeFundoBotaoSecundaria, borderRadius: arredondamentoBordas),
+          color: Colors.blue.withOpacity(0.2),
+          borderRadius: arredondamentoBordas),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -23,18 +31,28 @@ class CardCustosTotais extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text(
-                "Custo total do projeto",
+                "Custo do projeto",
                 style: TextStyle(
                     fontSize: tamanhoSubtitulo,
                     color: corTituloTexto,
                     fontWeight: Fontes.weightTextoNormal),
               ),
               Observer(builder: (context) {
-                return Text(
-                  "${storeEstimativaCusto.custoProjeto.toString()} R\$",
-                  style: const TextStyle(
-                    fontSize: tamanhoSubtitulo,
-                    color: corTituloTexto,
+                controllerCustoTotalProjeto.text = storeEstimativaCusto
+                    .custoProjeto
+                    .ceilToDouble()
+                    .toStringAsFixed(2);
+                return SizedBox(
+                  width: 150,
+                  child: Text(
+                    controllerCustoTotalProjeto.text,
+                    textAlign: TextAlign.right,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: const TextStyle(
+                      fontSize: tamanhoSubtitulo,
+                      color: corTituloTexto,
+                    ),
                   ),
                 );
               }),
@@ -54,18 +72,23 @@ class CardCustosTotais extends StatelessWidget {
                     fontWeight: Fontes.weightTextoNormal),
               ),
               Observer(builder: (context) {
-                return Text(
-                  "${storeEstimativaCusto.valorTotalProjeto.toString()} R\$",
-                  style: const TextStyle(
-                    fontSize: tamanhoSubtitulo,
-                    color: corTituloTexto,
+                controllerValorTotalProjeto.text =
+                    storeEstimativaCusto.valorTotalProjeto.toString() + "0";
+                return SizedBox(
+                  width: 150,
+                  child: Text(
+                    controllerValorTotalProjeto.text,
+                    textAlign: TextAlign.right,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: const TextStyle(
+                      fontSize: tamanhoSubtitulo,
+                      color: corTituloTexto,
+                    ),
                   ),
                 );
               }),
             ],
-          ),
-          const SizedBox(
-            height: 20,
           ),
         ],
       ),

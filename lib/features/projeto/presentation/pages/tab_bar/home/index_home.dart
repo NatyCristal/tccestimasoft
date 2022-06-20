@@ -72,6 +72,8 @@ class IndexHome extends StatelessWidget {
                           controller.estimativasController.prazos);
                       equipe.buscarListaEquipe(
                           controller.estimativasController.equipe);
+                      custo.buscarListaCusto(
+                          controller.estimativasController.custos);
 
                       store.carregou = true;
                     }

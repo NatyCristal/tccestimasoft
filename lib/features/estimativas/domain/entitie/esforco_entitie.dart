@@ -10,4 +10,6 @@ class EsforcoEntity {
     required this.produtividadeEquipe,
     required this.esforcoTotal,
   });
+
+  split(String s) {}
 }

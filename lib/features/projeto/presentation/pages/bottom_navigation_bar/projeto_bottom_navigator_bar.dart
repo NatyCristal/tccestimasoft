@@ -13,7 +13,6 @@ import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativ
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_equipe.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_esforco.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_prazo.dart';
-import 'package:estimasoft/features/projeto/presentation/projeto_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -309,6 +308,11 @@ class ProjetoMenuPage extends StatelessWidget {
                             storeEstimativaPrazo: storeEstimativaPrazo,
                           ),
                           EstimativaCustoPage(
+                            projetoEntitie: projeto,
+                            storeEstimativaEsforco: storeEstimativaEsforco,
+                            storeContagemIndicativa: storeIndicativa,
+                            storeContagemEstimada: storeEstimada,
+                            storeContagemDetalhada: storeDetalhada,
                             storeEstimativaEquipe: storeEstimativaEquipe,
                             storeEstimativaCusto: storeEstimativaCusto,
                           )

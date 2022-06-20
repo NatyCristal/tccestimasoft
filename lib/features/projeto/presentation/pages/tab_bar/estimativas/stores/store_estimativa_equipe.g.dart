@@ -173,6 +173,17 @@ mixin _$StoreEstimativaEquipe on StoreEstimativaEquipeBase, Store {
       ActionController(name: 'StoreEstimativaEquipeBase', context: context);
 
   @override
+  dynamic buscarListaEquipe(List<EquipeEntity> equipeEntity) {
+    final _$actionInfo = _$StoreEstimativaEquipeBaseActionController
+        .startAction(name: 'StoreEstimativaEquipeBase.buscarListaEquipe');
+    try {
+      return super.buscarListaEquipe(equipeEntity);
+    } finally {
+      _$StoreEstimativaEquipeBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic estimarEquipe() {
     final _$actionInfo = _$StoreEstimativaEquipeBaseActionController
         .startAction(name: 'StoreEstimativaEquipeBase.estimarEquipe');

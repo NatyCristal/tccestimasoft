@@ -1,20 +1,20 @@
-import 'package:estimasoft/features/estimativas/domain/entitie/esforco_entitie.dart';
+import 'package:estimasoft/features/estimativas/domain/entitie/custo_entity.dart';
 import 'package:estimasoft/features/projeto/domain/entitie/projeto_entitie.dart';
-import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_esforco.dart';
-import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/widgets/cards/card_esforco.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_custo.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/widgets/cards/card_custo.dart';
 import 'package:estimasoft/features/projeto/presentation/projeto_controller.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-class ConteudoEsforco extends StatelessWidget {
+class ConteudoCusto extends StatelessWidget {
   final ScrollController scrollController;
-  final StoreEstimativaEsforco storeEstimativaEsforco;
+  final StoreEstimativaCusto custo;
   final ProjetoEntitie projetoEntitie;
   final ProjetoController controller = Modular.get<ProjetoController>();
-  ConteudoEsforco(
+  ConteudoCusto(
       {Key? key,
       required this.projetoEntitie,
-      required this.storeEstimativaEsforco,
+      required this.custo,
       required this.scrollController})
       : super(key: key);
 
@@ -23,18 +23,17 @@ class ConteudoEsforco extends StatelessWidget {
     return ListView.builder(
       controller: scrollController,
       shrinkWrap: true,
-      itemCount: storeEstimativaEsforco.esforcos.length,
+      itemCount: custo.custos.length,
       itemBuilder: (context, index) {
-        EsforcoEntity esforco = storeEstimativaEsforco.esforcos[index];
+        CustoEntity custoEntity = custo.custos[index];
 
-        return CardEsforco(
-            esforcoEntity: esforco, store: storeEstimativaEsforco);
+        return CardCustoEstimativa(custoEntity: custoEntity, store: custo);
       },
     );
 
     // FutureBuilder(
     //   future: controller.recuperarEstimativa(projetoEntitie.uidProjeto,
-    //       Modular.get<UsuarioAutenticado>().store.uid, "Esforco"),
+    //       Modular.get<UsuarioAutenticado>().store.uid, "Equipe"),
     //   builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
     //     switch (snapshot.connectionState) {
     //       case ConnectionState.done:
@@ -42,19 +41,18 @@ class ConteudoEsforco extends StatelessWidget {
     //           return const Text(
     //               "Não foi possível recuperar os esforços cadastrados");
     //         } else if (snapshot.hasData) {
-    //           if (controller.estimativasController.esforcos.isEmpty) {
+    //           if (controller.estimativasController.equipe.isEmpty) {
     //             return const Text("Vazio");
     //           } else {
     //             return ListView.builder(
     //               controller: scrollController,
     //               shrinkWrap: true,
-    //               itemCount: storeEstimativaEsforco.esforcos.length,
+    //               itemCount: equipe.equipes.length,
     //               itemBuilder: (context, index) {
-    //                 EsforcoEntity esforco =
-    //                     storeEstimativaEsforco.esforcos[index];
+    //                 EquipeEntity equipeEntity = equipe.equipes[index];
 
-    //                 return CardEsforco(
-    //                     esforcoEntity: esforco, store: storeEstimativaEsforco);
+    //                 return CardEquipeEstimativa(
+    //                     equipeEntity: equipeEntity, store: equipe);
     //               },
     //             );
     //           }
@@ -68,7 +66,7 @@ class ConteudoEsforco extends StatelessWidget {
     //       case ConnectionState.waiting:
     //         return const Carregando();
     //     }
-    //     return const Text("Erro");
+    //     return const SizedBox();
     //   },
     // );
   }

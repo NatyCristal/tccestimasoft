@@ -1,23 +1,28 @@
 import 'package:estimasoft/core/shared/utils.dart';
 import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
+import 'package:estimasoft/features/estimativas/domain/entitie/cadastro_insumo_custo_entity.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_custo.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 
 class CardEquipe extends StatelessWidget {
   final StoreEstimativaCusto store;
-  final String chave;
-  final String valor;
+  final CadastroInsumoCustoEntity insumoCustoEntity;
+
   final bool custo;
   const CardEquipe(
       {Key? key,
-      required this.valor,
-      required this.chave,
       required this.store,
-      this.custo = false})
+      this.custo = false,
+      required this.insumoCustoEntity})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final controllerSalario = MoneyMaskedTextController(
+        decimalSeparator: ',', thousandSeparator: '.', leftSymbol: "R\$");
+
+    controllerSalario.text = insumoCustoEntity.valor;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
@@ -41,9 +46,10 @@ class CardEquipe extends StatelessWidget {
                       ),
               ),
               SizedBox(
-                width: 200,
+                width: 180,
                 child: Text(
-                  chave,
+                  insumoCustoEntity.nome,
+                  overflow: TextOverflow.ellipsis,
                   maxLines: 1,
                   style: const TextStyle(
                       color: corCorpoTexto,
@@ -53,9 +59,10 @@ class CardEquipe extends StatelessWidget {
               Row(
                 children: [
                   SizedBox(
-                    width: 60,
+                    width: 80,
                     child: Text(
-                      valor,
+                      controllerSalario.text,
+                      overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                       style: const TextStyle(
                           color: corCorpoTexto,
@@ -67,8 +74,8 @@ class CardEquipe extends StatelessWidget {
                   ),
                   GestureDetector(
                       onTap: (() => custo
-                          ? store.removerCusto(chave, valor, context)
-                          : store.removerEquipe(chave, valor, context)),
+                          ? store.removerCusto(insumoCustoEntity, context)
+                          : store.removerEquipe(insumoCustoEntity, context)),
                       child: const Icon(Icons.delete, color: Colors.grey))
                 ],
               ),

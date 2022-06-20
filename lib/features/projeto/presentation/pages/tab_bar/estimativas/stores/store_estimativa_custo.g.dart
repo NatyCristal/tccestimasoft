@@ -9,6 +9,54 @@ part of 'store_estimativa_custo.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$StoreEstimativaCusto on StoreEstimativaCustoBase, Store {
+  late final _$alteracaoAtom =
+      Atom(name: 'StoreEstimativaCustoBase.alteracao', context: context);
+
+  @override
+  bool get alteracao {
+    _$alteracaoAtom.reportRead();
+    return super.alteracao;
+  }
+
+  @override
+  set alteracao(bool value) {
+    _$alteracaoAtom.reportWrite(value, super.alteracao, () {
+      super.alteracao = value;
+    });
+  }
+
+  late final _$custosAtom =
+      Atom(name: 'StoreEstimativaCustoBase.custos', context: context);
+
+  @override
+  List<CustoEntity> get custos {
+    _$custosAtom.reportRead();
+    return super.custos;
+  }
+
+  @override
+  set custos(List<CustoEntity> value) {
+    _$custosAtom.reportWrite(value, super.custos, () {
+      super.custos = value;
+    });
+  }
+
+  late final _$tamanhoListaCustosAtom = Atom(
+      name: 'StoreEstimativaCustoBase.tamanhoListaCustos', context: context);
+
+  @override
+  int get tamanhoListaCustos {
+    _$tamanhoListaCustosAtom.reportRead();
+    return super.tamanhoListaCustos;
+  }
+
+  @override
+  set tamanhoListaCustos(int value) {
+    _$tamanhoListaCustosAtom.reportWrite(value, super.tamanhoListaCustos, () {
+      super.tamanhoListaCustos = value;
+    });
+  }
+
   late final _$tamanhoEquipeAtom =
       Atom(name: 'StoreEstimativaCustoBase.tamanhoEquipe', context: context);
 
@@ -38,6 +86,235 @@ mixin _$StoreEstimativaCusto on StoreEstimativaCustoBase, Store {
   set tamanhoCustos(int value) {
     _$tamanhoCustosAtom.reportWrite(value, super.tamanhoCustos, () {
       super.tamanhoCustos = value;
+    });
+  }
+
+  late final _$carregandoAtom =
+      Atom(name: 'StoreEstimativaCustoBase.carregando', context: context);
+
+  @override
+  bool get carregando {
+    _$carregandoAtom.reportRead();
+    return super.carregando;
+  }
+
+  @override
+  set carregando(bool value) {
+    _$carregandoAtom.reportWrite(value, super.carregando, () {
+      super.carregando = value;
+    });
+  }
+
+  late final _$equipeAtom =
+      Atom(name: 'StoreEstimativaCustoBase.equipe', context: context);
+
+  @override
+  List<InsumoEstimativaCustoModel> get equipe {
+    _$equipeAtom.reportRead();
+    return super.equipe;
+  }
+
+  @override
+  set equipe(List<InsumoEstimativaCustoModel> value) {
+    _$equipeAtom.reportWrite(value, super.equipe, () {
+      super.equipe = value;
+    });
+  }
+
+  late final _$custosVariaveisAtom =
+      Atom(name: 'StoreEstimativaCustoBase.custosVariaveis', context: context);
+
+  @override
+  List<InsumoEstimativaCustoModel> get custosVariaveis {
+    _$custosVariaveisAtom.reportRead();
+    return super.custosVariaveis;
+  }
+
+  @override
+  set custosVariaveis(List<InsumoEstimativaCustoModel> value) {
+    _$custosVariaveisAtom.reportWrite(value, super.custosVariaveis, () {
+      super.custosVariaveis = value;
+    });
+  }
+
+  late final _$custoPFAtom =
+      Atom(name: 'StoreEstimativaCustoBase.custoPF', context: context);
+
+  @override
+  double get custoPF {
+    _$custoPFAtom.reportRead();
+    return super.custoPF;
+  }
+
+  @override
+  set custoPF(double value) {
+    _$custoPFAtom.reportWrite(value, super.custoPF, () {
+      super.custoPF = value;
+    });
+  }
+
+  late final _$custoTotalMensalAtom =
+      Atom(name: 'StoreEstimativaCustoBase.custoTotalMensal', context: context);
+
+  @override
+  double get custoTotalMensal {
+    _$custoTotalMensalAtom.reportRead();
+    return super.custoTotalMensal;
+  }
+
+  @override
+  set custoTotalMensal(double value) {
+    _$custoTotalMensalAtom.reportWrite(value, super.custoTotalMensal, () {
+      super.custoTotalMensal = value;
+    });
+  }
+
+  late final _$disponibilidadeEquipeAtom = Atom(
+      name: 'StoreEstimativaCustoBase.disponibilidadeEquipe', context: context);
+
+  @override
+  double get disponibilidadeEquipe {
+    _$disponibilidadeEquipeAtom.reportRead();
+    return super.disponibilidadeEquipe;
+  }
+
+  @override
+  set disponibilidadeEquipe(double value) {
+    _$disponibilidadeEquipeAtom.reportWrite(value, super.disponibilidadeEquipe,
+        () {
+      super.disponibilidadeEquipe = value;
+    });
+  }
+
+  late final _$custoTotalEquipeAtom =
+      Atom(name: 'StoreEstimativaCustoBase.custoTotalEquipe', context: context);
+
+  @override
+  double get custoTotalEquipe {
+    _$custoTotalEquipeAtom.reportRead();
+    return super.custoTotalEquipe;
+  }
+
+  @override
+  set custoTotalEquipe(double value) {
+    _$custoTotalEquipeAtom.reportWrite(value, super.custoTotalEquipe, () {
+      super.custoTotalEquipe = value;
+    });
+  }
+
+  late final _$custoHoraAtom =
+      Atom(name: 'StoreEstimativaCustoBase.custoHora', context: context);
+
+  @override
+  double get custoHora {
+    _$custoHoraAtom.reportRead();
+    return super.custoHora;
+  }
+
+  @override
+  set custoHora(double value) {
+    _$custoHoraAtom.reportWrite(value, super.custoHora, () {
+      super.custoHora = value;
+    });
+  }
+
+  late final _$porcentagemLucroAtom =
+      Atom(name: 'StoreEstimativaCustoBase.porcentagemLucro', context: context);
+
+  @override
+  double get porcentagemLucro {
+    _$porcentagemLucroAtom.reportRead();
+    return super.porcentagemLucro;
+  }
+
+  @override
+  set porcentagemLucro(double value) {
+    _$porcentagemLucroAtom.reportWrite(value, super.porcentagemLucro, () {
+      super.porcentagemLucro = value;
+    });
+  }
+
+  late final _$custoProjetoAtom =
+      Atom(name: 'StoreEstimativaCustoBase.custoProjeto', context: context);
+
+  @override
+  double get custoProjeto {
+    _$custoProjetoAtom.reportRead();
+    return super.custoProjeto;
+  }
+
+  @override
+  set custoProjeto(double value) {
+    _$custoProjetoAtom.reportWrite(value, super.custoProjeto, () {
+      super.custoProjeto = value;
+    });
+  }
+
+  late final _$valorTotalProjetoAtom = Atom(
+      name: 'StoreEstimativaCustoBase.valorTotalProjeto', context: context);
+
+  @override
+  double get valorTotalProjeto {
+    _$valorTotalProjetoAtom.reportRead();
+    return super.valorTotalProjeto;
+  }
+
+  @override
+  set valorTotalProjeto(double value) {
+    _$valorTotalProjetoAtom.reportWrite(value, super.valorTotalProjeto, () {
+      super.valorTotalProjeto = value;
+    });
+  }
+
+  late final _$tipoContagemAtom =
+      Atom(name: 'StoreEstimativaCustoBase.tipoContagem', context: context);
+
+  @override
+  String get tipoContagem {
+    _$tipoContagemAtom.reportRead();
+    return super.tipoContagem;
+  }
+
+  @override
+  set tipoContagem(String value) {
+    _$tipoContagemAtom.reportWrite(value, super.tipoContagem, () {
+      super.tipoContagem = value;
+    });
+  }
+
+  late final _$esforcoEntitySelecionadoAtom = Atom(
+      name: 'StoreEstimativaCustoBase.esforcoEntitySelecionado',
+      context: context);
+
+  @override
+  EsforcoEntity get esforcoEntitySelecionado {
+    _$esforcoEntitySelecionadoAtom.reportRead();
+    return super.esforcoEntitySelecionado;
+  }
+
+  @override
+  set esforcoEntitySelecionado(EsforcoEntity value) {
+    _$esforcoEntitySelecionadoAtom
+        .reportWrite(value, super.esforcoEntitySelecionado, () {
+      super.esforcoEntitySelecionado = value;
+    });
+  }
+
+  late final _$equipeEntitySelecionadoAtom = Atom(
+      name: 'StoreEstimativaCustoBase.equipeEntitySelecionado',
+      context: context);
+
+  @override
+  EquipeEntity get equipeEntitySelecionado {
+    _$equipeEntitySelecionadoAtom.reportRead();
+    return super.equipeEntitySelecionado;
+  }
+
+  @override
+  set equipeEntitySelecionado(EquipeEntity value) {
+    _$equipeEntitySelecionadoAtom
+        .reportWrite(value, super.equipeEntitySelecionado, () {
+      super.equipeEntitySelecionado = value;
     });
   }
 
@@ -237,203 +514,116 @@ mixin _$StoreEstimativaCusto on StoreEstimativaCustoBase, Store {
     });
   }
 
-  late final _$carregandoAtom =
-      Atom(name: 'StoreEstimativaCustoBase.carregando', context: context);
-
-  @override
-  bool get carregando {
-    _$carregandoAtom.reportRead();
-    return super.carregando;
-  }
-
-  @override
-  set carregando(bool value) {
-    _$carregandoAtom.reportWrite(value, super.carregando, () {
-      super.carregando = value;
-    });
-  }
-
-  late final _$equipeAtom =
-      Atom(name: 'StoreEstimativaCustoBase.equipe', context: context);
-
-  @override
-  Map<String, String> get equipe {
-    _$equipeAtom.reportRead();
-    return super.equipe;
-  }
-
-  @override
-  set equipe(Map<String, String> value) {
-    _$equipeAtom.reportWrite(value, super.equipe, () {
-      super.equipe = value;
-    });
-  }
-
-  late final _$custosVariaveisAtom =
-      Atom(name: 'StoreEstimativaCustoBase.custosVariaveis', context: context);
-
-  @override
-  Map<String, String> get custosVariaveis {
-    _$custosVariaveisAtom.reportRead();
-    return super.custosVariaveis;
-  }
-
-  @override
-  set custosVariaveis(Map<String, String> value) {
-    _$custosVariaveisAtom.reportWrite(value, super.custosVariaveis, () {
-      super.custosVariaveis = value;
-    });
-  }
-
-  late final _$custoPFAtom =
-      Atom(name: 'StoreEstimativaCustoBase.custoPF', context: context);
-
-  @override
-  double get custoPF {
-    _$custoPFAtom.reportRead();
-    return super.custoPF;
-  }
-
-  @override
-  set custoPF(double value) {
-    _$custoPFAtom.reportWrite(value, super.custoPF, () {
-      super.custoPF = value;
-    });
-  }
-
-  late final _$custoTotalMensalAtom =
-      Atom(name: 'StoreEstimativaCustoBase.custoTotalMensal', context: context);
-
-  @override
-  double get custoTotalMensal {
-    _$custoTotalMensalAtom.reportRead();
-    return super.custoTotalMensal;
-  }
-
-  @override
-  set custoTotalMensal(double value) {
-    _$custoTotalMensalAtom.reportWrite(value, super.custoTotalMensal, () {
-      super.custoTotalMensal = value;
-    });
-  }
-
-  late final _$disponibilidadeEquipeAtom = Atom(
-      name: 'StoreEstimativaCustoBase.disponibilidadeEquipe', context: context);
-
-  @override
-  double get disponibilidadeEquipe {
-    _$disponibilidadeEquipeAtom.reportRead();
-    return super.disponibilidadeEquipe;
-  }
-
-  @override
-  set disponibilidadeEquipe(double value) {
-    _$disponibilidadeEquipeAtom.reportWrite(value, super.disponibilidadeEquipe,
-        () {
-      super.disponibilidadeEquipe = value;
-    });
-  }
-
-  late final _$custoTotalEquipeAtom =
-      Atom(name: 'StoreEstimativaCustoBase.custoTotalEquipe', context: context);
-
-  @override
-  double get custoTotalEquipe {
-    _$custoTotalEquipeAtom.reportRead();
-    return super.custoTotalEquipe;
-  }
-
-  @override
-  set custoTotalEquipe(double value) {
-    _$custoTotalEquipeAtom.reportWrite(value, super.custoTotalEquipe, () {
-      super.custoTotalEquipe = value;
-    });
-  }
-
-  late final _$custoHoraAtom =
-      Atom(name: 'StoreEstimativaCustoBase.custoHora', context: context);
-
-  @override
-  double get custoHora {
-    _$custoHoraAtom.reportRead();
-    return super.custoHora;
-  }
-
-  @override
-  set custoHora(double value) {
-    _$custoHoraAtom.reportWrite(value, super.custoHora, () {
-      super.custoHora = value;
-    });
-  }
-
-  late final _$porcentagemLucroAtom =
-      Atom(name: 'StoreEstimativaCustoBase.porcentagemLucro', context: context);
-
-  @override
-  double get porcentagemLucro {
-    _$porcentagemLucroAtom.reportRead();
-    return super.porcentagemLucro;
-  }
-
-  @override
-  set porcentagemLucro(double value) {
-    _$porcentagemLucroAtom.reportWrite(value, super.porcentagemLucro, () {
-      super.porcentagemLucro = value;
-    });
-  }
-
-  late final _$custoProjetoAtom =
-      Atom(name: 'StoreEstimativaCustoBase.custoProjeto', context: context);
-
-  @override
-  double get custoProjeto {
-    _$custoProjetoAtom.reportRead();
-    return super.custoProjeto;
-  }
-
-  @override
-  set custoProjeto(double value) {
-    _$custoProjetoAtom.reportWrite(value, super.custoProjeto, () {
-      super.custoProjeto = value;
-    });
-  }
-
-  late final _$valorTotalProjetoAtom = Atom(
-      name: 'StoreEstimativaCustoBase.valorTotalProjeto', context: context);
-
-  @override
-  double get valorTotalProjeto {
-    _$valorTotalProjetoAtom.reportRead();
-    return super.valorTotalProjeto;
-  }
-
-  @override
-  set valorTotalProjeto(double value) {
-    _$valorTotalProjetoAtom.reportWrite(value, super.valorTotalProjeto, () {
-      super.valorTotalProjeto = value;
-    });
-  }
-
   late final _$StoreEstimativaCustoBaseActionController =
       ActionController(name: 'StoreEstimativaCustoBase', context: context);
 
   @override
-  dynamic removerEquipe(String chave, String valor, dynamic context) {
+  dynamic exibirEsforcos(List<EsforcoEntity> esforcos) {
     final _$actionInfo = _$StoreEstimativaCustoBaseActionController.startAction(
-        name: 'StoreEstimativaCustoBase.removerEquipe');
+        name: 'StoreEstimativaCustoBase.exibirEsforcos');
     try {
-      return super.removerEquipe(chave, valor, context);
+      return super.exibirEsforcos(esforcos);
     } finally {
       _$StoreEstimativaCustoBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  dynamic removerCusto(String chave, String valor, dynamic context) {
+  dynamic exibirEquipe(List<EquipeEntity> equipes) {
+    final _$actionInfo = _$StoreEstimativaCustoBaseActionController.startAction(
+        name: 'StoreEstimativaCustoBase.exibirEquipe');
+    try {
+      return super.exibirEquipe(equipes);
+    } finally {
+      _$StoreEstimativaCustoBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic calcularDisponibiliadeEquipe() {
+    final _$actionInfo = _$StoreEstimativaCustoBaseActionController.startAction(
+        name: 'StoreEstimativaCustoBase.calcularDisponibiliadeEquipe');
+    try {
+      return super.calcularDisponibiliadeEquipe();
+    } finally {
+      _$StoreEstimativaCustoBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic adicionarNovoCusto(CustoEntity custoEntity, dynamic context) {
+    final _$actionInfo = _$StoreEstimativaCustoBaseActionController.startAction(
+        name: 'StoreEstimativaCustoBase.adicionarNovoCusto');
+    try {
+      return super.adicionarNovoCusto(custoEntity, context);
+    } finally {
+      _$StoreEstimativaCustoBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic remover(CustoEntity custoEntity) {
+    final _$actionInfo = _$StoreEstimativaCustoBaseActionController.startAction(
+        name: 'StoreEstimativaCustoBase.remover');
+    try {
+      return super.remover(custoEntity);
+    } finally {
+      _$StoreEstimativaCustoBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic calcularCustoHora() {
+    final _$actionInfo = _$StoreEstimativaCustoBaseActionController.startAction(
+        name: 'StoreEstimativaCustoBase.calcularCustoHora');
+    try {
+      return super.calcularCustoHora();
+    } finally {
+      _$StoreEstimativaCustoBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic calcularCustoPF() {
+    final _$actionInfo = _$StoreEstimativaCustoBaseActionController.startAction(
+        name: 'StoreEstimativaCustoBase.calcularCustoPF');
+    try {
+      return super.calcularCustoPF();
+    } finally {
+      _$StoreEstimativaCustoBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic buscarListaCusto(List<CustoEntity> custoEntity) {
+    final _$actionInfo = _$StoreEstimativaCustoBaseActionController.startAction(
+        name: 'StoreEstimativaCustoBase.buscarListaCusto');
+    try {
+      return super.buscarListaCusto(custoEntity);
+    } finally {
+      _$StoreEstimativaCustoBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic removerEquipe(
+      CadastroInsumoCustoEntity insumoCustoEntity, dynamic context) {
+    final _$actionInfo = _$StoreEstimativaCustoBaseActionController.startAction(
+        name: 'StoreEstimativaCustoBase.removerEquipe');
+    try {
+      return super.removerEquipe(insumoCustoEntity, context);
+    } finally {
+      _$StoreEstimativaCustoBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic removerCusto(
+      CadastroInsumoCustoEntity insumoCustoEntity, dynamic context) {
     final _$actionInfo = _$StoreEstimativaCustoBaseActionController.startAction(
         name: 'StoreEstimativaCustoBase.removerCusto');
     try {
-      return super.removerCusto(chave, valor, context);
+      return super.removerCusto(insumoCustoEntity, context);
     } finally {
       _$StoreEstimativaCustoBaseActionController.endAction(_$actionInfo);
     }
@@ -497,8 +687,25 @@ mixin _$StoreEstimativaCusto on StoreEstimativaCustoBase, Store {
   @override
   String toString() {
     return '''
+alteracao: ${alteracao},
+custos: ${custos},
+tamanhoListaCustos: ${tamanhoListaCustos},
 tamanhoEquipe: ${tamanhoEquipe},
 tamanhoCustos: ${tamanhoCustos},
+carregando: ${carregando},
+equipe: ${equipe},
+custosVariaveis: ${custosVariaveis},
+custoPF: ${custoPF},
+custoTotalMensal: ${custoTotalMensal},
+disponibilidadeEquipe: ${disponibilidadeEquipe},
+custoTotalEquipe: ${custoTotalEquipe},
+custoHora: ${custoHora},
+porcentagemLucro: ${porcentagemLucro},
+custoProjeto: ${custoProjeto},
+valorTotalProjeto: ${valorTotalProjeto},
+tipoContagem: ${tipoContagem},
+esforcoEntitySelecionado: ${esforcoEntitySelecionado},
+equipeEntitySelecionado: ${equipeEntitySelecionado},
 cargoMembro: ${cargoMembro},
 salarioMembro: ${salarioMembro},
 temErroCargoMembro: ${temErroCargoMembro},
@@ -510,18 +717,7 @@ valorCusto: ${valorCusto},
 temErroNomeCusto: ${temErroNomeCusto},
 temErroValorCusto: ${temErroValorCusto},
 textoErroNomeCusto: ${textoErroNomeCusto},
-textoErrovalorCusto: ${textoErrovalorCusto},
-carregando: ${carregando},
-equipe: ${equipe},
-custosVariaveis: ${custosVariaveis},
-custoPF: ${custoPF},
-custoTotalMensal: ${custoTotalMensal},
-disponibilidadeEquipe: ${disponibilidadeEquipe},
-custoTotalEquipe: ${custoTotalEquipe},
-custoHora: ${custoHora},
-porcentagemLucro: ${porcentagemLucro},
-custoProjeto: ${custoProjeto},
-valorTotalProjeto: ${valorTotalProjeto}
+textoErrovalorCusto: ${textoErrovalorCusto}
     ''';
   }
 }

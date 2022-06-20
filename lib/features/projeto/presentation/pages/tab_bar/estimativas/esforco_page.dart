@@ -43,7 +43,6 @@ class EstimativaEsforcoPage extends StatefulWidget {
 
 class _EstimativaEsforcoPageState extends State<EstimativaEsforcoPage> {
   Map<String, dynamic> dados = <String, dynamic>{};
-  // final StoreEstimativaEsforco store = StoreEstimativaEsforco();
 
   Future<String> carregarDados() async {
     var textoJson = await rootBundle.loadString('assets/arquivos/indices.json');

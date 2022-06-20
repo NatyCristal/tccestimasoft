@@ -1,8 +1,10 @@
 import 'package:estimasoft/core/shared/utils.dart';
 import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
+import 'package:estimasoft/features/estimativas/domain/entitie/cadastro_insumo_custo_entity.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_custo.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/widgets/card_equipe.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 class CardMembros extends StatelessWidget {
@@ -16,10 +18,14 @@ class CardMembros extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controllerSalario = MoneyMaskedTextController(
+        decimalSeparator: ',', thousandSeparator: '.', leftSymbol: "R\$");
+
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          "Equipe",
+          "Membros Equipe",
           style: TextStyle(color: corTituloTexto, fontSize: tamanhoSubtitulo),
         ),
         const SizedBox(
@@ -63,8 +69,15 @@ class CardMembros extends StatelessWidget {
               Observer(builder: (context) {
                 return storeEstimativaCusto.textoErroSalarioMembro == ""
                     ? TextField(
+                        controller: controllerSalario,
                         onChanged: (value) {
-                          storeEstimativaCusto.salarioMembro = value.toString();
+                          var textoSemFormtacao = value
+                              .toString()
+                              .replaceAll("R\$", "")
+                              .replaceAll(".", "")
+                              .replaceAll(",", ".");
+                          storeEstimativaCusto.salarioMembro =
+                              textoSemFormtacao;
                           storeEstimativaCusto.validarAdicaoEquipe();
                         },
                         keyboardType: TextInputType.number,
@@ -73,13 +86,20 @@ class CardMembros extends StatelessWidget {
                         ),
                       )
                     : TextField(
+                        controller: controllerSalario,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                             errorText:
                                 storeEstimativaCusto.textoErroSalarioMembro,
                             hintText: "Salário"),
                         onChanged: (value) {
-                          storeEstimativaCusto.salarioMembro = value.toString();
+                          var textoSemFormtacao = value
+                              .toString()
+                              .replaceAll("R\$", "")
+                              .replaceAll(".", "")
+                              .replaceAll(",", ".");
+                          storeEstimativaCusto.salarioMembro =
+                              textoSemFormtacao;
                           storeEstimativaCusto.validarAdicaoEquipe();
                         },
                       );
@@ -124,42 +144,33 @@ class CardMembros extends StatelessWidget {
                         fontWeight: Fontes.weightTextoNormal),
                   ),
                 )
-              : Container(
-                  margin: const EdgeInsets.symmetric(vertical: 10),
-                  height: 200,
-                  child: Column(
-                    children: [
-                      const Text(
-                        "Equipe Cadastrada",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: corCorpoTexto,
-                            fontWeight: Fontes.weightTextoNormal),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Expanded(
-                        child: ListView.builder(
-                          controller: scrollController,
-                          shrinkWrap: true,
-                          itemCount: storeEstimativaCusto.equipe.length,
-                          itemBuilder: ((context, index) {
-                            String chave = storeEstimativaCusto.equipe.keys
-                                .elementAt(index);
-                            String valor = storeEstimativaCusto.equipe.values
-                                .elementAt(index);
+              : Column(
+                  children: [
+                    const Text(
+                      "Equipe Cadastrada",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: corCorpoTexto,
+                          fontWeight: Fontes.weightTextoNormal),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    ListView.builder(
+                      controller: scrollController,
+                      shrinkWrap: true,
+                      itemCount: storeEstimativaCusto.equipe.length,
+                      itemBuilder: ((context, index) {
+                        CadastroInsumoCustoEntity insumoCustoEntity =
+                            storeEstimativaCusto.equipe[index];
 
-                            return CardEquipe(
-                              valor: valor,
-                              chave: chave,
-                              store: storeEstimativaCusto,
-                            );
-                          }),
-                        ),
-                      ),
-                    ],
-                  ),
+                        return CardEquipe(
+                          insumoCustoEntity: insumoCustoEntity,
+                          store: storeEstimativaCusto,
+                        );
+                      }),
+                    ),
+                  ],
                 );
         }),
         const SizedBox(

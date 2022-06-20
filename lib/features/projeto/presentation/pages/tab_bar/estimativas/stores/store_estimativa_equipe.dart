@@ -55,6 +55,10 @@ abstract class StoreEstimativaEquipeBase with Store {
   buscarListaEquipe(List<EquipeEntity> equipeEntity) {
     equipes = equipeEntity;
     tamanhoEquipe = equipeEntity.length;
+
+    if (equipesValidas.isEmpty) {
+      equipesValidas = equipeEntity;
+    }
   }
 
   @action

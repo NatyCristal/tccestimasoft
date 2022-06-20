@@ -3,6 +3,7 @@
 import 'dart:io';
 import 'package:estimasoft/core/auth/usuario_autenticado.dart';
 import 'package:estimasoft/features/contagem/contagem_controller.dart';
+import 'package:estimasoft/features/estimativas/domain/entitie/custo_entity.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/equipe_entity.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/esforco_entitie.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/prazo_entitie.dart';
@@ -240,6 +241,12 @@ class ProjetoController {
         equipeEntity, uidProjeto, uidUsuario, tipoContagem);
   }
 
+  salvarCusto(CustoEntity custoEntity, String uidProjeto, String uidUsuario,
+      String tipoContagem) async {
+    return await estimativasController.salvarCusto(
+        custoEntity, uidProjeto, uidUsuario, tipoContagem);
+  }
+
   recuperarEstimativa(
       String uidProjeto, String uidUsuario, String estimativa) async {
     switch (estimativa) {
@@ -251,6 +258,9 @@ class ProjetoController {
             uidProjeto, uidUsuario);
       case "Equipe":
         return await estimativasController.recuperarEquipe(
+            uidProjeto, uidUsuario);
+      case "Custo":
+        return await estimativasController.recuperarCusto(
             uidProjeto, uidUsuario);
       default:
     }

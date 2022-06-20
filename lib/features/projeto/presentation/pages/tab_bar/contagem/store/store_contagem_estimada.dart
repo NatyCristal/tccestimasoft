@@ -1,6 +1,8 @@
 import 'package:estimasoft/core/shared/utils/snackbar.dart';
 import 'package:estimasoft/features/contagem/domain/entitie/contagem_estimada_entitie.dart';
+import 'package:estimasoft/features/projeto/presentation/projeto_controller.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
 part 'store_contagem_estimada.g.dart';
@@ -186,6 +188,8 @@ abstract class StoreContagemEstimadaBase with Store {
 
     se = contagemRecuperadaFirebase.se;
     tamanhoListaSE = contagemRecuperadaFirebase.se.length;
+    contagemEstimadaValida =
+        Modular.get<ProjetoController>().contagemController.contagemEstimada;
   }
 
   @action

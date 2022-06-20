@@ -1,9 +1,11 @@
+import 'package:estimasoft/features/estimativas/data/models/insumo_estimativa_custo.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/custo_entity.dart';
 
 class CustoModel extends CustoEntity {
   CustoModel(
-      {required Map<String, String> equipe,
-      required Map<String, String> custosVariaisFixos,
+      {required tipoContagem,
+      required List<InsumoEstimativaCustoModel> equipe,
+      required List<InsumoEstimativaCustoModel> custosVariaisFixos,
       required String disponibilidadeEquipe,
       required String custoTotalMensal,
       required double custoHora,
@@ -12,6 +14,7 @@ class CustoModel extends CustoEntity {
       required double valorTotalProjeto,
       required String custoPF})
       : super(
+            tipoContagem: tipoContagem,
             equipe: equipe,
             custosVariaisFixos: custosVariaisFixos,
             disponibilidadeEquipe: disponibilidadeEquipe,
@@ -24,11 +27,15 @@ class CustoModel extends CustoEntity {
 
   Map<String, dynamic> toMap() {
     return {
-      "Equipe": equipe,
-      'CustosVariaveisEFixos': custosVariaisFixos,
+      "Equipe": {for (var e in equipe) equipe.indexOf(e).toString(): e.toMap()},
+      'CustosVariaveisEFixos': {
+        for (var e in custosVariaisFixos)
+          custosVariaisFixos.indexOf(e).toString(): e.toMap()
+      },
+      'TipoContagem': tipoContagem,
       'DisponibilidadeEquipe': disponibilidadeEquipe,
       'CustoTotalMensal': custoTotalMensal,
-      'CustoHora': custoHora,
+      'CustoHora': custoHora.toStringAsFixed(2),
       'PorcentagemLucro': porcentagemLucro,
       'CustoTotalDoProjeto': custoTotalProjeto,
       'ValorTotalProjeto': valorTotalProjeto,
@@ -37,15 +44,32 @@ class CustoModel extends CustoEntity {
   }
 
   factory CustoModel.fromMap(Map<String, dynamic> map) {
+    List<InsumoEstimativaCustoModel> equipe = [];
+    List<InsumoEstimativaCustoModel> custos = [];
+    Map<String, dynamic> equipeFirebase = map["Equipe"];
+    if (equipeFirebase.isNotEmpty) {
+      equipeFirebase.forEach((key, value) {
+        equipe.add(InsumoEstimativaCustoModel.fromMap(value));
+      });
+    }
+
+    Map<String, dynamic> custosFirebase = map["CustosVariaveisEFixos"];
+    if (custosFirebase.isNotEmpty) {
+      custosFirebase.forEach((key, value) {
+        custos.add(InsumoEstimativaCustoModel.fromMap(value));
+      });
+    }
+
     return CustoModel(
-      equipe: map["Equipe"],
-      custosVariaisFixos: map["CustosVariaveisEFixos"],
+      tipoContagem: map["TipoContagem"],
+      equipe: equipe,
+      custosVariaisFixos: custos,
       disponibilidadeEquipe: map["DisponibilidadeEquipe"],
       custoTotalMensal: map["CustoTotalMensal"],
-      custoHora: map["CustoHora"],
+      custoHora: double.parse(map["CustoHora"]),
       porcentagemLucro: map["PorcentagemLucro"],
       custoTotalProjeto: map["CustoTotalDoProjeto"],
-      valorTotalProjeto: map["valorTotalProjeto"],
+      valorTotalProjeto: map["ValorTotalProjeto"],
       custoPF: map['CustoPF'],
     );
   }
