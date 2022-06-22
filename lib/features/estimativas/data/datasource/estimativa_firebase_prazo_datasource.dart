@@ -30,13 +30,14 @@ class EstimativaFirebasePrazoDatasource extends EstimativaPrazo {
   }
 
   @override
-  Future<PrazoEntity> salvarEstimativaPrazo(PrazoEntity prazoEntity,
+  Future<PrazoEntity> salvarEstimativaPrazo(PrazoEntity prazo,
       String uidProjeto, String uidUsuario, String tipoContagem) async {
-    EstimativaPrazoModel prazo = EstimativaPrazoModel(
-        contagemPontoDeFuncao: prazoEntity.contagemPontoDeFuncao,
-        tipoSistema: prazoEntity.tipoSistema,
-        prazoMinimo: prazoEntity.prazoMinimo,
-        prazoTotal: prazoEntity.prazoTotal);
+    EstimativaPrazoModel prazoModel = EstimativaPrazoModel(
+        compartilhada: false,
+        contagemPontoDeFuncao: prazo.contagemPontoDeFuncao,
+        tipoSistema: prazo.tipoSistema,
+        prazoMinimo: prazo.prazoMinimo,
+        prazoTotal: prazo.prazoTotal);
 
     await firestore
         .collection("Estimativa")
@@ -51,17 +52,17 @@ class EstimativaFirebasePrazoDatasource extends EstimativaPrazo {
             .doc(uidProjeto)
             .collection("Prazo")
             .doc(uidUsuario)
-            .update({tipoContagem: prazo.toMap()});
+            .update({tipoContagem: prazoModel.toMap()});
       } else {
         await firestore
             .collection("Estimativa")
             .doc(uidProjeto)
             .collection("Prazo")
             .doc(uidUsuario)
-            .set({tipoContagem: prazo.toMap()});
+            .set({tipoContagem: prazoModel.toMap()});
       }
     });
 
-    return prazo;
+    return prazoModel;
   }
 }

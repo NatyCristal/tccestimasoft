@@ -13,6 +13,7 @@ import 'package:estimasoft/features/projeto/domain/entitie/projeto_entitie.dart'
 import 'package:estimasoft/features/projeto/domain/usecase/entrar_projeto_usecase.dart';
 import 'package:estimasoft/features/projeto/domain/usecase/recuperar_membros_usecase.dart';
 import 'package:estimasoft/features/projeto/domain/usecase/arquivo_usecase.dart';
+import 'package:estimasoft/features/resultado/presentation/resultado_controller.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import '../../usuario/presentation/usuario_controller.dart';
@@ -26,6 +27,8 @@ class ProjetoController {
       Modular.get<ContagemController>();
   final EstimativasController estimativasController =
       Modular.get<EstimativasController>();
+  final ResultadoController resultadoController =
+      Modular.get<ResultadoController>();
 
   //referente a projetos
 
@@ -266,10 +269,17 @@ class ProjetoController {
     }
   }
 
+  // enviarResultadoEstimativaEsforco(List<EsforcoEntity> esforcos,
+  //     String uidProjeto, String uidUsuario) async {
+  //   await resultadoController.enviarEstimativasEsforco(
+  //       esforcos, uidProjeto, uidUsuario);
+  // }
+
   carregarTodosDados(String uidProjeto, String uidUsuario) async {
     await estimativasController.carregarEstimativas(uidProjeto, uidUsuario);
-    await contagemController.carregar(uidProjeto, uidUsuario);
+    await contagemController.carregarContagens(uidProjeto, uidUsuario);
     await recuperarMembrosProjeto(uidProjeto);
+    await resultadoController.recuperarResultados(uidProjeto);
     return true;
   }
 }

@@ -183,6 +183,7 @@ class EstimativaCustoPage extends StatelessWidget {
                       if (storeEstimativaCusto
                           .validarCamposPreenchidos(context)) {
                         CustoEntity novoCusto = CustoEntity(
+                          compartilhada: false,
                           tipoContagem: storeEstimativaCusto.tipoContagem,
                           equipe: storeEstimativaCusto.equipe,
                           custosVariaisFixos:
@@ -248,6 +249,11 @@ class EstimativaCustoPage extends StatelessWidget {
                               storeEstimativaCusto.tipoContagem
                                   .split(" - ")
                                   .first);
+
+                          storeEstimativaCusto.custosValidos =
+                              Modular.get<ProjetoController>()
+                                  .estimativasController
+                                  .custos;
                           storeEstimativaCusto.carregando = false;
                           AlertaSnack.exbirSnackBar(
                               context, "Custo salvo com sucesso!");

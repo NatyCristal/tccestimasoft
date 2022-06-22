@@ -1,5 +1,6 @@
 import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
 import 'package:estimasoft/core/shared/widgets/botao.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_detalhada.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_estimada.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_indicativa.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/widgets/componentes/card_funcao_dados_detalhada.dart';
@@ -17,19 +18,21 @@ class ContagemDetalhada extends StatelessWidget {
   final StoreContagemIndicativa storeIndicativa;
   final String projetoUid;
   final ProjetoController controller = Modular.get<ProjetoController>();
-  final StoreContagemEstimada store;
+  final StoreContagemEstimada storeEstimada;
   final ScrollController scrollController = ScrollController();
   final ScrollController scrollControllerLateral = ScrollController();
+  final StoreContagemDetalhada storeContagemDetalhada;
   ContagemDetalhada(
       {Key? key,
       required this.projetoUid,
-      required this.store,
-      required this.storeIndicativa})
+      required this.storeEstimada,
+      required this.storeIndicativa,
+      required this.storeContagemDetalhada})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    store.totalIndicativa = storeIndicativa.totalPf;
+    storeEstimada.totalIndicativa = storeIndicativa.totalPf;
 
     return Container(
       padding: paddingPagePrincipal,
@@ -39,8 +42,9 @@ class ContagemDetalhada extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ConteudoContagemDetalhada(
+                storeContagemDetalhada: storeContagemDetalhada,
                 uidProjeto: projetoUid,
-                store: store,
+                store: storeEstimada,
                 storeContagemIndicativa: storeIndicativa),
             const SizedBox(
               height: 10,
@@ -67,7 +71,7 @@ class ContagemDetalhada extends StatelessWidget {
               ),
               Observer(builder: (context) {
                 return Text(
-                    "Quantidade de funções  ${(store.tamanhoListaCE + store.tamanhoListaEE + store.tamanhoListaSE + storeIndicativa.contagemIndicativaValida.aie.length + storeIndicativa.contagemIndicativaValida.ali.length).toString()}");
+                    "Quantidade de funções  ${(storeEstimada.contagemEstimadaValida.ce.length + storeEstimada.contagemEstimadaValida.ee.length + storeEstimada.contagemEstimadaValida.se.length + storeIndicativa.contagemIndicativaValida.aie.length + storeIndicativa.contagemIndicativaValida.ali.length).toString()}");
               }),
             ]),
             Align(
@@ -181,10 +185,10 @@ class ContagemDetalhada extends StatelessWidget {
               height: 20,
             ),
 
-            storeIndicativa.contagemIndicativaValida.aie.isNotEmpty ||
-                    storeIndicativa.contagemIndicativaValida.ali.isNotEmpty
+            storeContagemDetalhada
+                    .contagemDetalhadaEntitie.funcaoDados.isNotEmpty
                 ? FuncaoDeDadosDetalhada(
-                    storeContagemIndicativa: storeIndicativa,
+                    storeContagemDetalhada: storeContagemDetalhada,
                     scrollController: scrollControllerLateral)
                 : SizedBox(
                     child: Text(
@@ -192,8 +196,6 @@ class ContagemDetalhada extends StatelessWidget {
                       style: TextStyle(color: corCorpoTexto.withOpacity(0.5)),
                     ),
                   ),
-
-            const Text("xx PF em Função de dados"),
 
             const SizedBox(
               height: 20,
@@ -209,9 +211,10 @@ class ContagemDetalhada extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            store.ce.isNotEmpty || store.ee.isNotEmpty || store.se.isNotEmpty
+            storeContagemDetalhada
+                    .contagemDetalhadaEntitie.funcaoTransacional.isNotEmpty
                 ? CardFuncaoTransacionalDetalhada(
-                    storeEstimada: store,
+                    contagemDetalhada: storeContagemDetalhada,
                     scrollController: scrollControllerLateral)
                 : SizedBox(
                     height: 30,
@@ -221,26 +224,69 @@ class ContagemDetalhada extends StatelessWidget {
                     ),
                   ),
 
-            const Text("xx PF em Função Transacional"),
             const SizedBox(
               height: 20,
             ),
-            BotaoPadrao(
-                corDeTextoBotao: corTextoSobCorPrimaria,
-                acao: () async {
-                  // var retorno = await controller.salvarContagem(
-                  //   "Indicativa",
-                  //   store.alis,
-                  //   store.aies,
-                  //   projetoUid,
-                  //   store.totalPf,
-                  // );
-                  // store.alteracoes = false;
-                  // AlertaSnack.exbirSnackBar(context, retorno);
-                },
-                tituloBotao: "Salvar",
-                corBotao: corDeFundoBotaoPrimaria,
-                carregando: false),
+            Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                  color: Colors.blue.withOpacity(0.2),
+                  borderRadius: arredondamentoBordas),
+              width: double.infinity,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Observer(builder: (context) {
+                    return Text(
+                        "${storeContagemDetalhada.totalPfFuncaoDeDados} PF em Função de dados");
+                  }),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Observer(builder: (context) {
+                    return Text(
+                        "${storeContagemDetalhada.totalPfFuncaTransacional}  PF em Função Transacional");
+                  }),
+                ],
+              ),
+            ),
+
+            const SizedBox(
+              height: 20,
+            ),
+
+            Observer(builder: (context) {
+              return storeContagemDetalhada.alteracoes
+                  ? const Text(
+                      "Salve as alterações!",
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontWeight: Fontes.weightTextoNormal,
+                      ),
+                    )
+                  : const SizedBox(
+                      height: 20,
+                    );
+            }),
+
+            Observer(builder: (context) {
+              return BotaoPadrao(
+                  corDeTextoBotao: corTextoSobCorPrimaria,
+                  acao: () async {
+                    // var retorno = await controller.salvarContagem(
+                    //   "Indicativa",
+                    //   store.alis,
+                    //   store.aies,
+                    //   projetoUid,
+                    //   store.totalPf,
+                    // );
+                    // store.alteracoes = false;
+                    // AlertaSnack.exbirSnackBar(context, retorno);
+                  },
+                  tituloBotao: "Salvar",
+                  corBotao: corDeFundoBotaoPrimaria,
+                  carregando: storeContagemDetalhada.carregando);
+            }),
           ],
         ),
       ),

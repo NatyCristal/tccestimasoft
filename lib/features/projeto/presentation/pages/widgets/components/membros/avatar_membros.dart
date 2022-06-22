@@ -4,8 +4,12 @@ import 'package:estimasoft/features/login/domain/entities/login_entitie.dart';
 import 'package:flutter/material.dart';
 
 class AvatarMembro extends StatelessWidget {
+  final double altura;
+  final double largura;
   final UsuarioEntitie membro;
-  const AvatarMembro({Key? key, required this.membro}) : super(key: key);
+  const AvatarMembro(
+      {Key? key, required this.membro, this.altura = 50, this.largura = 50})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,24 +17,25 @@ class AvatarMembro extends StatelessWidget {
         membro.nome.split(" ")[0][0] + membro.nome.split(" ")[1][0];
 
     return Container(
-      padding: const EdgeInsets.all(3),
+      padding: const EdgeInsets.all(2),
       margin: const EdgeInsets.all(5),
-      height: 50,
-      width: 50,
+      height: altura,
+      width: largura,
       decoration: BoxDecoration(
-          color: corDeLinhaAppBar, borderRadius: BorderRadius.circular(30)),
+          color: corDeLinhaAppBar, borderRadius: BorderRadius.circular(40)),
       child: membro.urlFoto == ""
           ? Container(
               decoration: BoxDecoration(
                   color: corDeFundoBotaoSecundaria,
-                  borderRadius: BorderRadiusDirectional.circular(30)),
+                  borderRadius: BorderRadiusDirectional.circular(40)),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
                     nome,
-                    style: const TextStyle(
+                    style: TextStyle(
+                        fontSize: altura < 50 ? 10 : 14,
                         color: corTituloTexto,
                         fontWeight: Fontes.weightTextoTitulo),
                   )
@@ -38,7 +43,7 @@ class AvatarMembro extends StatelessWidget {
               ),
             )
           : ClipRRect(
-              borderRadius: BorderRadius.circular(30),
+              borderRadius: BorderRadius.circular(40),
               child: CachedNetworkImage(
                   imageUrl: membro.urlFoto, fit: BoxFit.cover)),
     );

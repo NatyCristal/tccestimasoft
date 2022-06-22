@@ -2,11 +2,13 @@ import 'package:estimasoft/features/estimativas/domain/entitie/esforco_entitie.d
 
 class EstimativaEsforcoModel extends EsforcoEntity {
   EstimativaEsforcoModel(
-      {required String contagemPontoDeFuncao,
+      {required bool compartilhada,
+      required String contagemPontoDeFuncao,
       required String linguagem,
       required String produtividadeEquipe,
       required String esforcoTotal})
       : super(
+            compartilhada: compartilhada,
             contagemPontoDeFuncao: contagemPontoDeFuncao,
             linguagem: linguagem,
             produtividadeEquipe: produtividadeEquipe,
@@ -14,6 +16,7 @@ class EstimativaEsforcoModel extends EsforcoEntity {
 
   Map<String, dynamic> toMap() {
     return {
+      "Compartilhada": compartilhada,
       "ContagemPontoDeFuncao": contagemPontoDeFuncao,
       'Linguagem': linguagem,
       'ProdutividadeEquipe': produtividadeEquipe,
@@ -23,6 +26,7 @@ class EstimativaEsforcoModel extends EsforcoEntity {
 
   factory EstimativaEsforcoModel.fromMap(Map<String, dynamic> map) {
     return EstimativaEsforcoModel(
+        compartilhada: map["Compartilhada"] ?? false,
         contagemPontoDeFuncao: map["ContagemPontoDeFuncao"],
         esforcoTotal: map["EsforcoTotal"],
         linguagem: map["Linguagem"],

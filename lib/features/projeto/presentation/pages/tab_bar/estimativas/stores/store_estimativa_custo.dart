@@ -61,9 +61,12 @@ abstract class StoreEstimativaCustoBase with Store {
 
   @observable
   String tipoContagem = "";
+  @observable
+  List<CustoEntity> custosValidos = [];
 
   @observable
   EsforcoEntity esforcoEntitySelecionado = EsforcoEntity(
+      compartilhada: false,
       contagemPontoDeFuncao: "",
       linguagem: "",
       produtividadeEquipe: "",
@@ -71,7 +74,11 @@ abstract class StoreEstimativaCustoBase with Store {
 
   @observable
   EquipeEntity equipeEntitySelecionado = EquipeEntity(
-      esforco: "", prazo: '', producaoDiaria: "", equipeEstimada: "");
+      compartilhada: false,
+      esforco: "",
+      prazo: '',
+      producaoDiaria: "",
+      equipeEstimada: "");
 
   @action
   exibirEsforcos(List<EsforcoEntity> esforcos) {
@@ -183,6 +190,7 @@ abstract class StoreEstimativaCustoBase with Store {
   buscarListaCusto(List<CustoEntity> custoEntity) {
     custos = custoEntity;
     tamanhoListaCustos = custoEntity.length;
+    custosValidos = custoEntity;
   }
 
   @action

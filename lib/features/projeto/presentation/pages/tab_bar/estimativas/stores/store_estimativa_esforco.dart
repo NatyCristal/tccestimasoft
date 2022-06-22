@@ -93,6 +93,7 @@ abstract class StoreEstimativaEsforcoBase with Store {
 
     if (contagemPF.isNotEmpty && !existe) {
       EsforcoEntity esforcoEntity = EsforcoEntity(
+          compartilhada: false,
           contagemPontoDeFuncao: contagemPF,
           linguagem: linguagemSelecionada,
           produtividadeEquipe: produtividadeEquipe,

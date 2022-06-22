@@ -104,6 +104,7 @@ abstract class StoreEstimativaEquipeBase with Store {
 
     if (esforcosValidos.isNotEmpty && !existe) {
       EquipeEntity equipeEntity = EquipeEntity(
+        compartilhada: false,
         esforco: esforcoSelecionado,
         prazo: prazoSelecionado,
         producaoDiaria: producaoDiaria,

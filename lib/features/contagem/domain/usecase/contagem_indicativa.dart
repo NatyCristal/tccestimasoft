@@ -20,6 +20,7 @@ class ContagemIndicativaUseCase {
         await repository.salvar(alis, aies, uidProjeto, uidUsuario, totalPf);
 
     var erro = "";
+    // ignore: prefer_typing_uninitialized_variables
     var retorno;
 
     resultado.fold((l) {
@@ -43,6 +44,7 @@ class ContagemIndicativaUseCase {
     var resultado = await repository.recuperarContagem(uidProjeto, uidUsuario);
 
     var erro = "";
+    // ignore: prefer_typing_uninitialized_variables
     var retorno;
 
     resultado.fold((l) {

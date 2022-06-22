@@ -10,6 +10,7 @@ class EstimativaFirebaseEsforcoDatasource extends EstimativaEsforcoDatasource {
   Future<EsforcoEntity> salvarEstimativaEsforco(EsforcoEntity esforcoEntity,
       String uidProjeto, String uidUsuario, String tipoContagem) async {
     EstimativaEsforcoModel esforco = EstimativaEsforcoModel(
+        compartilhada: esforcoEntity.compartilhada,
         contagemPontoDeFuncao: esforcoEntity.contagemPontoDeFuncao,
         linguagem: esforcoEntity.linguagem,
         produtividadeEquipe: esforcoEntity.produtividadeEquipe,

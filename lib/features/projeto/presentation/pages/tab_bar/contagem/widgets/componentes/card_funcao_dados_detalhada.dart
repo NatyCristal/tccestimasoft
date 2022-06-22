@@ -1,18 +1,19 @@
+import 'package:estimasoft/core/shared/utils.dart';
 import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
 import 'package:estimasoft/core/shared/utils/tamanho_tela.dart';
-import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_indicativa.dart';
-import 'package:flutter/widgets.dart';
+import 'package:estimasoft/features/contagem/domain/entitie/indice_detalhada.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_detalhada.dart';
+import 'package:flutter/material.dart';
 
 import '../cards/card_contagem_detalhada.dart';
 
 class FuncaoDeDadosDetalhada extends StatelessWidget {
   final ScrollController scrollController;
-
-  final StoreContagemIndicativa storeContagemIndicativa;
+  final StoreContagemDetalhada storeContagemDetalhada;
   const FuncaoDeDadosDetalhada(
       {Key? key,
-      required this.storeContagemIndicativa,
-      required this.scrollController})
+      required this.scrollController,
+      required this.storeContagemDetalhada})
       : super(key: key);
 
   @override
@@ -20,7 +21,11 @@ class FuncaoDeDadosDetalhada extends StatelessWidget {
     return SingleChildScrollView(
       controller: scrollController,
       scrollDirection: Axis.horizontal,
-      child: SizedBox(
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+            borderRadius: arredondamentoBordas,
+            color: Colors.yellow.withOpacity(0.2)),
         width: TamanhoTela.width(context, 1.3),
         child: Column(
           children: [
@@ -67,35 +72,34 @@ class FuncaoDeDadosDetalhada extends StatelessWidget {
             ListView.builder(
               controller: scrollController,
               shrinkWrap: true,
-              itemCount:
-                  storeContagemIndicativa.contagemIndicativaValida.ali.length,
+              itemCount: storeContagemDetalhada
+                  .contagemDetalhadaEntitie.funcaoDados.length,
               itemBuilder: (context, index) {
-                String nomeFuncao =
-                    storeContagemIndicativa.contagemIndicativaValida.ali[index];
+                IndiceDetalhada indiceDetalhada = storeContagemDetalhada
+                    .contagemDetalhadaEntitie.funcaoDados[index];
 
                 return ContagemDetalhadaCard(
-                  scrollController: scrollController,
-                  tipoFuncao: "ALI",
-                  nomeDaFuncao: nomeFuncao,
+                  store: storeContagemDetalhada,
+                  indiceDetalhada: indiceDetalhada,
                 );
               },
             ),
-            ListView.builder(
-              controller: scrollController,
-              shrinkWrap: true,
-              itemCount:
-                  storeContagemIndicativa.contagemIndicativaValida.aie.length,
-              itemBuilder: (context, index) {
-                String nomeFuncao =
-                    storeContagemIndicativa.contagemIndicativaValida.aie[index];
+            // ListView.builder(
+            //   controller: scrollController,
+            //   shrinkWrap: true,
+            //   itemCount:
+            //       storeContagemIndicativa.contagemIndicativaValida.aie.length,
+            //   itemBuilder: (context, index) {
+            //     String nomeFuncao =
+            //         storeContagemIndicativa.contagemIndicativaValida.aie[index];
 
-                return ContagemDetalhadaCard(
-                  scrollController: scrollController,
-                  tipoFuncao: "AIE",
-                  nomeDaFuncao: nomeFuncao,
-                );
-              },
-            )
+            //     return ContagemDetalhadaCard(
+            //       store: storeContagemDetalhada,
+            //       tipoFuncao: "AIE",
+            //       nomeDaFuncao: nomeFuncao,
+            //     );
+            //   },
+            // )
           ],
         ),
       ),

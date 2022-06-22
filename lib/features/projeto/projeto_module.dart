@@ -6,11 +6,13 @@ import 'package:estimasoft/features/projeto/domain/usecase/entrar_projeto_usecas
 import 'package:estimasoft/features/projeto/domain/usecase/recuperar_membros_usecase.dart';
 import 'package:estimasoft/features/projeto/domain/usecase/arquivo_usecase.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/projeto_bottom_navigator_bar.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/exibicao_estimativa_page.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/exibicao_projetos_compartilhados_page.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/exibicao_meus_projetos_page.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/insercao_arquivos_projetos_page.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/projetos_principal_page.dart';
 import 'package:estimasoft/features/projeto/presentation/projeto_controller.dart';
+import 'package:estimasoft/features/resultado/resultado_module.dart';
 import 'package:estimasoft/features/usuario/usuario_module.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import '../usuario/data/datasource/usuario_firebase_datasource.dart';
@@ -37,6 +39,7 @@ class ProjetoModule extends Module {
         UsuarioModule(),
         ContagemModule(),
         EstimativasModule(),
+        ResultadoModule(),
       ];
 
   @override
@@ -60,5 +63,12 @@ class ProjetoModule extends Module {
                   projetoEntitie: args.data,
                 ),
             guards: [AutorizadoGuard()]),
+        ChildRoute('/visualizar-estimativa',
+            child: (context, args) => VisualizarEstimativas(
+                  resultadoEntity: args.data[0],
+                  tipoDeEstimativa: args.data[1],
+                  uidProjeto: args.data[2],
+                ),
+            guards: [AutorizadoGuard()])
       ];
 }

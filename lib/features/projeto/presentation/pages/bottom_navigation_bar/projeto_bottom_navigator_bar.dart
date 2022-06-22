@@ -1,6 +1,18 @@
+import 'package:estimasoft/core/shared/utils.dart';
 import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
+import 'package:estimasoft/core/shared/utils/snackbar.dart';
+import 'package:estimasoft/features/estimativas/domain/entitie/custo_entity.dart';
+import 'package:estimasoft/features/estimativas/domain/entitie/equipe_entity.dart';
+import 'package:estimasoft/features/estimativas/domain/entitie/esforco_entitie.dart';
+import 'package:estimasoft/features/estimativas/domain/entitie/prazo_entitie.dart';
 import 'package:estimasoft/features/projeto/domain/entitie/projeto_entitie.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/home/store/store_projeto_index_menu.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/resultados/widget/card_custo.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/resultados/widget/card_equipe.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/resultados/widget/card_esforco.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/resultados/widget/card_estimada.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/resultados/widget/card_indicativa.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/resultados/widget/card_prazo.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/contagem_detalhada.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_detalhada.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_estimada.dart';
@@ -14,6 +26,7 @@ import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativ
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_esforco.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_prazo.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import '../tab_bar/contagem/contagem_estimada.dart';
@@ -36,7 +49,7 @@ class ProjetoMenuPage extends StatelessWidget {
   final StoreEstimativaCusto storeEstimativaCusto = StoreEstimativaCusto();
   ProjetoMenuPage({Key? key, required this.projeto}) : super(key: key);
 
-  _itemSelecionado(int index) {
+  itemSelecionado(int index) {
     store.index = index;
   }
 
@@ -82,46 +95,7 @@ class ProjetoMenuPage extends StatelessWidget {
                       actions: [
                         GestureDetector(
                           onTap: () {
-                            Alert(
-                              context: context,
-                              type: AlertType.warning,
-                              title: "Id de compartilhamento:",
-                              style: const AlertStyle(
-                                titleStyle: TextStyle(
-                                    color: corTituloTexto, fontSize: 20),
-                              ),
-                              content: Column(
-                                children: [
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text(
-                                    projeto.uidProjeto,
-                                    style: const TextStyle(
-                                        color: corCorpoTexto,
-                                        fontSize: 18,
-                                        fontWeight: Fontes.weightTextoLeve),
-                                  ),
-                                ],
-                              ),
-                              buttons: [
-                                DialogButton(
-                                  color: corDeFundoBotaoSecundaria,
-                                  child: const Text(
-                                    "OK",
-                                    style: TextStyle(
-                                        fontWeight: Fontes.weightTextoNormal,
-                                        color: corDeTextoBotaoSecundaria,
-                                        fontSize: 14),
-                                  ),
-                                  onPressed: () async {
-                                    Navigator.of(context, rootNavigator: true)
-                                        .pop();
-                                  },
-                                  width: 120,
-                                ),
-                              ],
-                            ).show();
+                            alertaCompartilhamentoProjeto(projeto, context);
                           },
                           child: const Icon(
                             Icons.share,
@@ -167,8 +141,9 @@ class ProjetoMenuPage extends StatelessWidget {
                         projetoUid: projeto.uidProjeto,
                       ),
                       ContagemDetalhada(
+                          storeContagemDetalhada: storeDetalhada,
                           projetoUid: projeto.uidProjeto,
-                          store: storeEstimada,
+                          storeEstimada: storeEstimada,
                           storeIndicativa: storeIndicativa),
                     ]),
                     bottomNavigationBar: Observer(builder: (context) {
@@ -176,7 +151,7 @@ class ProjetoMenuPage extends StatelessWidget {
                         type: BottomNavigationBarType.fixed,
                         currentIndex: store.index,
                         selectedItemColor: corDeAcao,
-                        onTap: _itemSelecionado,
+                        onTap: itemSelecionado,
                         items: const [
                           BottomNavigationBarItem(
                             label: "Home",
@@ -205,48 +180,7 @@ class ProjetoMenuPage extends StatelessWidget {
                           actions: [
                             GestureDetector(
                               onTap: () {
-                                Alert(
-                                  context: context,
-                                  type: AlertType.warning,
-                                  title: "Id de compartilhamento:",
-                                  style: const AlertStyle(
-                                    titleStyle: TextStyle(
-                                        color: corTituloTexto, fontSize: 20),
-                                  ),
-                                  content: Column(
-                                    children: [
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      Text(
-                                        projeto.uidProjeto,
-                                        style: const TextStyle(
-                                            color: corCorpoTexto,
-                                            fontSize: 18,
-                                            fontWeight: Fontes.weightTextoLeve),
-                                      ),
-                                    ],
-                                  ),
-                                  buttons: [
-                                    DialogButton(
-                                      color: corDeFundoBotaoSecundaria,
-                                      child: const Text(
-                                        "OK",
-                                        style: TextStyle(
-                                            fontWeight:
-                                                Fontes.weightTextoNormal,
-                                            color: corDeTextoBotaoSecundaria,
-                                            fontSize: 14),
-                                      ),
-                                      onPressed: () async {
-                                        Navigator.of(context,
-                                                rootNavigator: true)
-                                            .pop();
-                                      },
-                                      width: 120,
-                                    ),
-                                  ],
-                                ).show();
+                                alertaCompartilhamentoProjeto(projeto, context);
                               },
                               child: const Icon(
                                 Icons.share,
@@ -322,7 +256,7 @@ class ProjetoMenuPage extends StatelessWidget {
                             type: BottomNavigationBarType.fixed,
                             currentIndex: store.index,
                             selectedItemColor: corDeAcao,
-                            onTap: _itemSelecionado,
+                            onTap: itemSelecionado,
                             items: const [
                               BottomNavigationBarItem(
                                 label: "Home",
@@ -342,102 +276,339 @@ class ProjetoMenuPage extends StatelessWidget {
                         })),
                   ),
                 )
-              : Scaffold(
-                  appBar: AppBar(
-                    actions: [
-                      GestureDetector(
-                        onTap: () {
-                          Alert(
-                            context: context,
-                            type: AlertType.warning,
-                            title: "Id de compartilhamento:",
-                            style: const AlertStyle(
-                              titleStyle: TextStyle(
-                                  color: corTituloTexto, fontSize: 20),
+              : store.index == 0
+                  ? Scaffold(
+                      appBar: AppBar(
+                        actions: [
+                          GestureDetector(
+                            onTap: () {
+                              alertaCompartilhamentoProjeto(projeto, context);
+                            },
+                            child: const Icon(
+                              Icons.share,
+                              color: corTituloTexto,
+                              size: 20,
                             ),
-                            content: Column(
-                              children: [
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  projeto.uidProjeto,
-                                  style: const TextStyle(
-                                      color: corCorpoTexto,
-                                      fontSize: 18,
-                                      fontWeight: Fontes.weightTextoLeve),
-                                ),
-                              ],
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                        ],
+                        backgroundColor: Colors.transparent,
+                        elevation: 0,
+                        title: Text(
+                          projeto.nomeProjeto,
+                          style: const TextStyle(
+                              fontSize: tamanhoSubtitulo,
+                              color: corTituloTexto),
+                        ),
+                        shape: const Border(
+                          bottom: BorderSide(color: corDeLinhaAppBar, width: 1),
+                        ),
+                      ),
+                      body: IndexHome(
+                        prazo: storeEstimativaPrazo,
+                        indicativa: storeIndicativa,
+                        estimada: storeEstimada,
+                        esforco: storeEstimativaEsforco,
+                        custo: storeEstimativaCusto,
+                        detalhada: storeDetalhada,
+                        equipe: storeEstimativaEquipe,
+                        store: store,
+                        projeto: projeto,
+                      ),
+                      bottomNavigationBar: Observer(builder: (context) {
+                        return BottomNavigationBar(
+                          type: BottomNavigationBarType.fixed,
+                          currentIndex: store.index,
+                          selectedItemColor: corDeAcao,
+                          onTap: itemSelecionado,
+                          items: const [
+                            BottomNavigationBarItem(
+                              label: "Home",
+                              icon: Icon(Icons.home),
                             ),
-                            buttons: [
-                              DialogButton(
-                                color: corDeFundoBotaoSecundaria,
-                                child: const Text(
-                                  "OK",
-                                  style: TextStyle(
-                                      fontWeight: Fontes.weightTextoNormal,
-                                      color: corDeTextoBotaoSecundaria,
-                                      fontSize: 14),
-                                ),
-                                onPressed: () async {
-                                  Navigator.of(context, rootNavigator: true)
-                                      .pop();
-                                },
-                                width: 120,
+                            BottomNavigationBarItem(
+                                label: "Contagem",
+                                icon: Icon(Icons.auto_graph_outlined)),
+                            BottomNavigationBarItem(
+                                label: "Estimativas",
+                                icon: Icon(Icons.bar_chart_rounded)),
+                            BottomNavigationBarItem(
+                                label: "Resultado",
+                                icon: Icon(Icons.checklist_rtl_rounded)),
+                          ],
+                        );
+                      }))
+                  : Scaffold(
+                      appBar: AppBar(
+                        actions: [
+                          GestureDetector(
+                            onTap: () {
+                              alertaCompartilhamentoProjeto(projeto, context);
+                            },
+                            child: const Icon(
+                              Icons.share,
+                              color: corTituloTexto,
+                              size: 20,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                        ],
+                        backgroundColor: Colors.transparent,
+                        elevation: 0,
+                        title: Text(
+                          projeto.nomeProjeto,
+                          style: const TextStyle(
+                              fontSize: tamanhoSubtitulo,
+                              color: corTituloTexto),
+                        ),
+                        shape: const Border(
+                          bottom: BorderSide(color: corDeLinhaAppBar, width: 1),
+                        ),
+                      ),
+                      body: Container(
+                        padding: paddingPagePrincipal,
+                        child: SingleChildScrollView(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text('Contagens prontas para compartilhar'),
+                              const SizedBox(
+                                height: 20,
                               ),
+                              Row(
+                                children: [
+                                  Observer(builder: (context) {
+                                    return storeIndicativa
+                                                .contagemIndicativaValida
+                                                .totalPf >
+                                            0
+                                        ? const CardIndicativaResultado()
+                                        : const SizedBox();
+                                  }),
+                                  Observer(builder: (context) {
+                                    return storeEstimada.contagemEstimadaValida
+                                                .totalPF >
+                                            0
+                                        ? const CardEstimadaResultado()
+                                        : const SizedBox();
+                                  }),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              const Text("Esforços para compartilhamento"),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Row(
+                                children: [
+                                  Observer(builder: (context) {
+                                    return storeEstimativaEsforco
+                                            .esforcosValidos.isNotEmpty
+                                        ? SizedBox(
+                                            height: 120,
+                                            child: ListView.builder(
+                                                scrollDirection:
+                                                    Axis.horizontal,
+                                                shrinkWrap: true,
+                                                itemCount:
+                                                    storeEstimativaEsforco
+                                                        .esforcosValidos.length,
+                                                itemBuilder: (context, index) {
+                                                  EsforcoEntity esforcoEntity =
+                                                      storeEstimativaEsforco
+                                                              .esforcosValidos[
+                                                          index];
+                                                  return CardEsforcoResultado(
+                                                      projetoEntitie: projeto,
+                                                      esforcoEntity:
+                                                          esforcoEntity);
+                                                }),
+                                          )
+                                        : const SizedBox();
+                                  }),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              const Text("Prazos para compartilhamento"),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Row(
+                                children: [
+                                  Observer(builder: (context) {
+                                    return storeEstimativaPrazo
+                                            .prazosValidos.isNotEmpty
+                                        ? SizedBox(
+                                            height: 120,
+                                            child: ListView.builder(
+                                                scrollDirection:
+                                                    Axis.horizontal,
+                                                shrinkWrap: true,
+                                                itemCount: storeEstimativaPrazo
+                                                    .prazosValidos.length,
+                                                itemBuilder: (context, index) {
+                                                  PrazoEntity prazoEntity =
+                                                      storeEstimativaPrazo
+                                                          .prazosValidos[index];
+                                                  return CardResultadoPrazoCompartilhar(
+                                                      projetoEntitie: projeto,
+                                                      prazoEntity: prazoEntity);
+                                                }),
+                                          )
+                                        : const SizedBox();
+                                  }),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              const Text("Equipes para compartilhamento"),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Row(
+                                children: [
+                                  Observer(builder: (context) {
+                                    return storeEstimativaPrazo
+                                            .prazosValidos.isNotEmpty
+                                        ? SizedBox(
+                                            height: 120,
+                                            child: ListView.builder(
+                                                scrollDirection:
+                                                    Axis.horizontal,
+                                                shrinkWrap: true,
+                                                itemCount: storeEstimativaPrazo
+                                                    .prazosValidos.length,
+                                                itemBuilder: (context, index) {
+                                                  EquipeEntity equipeEntity =
+                                                      storeEstimativaEquipe
+                                                              .equipesValidas[
+                                                          index];
+                                                  return CardEquipeResultadoCompartilhar(
+                                                      projetoEntitie: projeto,
+                                                      equipeEntity:
+                                                          equipeEntity);
+                                                }),
+                                          )
+                                        : const SizedBox();
+                                  }),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              const Text("Custos para compartilhamento"),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Row(
+                                children: [
+                                  Observer(builder: (context) {
+                                    return storeEstimativaCusto
+                                            .custosValidos.isNotEmpty
+                                        ? SizedBox(
+                                            height: 120,
+                                            child: ListView.builder(
+                                                scrollDirection:
+                                                    Axis.horizontal,
+                                                shrinkWrap: true,
+                                                itemCount: storeEstimativaCusto
+                                                    .custosValidos.length,
+                                                itemBuilder: (context, index) {
+                                                  CustoEntity custoEntity =
+                                                      storeEstimativaCusto
+                                                          .custosValidos[index];
+                                                  return CardResultadoCustoCompartilhar(
+                                                      projetoEntitie: projeto,
+                                                      custoEntity: custoEntity);
+                                                }),
+                                          )
+                                        : const SizedBox();
+                                  }),
+                                ],
+                              )
                             ],
-                          ).show();
-                        },
-                        child: const Icon(
-                          Icons.share,
-                          color: corTituloTexto,
-                          size: 20,
+                          ),
                         ),
                       ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                    ],
-                    backgroundColor: Colors.transparent,
-                    elevation: 0,
-                    title: Text(
-                      projeto.nomeProjeto,
-                      style: const TextStyle(
-                          fontSize: tamanhoSubtitulo, color: corTituloTexto),
-                    ),
-                    shape: const Border(
-                      bottom: BorderSide(color: corDeLinhaAppBar, width: 1),
-                    ),
-                  ),
-                  body: Observer(builder: (context) {
-                    return Center(
-                      child: listaBottomNavigator(projeto, store),
+                      bottomNavigationBar: Observer(builder: (context) {
+                        return BottomNavigationBar(
+                          type: BottomNavigationBarType.fixed,
+                          currentIndex: store.index,
+                          selectedItemColor: corDeAcao,
+                          onTap: itemSelecionado,
+                          items: const [
+                            BottomNavigationBarItem(
+                              label: "Home",
+                              icon: Icon(Icons.home),
+                            ),
+                            BottomNavigationBarItem(
+                                label: "Contagem",
+                                icon: Icon(Icons.auto_graph_outlined)),
+                            BottomNavigationBarItem(
+                                label: "Estimativas",
+                                icon: Icon(Icons.bar_chart_rounded)),
+                            BottomNavigationBarItem(
+                                label: "Resultado",
+                                icon: Icon(Icons.checklist_rtl_rounded)),
+                          ],
+                        );
+                      }),
                     );
-                  }),
-                  bottomNavigationBar: Observer(builder: (context) {
-                    return BottomNavigationBar(
-                      type: BottomNavigationBarType.fixed,
-                      currentIndex: store.index,
-                      selectedItemColor: corDeAcao,
-                      onTap: _itemSelecionado,
-                      items: const [
-                        BottomNavigationBarItem(
-                          label: "Home",
-                          icon: Icon(Icons.home),
-                        ),
-                        BottomNavigationBarItem(
-                            label: "Contagem",
-                            icon: Icon(Icons.auto_graph_outlined)),
-                        BottomNavigationBarItem(
-                            label: "Estimativas",
-                            icon: Icon(Icons.bar_chart_rounded)),
-                        BottomNavigationBarItem(
-                            label: "Resultado",
-                            icon: Icon(Icons.checklist_rtl_rounded)),
-                      ],
-                    );
-                  }),
-                );
     });
   }
+}
+
+alertaCompartilhamentoProjeto(ProjetoEntitie projetoEntitie, context) {
+  Alert(
+    context: context,
+    type: AlertType.warning,
+    title: "Id de compartilhamento:",
+    style: const AlertStyle(
+      titleStyle: TextStyle(color: corTituloTexto, fontSize: 20),
+    ),
+    content: Column(
+      children: [
+        const SizedBox(
+          height: 10,
+        ),
+        Text(
+          projetoEntitie.uidProjeto,
+          style: const TextStyle(
+              color: corCorpoTexto,
+              fontSize: 18,
+              fontWeight: Fontes.weightTextoLeve),
+        ),
+      ],
+    ),
+    buttons: [
+      DialogButton(
+        color: corDeFundoBotaoSecundaria,
+        child: const Text(
+          "Copiar",
+          style: TextStyle(
+              fontWeight: Fontes.weightTextoNormal,
+              color: corDeTextoBotaoSecundaria,
+              fontSize: 14),
+        ),
+        onPressed: () async {
+          ClipboardData data = ClipboardData(text: projetoEntitie.uidProjeto);
+
+          await Clipboard.setData(data).then((value) {
+            AlertaSnack.exbirSnackBar(context, "Código copiado");
+            Navigator.of(context, rootNavigator: true).pop();
+          });
+        },
+        width: 120,
+      ),
+    ],
+  ).show();
 }

@@ -3,7 +3,8 @@ import 'package:estimasoft/features/estimativas/domain/entitie/custo_entity.dart
 
 class CustoModel extends CustoEntity {
   CustoModel(
-      {required tipoContagem,
+      {required compartilhada,
+      required tipoContagem,
       required List<InsumoEstimativaCustoModel> equipe,
       required List<InsumoEstimativaCustoModel> custosVariaisFixos,
       required String disponibilidadeEquipe,
@@ -14,6 +15,7 @@ class CustoModel extends CustoEntity {
       required double valorTotalProjeto,
       required String custoPF})
       : super(
+            compartilhada: compartilhada,
             tipoContagem: tipoContagem,
             equipe: equipe,
             custosVariaisFixos: custosVariaisFixos,
@@ -27,6 +29,7 @@ class CustoModel extends CustoEntity {
 
   Map<String, dynamic> toMap() {
     return {
+      "Compartilhada": compartilhada,
       "Equipe": {for (var e in equipe) equipe.indexOf(e).toString(): e.toMap()},
       'CustosVariaveisEFixos': {
         for (var e in custosVariaisFixos)
@@ -61,6 +64,7 @@ class CustoModel extends CustoEntity {
     }
 
     return CustoModel(
+      compartilhada: map["Compartilhada"] ?? false,
       tipoContagem: map["TipoContagem"],
       equipe: equipe,
       custosVariaisFixos: custos,

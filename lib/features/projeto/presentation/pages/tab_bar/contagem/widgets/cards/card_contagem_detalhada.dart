@@ -1,17 +1,17 @@
 import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
+import 'package:estimasoft/features/contagem/domain/entitie/indice_detalhada.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_detalhada.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/widgets/componentes/spin_box.dart';
 import 'package:flutter/material.dart';
 
 class ContagemDetalhadaCard extends StatelessWidget {
-  final ScrollController scrollController;
-  final String nomeDaFuncao;
-  final String tipoFuncao;
-  const ContagemDetalhadaCard(
-      {Key? key,
-      required this.tipoFuncao,
-      required this.nomeDaFuncao,
-      required this.scrollController})
-      : super(key: key);
+  final StoreContagemDetalhada store;
+  final IndiceDetalhada indiceDetalhada;
+  const ContagemDetalhadaCard({
+    Key? key,
+    required this.store,
+    required this.indiceDetalhada,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,36 +19,36 @@ class ContagemDetalhadaCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          //  width: TamanhoTela.width(context, 1),
           child: Row(
             children: [
               SizedBox(
                 width: 120,
                 child: Text(
-                  nomeDaFuncao,
+                  indiceDetalhada.nome,
                   style: const TextStyle(color: corCorpoTexto),
                 ),
               ),
               SizedBox(
                 width: 80,
                 child: Text(
-                  tipoFuncao,
+                  indiceDetalhada.tipo,
                   style: const TextStyle(color: corCorpoTexto),
                 ),
               ),
               SizedBox(
                 width: 130,
                 child: SpinBox(
-                    tipoFuncao: tipoFuncao, scrollController: scrollController),
+                  valorAlterado: indiceDetalhada.quantidadeTrsEArs,
+                ),
               ),
               const SizedBox(
                 width: 20,
               ),
               SizedBox(
-                width: 130,
-                child: SpinBox(
-                    tipoFuncao: tipoFuncao, scrollController: scrollController),
-              ),
+                  width: 130,
+                  child: SpinBox(
+                    valorAlterado: indiceDetalhada.quantidadeTRs,
+                  )),
             ],
           ),
         ),

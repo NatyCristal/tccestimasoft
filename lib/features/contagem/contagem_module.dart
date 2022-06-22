@@ -1,7 +1,10 @@
+import 'package:estimasoft/features/contagem/data/datasource/contagem_detalhada_firebase.dart';
 import 'package:estimasoft/features/contagem/data/datasource/contagem_estimada_firebase.dart';
 import 'package:estimasoft/features/contagem/data/datasource/contagem_indicativa_firebase.dart';
+import 'package:estimasoft/features/contagem/data/infra/contagem_detalhada_infra.dart';
 import 'package:estimasoft/features/contagem/data/infra/contagem_estimada_infra.dart';
 import 'package:estimasoft/features/contagem/data/infra/contagem_indicativa_infra.dart';
+import 'package:estimasoft/features/contagem/domain/usecase/contagem_detalhada.dart';
 import 'package:estimasoft/features/contagem/domain/usecase/contagem_estimada.dart';
 import 'package:estimasoft/features/contagem/domain/usecase/contagem_indicativa.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -17,7 +20,10 @@ class ContagemModule extends Module {
         Bind.factory((i) => ContagemEstimadaFirebase(), export: true),
         Bind.factory((i) => ContagemEstimadaInfra(i()), export: true),
         Bind.factory((i) => ContagemEstimadaUsecase(i()), export: true),
-        Bind.factory((i) => ContagemController(i(), i()), export: true),
+        Bind.factory((i) => ContagemDetalhadaFirebase(), export: true),
+        Bind.factory((i) => ContagemDetalhadaInfra(i()), export: true),
+        Bind.factory((i) => ContagemDetalhadaUsecase(i()), export: true),
+        Bind.factory((i) => ContagemController(i(), i(), i()), export: true),
       ];
 
   @override

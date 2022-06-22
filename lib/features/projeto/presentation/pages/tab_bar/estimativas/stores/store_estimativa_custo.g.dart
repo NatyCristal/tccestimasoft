@@ -282,6 +282,22 @@ mixin _$StoreEstimativaCusto on StoreEstimativaCustoBase, Store {
     });
   }
 
+  late final _$custosValidosAtom =
+      Atom(name: 'StoreEstimativaCustoBase.custosValidos', context: context);
+
+  @override
+  List<CustoEntity> get custosValidos {
+    _$custosValidosAtom.reportRead();
+    return super.custosValidos;
+  }
+
+  @override
+  set custosValidos(List<CustoEntity> value) {
+    _$custosValidosAtom.reportWrite(value, super.custosValidos, () {
+      super.custosValidos = value;
+    });
+  }
+
   late final _$esforcoEntitySelecionadoAtom = Atom(
       name: 'StoreEstimativaCustoBase.esforcoEntitySelecionado',
       context: context);
@@ -551,6 +567,17 @@ mixin _$StoreEstimativaCusto on StoreEstimativaCustoBase, Store {
   }
 
   @override
+  dynamic validarCamposPreenchidos(dynamic context) {
+    final _$actionInfo = _$StoreEstimativaCustoBaseActionController.startAction(
+        name: 'StoreEstimativaCustoBase.validarCamposPreenchidos');
+    try {
+      return super.validarCamposPreenchidos(context);
+    } finally {
+      _$StoreEstimativaCustoBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic adicionarNovoCusto(CustoEntity custoEntity, dynamic context) {
     final _$actionInfo = _$StoreEstimativaCustoBaseActionController.startAction(
         name: 'StoreEstimativaCustoBase.adicionarNovoCusto');
@@ -704,6 +731,7 @@ porcentagemLucro: ${porcentagemLucro},
 custoProjeto: ${custoProjeto},
 valorTotalProjeto: ${valorTotalProjeto},
 tipoContagem: ${tipoContagem},
+custosValidos: ${custosValidos},
 esforcoEntitySelecionado: ${esforcoEntitySelecionado},
 equipeEntitySelecionado: ${equipeEntitySelecionado},
 cargoMembro: ${cargoMembro},

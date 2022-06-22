@@ -194,6 +194,9 @@ class EstimativaPrazo extends StatelessWidget {
                             projetoEntitie.uidProjeto,
                             Modular.get<UsuarioAutenticado>().store.uid,
                             element.contagemPontoDeFuncao.split(" - ").first);
+
+                        store.prazosValidos =
+                            controller.estimativasController.prazos;
                       }
                       store.alteracao = false;
                       store.carregando = false;

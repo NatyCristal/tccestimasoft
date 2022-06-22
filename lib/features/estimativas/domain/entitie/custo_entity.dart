@@ -1,7 +1,7 @@
 import 'package:estimasoft/features/estimativas/data/models/insumo_estimativa_custo.dart';
-import 'package:get/get_connect/http/src/request/request.dart';
 
 class CustoEntity {
+  bool compartilhada;
   String tipoContagem;
   List<InsumoEstimativaCustoModel> equipe;
 
@@ -16,6 +16,7 @@ class CustoEntity {
   double valorTotalProjeto;
 
   CustoEntity({
+    required this.compartilhada,
     required this.tipoContagem,
     required this.equipe,
     required this.custosVariaisFixos,

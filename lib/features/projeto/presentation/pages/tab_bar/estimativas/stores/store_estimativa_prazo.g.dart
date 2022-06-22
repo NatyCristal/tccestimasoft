@@ -171,6 +171,22 @@ mixin _$StoreEstimativaPrazo on StoreEstimativaPrazoBase, Store {
     });
   }
 
+  late final _$prazosValidosAtom =
+      Atom(name: 'StoreEstimativaPrazoBase.prazosValidos', context: context);
+
+  @override
+  List<PrazoEntity> get prazosValidos {
+    _$prazosValidosAtom.reportRead();
+    return super.prazosValidos;
+  }
+
+  @override
+  set prazosValidos(List<PrazoEntity> value) {
+    _$prazosValidosAtom.reportWrite(value, super.prazosValidos, () {
+      super.prazosValidos = value;
+    });
+  }
+
   late final _$tipoSistemaSelecionadoAtom = Atom(
       name: 'StoreEstimativaPrazoBase.tipoSistemaSelecionado',
       context: context);
@@ -260,6 +276,7 @@ contagemPF: ${contagemPF},
 tamanhoPf: ${tamanhoPf},
 prazoTotal: ${prazoTotal},
 regiaoDoImpossivel: ${regiaoDoImpossivel},
+prazosValidos: ${prazosValidos},
 tipoSistemaSelecionado: ${tipoSistemaSelecionado}
     ''';
   }

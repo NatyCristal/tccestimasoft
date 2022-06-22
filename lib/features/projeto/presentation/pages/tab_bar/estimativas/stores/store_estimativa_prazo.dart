@@ -38,6 +38,9 @@ abstract class StoreEstimativaPrazoBase with Store {
   @observable
   double regiaoDoImpossivel = 0;
 
+  @observable
+  List<PrazoEntity> prazosValidos = [];
+
   List<String> tipoSistema = [
     "Sistema Comum - Mainframe",
     "Sistema Comum - Web",
@@ -54,6 +57,7 @@ abstract class StoreEstimativaPrazoBase with Store {
   buscarListaPrazp(List<PrazoEntity> prazoEntity) {
     prazos = prazoEntity;
     tamanhoListaPrazo = prazoEntity.length;
+    prazosValidos = prazoEntity;
   }
 
   @action
@@ -81,6 +85,7 @@ abstract class StoreEstimativaPrazoBase with Store {
 
     if (contagemPF.isNotEmpty && !existe) {
       PrazoEntity prazoEntity = PrazoEntity(
+          compartilhada: false,
           contagemPontoDeFuncao: contagemPF,
           tipoSistema: tipoSistemaSelecionado,
           prazoMinimo: valorEmDiasReagiaoDoImpossivel,

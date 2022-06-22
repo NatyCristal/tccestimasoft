@@ -2,12 +2,10 @@ import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
 import 'package:flutter/material.dart';
 
 class SpinBox extends StatelessWidget {
-  final String tipoFuncao;
-  final ScrollController scrollController;
-  const SpinBox({
+  int valorAlterado;
+  SpinBox({
     Key? key,
-    required this.scrollController,
-    required this.tipoFuncao,
+    required this.valorAlterado,
   }) : super(key: key);
 
   @override
@@ -34,6 +32,8 @@ class SpinBox extends StatelessWidget {
                           int.parse(valueController.text) - 1 >= 0
                               ? (int.parse(valueController.text) - 1).toString()
                               : valueController.text;
+
+                      valorAlterado = int.parse(valueController.text);
                     },
                     icon: const Icon(
                       Icons.remove,
@@ -44,6 +44,10 @@ class SpinBox extends StatelessWidget {
                 SizedBox(
                   width: 40,
                   child: TextField(
+                    onChanged: (value) {
+                      value.toString();
+                      valorAlterado = int.parse(value.toString());
+                    },
                     textAlign: TextAlign.center,
                     onTap: () {
                       valueController.selection = TextSelection(
@@ -67,6 +71,7 @@ class SpinBox extends StatelessWidget {
                       valueController.text =
                           (int.parse(valueController.text) + 1).toString();
                       //   valor = (int.parse(valueController.text) + 1).toString();
+                      valorAlterado = int.parse(valueController.text);
                     },
                     icon: const Icon(
                       Icons.add,

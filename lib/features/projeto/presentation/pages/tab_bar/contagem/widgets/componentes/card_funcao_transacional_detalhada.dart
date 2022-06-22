@@ -1,22 +1,31 @@
+import 'package:estimasoft/core/shared/utils.dart';
 import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
 import 'package:estimasoft/core/shared/utils/tamanho_tela.dart';
-import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_estimada.dart';
+import 'package:estimasoft/features/contagem/domain/entitie/indice_detalhada.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_detalhada.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/widgets/cards/card_contagem_detalhada.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
 class CardFuncaoTransacionalDetalhada extends StatelessWidget {
+  final StoreContagemDetalhada contagemDetalhada;
   final ScrollController scrollController;
-  final StoreContagemEstimada storeEstimada;
-  const CardFuncaoTransacionalDetalhada(
-      {Key? key, required this.storeEstimada, required this.scrollController})
-      : super(key: key);
+
+  const CardFuncaoTransacionalDetalhada({
+    Key? key,
+    required this.scrollController,
+    required this.contagemDetalhada,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       controller: scrollController,
       scrollDirection: Axis.horizontal,
-      child: SizedBox(
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: arredondamentoBordas,
+            color: Colors.yellow.withOpacity(0.2)),
+        padding: const EdgeInsets.all(10),
         width: TamanhoTela.width(context, 1.3),
         child: Column(
           children: [
@@ -63,45 +72,46 @@ class CardFuncaoTransacionalDetalhada extends StatelessWidget {
             ListView.builder(
               controller: scrollController,
               shrinkWrap: true,
-              itemCount: storeEstimada.tamanhoListaCE,
+              itemCount: contagemDetalhada
+                  .contagemDetalhadaEntitie.funcaoTransacional.length,
               itemBuilder: (context, index) {
-                String nomeFuncao = storeEstimada.ce[index];
+                IndiceDetalhada indiceDetalhada = contagemDetalhada
+                    .contagemDetalhadaEntitie.funcaoTransacional[index];
 
                 return ContagemDetalhadaCard(
-                  scrollController: scrollController,
-                  tipoFuncao: "CE",
-                  nomeDaFuncao: nomeFuncao,
+                  store: contagemDetalhada,
+                  indiceDetalhada: indiceDetalhada,
                 );
               },
             ),
-            ListView.builder(
-              controller: scrollController,
-              shrinkWrap: true,
-              itemCount: storeEstimada.tamanhoListaEE,
-              itemBuilder: (context, index) {
-                String nomeFuncao = storeEstimada.ee[index];
+            // ListView.builder(
+            //   controller: scrollController,
+            //   shrinkWrap: true,
+            //   itemCount: storeEstimada.tamanhoListaEE,
+            //   itemBuilder: (context, index) {
+            //     String nomeFuncao = storeEstimada.ee[index];
 
-                return ContagemDetalhadaCard(
-                  scrollController: scrollController,
-                  tipoFuncao: "EE",
-                  nomeDaFuncao: nomeFuncao,
-                );
-              },
-            ),
-            ListView.builder(
-              controller: scrollController,
-              shrinkWrap: true,
-              itemCount: storeEstimada.tamanhoListaSE,
-              itemBuilder: (context, index) {
-                String nomeFuncao = storeEstimada.se[index];
+            //     return ContagemDetalhadaCard(
+            //       store: contagemDetalhada,
+            //       tipoFuncao: "EE",
+            //       nomeDaFuncao: nomeFuncao,
+            //     );
+            //   },
+            // ),
+            // ListView.builder(
+            //   controller: scrollController,
+            //   shrinkWrap: true,
+            //   itemCount: storeEstimada.tamanhoListaSE,
+            //   itemBuilder: (context, index) {
+            //     String nomeFuncao = storeEstimada.se[index];
 
-                return ContagemDetalhadaCard(
-                  scrollController: scrollController,
-                  tipoFuncao: "SE",
-                  nomeDaFuncao: nomeFuncao,
-                );
-              },
-            ),
+            //     return ContagemDetalhadaCard(
+            //       store: contagemDetalhada,
+            //       tipoFuncao: "SE",
+            //       nomeDaFuncao: nomeFuncao,
+            //     );
+            //   },
+            // ),
           ],
         ),
       ),

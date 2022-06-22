@@ -33,6 +33,7 @@ class EstimativaEquipeFirebaseDatasource extends EstimativaEquipeDatasource {
   Future<EquipeEntity> salvarEstimativaEquipe(EquipeEntity equipeEntity,
       String uidProjeto, String uidUsuario, String tipoContagem) async {
     EstimativaEquipeModel prazo = EstimativaEquipeModel(
+      compartilhada: false,
       equipeEstimada: equipeEntity.equipeEstimada,
       esforco: equipeEntity.esforco,
       prazo: equipeEntity.prazo,

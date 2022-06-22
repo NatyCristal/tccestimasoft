@@ -5,6 +5,7 @@ import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
 import 'package:estimasoft/core/shared/utils/tamanho_tela.dart';
 import 'package:estimasoft/features/projeto/domain/entitie/projeto_entitie.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/home/store/store_projeto_index_menu.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/home/widget/card_resultados_compartilhados.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_detalhada.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_estimada.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_indicativa.dart';
@@ -18,7 +19,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import '../../bottom_navigation_bar/home/widgets/exemplo_chart.dart';
 
 class IndexHome extends StatelessWidget {
   final StoreContagemIndicativa indicativa;
@@ -74,6 +74,9 @@ class IndexHome extends StatelessWidget {
                           controller.estimativasController.equipe);
                       custo.buscarListaCusto(
                           controller.estimativasController.custos);
+
+                      controller.resultadoController
+                          .recuperarResultados(projeto.uidProjeto);
 
                       store.carregou = true;
                     }
@@ -300,7 +303,20 @@ class IndexHome extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    const BarChartSample7()
+                    CardEsforcosCompartilhados(uidProjeto: projeto.uidProjeto),
+
+                    // const Center(child: Text("Contagem Indicativa")),
+                    // const BarChartSample7(),
+                    // const SizedBox(
+                    //   height: 10,
+                    // ),
+                    // const Center(child: Text("Contagem Estimada")),
+                    // const BarChartSample7(),
+                    // const SizedBox(
+                    //   height: 10,
+                    // ),
+                    // const Center(child: Text("Contagem Detalhada")),
+                    // const BarChartSample7(),
                   ],
                 ),
               ),

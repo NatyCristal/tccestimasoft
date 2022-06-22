@@ -1,5 +1,6 @@
 import 'package:estimasoft/core/auth/usuario_autenticado.dart';
 import 'package:estimasoft/core/shared/anim/lotties.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_detalhada.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_estimada.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_indicativa.dart';
 import 'package:estimasoft/features/projeto/presentation/projeto_controller.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class ConteudoContagemDetalhada extends StatelessWidget {
+  final StoreContagemDetalhada storeContagemDetalhada;
   final StoreContagemIndicativa storeContagemIndicativa;
   final StoreContagemEstimada store;
   final String uidProjeto;
@@ -15,7 +17,8 @@ class ConteudoContagemDetalhada extends StatelessWidget {
       {Key? key,
       required this.uidProjeto,
       required this.store,
-      required this.storeContagemIndicativa})
+      required this.storeContagemIndicativa,
+      required this.storeContagemDetalhada})
       : super(key: key);
 
   @override
@@ -34,6 +37,9 @@ class ConteudoContagemDetalhada extends StatelessWidget {
                   controller.contagemController.contagemIndicativa;
               store.contagemEstimadaValida =
                   controller.contagemController.contagemEstimada;
+
+              storeContagemDetalhada.receberDados(store.contagemEstimadaValida,
+                  storeContagemIndicativa.contagemIndicativaValida);
             }
 
             break;
