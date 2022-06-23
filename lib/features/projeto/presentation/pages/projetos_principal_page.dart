@@ -77,7 +77,7 @@ class ProjetosPrincipalPage extends StatelessWidget {
                     DialogButton(
                       color: corDeFundoBotaoSecundaria,
                       child: const Text(
-                        "Salvar",
+                        "Entrar",
                         style: TextStyle(
                             fontWeight: Fontes.weightTextoNormal,
                             color: corDeTextoBotaoSecundaria,

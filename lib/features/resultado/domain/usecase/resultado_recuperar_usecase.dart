@@ -83,9 +83,33 @@ class ResultadoRecuperarUsecase {
     return Right(retorno);
   }
 
-  Future<Either<Falha, List<ResultadoEntity>>> enviarEstimativasPrazo(
+  Future<Either<Falha, List<ResultadoEntity>>> recuperarEstimativasPrazo(
       String uidProjeto) async {
     var resultado = await repository.recuperarEstimativasPrazo(uidProjeto);
+
+    var erro = "";
+    // ignore: prefer_typing_uninitialized_variables
+    var retorno;
+
+    resultado.fold((l) {
+      erro = l.mensagem;
+    }, (r) {
+      retorno = r;
+    });
+
+    if (resultado.isLeft()) {
+      return Left(
+        ContagemEstimadaErro(
+            mensagem: "Não foi possível salvar a função. O erro foi: $erro"),
+      );
+    }
+
+    return Right(retorno);
+  }
+
+  Future<Either<Falha, List<ResultadoEntity>>> recuperarContagens(
+      String uidProjeto) async {
+    var resultado = await repository.recuperarContagens(uidProjeto);
 
     var erro = "";
     // ignore: prefer_typing_uninitialized_variables

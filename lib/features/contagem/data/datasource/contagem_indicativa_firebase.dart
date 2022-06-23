@@ -8,8 +8,8 @@ class ContagemIndicativaFirebase extends ContagemIndicativaDatasource {
   @override
   Future<ContagemIndicativaEntitie> salvar(List<String> alis, List<String> aies,
       String uidProjeto, String iudUsuario, int totalPf) async {
-    ContagemIndicativaModelFirebase contagem =
-        ContagemIndicativaModelFirebase(aie: aies, ali: alis, totalPf: totalPf);
+    ContagemIndicativaModelFirebase contagem = ContagemIndicativaModelFirebase(
+        aie: aies, ali: alis, totalPf: totalPf, compartilhada: false);
 
     await firestore
         .collection("Contagem")
@@ -41,8 +41,8 @@ class ContagemIndicativaFirebase extends ContagemIndicativaDatasource {
   @override
   Future<ContagemIndicativaEntitie> recuperarContagem(
       String uidProjeto, String uidUsuario) async {
-    ContagemIndicativaModelFirebase contagem =
-        ContagemIndicativaModelFirebase(totalPf: 0, aie: [], ali: []);
+    ContagemIndicativaModelFirebase contagem = ContagemIndicativaModelFirebase(
+        totalPf: 0, aie: [], ali: [], compartilhada: false);
 
     await firestore
         .collection("Contagem")

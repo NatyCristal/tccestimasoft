@@ -13,8 +13,15 @@ class AvatarMembro extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String nome =
-        membro.nome.split(" ")[0][0] + membro.nome.split(" ")[1][0];
+    String nome = membro.nome.split(" ").first[0];
+    String sobrenome = "";
+    if (membro.nome.split(" ").length >= 2) {
+      sobrenome = membro.nome.split(" ")[1][0];
+    } else {
+      sobrenome = membro.nome.split(" ").first[1];
+    }
+
+    nome = nome + sobrenome.toUpperCase();
 
     return Container(
       padding: const EdgeInsets.all(2),

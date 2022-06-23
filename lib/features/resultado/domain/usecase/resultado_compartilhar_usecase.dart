@@ -1,5 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:estimasoft/core/errors/falha.dart';
+import 'package:estimasoft/features/contagem/domain/entitie/contagem_detalhada_entitie.dart';
+import 'package:estimasoft/features/contagem/domain/entitie/contagem_estimada_entitie.dart';
+import 'package:estimasoft/features/contagem/domain/entitie/contagem_indicativa_entitie.dart';
 import 'package:estimasoft/features/contagem/error/contagem_erro.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/custo_entity.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/equipe_entity.dart';
@@ -22,7 +25,7 @@ class ResultadoCompartilharUsecase {
         anonimamente, custos, uidProjeto, uidUsuario);
 
     var erro = "";
-    var retorno;
+    ResultadoEntity retorno = ResultadoEntity(false, "", "", "");
 
     resultado.fold((l) {
       erro = l.mensagem;
@@ -49,7 +52,7 @@ class ResultadoCompartilharUsecase {
         anonimamente, equipes, uidProjeto, uidUsuario);
 
     var erro = "";
-    var retorno;
+    ResultadoEntity retorno = ResultadoEntity(false, "", "", "");
 
     resultado.fold((l) {
       erro = l.mensagem;
@@ -76,7 +79,7 @@ class ResultadoCompartilharUsecase {
         anonimamente, esforcos, uidProjeto, uidUsuario);
 
     var erro = "";
-    var retorno;
+    ResultadoEntity retorno = ResultadoEntity(false, "", "", "");
 
     resultado.fold((l) {
       erro = l.mensagem;
@@ -103,7 +106,88 @@ class ResultadoCompartilharUsecase {
         anonimamente, prazos, uidProjeto, uidUsuario);
 
     var erro = "";
-    var retorno;
+    ResultadoEntity retorno = ResultadoEntity(false, "", "", "");
+
+    resultado.fold((l) {
+      erro = l.mensagem;
+    }, (r) {
+      retorno = r;
+    });
+
+    if (resultado.isLeft()) {
+      return Left(
+        ContagemEstimadaErro(
+            mensagem: "Não foi possível salvar a função. O erro foi: $erro"),
+      );
+    }
+
+    return Right(retorno);
+  }
+
+  Future<Either<Falha, ResultadoEntity>> enviarContagemDetalhada(
+      bool anonimamente,
+      ContagemDetalhadaEntitie contagem,
+      String uidProjeto,
+      String uidUsuario) async {
+    var resultado = await repository.enviarContagemDetaoyada(
+        anonimamente, contagem, uidProjeto, uidUsuario);
+
+    var erro = "";
+    ResultadoEntity retorno = ResultadoEntity(false, "", "", "");
+
+    resultado.fold((l) {
+      erro = l.mensagem;
+    }, (r) {
+      retorno = r;
+    });
+
+    if (resultado.isLeft()) {
+      return Left(
+        ContagemEstimadaErro(
+            mensagem: "Não foi possível salvar a função. O erro foi: $erro"),
+      );
+    }
+
+    return Right(retorno);
+  }
+
+  Future<Either<Falha, ResultadoEntity>> enviarContagemEstimada(
+      bool anonimamente,
+      ContagemEstimadaEntitie contagem,
+      String uidProjeto,
+      String uidUsuario) async {
+    var resultado = await repository.enviarContagemEstimada(
+        anonimamente, contagem, uidProjeto, uidUsuario);
+
+    var erro = "";
+    ResultadoEntity retorno = ResultadoEntity(false, "", "", "");
+
+    resultado.fold((l) {
+      erro = l.mensagem;
+    }, (r) {
+      retorno = r;
+    });
+
+    if (resultado.isLeft()) {
+      return Left(
+        ContagemEstimadaErro(
+            mensagem: "Não foi possível salvar a função. O erro foi: $erro"),
+      );
+    }
+
+    return Right(retorno);
+  }
+
+  Future<Either<Falha, ResultadoEntity>> enviarContagemIndicativa(
+      bool anonimamente,
+      ContagemIndicativaEntitie contagemIndicativa,
+      String uidProjeto,
+      String uidUsuario) async {
+    var resultado = await repository.enviarContagemIndicativa(
+        anonimamente, contagemIndicativa, uidProjeto, uidUsuario);
+
+    var erro = "";
+    ResultadoEntity retorno = ResultadoEntity(false, "", "", "");
 
     resultado.fold((l) {
       erro = l.mensagem;

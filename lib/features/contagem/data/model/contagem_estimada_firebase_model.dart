@@ -2,14 +2,21 @@ import 'package:estimasoft/features/contagem/domain/entitie/contagem_estimada_en
 
 class ContagemEstimadaFirebaseModel extends ContagemEstimadaEntitie {
   ContagemEstimadaFirebaseModel(
-      {required List<String> ce,
+      {required bool compartilhada,
+      required List<String> ce,
       required List<String> ee,
       required List<String> se,
       required int totalPF})
-      : super(ce: ce, ee: ee, se: se, totalPF: totalPF);
+      : super(
+            ce: ce,
+            ee: ee,
+            se: se,
+            totalPF: totalPF,
+            compartilhada: compartilhada);
 
   Map<String, dynamic> toMap() {
     return {
+      "Compartilhada": compartilhada,
       "total": totalPF,
       'EE': ee,
       'CE': ce,
@@ -39,6 +46,10 @@ class ContagemEstimadaFirebaseModel extends ContagemEstimadaEntitie {
     }
 
     return ContagemEstimadaFirebaseModel(
-        ce: listaCE, ee: listaEE, se: listaSE, totalPF: map["total"]);
+        compartilhada: map["Compartilhada"] ?? false,
+        ce: listaCE,
+        ee: listaEE,
+        se: listaSE,
+        totalPF: map["total"]);
   }
 }

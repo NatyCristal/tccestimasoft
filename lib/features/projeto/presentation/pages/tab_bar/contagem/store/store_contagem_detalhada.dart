@@ -12,6 +12,7 @@ class StoreContagemDetalhada = StoreContagemDetalhadaBase
 abstract class StoreContagemDetalhadaBase with Store {
   @observable
   ContagemDetalhadaEntitie contagemDetalhadaEntitie = ContagemDetalhadaEntitie(
+      compartilhada: false,
       funcaoDados: [],
       funcaoTransacional: [],
       totalPf: 0,

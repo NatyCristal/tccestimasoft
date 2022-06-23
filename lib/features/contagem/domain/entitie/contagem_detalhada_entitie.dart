@@ -1,6 +1,7 @@
 import 'package:estimasoft/features/contagem/data/model/indice_detalhada_model.dart';
 
 class ContagemDetalhadaEntitie {
+  bool compartilhada;
   List<IndiceDetalhadaModel> funcaoDados;
   List<IndiceDetalhadaModel> funcaoTransacional;
   int totalPf;
@@ -8,6 +9,7 @@ class ContagemDetalhadaEntitie {
   int totalFuncaoTransacional;
 
   ContagemDetalhadaEntitie({
+    required this.compartilhada,
     required this.funcaoDados,
     required this.funcaoTransacional,
     required this.totalPf,

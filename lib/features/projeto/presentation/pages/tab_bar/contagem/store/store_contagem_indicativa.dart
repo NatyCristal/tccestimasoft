@@ -15,6 +15,7 @@ abstract class StoreContagemIndicativaBase with Store {
   @observable
   ContagemIndicativaEntitie contagemIndicativaValida =
       ContagemIndicativaModelFirebase(
+    compartilhada: false,
     aie: [],
     ali: [],
     totalPf: 0,

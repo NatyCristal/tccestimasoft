@@ -1,3 +1,6 @@
+import 'package:estimasoft/features/contagem/domain/entitie/contagem_detalhada_entitie.dart';
+import 'package:estimasoft/features/contagem/domain/entitie/contagem_estimada_entitie.dart';
+import 'package:estimasoft/features/contagem/domain/entitie/contagem_indicativa_entitie.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/custo_entity.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/equipe_entity.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/esforco_entitie.dart';
@@ -13,10 +16,63 @@ class ResultadoController {
   ResultadoController(
       this._resultadoCompartilharUsecase, this._resultadoRecuperarUsecase);
 
+  List<ResultadoEntity> contagens = [];
   List<ResultadoEntity> esforcosCompartilhados = [];
   List<ResultadoEntity> prazosCompartilhados = [];
   List<ResultadoEntity> equipesCompartilhados = [];
   List<ResultadoEntity> custosCompartilhados = [];
+
+  enviarContagemDetalhada(
+      bool anonimamente,
+      ContagemDetalhadaEntitie contagemDetalhada,
+      String uidProjeto,
+      String uidUsuario) async {
+    var resultado = await _resultadoCompartilharUsecase.enviarContagemDetalhada(
+        anonimamente, contagemDetalhada, uidProjeto, uidUsuario);
+
+    resultado.fold((l) {}, (r) {
+      contagens.add(r);
+    });
+
+    if (resultado.isRight()) {
+      return resultado;
+    }
+  }
+
+  enviarContagemEstimada(
+      bool anonimamente,
+      ContagemEstimadaEntitie conagemIndicativa,
+      String uidProjeto,
+      String uidUsuario) async {
+    var resultado = await _resultadoCompartilharUsecase.enviarContagemEstimada(
+        anonimamente, conagemIndicativa, uidProjeto, uidUsuario);
+
+    resultado.fold((l) {}, (r) {
+      contagens.add(r);
+    });
+
+    if (resultado.isRight()) {
+      return resultado;
+    }
+  }
+
+  enviaContagemIndicativas(
+      bool anonimamente,
+      ContagemIndicativaEntitie conagemIndicativa,
+      String uidProjeto,
+      String uidUsuario) async {
+    var resultado =
+        await _resultadoCompartilharUsecase.enviarContagemIndicativa(
+            anonimamente, conagemIndicativa, uidProjeto, uidUsuario);
+
+    resultado.fold((l) {}, (r) {
+      contagens.add(r);
+    });
+
+    if (resultado.isRight()) {
+      return resultado;
+    }
+  }
 
   enviarEstimativasEsforco(bool anonimamente, EsforcoEntity esforcos,
       String uidProjeto, String uidUsuario) async {
@@ -84,7 +140,7 @@ class ResultadoController {
     });
 
     var resultadoPrazo =
-        await _resultadoRecuperarUsecase.enviarEstimativasPrazo(uidProjeto);
+        await _resultadoRecuperarUsecase.recuperarEstimativasPrazo(uidProjeto);
 
     resultadoPrazo.fold((l) => null, (r) {
       prazosCompartilhados = r;
@@ -102,6 +158,13 @@ class ResultadoController {
 
     resultadoCusto.fold((l) => null, (r) {
       custosCompartilhados = r;
+    });
+
+    var resultadoContagens =
+        await _resultadoRecuperarUsecase.recuperarContagens(uidProjeto);
+
+    resultadoContagens.fold((l) => null, (r) {
+      contagens = r;
     });
   }
 }

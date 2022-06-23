@@ -10,6 +10,7 @@ class ContagemDetalhadaFirebase extends ContagemDetalhadaDatasource {
   Future<ContagemDetalhadaEntitie> recuperarContagemDetalhada(
       String uidProjeto, String uidUsuario) async {
     ContagemDetalhadaModel contagem = ContagemDetalhadaModel(
+        compartilhada: false,
         funcaoDados: [],
         funcaoTransacional: [],
         totalFuncaoDados: 0,
@@ -40,6 +41,7 @@ class ContagemDetalhadaFirebase extends ContagemDetalhadaDatasource {
       String uidProjeto,
       String uidUsuario) async {
     ContagemDetalhadaModel contagemDetalhada = ContagemDetalhadaModel(
+        compartilhada: false,
         funcaoDados: contagemDetalhadaEntitie.funcaoDados,
         funcaoTransacional: contagemDetalhadaEntitie.funcaoTransacional,
         totalPf: contagemDetalhadaEntitie.totalPf,

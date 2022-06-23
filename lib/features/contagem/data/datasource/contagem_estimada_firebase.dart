@@ -8,8 +8,8 @@ class ContagemEstimadaFirebase extends ContagemEstimadaDatasource {
   @override
   Future<ContagemEstimadaEntitie> recuperarContagemEstimada(
       String uidProjeto, String uidUsuario) async {
-    ContagemEstimadaFirebaseModel contagem =
-        ContagemEstimadaFirebaseModel(totalPF: 0, ce: [], ee: [], se: []);
+    ContagemEstimadaFirebaseModel contagem = ContagemEstimadaFirebaseModel(
+        totalPF: 0, ce: [], ee: [], se: [], compartilhada: false);
 
     await firestore
         .collection("Contagem")
@@ -37,8 +37,8 @@ class ContagemEstimadaFirebase extends ContagemEstimadaDatasource {
       String uidProjeto,
       String uidUsuario,
       int totalPF) async {
-    ContagemEstimadaFirebaseModel contagem =
-        ContagemEstimadaFirebaseModel(ce: ce, ee: ee, se: se, totalPF: totalPF);
+    ContagemEstimadaFirebaseModel contagem = ContagemEstimadaFirebaseModel(
+        compartilhada: false, ce: ce, ee: ee, se: se, totalPF: totalPF);
 
     await firestore
         .collection("Contagem")

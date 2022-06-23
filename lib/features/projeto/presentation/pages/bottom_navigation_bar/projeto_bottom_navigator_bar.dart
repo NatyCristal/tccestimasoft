@@ -1,12 +1,15 @@
 import 'package:estimasoft/core/shared/utils.dart';
 import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
 import 'package:estimasoft/core/shared/utils/snackbar.dart';
+import 'package:estimasoft/core/shared/utils/tamanho_tela.dart';
+import 'package:estimasoft/core/shared/widgets/botao.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/custo_entity.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/equipe_entity.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/esforco_entitie.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/prazo_entitie.dart';
 import 'package:estimasoft/features/projeto/domain/entitie/projeto_entitie.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/home/store/store_projeto_index_menu.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/resultados/index_resultado.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/resultados/widget/card_custo.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/resultados/widget/card_equipe.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/resultados/widget/card_esforco.dart';
@@ -29,6 +32,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:share_plus/share_plus.dart';
 import '../tab_bar/contagem/contagem_estimada.dart';
 import '../tab_bar/contagem/contagem_indicativa.dart';
 import '../tab_bar/home/index_home.dart';
@@ -342,21 +346,6 @@ class ProjetoMenuPage extends StatelessWidget {
                       }))
                   : Scaffold(
                       appBar: AppBar(
-                        actions: [
-                          GestureDetector(
-                            onTap: () {
-                              alertaCompartilhamentoProjeto(projeto, context);
-                            },
-                            child: const Icon(
-                              Icons.share,
-                              color: corTituloTexto,
-                              size: 20,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                        ],
                         backgroundColor: Colors.transparent,
                         elevation: 0,
                         title: Text(
@@ -369,176 +358,16 @@ class ProjetoMenuPage extends StatelessWidget {
                           bottom: BorderSide(color: corDeLinhaAppBar, width: 1),
                         ),
                       ),
-                      body: Container(
-                        padding: paddingPagePrincipal,
-                        child: SingleChildScrollView(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text('Contagens prontas para compartilhar'),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Row(
-                                children: [
-                                  Observer(builder: (context) {
-                                    return storeIndicativa
-                                                .contagemIndicativaValida
-                                                .totalPf >
-                                            0
-                                        ? const CardIndicativaResultado()
-                                        : const SizedBox();
-                                  }),
-                                  Observer(builder: (context) {
-                                    return storeEstimada.contagemEstimadaValida
-                                                .totalPF >
-                                            0
-                                        ? const CardEstimadaResultado()
-                                        : const SizedBox();
-                                  }),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              const Text("Esforços para compartilhamento"),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Row(
-                                children: [
-                                  Observer(builder: (context) {
-                                    return storeEstimativaEsforco
-                                            .esforcosValidos.isNotEmpty
-                                        ? SizedBox(
-                                            height: 120,
-                                            child: ListView.builder(
-                                                scrollDirection:
-                                                    Axis.horizontal,
-                                                shrinkWrap: true,
-                                                itemCount:
-                                                    storeEstimativaEsforco
-                                                        .esforcosValidos.length,
-                                                itemBuilder: (context, index) {
-                                                  EsforcoEntity esforcoEntity =
-                                                      storeEstimativaEsforco
-                                                              .esforcosValidos[
-                                                          index];
-                                                  return CardEsforcoResultado(
-                                                      projetoEntitie: projeto,
-                                                      esforcoEntity:
-                                                          esforcoEntity);
-                                                }),
-                                          )
-                                        : const SizedBox();
-                                  }),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              const Text("Prazos para compartilhamento"),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Row(
-                                children: [
-                                  Observer(builder: (context) {
-                                    return storeEstimativaPrazo
-                                            .prazosValidos.isNotEmpty
-                                        ? SizedBox(
-                                            height: 120,
-                                            child: ListView.builder(
-                                                scrollDirection:
-                                                    Axis.horizontal,
-                                                shrinkWrap: true,
-                                                itemCount: storeEstimativaPrazo
-                                                    .prazosValidos.length,
-                                                itemBuilder: (context, index) {
-                                                  PrazoEntity prazoEntity =
-                                                      storeEstimativaPrazo
-                                                          .prazosValidos[index];
-                                                  return CardResultadoPrazoCompartilhar(
-                                                      projetoEntitie: projeto,
-                                                      prazoEntity: prazoEntity);
-                                                }),
-                                          )
-                                        : const SizedBox();
-                                  }),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              const Text("Equipes para compartilhamento"),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Row(
-                                children: [
-                                  Observer(builder: (context) {
-                                    return storeEstimativaPrazo
-                                            .prazosValidos.isNotEmpty
-                                        ? SizedBox(
-                                            height: 120,
-                                            child: ListView.builder(
-                                                scrollDirection:
-                                                    Axis.horizontal,
-                                                shrinkWrap: true,
-                                                itemCount: storeEstimativaPrazo
-                                                    .prazosValidos.length,
-                                                itemBuilder: (context, index) {
-                                                  EquipeEntity equipeEntity =
-                                                      storeEstimativaEquipe
-                                                              .equipesValidas[
-                                                          index];
-                                                  return CardEquipeResultadoCompartilhar(
-                                                      projetoEntitie: projeto,
-                                                      equipeEntity:
-                                                          equipeEntity);
-                                                }),
-                                          )
-                                        : const SizedBox();
-                                  }),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              const Text("Custos para compartilhamento"),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Row(
-                                children: [
-                                  Observer(builder: (context) {
-                                    return storeEstimativaCusto
-                                            .custosValidos.isNotEmpty
-                                        ? SizedBox(
-                                            height: 120,
-                                            child: ListView.builder(
-                                                scrollDirection:
-                                                    Axis.horizontal,
-                                                shrinkWrap: true,
-                                                itemCount: storeEstimativaCusto
-                                                    .custosValidos.length,
-                                                itemBuilder: (context, index) {
-                                                  CustoEntity custoEntity =
-                                                      storeEstimativaCusto
-                                                          .custosValidos[index];
-                                                  return CardResultadoCustoCompartilhar(
-                                                      projetoEntitie: projeto,
-                                                      custoEntity: custoEntity);
-                                                }),
-                                          )
-                                        : const SizedBox();
-                                  }),
-                                ],
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
+                      body: IndexResultado(
+                          projeto: projeto,
+                          store: store,
+                          storeContagemDetalhada: storeDetalhada,
+                          storeContagemEstimada: storeEstimada,
+                          storeContagemIndicativa: storeIndicativa,
+                          storeEstimativaCusto: storeEstimativaCusto,
+                          storeEstimativaEquipe: storeEstimativaEquipe,
+                          storeEstimativaEsforco: storeEstimativaEsforco,
+                          storeEstimativaPrazo: storeEstimativaPrazo),
                       bottomNavigationBar: Observer(builder: (context) {
                         return BottomNavigationBar(
                           type: BottomNavigationBarType.fixed,

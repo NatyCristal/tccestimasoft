@@ -4,6 +4,7 @@ import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
 import 'package:estimasoft/core/shared/utils/snackbar.dart';
 import 'package:estimasoft/core/shared/utils/tamanho_tela.dart';
 import 'package:estimasoft/features/projeto/domain/entitie/projeto_entitie.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/home/store/store_projeto_index_menu.dart';
 import 'package:estimasoft/features/projeto/presentation/projeto_controller.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -12,11 +13,13 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:path/path.dart';
 
 class InsercaoArquivosUpload extends StatefulWidget {
+  final StoreProjetosIndexMenu storeProjetosIndexMenu;
   final ProjetoEntitie projetoEntitie;
   final ProjetoController controller = Modular.get<ProjetoController>();
   InsercaoArquivosUpload({
     Key? key,
     required this.projetoEntitie,
+    required this.storeProjetosIndexMenu,
   }) : super(key: key);
 
   @override
@@ -146,6 +149,9 @@ class _InsercaoArquivosUploadState extends State<InsercaoArquivosUpload> {
                                                           arquivo.fullPath)
                                                       .whenComplete(() =>
                                                           setState(() {}));
+                                                  widget.storeProjetosIndexMenu
+                                                          .houveMudancaEmArquivosEdocumentos =
+                                                      true;
 
                                                   AlertaSnack.exbirSnackBar(
                                                       context, retorno);
@@ -227,6 +233,8 @@ class _InsercaoArquivosUploadState extends State<InsercaoArquivosUpload> {
                         await widget.controller.recuperarArquivos(
                             widget.projetoEntitie.uidProjeto);
                         setState(() {});
+                        widget.storeProjetosIndexMenu
+                            .houveMudancaEmArquivosEdocumentos = true;
                       });
                     }),
               ),

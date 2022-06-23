@@ -1,4 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:estimasoft/features/contagem/data/model/contagem_detalhada_firebase_model.dart';
+import 'package:estimasoft/features/contagem/data/model/contagem_estimada_firebase_model.dart';
+import 'package:estimasoft/features/contagem/data/model/contagem_indicativa_firebase_model.dart';
+import 'package:estimasoft/features/contagem/domain/entitie/contagem_detalhada_entitie.dart';
+import 'package:estimasoft/features/contagem/domain/entitie/contagem_estimada_entitie.dart';
+import 'package:estimasoft/features/contagem/domain/entitie/contagem_indicativa_entitie.dart';
 import 'package:estimasoft/features/estimativas/data/models/estimativa_custo_model_firebase.dart';
 import 'package:estimasoft/features/estimativas/data/models/estimativa_equipe_model_firebase.dart';
 import 'package:estimasoft/features/estimativas/data/models/estimativa_esforco_model_firebases.dart';
@@ -7,7 +13,9 @@ import 'package:estimasoft/features/estimativas/domain/entitie/prazo_entitie.dar
 import 'package:estimasoft/features/estimativas/domain/entitie/esforco_entitie.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/equipe_entity.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/custo_entity.dart';
-import 'package:estimasoft/features/resultado/data/datasource/resultado_compartilhar_datasource.dart';
+import 'package:estimasoft/features/resultado/domain/entity/resultado_entity.dart';
+
+import 'interfaces/resultado_compartilhar_datasource.dart';
 
 class ResultadoFirebaseDatasource extends CompartilharResultadoDatasource {
   final firestore = FirebaseFirestore.instance;
@@ -68,10 +76,11 @@ class ResultadoFirebaseDatasource extends CompartilharResultadoDatasource {
         .collection("Custo")
         .doc(uidUsuario)
         .update({
-      custoModel.tipoContagem: custoModel.toMap(),
+      custoModel.tipoContagem.split(" - ").first: custoModel.toMap(),
     });
 
-    return custoModel;
+    return ResultadoEntity(anonimamente, custoModel.tipoContagem,
+        custoModel.valorTotalProjeto.toString(), uidUsuario);
   }
 
   @override
@@ -108,7 +117,7 @@ class ResultadoFirebaseDatasource extends CompartilharResultadoDatasource {
         await firestore
             .collection("Resultados")
             .doc(uidProjeto)
-            .collection("Equipe")
+            .collection("Equipes")
             .doc(uidUsuario)
             .set({
           equipeModels.esforco.split(" - ").last: {
@@ -121,18 +130,19 @@ class ResultadoFirebaseDatasource extends CompartilharResultadoDatasource {
     await firestore
         .collection("Estimativa")
         .doc(uidProjeto)
-        .collection("Esforco")
+        .collection("Equipe")
         .doc(uidUsuario)
         .update({
       equipeModels.esforco.split(" - ").last: equipeModels.toMap(),
     });
 
-    return equipeModels;
+    return ResultadoEntity(anonimamente, equipeModels.esforco.split(" - ").last,
+        equipeModels.equipeEstimada, uidUsuario);
   }
 
   @override
-  Future<EsforcoEntity> enviarEstimativasEsforco(bool anonimamente,
-      EsforcoEntity esforcos, String uidProjeto, String uidUsuario) async {
+  Future enviarEstimativasEsforco(bool anonimamente, EsforcoEntity esforcos,
+      String uidProjeto, String uidUsuario) async {
     EstimativaEsforcoModel esforcosModels = (EstimativaEsforcoModel(
         compartilhada: true,
         contagemPontoDeFuncao: esforcos.contagemPontoDeFuncao,
@@ -183,7 +193,11 @@ class ResultadoFirebaseDatasource extends CompartilharResultadoDatasource {
           esforcosModels.toMap(),
     });
 
-    return esforcosModels;
+    return ResultadoEntity(
+        anonimamente,
+        esforcosModels.contagemPontoDeFuncao.split(" - ").first,
+        esforcosModels.esforcoTotal,
+        uidUsuario);
   }
 
   @override
@@ -239,6 +253,193 @@ class ResultadoFirebaseDatasource extends CompartilharResultadoDatasource {
       prazoModel.contagemPontoDeFuncao.split(" - ").first: prazoModel.toMap(),
     });
 
-    return prazoModel;
+    return ResultadoEntity(
+        anonimamente,
+        prazoModel.contagemPontoDeFuncao.split(" - ").first,
+        prazoModel.prazoTotal.toString(),
+        uidUsuario);
+  }
+
+  @override
+  Future enviarContagemDetalhada(
+      bool anonimamente,
+      ContagemDetalhadaEntitie contagem,
+      String uidProjeto,
+      String uidUsuario) async {
+    ContagemDetalhadaModel contagemDetalhada = (ContagemDetalhadaModel(
+      compartilhada: true,
+      funcaoDados: contagem.funcaoDados,
+      funcaoTransacional: contagem.funcaoTransacional,
+      totalFuncaoDados: contagem.totalFuncaoDados,
+      totalFuncaoTransacional: contagem.totalFuncaoTransacional,
+      totalPf: contagem.totalPf,
+    ));
+
+    await firestore
+        .collection("Resultados")
+        .doc(uidProjeto)
+        .collection("Contagem")
+        .doc(uidUsuario)
+        .get()
+        .then((value) async {
+      if (value.exists) {
+        await firestore
+            .collection("Resultados")
+            .doc(uidProjeto)
+            .collection("Contagem")
+            .doc(uidUsuario)
+            .update({
+          "Detalhada": {
+            "Anonimamente": anonimamente,
+            "Valor": contagemDetalhada.totalPf
+          }
+        });
+      } else {
+        await firestore
+            .collection("Resultados")
+            .doc(uidProjeto)
+            .collection("Contagem")
+            .doc(uidUsuario)
+            .set({
+          "Detalhada": {
+            "Anonimamente": anonimamente,
+            "Valor": contagemDetalhada.totalPf
+          }
+        });
+      }
+    });
+    await firestore
+        .collection("Contagem")
+        .doc(uidProjeto)
+        .collection(uidUsuario)
+        .doc("Detalhada")
+        .update(
+          contagemDetalhada.toMap(),
+        );
+    return ResultadoEntity(anonimamente, "Detalhada",
+        contagemDetalhada.totalPf.toString(), uidUsuario);
+  }
+
+  @override
+  Future enviarContagemEstimada(
+      bool anonimamente,
+      ContagemEstimadaEntitie contagem,
+      String uidProjeto,
+      String uidUsuario) async {
+    ContagemEstimadaFirebaseModel contagemEstimada =
+        (ContagemEstimadaFirebaseModel(
+      compartilhada: true,
+      ce: contagem.ce,
+      ee: contagem.ee,
+      se: contagem.se,
+      totalPF: contagem.totalPF,
+    ));
+
+    await firestore
+        .collection("Resultados")
+        .doc(uidProjeto)
+        .collection("Contagem")
+        .doc(uidUsuario)
+        .get()
+        .then((value) async {
+      if (value.exists) {
+        await firestore
+            .collection("Resultados")
+            .doc(uidProjeto)
+            .collection("Contagem")
+            .doc(uidUsuario)
+            .update({
+          "Estimada": {
+            "Anonimamente": anonimamente,
+            "Valor": contagemEstimada.totalPF
+          }
+        });
+      } else {
+        await firestore
+            .collection("Resultados")
+            .doc(uidProjeto)
+            .collection("Contagem")
+            .doc(uidUsuario)
+            .set({
+          "Estimada": {
+            "Anonimamente": anonimamente,
+            "Valor": contagemEstimada.totalPF
+          }
+        });
+      }
+    });
+
+    await firestore
+        .collection("Contagem")
+        .doc(uidProjeto)
+        .collection(uidUsuario)
+        .doc("Estimada")
+        .update(
+          contagemEstimada.toMap(),
+        );
+
+    return ResultadoEntity(anonimamente, "Estimada",
+        contagemEstimada.totalPF.toString(), uidUsuario);
+  }
+
+  @override
+  Future enviarContagemIndicativa(
+      bool anonimamente,
+      ContagemIndicativaEntitie contagem,
+      String uidProjeto,
+      String uidUsuario) async {
+    ContagemIndicativaModelFirebase contagemEstimada =
+        (ContagemIndicativaModelFirebase(
+      compartilhada: true,
+      aie: contagem.aie,
+      ali: contagem.ali,
+      totalPf: contagem.totalPf,
+    ));
+
+    await firestore
+        .collection("Resultados")
+        .doc(uidProjeto)
+        .collection("Contagem")
+        .doc(uidUsuario)
+        .get()
+        .then((value) async {
+      if (value.exists) {
+        await firestore
+            .collection("Resultados")
+            .doc(uidProjeto)
+            .collection("Contagem")
+            .doc(uidUsuario)
+            .update({
+          "Indicativa": {
+            "Anonimamente": anonimamente,
+            "Valor": contagemEstimada.totalPf
+          }
+        });
+      } else {
+        await firestore
+            .collection("Resultados")
+            .doc(uidProjeto)
+            .collection("Contagem")
+            .doc(uidUsuario)
+            .set({
+          "Indicativa": {
+            "Anonimamente": anonimamente,
+            "Valor": contagemEstimada.totalPf
+          }
+        });
+      }
+    });
+
+    await firestore
+        .collection("Contagem")
+        .doc(uidProjeto)
+        .collection(uidUsuario)
+        .doc("Indicativa")
+        .update(
+          contagemEstimada.toMap(),
+        );
+
+    return ResultadoEntity(anonimamente, "Indicativa",
+        contagemEstimada.totalPf.toString(), uidUsuario);
   }
 }

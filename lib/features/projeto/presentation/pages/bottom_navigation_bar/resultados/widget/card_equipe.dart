@@ -2,6 +2,7 @@ import 'package:estimasoft/core/shared/utils.dart';
 import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/equipe_entity.dart';
 import 'package:estimasoft/features/projeto/domain/entitie/projeto_entitie.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/home/store/store_projeto_index_menu.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/resultados/store/store_resultados.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/resultados/widget/alerta_copiar_estimativas.dart';
 import 'package:estimasoft/features/projeto/presentation/projeto_controller.dart';
@@ -12,12 +13,14 @@ import 'package:flutter_modular/flutter_modular.dart';
 import '../../../../../../../core/auth/usuario_autenticado.dart';
 
 class CardEquipeResultadoCompartilhar extends StatelessWidget {
+  final StoreProjetosIndexMenu storeIndex;
   final ProjetoEntitie projetoEntitie;
   final EquipeEntity equipeEntity;
   const CardEquipeResultadoCompartilhar({
     Key? key,
     required this.equipeEntity,
     required this.projetoEntitie,
+    required this.storeIndex,
   }) : super(key: key);
 
   @override
@@ -37,13 +40,13 @@ class CardEquipeResultadoCompartilhar extends StatelessWidget {
                         equipeEntity,
                         projetoEntitie.uidProjeto,
                         Modular.get<UsuarioAutenticado>().store.uid);
+                equipeEntity.compartilhada = true;
+                store.compartilhada = true;
+                storeIndex.houveMudancaEmResultado = true;
               });
-
-        equipeEntity.compartilhada = true;
-        store.compartilhada = true;
       },
       child: Container(
-        width: 150,
+        width: 140,
         margin: const EdgeInsets.symmetric(horizontal: 5),
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
@@ -71,15 +74,18 @@ class CardEquipeResultadoCompartilhar extends StatelessWidget {
               },
               child: Observer(builder: (context) {
                 return CircleAvatar(
+                  radius: 15,
                   backgroundColor: corDeFundoCards,
                   child: !store.compartilhada
                       ? const Icon(
-                          Icons.send,
+                          Icons.check_rounded,
                           color: corCorpoTexto,
+                          size: 20,
                         )
-                      : const Icon(
+                      : Icon(
                           Icons.lock,
-                          color: corCorpoTexto,
+                          color: corCorpoTexto.withOpacity(0.5),
+                          size: 20,
                         ),
                 );
               }),

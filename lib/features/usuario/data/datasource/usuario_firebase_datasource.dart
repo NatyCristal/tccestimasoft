@@ -66,7 +66,10 @@ class UsuarioFirebaseDataSource extends PerfilDatasource {
               .update(mapFinal);
         } else {
           mapFinal = {"projetosUids": listaProjetos};
-          await _firestore.collection("Usuarios").doc(uidUsuario).set(mapFinal);
+          await _firestore
+              .collection("Usuarios")
+              .doc(uidUsuario)
+              .update(mapFinal);
         }
       }
     });

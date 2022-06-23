@@ -41,11 +41,49 @@ mixin _$StoreProjetosIndexMenu on StoreProjetosIndexMenuBase, Store {
     });
   }
 
+  late final _$houveMudancaEmResultadoAtom = Atom(
+      name: 'StoreProjetosIndexMenuBase.houveMudancaEmResultado',
+      context: context);
+
+  @override
+  bool get houveMudancaEmResultado {
+    _$houveMudancaEmResultadoAtom.reportRead();
+    return super.houveMudancaEmResultado;
+  }
+
+  @override
+  set houveMudancaEmResultado(bool value) {
+    _$houveMudancaEmResultadoAtom
+        .reportWrite(value, super.houveMudancaEmResultado, () {
+      super.houveMudancaEmResultado = value;
+    });
+  }
+
+  late final _$houveMudancaEmArquivosEdocumentosAtom = Atom(
+      name: 'StoreProjetosIndexMenuBase.houveMudancaEmArquivosEdocumentos',
+      context: context);
+
+  @override
+  bool get houveMudancaEmArquivosEdocumentos {
+    _$houveMudancaEmArquivosEdocumentosAtom.reportRead();
+    return super.houveMudancaEmArquivosEdocumentos;
+  }
+
+  @override
+  set houveMudancaEmArquivosEdocumentos(bool value) {
+    _$houveMudancaEmArquivosEdocumentosAtom
+        .reportWrite(value, super.houveMudancaEmArquivosEdocumentos, () {
+      super.houveMudancaEmArquivosEdocumentos = value;
+    });
+  }
+
   @override
   String toString() {
     return '''
 carregou: ${carregou},
-index: ${index}
+index: ${index},
+houveMudancaEmResultado: ${houveMudancaEmResultado},
+houveMudancaEmArquivosEdocumentos: ${houveMudancaEmArquivosEdocumentos}
     ''';
   }
 }

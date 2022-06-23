@@ -98,6 +98,7 @@ class IndexHome extends StatelessWidget {
               height: TamanhoTela.height(context, 1),
               width: double.infinity,
               child: SingleChildScrollView(
+                controller: scrollControllerLateral,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -146,7 +147,7 @@ class IndexHome extends StatelessWidget {
                             child: GestureDetector(
                               onTap: () {
                                 Modular.to.pushNamed("inserir-arquivos",
-                                    arguments: projeto);
+                                    arguments: [projeto, store]);
                               },
                               child: const Icon(
                                 Icons.add,
@@ -155,139 +156,158 @@ class IndexHome extends StatelessWidget {
                               ),
                             ),
                           ),
-                          SizedBox(
-                              width: TamanhoTela.width(context, 0.8),
-                              child: FutureBuilder<ListResult>(
-                                future: controller
-                                    .recuperarArquivos(projeto.uidProjeto),
-                                builder: (BuildContext context, snapshot) {
-                                  switch (snapshot.connectionState) {
-                                    case ConnectionState.done:
-                                      if (snapshot.hasError) {
-                                        return const Text("Erro");
-                                      }
-                                      if (snapshot.hasData) {
-                                        final arquivosConcretos =
-                                            snapshot.data!.items;
-                                        return arquivosConcretos.isNotEmpty
-                                            ? ListView.builder(
-                                                controller:
-                                                    scrollControllerLateral,
-                                                shrinkWrap: false,
-                                                itemCount: controller
-                                                    .arquivos.items.length,
-                                                scrollDirection:
-                                                    Axis.horizontal,
-                                                itemBuilder: (context, index) {
-                                                  final arquivo =
-                                                      arquivosConcretos[index];
-                                                  return GestureDetector(
-                                                    onTap: () => Modular.to
-                                                        .pushNamed(
-                                                            "inserir-arquivos",
-                                                            arguments: projeto),
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        const SizedBox(
-                                                          width: 80,
-                                                          child: Icon(
-                                                            Icons
-                                                                .drive_file_move,
-                                                            size: 40,
-                                                            color: Colors.grey,
-                                                          ),
-                                                        ),
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .start,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            SizedBox(
-                                                              width: 60,
-                                                              child: Text(
-                                                                arquivo.fullPath
-                                                                    .split("/")
-                                                                    .last
-                                                                    .split(
-                                                                        ".")[0],
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .right,
-                                                                maxLines: 1,
-                                                                overflow:
-                                                                    TextOverflow
-                                                                        .ellipsis,
-                                                                style: (const TextStyle(
-                                                                    fontSize:
-                                                                        tamanhoTextoCorpoTexto,
-                                                                    color:
-                                                                        corCorpoTexto)),
-                                                              ),
-                                                            ),
-                                                            SizedBox(
-                                                              width: 40,
-                                                              child: Text(
-                                                                "." +
-                                                                    arquivo
-                                                                        .fullPath
-                                                                        .split(
-                                                                            ".")[1],
-                                                                maxLines: 1,
-                                                                style: (const TextStyle(
-                                                                    fontSize:
-                                                                        tamanhoTextoCorpoTexto,
-                                                                    color:
-                                                                        corCorpoTexto)),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  );
-                                                },
-                                              )
-                                            : GestureDetector(
-                                                onTap: () {
-                                                  Modular.to.pushNamed(
-                                                    "inserir-arquivos",
-                                                    arguments: projeto,
-                                                  );
-                                                },
-                                                child: Container(
-                                                    margin: const EdgeInsets
-                                                            .symmetric(
-                                                        horizontal: 5),
-                                                    child: const Text(
-                                                        "Clique para adicionar arquivos",
-                                                        style: TextStyle(
-                                                            fontSize:
-                                                                tamanhoTextoCorpoTexto,
-                                                            color:
-                                                                corCorpoTexto))),
-                                              );
-                                      }
+                          Observer(builder: (context) {
+                            store.houveMudancaEmArquivosEdocumentos
+                                ? controller
+                                    .recuperarArquivos(projeto.uidProjeto)
+                                : store.houveMudancaEmArquivosEdocumentos =
+                                    false;
 
-                                      break;
-                                    case ConnectionState.active:
-                                      return const SizedBox();
-                                    case ConnectionState.none:
-                                      return const Text("Erro nenhum");
-                                    case ConnectionState.waiting:
-                                      return const SizedBox(); // Carregando();
-                                  }
-                                  return const SizedBox();
-                                },
-                              ))
+                            return SizedBox(
+                                width: TamanhoTela.width(context, 0.8),
+                                child: FutureBuilder<ListResult>(
+                                  future: controller
+                                      .recuperarArquivos(projeto.uidProjeto),
+                                  builder: (BuildContext context, snapshot) {
+                                    switch (snapshot.connectionState) {
+                                      case ConnectionState.done:
+                                        if (snapshot.hasError) {
+                                          return const Text("Erro");
+                                        }
+                                        if (snapshot.hasData) {
+                                          final arquivosConcretos =
+                                              snapshot.data!.items;
+                                          return arquivosConcretos.isNotEmpty
+                                              ? ListView.builder(
+                                                  controller:
+                                                      scrollControllerLateral,
+                                                  shrinkWrap: false,
+                                                  itemCount: controller
+                                                      .arquivos.items.length,
+                                                  scrollDirection:
+                                                      Axis.horizontal,
+                                                  itemBuilder:
+                                                      (context, index) {
+                                                    final arquivo =
+                                                        arquivosConcretos[
+                                                            index];
+                                                    return GestureDetector(
+                                                      onTap: () => Modular.to
+                                                          .pushNamed(
+                                                              "inserir-arquivos",
+                                                              arguments: [
+                                                            projeto,
+                                                            store
+                                                          ]),
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          const SizedBox(
+                                                            width: 80,
+                                                            child: Icon(
+                                                              Icons
+                                                                  .drive_file_move,
+                                                              size: 40,
+                                                              color:
+                                                                  Colors.grey,
+                                                            ),
+                                                          ),
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .start,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              SizedBox(
+                                                                width: 60,
+                                                                child: Text(
+                                                                  arquivo
+                                                                      .fullPath
+                                                                      .split(
+                                                                          "/")
+                                                                      .last
+                                                                      .split(
+                                                                          ".")[0],
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .right,
+                                                                  maxLines: 1,
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .ellipsis,
+                                                                  style: (const TextStyle(
+                                                                      fontSize:
+                                                                          tamanhoTextoCorpoTexto,
+                                                                      color:
+                                                                          corCorpoTexto)),
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                width: 40,
+                                                                child: Text(
+                                                                  "." +
+                                                                      arquivo
+                                                                          .fullPath
+                                                                          .split(
+                                                                              ".")[1],
+                                                                  maxLines: 1,
+                                                                  style: (const TextStyle(
+                                                                      fontSize:
+                                                                          tamanhoTextoCorpoTexto,
+                                                                      color:
+                                                                          corCorpoTexto)),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    );
+                                                  },
+                                                )
+                                              : GestureDetector(
+                                                  onTap: () {
+                                                    Modular.to.pushNamed(
+                                                      "inserir-arquivos",
+                                                      arguments: [
+                                                        projeto,
+                                                        store
+                                                      ],
+                                                    );
+                                                  },
+                                                  child: Container(
+                                                      margin: const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 5),
+                                                      child: const Text(
+                                                          "Clique para adicionar arquivos",
+                                                          style: TextStyle(
+                                                              fontSize:
+                                                                  tamanhoTextoCorpoTexto,
+                                                              color:
+                                                                  corCorpoTexto))),
+                                                );
+                                        }
+
+                                        break;
+                                      case ConnectionState.active:
+                                        return const SizedBox();
+                                      case ConnectionState.none:
+                                        return const Text("Erro nenhum");
+                                      case ConnectionState.waiting:
+                                        return const SizedBox(); // Carregando();
+                                    }
+                                    return const SizedBox();
+                                  },
+                                ));
+                          })
                         ],
                       ),
                     ),
@@ -303,20 +323,17 @@ class IndexHome extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    CardEsforcosCompartilhados(uidProjeto: projeto.uidProjeto),
-
-                    // const Center(child: Text("Contagem Indicativa")),
-                    // const BarChartSample7(),
-                    // const SizedBox(
-                    //   height: 10,
-                    // ),
-                    // const Center(child: Text("Contagem Estimada")),
-                    // const BarChartSample7(),
-                    // const SizedBox(
-                    //   height: 10,
-                    // ),
-                    // const Center(child: Text("Contagem Detalhada")),
-                    // const BarChartSample7(),
+                    Observer(builder: (context) {
+                      return !store.houveMudancaEmResultado
+                          ? CardEsforcosCompartilhados(
+                              uidProjeto: projeto.uidProjeto,
+                              scrollController: scrollControllerLateral,
+                            )
+                          : CardEsforcosCompartilhados(
+                              uidProjeto: projeto.uidProjeto,
+                              scrollController: scrollControllerLateral,
+                            );
+                    }),
                   ],
                 ),
               ),

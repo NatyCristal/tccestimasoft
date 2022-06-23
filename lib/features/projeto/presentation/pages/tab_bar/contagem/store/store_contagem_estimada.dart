@@ -13,6 +13,7 @@ class StoreContagemEstimada = StoreContagemEstimadaBase
 abstract class StoreContagemEstimadaBase with Store {
   @observable
   ContagemEstimadaEntitie contagemEstimadaValida = ContagemEstimadaEntitie(
+    compartilhada: false,
     ce: [],
     ee: [],
     se: [],

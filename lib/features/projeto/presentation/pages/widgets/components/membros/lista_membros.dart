@@ -9,6 +9,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 class ListaMembros extends StatelessWidget {
   final ProjetoEntitie projeto;
+
   final ProjetoController controller = Modular.get<ProjetoController>();
   ListaMembros({Key? key, required this.projeto}) : super(key: key);
 

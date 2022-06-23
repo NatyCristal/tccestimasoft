@@ -1,0 +1,99 @@
+import 'package:estimasoft/features/contagem/domain/entitie/contagem_estimada_entitie.dart';
+import 'package:estimasoft/features/contagem/domain/entitie/contagem_indicativa_entitie.dart';
+import 'package:estimasoft/features/estimativas/domain/entitie/custo_entity.dart';
+import 'package:estimasoft/features/estimativas/domain/entitie/equipe_entity.dart';
+import 'package:estimasoft/features/estimativas/domain/entitie/esforco_entitie.dart';
+import 'package:estimasoft/features/estimativas/domain/entitie/prazo_entitie.dart';
+import 'package:flutter_masked_text2/flutter_masked_text2.dart';
+
+class FormarTextoCompartilhar {
+  static funcaoTextoEsforco(List<EsforcoEntity> esforco) {
+    String texto = "";
+
+    for (var element in esforco) {
+      texto +=
+          "Tipo Contagem: ${element.contagemPontoDeFuncao.split(" - ").first}\nLinguagem: ${element.linguagem}\nProdutividade Equipe: ${element.produtividadeEquipe} \nEsforço Total: ${element.esforcoTotal} HH\n\n";
+    }
+    texto = "**Estimativa de Esforço**\n\n" + texto;
+    return texto;
+  }
+
+  static funcaoTextoPrazo(List<PrazoEntity> prazo) {
+    String texto = "";
+
+    for (var element in prazo) {
+      texto +=
+          "Tipo Contagem: ${element.contagemPontoDeFuncao.split(" - ").first}\nTipo Sistema: ${element.tipoSistema}\nPrazo Mínimo:${element.prazoMinimo}\nPrazo total: ${element.prazoTotal}\n\n";
+    }
+    texto = "**Estimativa de Prazo**\n\n" + texto;
+
+    return texto;
+  }
+
+  static funcaoTextoEquipes(List<EquipeEntity> equipe) {
+    String texto = "";
+
+    for (var element in equipe) {
+      texto +=
+          "\nTipo Contagem: ${element.esforco.split(" - ").last}\nEsforco: ${element.esforco}\nPrazo: ${element.prazo} \nProdução diária: ${element.producaoDiaria}\nEquipe Estimada: ${element.equipeEstimada}\n";
+    }
+    texto = "**Estimativa de Equipes**\n\n" + texto;
+    return texto;
+  }
+
+  static funcaoTextoCustos(List<CustoEntity> custo) {
+    String texto = "";
+
+    for (var element in custo) {
+      final custoMental = MoneyMaskedTextController(
+          decimalSeparator: ',', thousandSeparator: '.', leftSymbol: "R\$");
+      custoMental.text = element.custoTotalMensal;
+
+      final custoHora = MoneyMaskedTextController(
+          decimalSeparator: ',', thousandSeparator: '.', leftSymbol: "R\$");
+      custoHora.text = element.custoHora.toStringAsFixed(2);
+
+      final custoPf = MoneyMaskedTextController(
+          decimalSeparator: ',', thousandSeparator: '.', leftSymbol: "R\$");
+      custoPf.text = element.custoPF;
+      final custototalProjeto = MoneyMaskedTextController(
+          decimalSeparator: ',', thousandSeparator: '.', leftSymbol: "R\$");
+      custototalProjeto.text = element.custoTotalProjeto.toStringAsFixed(2);
+
+      final valorTotalProjeto = MoneyMaskedTextController(
+          decimalSeparator: ',', thousandSeparator: '.', leftSymbol: "R\$");
+      valorTotalProjeto.text = element.valorTotalProjeto.toStringAsFixed(2);
+
+      texto +=
+          "Tipo Contagem: ${element.tipoContagem}\nDisponibilidade Equipe:${element.disponibilidadeEquipe} HH\nCusto Total Mensal: ${custoMental.text} \nCusto Hora: ${custoHora.text}\nCusto Pf ${custoPf.text}\nProcentagem: ${element.porcentagemLucro}%\n\nCusto total projeto: ${custototalProjeto.text}\nValor Total Projeto: ${valorTotalProjeto.text}\n";
+    }
+    texto = "**Estimativas de custo**\n\n" + texto;
+    return texto;
+  }
+
+  static funcaoTextoIndicativa(ContagemIndicativaEntitie indicativa) {
+    String texto = "";
+    texto +=
+        "Funções em ALI:${indicativa.ali}\nALI: ${indicativa.ali.length * 35} PF \nFunções em AIE: ${indicativa.aie.toString()}\nAIE: ${indicativa.aie.length * 15} PF\nTotal: ${indicativa.totalPf} PF\n";
+
+    texto = "**Contagem Indicativa**\n\n" + texto;
+    return texto.replaceAll("[", "").replaceAll("]", "");
+  }
+
+  static funcaoEstimada(
+      ContagemEstimadaEntitie estimada, ContagemIndicativaEntitie indicativa) {
+    String texto = "";
+    String textoStringIndicativa = "";
+    textoStringIndicativa +=
+        "Funções em ALI: ${indicativa.ali.toString()}\nPF ALI: ${indicativa.ali.length * 7}\nFunções em AIE: ${indicativa.aie.toString()}\nPF AIE: ${indicativa.aie.length * 7}\n";
+    texto =
+        "Funções em CE: ${estimada.ce.toString()}\nCE: ${estimada.ce.length * 4} PF\nFunções em EE: ${estimada.ee.toString()}\nEE: ${estimada.ee.length * 4} PF\nFunções em SE: ${estimada.se.toString()}\nSE: ${estimada.se.length * 5} PF\n";
+    String totalPF = "Total: " +
+        (indicativa.totalPf + estimada.totalPF).toString() +
+        " PF\n\n";
+
+    texto =
+        "\n**Contagem Estimada**\n\n" + textoStringIndicativa + texto + totalPF;
+    return texto.replaceAll("[", "").replaceAll("]", "");
+  }
+}

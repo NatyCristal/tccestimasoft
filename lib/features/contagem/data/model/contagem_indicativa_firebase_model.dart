@@ -2,13 +2,20 @@ import 'package:estimasoft/features/contagem/domain/entitie/contagem_indicativa_
 
 class ContagemIndicativaModelFirebase extends ContagemIndicativaEntitie {
   ContagemIndicativaModelFirebase(
-      {required int totalPf,
+      {required bool compartilhada,
+      required int totalPf,
       required List<String> aie,
       required List<String> ali})
-      : super(totalPf: totalPf, aie: aie, ali: ali);
+      : super(
+          compartilhada: compartilhada,
+          totalPf: totalPf,
+          aie: aie,
+          ali: ali,
+        );
 
   Map<String, dynamic> toMap() {
     return {
+      "Compartilhada": compartilhada,
       "total": totalPf,
       'AIE': aie,
       'ALI': ali,
@@ -33,6 +40,9 @@ class ContagemIndicativaModelFirebase extends ContagemIndicativaEntitie {
     }
 
     return ContagemIndicativaModelFirebase(
-        aie: listaAIE, ali: listaALI, totalPf: map["total"]);
+        compartilhada: map["Compartilhada"] ?? false,
+        aie: listaAIE,
+        ali: listaALI,
+        totalPf: map["total"]);
   }
 }

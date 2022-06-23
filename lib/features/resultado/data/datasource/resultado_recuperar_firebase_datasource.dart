@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:estimasoft/features/resultado/data/datasource/resultado_recuperar_datasource.dart';
+import 'package:estimasoft/features/resultado/data/datasource/interfaces/resultado_recuperar_datasource.dart';
 import 'package:estimasoft/features/resultado/data/model/resultado_model.dart';
 import 'package:estimasoft/features/resultado/domain/entity/resultado_entity.dart';
 
@@ -87,6 +87,29 @@ class ResultadoRecuperarFirebaseDatasource
         .collection("Resultados")
         .doc(uidProjeto)
         .collection("Prazo")
+        .get()
+        .then((value) {
+      List<QueryDocumentSnapshot<Map<String, dynamic>>> map = value.docs;
+
+      if (map.isNotEmpty) {
+        for (var element in map) {
+          element.data().forEach((key, value) {
+            resultadosEsforcos
+                .add(ResultadoModel.fromMap(value, element.id, key.toString()));
+          });
+        }
+      }
+    });
+    return resultadosEsforcos;
+  }
+
+  @override
+  Future<List<ResultadoEntity>> recuperarContagens(String uidProjeto) async {
+    List<ResultadoEntity> resultadosEsforcos = [];
+    await firestore
+        .collection("Resultados")
+        .doc(uidProjeto)
+        .collection("Contagem")
         .get()
         .then((value) {
       List<QueryDocumentSnapshot<Map<String, dynamic>>> map = value.docs;

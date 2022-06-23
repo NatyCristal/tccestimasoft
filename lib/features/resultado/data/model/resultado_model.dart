@@ -11,7 +11,7 @@ class ResultadoModel extends ResultadoEntity {
   Map<String, dynamic> toMap() {
     return {
       "Anonimo": anonimo,
-      'NomeEstimativa': nome,
+      'Nome': nome,
       'Valor': valor,
     };
   }
@@ -22,6 +22,6 @@ class ResultadoModel extends ResultadoEntity {
         uidMembro: id,
         anonimo: map["Anonimamente"],
         nome: tipoContagem,
-        valor: map["Valor"]);
+        valor: map["Valor"].toString());
   }
 }

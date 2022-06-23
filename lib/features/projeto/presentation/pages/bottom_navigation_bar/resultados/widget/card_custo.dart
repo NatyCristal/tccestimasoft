@@ -3,6 +3,7 @@ import 'package:estimasoft/core/shared/utils.dart';
 import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/custo_entity.dart';
 import 'package:estimasoft/features/projeto/domain/entitie/projeto_entitie.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/home/store/store_projeto_index_menu.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/resultados/store/store_resultados.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/resultados/widget/alerta_copiar_estimativas.dart';
 import 'package:estimasoft/features/projeto/presentation/projeto_controller.dart';
@@ -11,10 +12,14 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class CardResultadoCustoCompartilhar extends StatelessWidget {
+  final StoreProjetosIndexMenu storeIndex;
   final ProjetoEntitie projetoEntitie;
   final CustoEntity custoEntity;
   const CardResultadoCustoCompartilhar(
-      {Key? key, required this.projetoEntitie, required this.custoEntity})
+      {Key? key,
+      required this.projetoEntitie,
+      required this.custoEntity,
+      required this.storeIndex})
       : super(key: key);
 
   @override
@@ -34,14 +39,13 @@ class CardResultadoCustoCompartilhar extends StatelessWidget {
                         custoEntity,
                         projetoEntitie.uidProjeto,
                         Modular.get<UsuarioAutenticado>().store.uid);
+                custoEntity.compartilhada = true;
+                store.compartilhada = true;
+                storeIndex.houveMudancaEmResultado = true;
               });
-
-        custoEntity.compartilhada = true;
-
-        store.compartilhada = true;
       },
       child: Container(
-        width: 150,
+        width: 140,
         margin: const EdgeInsets.symmetric(horizontal: 5),
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
@@ -56,7 +60,9 @@ class CardResultadoCustoCompartilhar extends StatelessWidget {
               alignment: Alignment.topCenter,
               child: Column(
                 children: [
-                  const Text("Estimativa Custo"),
+                  const Text(
+                    "Estimativa Custo",
+                  ),
                   Text(custoEntity.tipoContagem),
                 ],
               ),
@@ -69,15 +75,18 @@ class CardResultadoCustoCompartilhar extends StatelessWidget {
               },
               child: Observer(builder: (context) {
                 return CircleAvatar(
+                  radius: 15,
                   backgroundColor: corDeFundoCards,
                   child: !store.compartilhada
                       ? const Icon(
-                          Icons.send,
+                          Icons.check_rounded,
                           color: corCorpoTexto,
+                          size: 20,
                         )
-                      : const Icon(
+                      : Icon(
                           Icons.lock,
-                          color: corCorpoTexto,
+                          color: corCorpoTexto.withOpacity(0.5),
+                          size: 20,
                         ),
                 );
               }),

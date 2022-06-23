@@ -13,11 +13,13 @@ class ContagemController {
   final ContagemDetalhadaUsecase _contagemDetalhadaUsecase;
 
   ContagemIndicativaEntitie contagemIndicativa =
-      ContagemIndicativaModelFirebase(aie: [], ali: [], totalPf: 0);
+      ContagemIndicativaModelFirebase(
+          aie: [], ali: [], totalPf: 0, compartilhada: false);
 
-  ContagemEstimadaEntitie contagemEstimada =
-      ContagemEstimadaFirebaseModel(ce: [], ee: [], se: [], totalPF: 0);
+  ContagemEstimadaEntitie contagemEstimada = ContagemEstimadaFirebaseModel(
+      ce: [], ee: [], se: [], totalPF: 0, compartilhada: false);
   ContagemDetalhadaEntitie contagemDetalhada = ContagemDetalhadaEntitie(
+      compartilhada: false,
       funcaoDados: [],
       funcaoTransacional: [],
       totalPf: 0,

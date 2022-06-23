@@ -8,4 +8,6 @@ abstract class ResultadoRecuperarDatasource {
   Future<List<ResultadoEntity>> recuperarEstimativasEquipe(String uidProjeto);
 
   Future<List<ResultadoEntity>> recuperarEstimativasCustos(String uidProjeto);
+
+  Future<List<ResultadoEntity>> recuperarContagens(String uidProjeto);
 }

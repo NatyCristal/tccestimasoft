@@ -95,7 +95,15 @@ class LoginFirebaseDatasource extends LoginDatasource {
       await firestore
           .collection("Usuarios")
           .doc(usuario.uid)
-          .set(usuario.toMap());
+          .get()
+          .then((value) async {
+        if (!value.exists) {
+          await firestore
+              .collection("Usuarios")
+              .doc(usuario.uid)
+              .set(usuario.toMap());
+        }
+      });
     }
 
     return usuario;

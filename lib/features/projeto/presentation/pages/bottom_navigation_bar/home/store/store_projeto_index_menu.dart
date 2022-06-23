@@ -10,4 +10,10 @@ abstract class StoreProjetosIndexMenuBase with Store {
 
   @observable
   int index = 0;
+
+  @observable
+  bool houveMudancaEmResultado = false;
+
+  @observable
+  bool houveMudancaEmArquivosEdocumentos = false;
 }

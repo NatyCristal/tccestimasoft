@@ -43,11 +43,11 @@ dependencies:
   material_floating_search_bar: ^0.3.7
   cached_network_image: ^3.2.0
   rflutter_alert: ^2.0.4
-  fl_chart: ^0.50.6
   firebase_storage: ^10.2.17
   file_picker: ^4.6.1
   dropdown_search: ^3.0.1
   flutter_masked_text2: ^0.9.1
+  share_plus: ^4.0.4
 
  
   # The following adds the Cupertino Icons font to your application.

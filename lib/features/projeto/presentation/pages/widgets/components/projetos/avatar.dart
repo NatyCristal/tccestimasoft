@@ -10,9 +10,16 @@ class AvatarUsuario extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final usuarioLogado = Modular.get<UsuarioAutenticado>();
-    final String nome = usuarioLogado.store.nome.split(" ")[0][0] +
-        usuarioLogado.store.nome.split(" ")[1][0];
 
+    String nome = usuarioLogado.store.nome.split(" ").first[0];
+    String sobrenome = "";
+    if (usuarioLogado.store.nome.split(" ").length >= 2) {
+      sobrenome = usuarioLogado.store.nome.split(" ")[1][0];
+    } else {
+      sobrenome = usuarioLogado.store.nome.split(" ").first[1];
+    }
+
+    nome = nome + sobrenome.toUpperCase();
     return CircleAvatar(
       radius: 50,
       backgroundColor: corDeFundoBotaoPrimaria.withOpacity(0.2),

@@ -60,7 +60,8 @@ class ProjetoModule extends Module {
             guards: [AutorizadoGuard()]),
         ChildRoute('/inserir-arquivos',
             child: (context, args) => InsercaoArquivosUpload(
-                  projetoEntitie: args.data,
+                  projetoEntitie: args.data[0],
+                  storeProjetosIndexMenu: args.data[1],
                 ),
             guards: [AutorizadoGuard()]),
         ChildRoute('/visualizar-estimativa',

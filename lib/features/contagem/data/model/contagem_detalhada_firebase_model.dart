@@ -3,12 +3,14 @@ import 'package:estimasoft/features/contagem/domain/entitie/contagem_detalhada_e
 
 class ContagemDetalhadaModel extends ContagemDetalhadaEntitie {
   ContagemDetalhadaModel({
+    required bool compartilhada,
     required List<IndiceDetalhadaModel> funcaoDados,
     required List<IndiceDetalhadaModel> funcaoTransacional,
     required int totalPf,
     required int totalFuncaoDados,
     required int totalFuncaoTransacional,
   }) : super(
+          compartilhada: compartilhada,
           funcaoDados: funcaoDados,
           funcaoTransacional: funcaoTransacional,
           totalFuncaoDados: totalFuncaoDados,
@@ -18,6 +20,7 @@ class ContagemDetalhadaModel extends ContagemDetalhadaEntitie {
 
   Map<String, dynamic> toMap() {
     return {
+      "Compartilhada": compartilhada,
       "TotalPF": totalPf,
       'TotalFuncaoDeDados': totalFuncaoDados,
       'FuncaoDeDados': {
@@ -32,6 +35,7 @@ class ContagemDetalhadaModel extends ContagemDetalhadaEntitie {
 
   factory ContagemDetalhadaModel.fromMap(Map<String, dynamic> map) {
     return ContagemDetalhadaModel(
+        compartilhada: map["Compartilhada"] ?? false,
         totalFuncaoTransacional: map['TotalFuncaoDeDados'],
         totalPf: map["TotalPF"],
         totalFuncaoDados: map["TotalFuncaoDeDados"],
