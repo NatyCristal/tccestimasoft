@@ -1,4 +1,5 @@
 class EsforcoEntity {
+  String uidUsuario = "";
   bool compartilhada = false;
   String contagemPontoDeFuncao;
   String linguagem;

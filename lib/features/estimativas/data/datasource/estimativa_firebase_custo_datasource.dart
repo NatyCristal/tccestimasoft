@@ -60,17 +60,47 @@ class EstimativaCustoFirebaseDatasource extends CustoDatasource {
             .doc(uidProjeto)
             .collection("Custo")
             .doc(uidUsuario)
-            .update({tipoContagem: custo.toMap()});
+            .update({tipoContagem.split(" - ").first: custo.toMap()});
       } else {
         await firestore
             .collection("Estimativa")
             .doc(uidProjeto)
             .collection("Custo")
             .doc(uidUsuario)
-            .set({tipoContagem: custo.toMap()});
+            .set({tipoContagem.split(" - ").first: custo.toMap()});
       }
     });
 
     return custo;
+  }
+
+  @override
+  Future<List<CustoEntity>> recuperaCustosCompartilhados(
+      String uidProjeto, String tipoContagem) async {
+    List<CustoEntity> custos = [];
+
+    await firestore
+        .collection("Estimativa")
+        .doc(uidProjeto)
+        .collection("Custo")
+        .get()
+        .then((value) async {
+      List<QueryDocumentSnapshot<Map<String, dynamic>>> map = value.docs;
+
+      if (map.isNotEmpty) {
+        for (var element in map) {
+          String id = element.id;
+
+          element.data().forEach((key, value) {
+            if (value["Compartilhada"] == true) {
+              CustoModel custo = CustoModel.fromMap(value);
+              custo.uidUsuario = id;
+              custos.add(custo);
+            }
+          });
+        }
+      }
+    });
+    return custos;
   }
 }

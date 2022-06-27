@@ -493,13 +493,19 @@ class ContagemEstimada extends StatelessWidget {
                       store.carregouBotao = true;
                       var retorno = await controller.salvarContagem(
                         "Estimada",
-                        [],
-                        [],
+                        storeIndicativa.contagemIndicativaValida.aie,
+                        storeIndicativa.contagemIndicativaValida.ali,
                         store.ce,
                         store.ee,
                         store.se,
                         projetoUid,
-                        store.totalPf,
+                        store.totalPf +
+                            storeIndicativa
+                                    .contagemIndicativaValida.aie.length *
+                                7 +
+                            storeIndicativa
+                                    .contagemIndicativaValida.ali.length *
+                                7,
                       );
 
                       store.salvar(

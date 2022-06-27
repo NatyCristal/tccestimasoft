@@ -1,10 +1,10 @@
+import 'package:estimasoft/core/shared/utils/formatadores.dart';
 import 'package:estimasoft/features/contagem/domain/entitie/contagem_estimada_entitie.dart';
 import 'package:estimasoft/features/contagem/domain/entitie/contagem_indicativa_entitie.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/custo_entity.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/equipe_entity.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/esforco_entitie.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/prazo_entitie.dart';
-import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 
 class FormarTextoCompartilhar {
   static funcaoTextoEsforco(List<EsforcoEntity> esforco) {
@@ -45,27 +45,8 @@ class FormarTextoCompartilhar {
     String texto = "";
 
     for (var element in custo) {
-      final custoMental = MoneyMaskedTextController(
-          decimalSeparator: ',', thousandSeparator: '.', leftSymbol: "R\$");
-      custoMental.text = element.custoTotalMensal;
-
-      final custoHora = MoneyMaskedTextController(
-          decimalSeparator: ',', thousandSeparator: '.', leftSymbol: "R\$");
-      custoHora.text = element.custoHora.toStringAsFixed(2);
-
-      final custoPf = MoneyMaskedTextController(
-          decimalSeparator: ',', thousandSeparator: '.', leftSymbol: "R\$");
-      custoPf.text = element.custoPF;
-      final custototalProjeto = MoneyMaskedTextController(
-          decimalSeparator: ',', thousandSeparator: '.', leftSymbol: "R\$");
-      custototalProjeto.text = element.custoTotalProjeto.toStringAsFixed(2);
-
-      final valorTotalProjeto = MoneyMaskedTextController(
-          decimalSeparator: ',', thousandSeparator: '.', leftSymbol: "R\$");
-      valorTotalProjeto.text = element.valorTotalProjeto.toStringAsFixed(2);
-
       texto +=
-          "Tipo Contagem: ${element.tipoContagem}\nDisponibilidade Equipe:${element.disponibilidadeEquipe} HH\nCusto Total Mensal: ${custoMental.text} \nCusto Hora: ${custoHora.text}\nCusto Pf ${custoPf.text}\nProcentagem: ${element.porcentagemLucro}%\n\nCusto total projeto: ${custototalProjeto.text}\nValor Total Projeto: ${valorTotalProjeto.text}\n";
+          "Tipo Contagem: ${element.tipoContagem}\nDisponibilidade Equipe:${element.disponibilidadeEquipe} HH\nCusto Total Mensal: ${Formatadores.formatadorMonetario(element.custoTotalMensal)} \nCusto Hora: ${Formatadores.formatadorMonetario(element.custoHora.toString())}\nCusto Pf ${element.custoPF}\nProcentagem: ${element.porcentagemLucro}%\n\nCusto total projeto: ${Formatadores.formatadorMonetario(element.custoTotalProjeto.toString())}\nValor Total Projeto: ${Formatadores.formatadorMonetario(element.valorTotalProjeto.toString())}\n";
     }
     texto = "**Estimativas de custo**\n\n" + texto;
     return texto;

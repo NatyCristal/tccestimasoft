@@ -48,6 +48,9 @@ dependencies:
   dropdown_search: ^3.0.1
   flutter_masked_text2: ^0.9.1
   share_plus: ^4.0.4
+  dio: ^4.0.4
+  gallery_saver: ^2.3.2
+  permission_handler: ^9.2.0
 
  
   # The following adds the Cupertino Icons font to your application.

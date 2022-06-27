@@ -32,10 +32,9 @@ class EstimativaEquipePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    storeEstimativaEquipe.exibirEsforcos(
-        Modular.get<ProjetoController>().estimativasController.esforcos);
-    storeEstimativaEquipe.exibirPrazps(
-        Modular.get<ProjetoController>().estimativasController.prazos);
+    storeEstimativaEquipe
+        .exibirEsforcos(controller.estimativasController.esforcos);
+    storeEstimativaEquipe.exibirPrazps(controller.estimativasController.prazos);
 
     return Container(
       padding: paddingPagePrincipal,
@@ -70,6 +69,9 @@ class EstimativaEquipePage extends StatelessWidget {
                   storeEstimativaEquipe.esforcoSelecionado = value.toString();
                   storeEstimativaEquipe.estimarEquipe();
                 },
+                emptyBuilder: (context, searchEntry) => const Center(
+                    child: Text('Cadastre um esforço para continuar.',
+                        style: TextStyle(color: Colors.blue))),
               );
             }),
             const SizedBox(
@@ -99,6 +101,9 @@ class EstimativaEquipePage extends StatelessWidget {
                 storeEstimativaEquipe.prazoSelecionado = value.toString();
                 storeEstimativaEquipe.estimarEquipe();
               },
+              emptyBuilder: (context, searchEntry) => const Center(
+                  child: Text('Cadastre um prazo para continuar.',
+                      style: TextStyle(color: Colors.blue))),
             ),
             const SizedBox(
               height: 20,
@@ -197,8 +202,12 @@ class EstimativaEquipePage extends StatelessWidget {
                             Modular.get<UsuarioAutenticado>().store.uid,
                             element.esforco.split(" - ").last);
                       }
-                      storeEstimativaEquipe.equipesValidas =
-                          controller.estimativasController.equipe;
+                      storeEstimativaEquipe.equipesValidas = await controller
+                          .estimativasController
+                          .recuperarEquipe(
+                        projetoEntitie.uidProjeto,
+                        Modular.get<UsuarioAutenticado>().store.uid,
+                      );
 
                       storeEstimativaEquipe.alteracao = false;
                       storeEstimativaEquipe.carregando = false;

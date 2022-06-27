@@ -31,4 +31,16 @@ class CustoUsecase {
 
     return result;
   }
+
+  Future<Either<Falha, List<CustoEntity>>> recuperaCustosCompartilhados(
+      String uidProjeto, String tipoContagem) async {
+    var result =
+        await repository.recuperaCustosCompartilhados(uidProjeto, tipoContagem);
+
+    if (result.isLeft()) {
+      Left(ErroEstimativas(mensagem: "Algo de errado aconteceu!"));
+    }
+
+    return result;
+  }
 }

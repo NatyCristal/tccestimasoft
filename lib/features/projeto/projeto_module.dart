@@ -66,7 +66,7 @@ class ProjetoModule extends Module {
             guards: [AutorizadoGuard()]),
         ChildRoute('/visualizar-estimativa',
             child: (context, args) => VisualizarEstimativas(
-                  resultadoEntity: args.data[0],
+                  estimativas: args.data[0],
                   tipoDeEstimativa: args.data[1],
                   uidProjeto: args.data[2],
                 ),

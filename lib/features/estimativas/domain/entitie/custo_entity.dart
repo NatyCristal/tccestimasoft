@@ -1,6 +1,7 @@
 import 'package:estimasoft/features/estimativas/data/models/insumo_estimativa_custo.dart';
 
 class CustoEntity {
+  String uidUsuario = "";
   bool compartilhada;
   String tipoContagem;
   List<InsumoEstimativaCustoModel> equipe;

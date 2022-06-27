@@ -32,4 +32,16 @@ class EquipeUsecase {
 
     return result;
   }
+
+  Future<Either<Falha, List<EquipeEntity>>> recuperarEquipesCompartilhadas(
+      String uidProjeto, String tipoContagem) async {
+    var result = await repository.recuperarEquipesCompartilhadas(
+        uidProjeto, tipoContagem);
+
+    if (result.isLeft()) {
+      Left(ErroEstimativas(mensagem: "Algo de errado aconteceu!"));
+    }
+
+    return result;
+  }
 }

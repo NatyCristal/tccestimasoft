@@ -32,4 +32,16 @@ class EstimativaEsforcoUsecase {
 
     return result;
   }
+
+  Future<Either<Falha, List<EsforcoEntity>>> recuperaEsforcosCompartilhados(
+      String uidProjeto, String tipoContagem) async {
+    var result = await repository.recuperarEsforcosCompartilhados(
+        uidProjeto, tipoContagem);
+
+    if (result.isLeft()) {
+      Left(ErroEstimativas(mensagem: "Algo de errado aconteceu!"));
+    }
+
+    return result;
+  }
 }

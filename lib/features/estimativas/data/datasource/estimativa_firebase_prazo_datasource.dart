@@ -65,4 +65,34 @@ class EstimativaFirebasePrazoDatasource extends EstimativaPrazo {
 
     return prazoModel;
   }
+
+  @override
+  Future<List<PrazoEntity>> recuperarPrazosCompartilhados(
+      String uidProjeto, String tipoContagem) async {
+    List<PrazoEntity> prazos = [];
+
+    await firestore
+        .collection("Estimativa")
+        .doc(uidProjeto)
+        .collection("Prazo")
+        .get()
+        .then((value) async {
+      List<QueryDocumentSnapshot<Map<String, dynamic>>> map = value.docs;
+
+      if (map.isNotEmpty) {
+        for (var element in map) {
+          String id = element.id;
+
+          element.data().forEach((key, value) {
+            if (value["Compartilhada"] == true) {
+              EstimativaPrazoModel prazo = EstimativaPrazoModel.fromMap(value);
+              prazo.uidUsuario = id;
+              prazos.add(prazo);
+            }
+          });
+        }
+      }
+    });
+    return prazos;
+  }
 }

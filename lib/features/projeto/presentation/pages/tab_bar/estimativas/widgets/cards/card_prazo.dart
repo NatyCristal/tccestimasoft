@@ -37,9 +37,25 @@ class CardPrazo extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  Text(
-                    "Tipo Sistema: " + prazoEntity.tipoSistema,
-                    style: const TextStyle(color: corCorpoTexto),
+                  Row(
+                    children: [
+                      const SizedBox(
+                        width: 90,
+                        child: Text(
+                          "Tipo Sistema:",
+                          style: TextStyle(color: corCorpoTexto),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 150,
+                        child: Text(
+                          prazoEntity.tipoSistema,
+                          style: const TextStyle(color: corCorpoTexto),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                      )
+                    ],
                   ),
                   Text(
                     "Prazo Mínimo: ${prazoEntity.prazoMinimo} Dias",

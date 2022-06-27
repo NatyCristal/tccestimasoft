@@ -86,7 +86,7 @@ class ResultadoRecuperarFirebaseDatasource
     await firestore
         .collection("Resultados")
         .doc(uidProjeto)
-        .collection("Prazo")
+        .collection("Prazos")
         .get()
         .then((value) {
       List<QueryDocumentSnapshot<Map<String, dynamic>>> map = value.docs;
@@ -105,7 +105,7 @@ class ResultadoRecuperarFirebaseDatasource
 
   @override
   Future<List<ResultadoEntity>> recuperarContagens(String uidProjeto) async {
-    List<ResultadoEntity> resultadosEsforcos = [];
+    List<ResultadoEntity> resultadosContagens = [];
     await firestore
         .collection("Resultados")
         .doc(uidProjeto)
@@ -117,12 +117,12 @@ class ResultadoRecuperarFirebaseDatasource
       if (map.isNotEmpty) {
         for (var element in map) {
           element.data().forEach((key, value) {
-            resultadosEsforcos
+            resultadosContagens
                 .add(ResultadoModel.fromMap(value, element.id, key.toString()));
           });
         }
       }
     });
-    return resultadosEsforcos;
+    return resultadosContagens;
   }
 }

@@ -6,4 +6,7 @@ abstract class ContagemIndicativaDatasource {
 
   Future<ContagemIndicativaEntitie> recuperarContagem(
       String uidProjeto, String uidUsuario);
+
+  Future<List<ContagemIndicativaEntitie>> recuperarIndicativasCompartilhadas(
+      String uidProjeto);
 }

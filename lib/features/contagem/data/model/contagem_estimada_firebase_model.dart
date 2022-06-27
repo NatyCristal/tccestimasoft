@@ -3,11 +3,15 @@ import 'package:estimasoft/features/contagem/domain/entitie/contagem_estimada_en
 class ContagemEstimadaFirebaseModel extends ContagemEstimadaEntitie {
   ContagemEstimadaFirebaseModel(
       {required bool compartilhada,
+      required List<String> aie,
+      required List<String> ali,
       required List<String> ce,
       required List<String> ee,
       required List<String> se,
       required int totalPF})
       : super(
+            aie: aie,
+            ali: ali,
             ce: ce,
             ee: ee,
             se: se,
@@ -16,6 +20,8 @@ class ContagemEstimadaFirebaseModel extends ContagemEstimadaEntitie {
 
   Map<String, dynamic> toMap() {
     return {
+      "AIE": aie,
+      "ALI": ali,
       "Compartilhada": compartilhada,
       "total": totalPF,
       'EE': ee,
@@ -28,6 +34,8 @@ class ContagemEstimadaFirebaseModel extends ContagemEstimadaEntitie {
     List<String> listaEE = [];
     List<String> listaCE = [];
     List<String> listaSE = [];
+    List<String> listaAli = [];
+    List<String> listaAie = [];
 
     List<dynamic>? lista = map["EE"];
 
@@ -45,8 +53,20 @@ class ContagemEstimadaFirebaseModel extends ContagemEstimadaEntitie {
       listaSE.add(element);
     }
 
+    List<dynamic>? lista4 = map["ALI"];
+    for (var element in lista4!) {
+      listaAli.add(element);
+    }
+
+    List<dynamic>? lista5 = map["AIE"];
+    for (var element in lista5!) {
+      listaAie.add(element);
+    }
+
     return ContagemEstimadaFirebaseModel(
         compartilhada: map["Compartilhada"] ?? false,
+        ali: listaAli,
+        aie: listaAie,
         ce: listaCE,
         ee: listaEE,
         se: listaSE,

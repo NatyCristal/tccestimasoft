@@ -1,4 +1,5 @@
 import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
+import 'package:estimasoft/core/shared/utils/formatadores.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_custo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
@@ -11,14 +12,6 @@ class CardCustosGerais extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controllerCustoTotalMensal = MoneyMaskedTextController(
-        decimalSeparator: ',', thousandSeparator: '.', leftSymbol: "R\$");
-
-    final controllerCustoDaHora = MoneyMaskedTextController(
-        decimalSeparator: ',', thousandSeparator: '.', leftSymbol: "R\$");
-    final controllerCustoPF = MoneyMaskedTextController(
-        decimalSeparator: ',', thousandSeparator: '.', leftSymbol: "R\$");
-
     return Column(
       children: [
         const Text(
@@ -57,11 +50,10 @@ class CardCustosGerais extends StatelessWidget {
                   color: corCorpoTexto, fontWeight: Fontes.weightTextoNormal),
             ),
             Observer(builder: (context) {
-              controllerCustoTotalMensal.text =
-                  storeEstimativaCusto.custoTotalMensal.toStringAsFixed(2);
               return SizedBox(
                 child: Text(
-                  controllerCustoTotalMensal.text,
+                  Formatadores.formatadorMonetario(
+                      storeEstimativaCusto.custoTotalMensal.toStringAsFixed(2)),
                   style: const TextStyle(
                       color: corCorpoTexto,
                       fontWeight: Fontes.weightTextoNormal),
@@ -82,10 +74,9 @@ class CardCustosGerais extends StatelessWidget {
                   color: corCorpoTexto, fontWeight: Fontes.weightTextoNormal),
             ),
             Observer(builder: (context) {
-              controllerCustoDaHora.text =
-                  storeEstimativaCusto.custoHora.toStringAsFixed(2);
               return Text(
-                controllerCustoDaHora.text,
+                Formatadores.formatadorMonetario(
+                    storeEstimativaCusto.custoHora.toStringAsFixed(2)),
                 style: const TextStyle(
                     color: corCorpoTexto, fontWeight: Fontes.weightTextoNormal),
               );
@@ -104,10 +95,9 @@ class CardCustosGerais extends StatelessWidget {
                   color: corCorpoTexto, fontWeight: Fontes.weightTextoNormal),
             ),
             Observer(builder: (context) {
-              controllerCustoPF.text =
-                  storeEstimativaCusto.custoPF.toStringAsFixed(2);
               return Text(
-                controllerCustoPF.text,
+                Formatadores.formatadorMonetario(
+                    storeEstimativaCusto.custoPF.toStringAsFixed(2)),
                 style: const TextStyle(
                     color: corCorpoTexto, fontWeight: Fontes.weightTextoNormal),
               );
@@ -127,7 +117,6 @@ class CardCustosGerais extends StatelessWidget {
                   color: corCorpoTexto,
                   fontWeight: Fontes.weightTextoNormal),
             ),
-
             Row(
               children: [
                 SizedBox(
@@ -148,11 +137,6 @@ class CardCustosGerais extends StatelessWidget {
                         fontWeight: Fontes.weightTextoNormal)),
               ],
             )
-            // return Text(
-            //   "${storeEstimativaCusto.porcentagemLucro.toString()} R\$",
-            //   style: const TextStyle(
-            //       color: corCorpoTexto, fontWeight: Fontes.weightTextoNormal),
-            // );
           ],
         ),
         const SizedBox(

@@ -1,3 +1,5 @@
+import 'package:estimasoft/core/auth/usuario_autenticado.dart';
+import 'package:estimasoft/core/shared/anim/lotties.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/custo_entity.dart';
 import 'package:estimasoft/features/projeto/domain/entitie/projeto_entitie.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_custo.dart';
@@ -20,54 +22,49 @@ class ConteudoCusto extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      controller: scrollController,
-      shrinkWrap: true,
-      itemCount: custo.custos.length,
-      itemBuilder: (context, index) {
-        CustoEntity custoEntity = custo.custos[index];
+    // return ListView.builder(
+    //   controller: scrollController,
+    //   shrinkWrap: true,
+    //   itemCount: custo.custos.length,
+    //   itemBuilder: (context, index) {
+    //     CustoEntity custoEntity = custo.custos[index];
 
-        return CardCustoEstimativa(custoEntity: custoEntity, store: custo);
-      },
-    );
-
-    // FutureBuilder(
-    //   future: controller.recuperarEstimativa(projetoEntitie.uidProjeto,
-    //       Modular.get<UsuarioAutenticado>().store.uid, "Equipe"),
-    //   builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-    //     switch (snapshot.connectionState) {
-    //       case ConnectionState.done:
-    //         if (snapshot.hasError) {
-    //           return const Text(
-    //               "Não foi possível recuperar os esforços cadastrados");
-    //         } else if (snapshot.hasData) {
-    //           if (controller.estimativasController.equipe.isEmpty) {
-    //             return const Text("Vazio");
-    //           } else {
-    //             return ListView.builder(
-    //               controller: scrollController,
-    //               shrinkWrap: true,
-    //               itemCount: equipe.equipes.length,
-    //               itemBuilder: (context, index) {
-    //                 EquipeEntity equipeEntity = equipe.equipes[index];
-
-    //                 return CardEquipeEstimativa(
-    //                     equipeEntity: equipeEntity, store: equipe);
-    //               },
-    //             );
-    //           }
-    //         }
-
-    //         break;
-    //       case ConnectionState.active:
-    //         return const Carregando();
-    //       case ConnectionState.none:
-    //         return const Text("Erro");
-    //       case ConnectionState.waiting:
-    //         return const Carregando();
-    //     }
-    //     return const SizedBox();
+    //     return CardCustoEstimativa(custoEntity: custoEntity, store: custo);
     //   },
     // );
+
+    return FutureBuilder(
+      future: controller.recuperarEstimativa(projetoEntitie.uidProjeto,
+          Modular.get<UsuarioAutenticado>().store.uid, "Custo"),
+      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.done:
+            if (snapshot.hasData) {
+              custo.custosValidos = controller.estimativasController.custos;
+
+              return ListView.builder(
+                controller: scrollController,
+                shrinkWrap: true,
+                itemCount: custo.custos.length,
+                itemBuilder: (context, index) {
+                  CustoEntity custoEntity = custo.custos[index];
+
+                  return CardCustoEstimativa(
+                      custoEntity: custoEntity, store: custo);
+                },
+              );
+            }
+
+            break;
+          case ConnectionState.active:
+            return const Carregando();
+          case ConnectionState.none:
+            return const Text("Erro");
+          case ConnectionState.waiting:
+            return const Carregando();
+        }
+        return const SizedBox();
+      },
+    );
   }
 }

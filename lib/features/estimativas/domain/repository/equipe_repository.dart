@@ -11,4 +11,7 @@ abstract class EquipeRepository {
       String uidProjeto,
       String uidUsuario,
       String tipoContagem);
+
+  Future<Either<Falha, List<EquipeEntity>>> recuperarEquipesCompartilhadas(
+      String uidProjeto, String tipoContagem);
 }

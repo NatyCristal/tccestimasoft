@@ -6,4 +6,7 @@ abstract class EstimativaPrazo {
 
   Future<PrazoEntity> salvarEstimativaPrazo(PrazoEntity prazo,
       String uidProjeto, String uidUsuario, String tipoContagem);
+
+  Future<List<PrazoEntity>> recuperarPrazosCompartilhados(
+      String uidProjeto, String tipoContagem);
 }

@@ -118,6 +118,9 @@ class EstimativaCustoPage extends StatelessWidget {
                       }
                     }
                   },
+                  emptyBuilder: (context, searchEntry) => const Center(
+                      child: Text('Cadastre um esforço para continuar.',
+                          style: TextStyle(color: Colors.blue))),
                 );
               }),
               Observer(builder: (context) {
@@ -155,6 +158,9 @@ class EstimativaCustoPage extends StatelessWidget {
                       }
                     }
                   },
+                  emptyBuilder: (context, searchEntry) => const Center(
+                      child: Text('Cadastre uma equipe para continuar.',
+                          style: TextStyle(color: Colors.blue))),
                 );
               }),
               const SizedBox(
@@ -213,13 +219,12 @@ class EstimativaCustoPage extends StatelessWidget {
                 height: 20,
               ),
               Observer(builder: (context) {
-                return storeEstimativaCusto.tamanhoListaCustos > 0
-                    ? ConteudoCusto(
-                        custo: storeEstimativaCusto,
-                        scrollController: scrollController,
-                        projetoEntitie: projetoEntitie,
-                      )
-                    : const SizedBox();
+                storeEstimativaCusto.tamanhoListaCustos > 0;
+                return ConteudoCusto(
+                  custo: storeEstimativaCusto,
+                  scrollController: scrollController,
+                  projetoEntitie: projetoEntitie,
+                );
               }),
               const SizedBox(
                 height: 20,
@@ -249,15 +254,18 @@ class EstimativaCustoPage extends StatelessWidget {
                               storeEstimativaCusto.tipoContagem
                                   .split(" - ")
                                   .first);
-
-                          storeEstimativaCusto.custosValidos =
-                              Modular.get<ProjetoController>()
-                                  .estimativasController
-                                  .custos;
-                          storeEstimativaCusto.carregando = false;
-                          AlertaSnack.exbirSnackBar(
-                              context, "Custo salvo com sucesso!");
                         }
+                        storeEstimativaCusto.custosValidos =
+                            await Modular.get<ProjetoController>()
+                                .estimativasController
+                                .recuperarCusto(
+                                    projetoEntitie.uidProjeto,
+                                    Modular.get<UsuarioAutenticado>()
+                                        .store
+                                        .uid);
+                        storeEstimativaCusto.carregando = false;
+                        AlertaSnack.exbirSnackBar(
+                            context, "Custo salvo com sucesso!");
                       } else {
                         AlertaSnack.exbirSnackBar(context,
                             "Não existem alterações para serem salvas!");

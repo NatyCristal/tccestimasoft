@@ -22,8 +22,10 @@ import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativ
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_equipe.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_esforco.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_prazo.dart';
+import 'package:estimasoft/features/projeto/presentation/projeto_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:share_plus/share_plus.dart';
 
 class IndexResultado extends StatelessWidget {
@@ -98,6 +100,20 @@ class IndexResultado extends StatelessWidget {
                 ],
               ),
             ),
+            Observer(builder: (context) {
+              if (storeContagemIndicativa.contagemIndicativaValida.totalPf ==
+                      0 &&
+                  storeContagemEstimada.contagemEstimadaValida.totalPF == 0) {
+                return const SizedBox(
+                  child: Text(
+                    "Não Realizado",
+                    style: TextStyle(color: corCorpoTexto),
+                  ),
+                );
+              }
+
+              return const SizedBox();
+            }),
             Container(
               padding: const EdgeInsets.all(10),
               child: SingleChildScrollView(
@@ -158,7 +174,7 @@ class IndexResultado extends StatelessWidget {
                       fontWeight: Fontes.weightTextoNormal),
                 ),
                 GestureDetector(
-                  onTap: () async {
+                  onTap: () {
                     if (storeEstimativaEsforco.esforcosValidos.isNotEmpty) {
                       Share.share(FormarTextoCompartilhar.funcaoTextoEsforco(
                           storeEstimativaEsforco.esforcosValidos));
@@ -172,45 +188,41 @@ class IndexResultado extends StatelessWidget {
                 )
               ],
             ),
-            const SizedBox(
-              height: 10,
-            ),
-            Observer(builder: (context) {
-              return storeEstimativaPrazo.prazosValidos.isNotEmpty
-                  ? Container(
-                      padding: const EdgeInsets.all(10),
-                      height: 120,
-                      width: TamanhoTela.width(context, 0.9),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          ListView.builder(
+            Row(
+              children: [
+                Observer(builder: (context) {
+                  return storeEstimativaEsforco.esforcosValidos.isNotEmpty
+                      ? Container(
+                          padding: const EdgeInsets.all(10),
+                          height: 120,
+                          width: TamanhoTela.width(context, 0.9),
+                          child: ListView.builder(
                               scrollDirection: Axis.horizontal,
                               shrinkWrap: true,
                               itemCount:
-                                  storeEstimativaPrazo.prazosValidos.length,
+                                  storeEstimativaEsforco.esforcosValidos.length,
                               itemBuilder: (context, index) {
-                                EsforcoEntity prazoEntity =
+                                EsforcoEntity equipeEntity =
                                     storeEstimativaEsforco
                                         .esforcosValidos[index];
                                 return CardEsforcoResultado(
                                     storeIndex: store,
                                     projetoEntitie: projeto,
-                                    esforcoEntity: prazoEntity);
+                                    esforcoEntity: equipeEntity);
                               }),
-                        ],
-                      ),
-                    )
-                  : const SizedBox(
-                      child: Center(
-                          child: Text(
-                        "Estimativas não cadastradas",
-                        style: TextStyle(color: corCorpoTexto),
-                      )),
-                    );
-            }),
+                        )
+                      : const SizedBox(
+                          child: Center(
+                              child: Text(
+                            "Não Realizado",
+                            style: TextStyle(color: corCorpoTexto),
+                          )),
+                        );
+                }),
+              ],
+            ),
             const SizedBox(
-              height: 10,
+              height: 20,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -233,9 +245,6 @@ class IndexResultado extends StatelessWidget {
                   ),
                 )
               ],
-            ),
-            const SizedBox(
-              height: 10,
             ),
             Observer(builder: (context) {
               return storeEstimativaPrazo.prazosValidos.isNotEmpty
@@ -263,11 +272,10 @@ class IndexResultado extends StatelessWidget {
                       ),
                     )
                   : const SizedBox(
-                      child: Center(
-                          child: Text(
-                        "Estimativas não cadastradas",
+                      child: Text(
+                        "Não Realizado",
                         style: TextStyle(color: corCorpoTexto),
-                      )),
+                      ),
                     );
             }),
             const SizedBox(
@@ -309,7 +317,7 @@ class IndexResultado extends StatelessWidget {
                               scrollDirection: Axis.horizontal,
                               shrinkWrap: true,
                               itemCount:
-                                  storeEstimativaPrazo.prazosValidos.length,
+                                  storeEstimativaEquipe.equipesValidas.length,
                               itemBuilder: (context, index) {
                                 EquipeEntity equipeEntity =
                                     storeEstimativaEquipe.equipesValidas[index];
@@ -319,7 +327,13 @@ class IndexResultado extends StatelessWidget {
                                     equipeEntity: equipeEntity);
                               }),
                         )
-                      : const SizedBox();
+                      : const SizedBox(
+                          child: Center(
+                              child: Text(
+                            "Não Realizado",
+                            style: TextStyle(color: corCorpoTexto),
+                          )),
+                        );
                 }),
               ],
             ),
@@ -372,7 +386,13 @@ class IndexResultado extends StatelessWidget {
                                     custoEntity: custoEntity);
                               }),
                         )
-                      : const SizedBox();
+                      : const SizedBox(
+                          child: Center(
+                              child: Text(
+                            "Não Realizado",
+                            style: TextStyle(color: corCorpoTexto),
+                          )),
+                        );
                 }),
               ],
             ),

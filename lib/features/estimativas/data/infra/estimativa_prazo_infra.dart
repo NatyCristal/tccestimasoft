@@ -36,4 +36,16 @@ class EstimativaPrazoFirebase extends PrazoRepository {
       return Left(Falha(mensagem: e.code));
     }
   }
+
+  @override
+  Future<Either<Falha, List<PrazoEntity>>> recuperarPrazosCompartilhados(
+      String uidProjeto, String tipoContagem) async {
+    try {
+      var custo = await datasource.recuperarPrazosCompartilhados(
+          uidProjeto, tipoContagem);
+      return Right(custo);
+    } on FirebaseException catch (e) {
+      return Left(Falha(mensagem: e.code));
+    }
+  }
 }

@@ -66,4 +66,35 @@ class EstimativaEquipeFirebaseDatasource extends EstimativaEquipeDatasource {
 
     return prazo;
   }
+
+  @override
+  Future<List<EquipeEntity>> recuperarEquipesCompartilhadas(
+      String uidProjeto, String tipoContagem) async {
+    List<EquipeEntity> equipes = [];
+
+    await firestore
+        .collection("Estimativa")
+        .doc(uidProjeto)
+        .collection("Equipe")
+        .get()
+        .then((value) async {
+      List<QueryDocumentSnapshot<Map<String, dynamic>>> map = value.docs;
+
+      if (map.isNotEmpty) {
+        for (var element in map) {
+          String id = element.id;
+
+          element.data().forEach((key, value) {
+            if (value["Compartilhada"] == true) {
+              EstimativaEquipeModel equipe =
+                  EstimativaEquipeModel.fromMap(value);
+              equipe.uidUsuario = id;
+              equipes.add(equipe);
+            }
+          });
+        }
+      }
+    });
+    return equipes;
+  }
 }

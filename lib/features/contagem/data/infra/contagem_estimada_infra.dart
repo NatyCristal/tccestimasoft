@@ -11,6 +11,8 @@ class ContagemEstimadaInfra extends ContagemEstimadaRepository {
 
   @override
   Future<Either<String, ContagemEstimadaEntitie>> salvar(
+      List<String> aie,
+      List<String> ali,
       List<String> ce,
       List<String> ee,
       List<String> se,
@@ -19,7 +21,7 @@ class ContagemEstimadaInfra extends ContagemEstimadaRepository {
       int totalPF) async {
     try {
       var resultado = await datasource.salvarContagem(
-          ce, ee, se, uidProjeto, uidUsuario, totalPF);
+          aie, ali, ce, ee, se, uidProjeto, uidUsuario, totalPF);
       return Right(resultado);
     } on FirebaseException catch (e) {
       return Left(e.code);
@@ -32,6 +34,18 @@ class ContagemEstimadaInfra extends ContagemEstimadaRepository {
     try {
       var resultado =
           await datasource.recuperarContagemEstimada(uidProjeto, uidUsuario);
+      return Right(resultado);
+    } on FirebaseException catch (e) {
+      return Left(e.code);
+    }
+  }
+
+  @override
+  Future<Either<String, List<ContagemEstimadaEntitie>>>
+      recuperarEstimadasCompartilhadas(String uidProjeto) async {
+    try {
+      var resultado =
+          await datasource.recuperarEstimadasCompartilhadas(uidProjeto);
       return Right(resultado);
     } on FirebaseException catch (e) {
       return Left(e.code);

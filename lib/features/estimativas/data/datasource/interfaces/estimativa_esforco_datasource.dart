@@ -6,4 +6,7 @@ abstract class EstimativaEsforcoDatasource {
 
   Future<EsforcoEntity> salvarEstimativaEsforco(EsforcoEntity esforcoEntity,
       String uidProjeto, String uidUsuario, String tipoContagem);
+
+  Future<List<EsforcoEntity>> recuperarEsforcosCompartilhados(
+      String uidProjeto, String tipoContagem);
 }

@@ -36,4 +36,16 @@ class ContagemIndicativaInfra extends ContagemIndicativaRepository {
       return Left(e.code);
     }
   }
+
+  @override
+  Future<Either<String, List<ContagemIndicativaEntitie>>>
+      recuperarIndicativasCompartilhadas(String uidProjeto) async {
+    try {
+      var resultado =
+          await datasource.recuperarIndicativasCompartilhadas(uidProjeto);
+      return Right(resultado);
+    } on FirebaseException catch (e) {
+      return Left(e.code);
+    }
+  }
 }

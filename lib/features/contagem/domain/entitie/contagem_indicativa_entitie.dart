@@ -1,4 +1,5 @@
 abstract class ContagemIndicativaEntitie {
+  String uidUsuario = "";
   bool compartilhada;
   final int totalPf;
   final List<String> aie;

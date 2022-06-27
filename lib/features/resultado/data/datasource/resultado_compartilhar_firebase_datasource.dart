@@ -311,8 +311,8 @@ class ResultadoFirebaseDatasource extends CompartilharResultadoDatasource {
     await firestore
         .collection("Contagem")
         .doc(uidProjeto)
-        .collection(uidUsuario)
-        .doc("Detalhada")
+        .collection("Detalhada")
+        .doc(uidUsuario)
         .update(
           contagemDetalhada.toMap(),
         );
@@ -328,6 +328,8 @@ class ResultadoFirebaseDatasource extends CompartilharResultadoDatasource {
       String uidUsuario) async {
     ContagemEstimadaFirebaseModel contagemEstimada =
         (ContagemEstimadaFirebaseModel(
+      aie: contagem.aie,
+      ali: contagem.ali,
       compartilhada: true,
       ce: contagem.ce,
       ee: contagem.ee,
@@ -372,8 +374,8 @@ class ResultadoFirebaseDatasource extends CompartilharResultadoDatasource {
     await firestore
         .collection("Contagem")
         .doc(uidProjeto)
-        .collection(uidUsuario)
-        .doc("Estimada")
+        .collection("Estimada")
+        .doc(uidUsuario)
         .update(
           contagemEstimada.toMap(),
         );
@@ -433,8 +435,8 @@ class ResultadoFirebaseDatasource extends CompartilharResultadoDatasource {
     await firestore
         .collection("Contagem")
         .doc(uidProjeto)
-        .collection(uidUsuario)
-        .doc("Indicativa")
+        .collection("Indicativa")
+        .doc(uidUsuario)
         .update(
           contagemEstimada.toMap(),
         );

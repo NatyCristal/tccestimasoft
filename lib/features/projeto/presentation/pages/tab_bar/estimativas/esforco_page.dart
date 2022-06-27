@@ -214,14 +214,13 @@ class _EstimativaEsforcoPageState extends State<EstimativaEsforcoPage> {
                     height: 10,
                   ),
                   Observer(builder: (context) {
-                    return widget.storeEstimativaEsforco.tamanhoListaEsforco > 0
-                        ? ConteudoEsforco(
-                            scrollController: widget.scroll,
-                            projetoEntitie: widget.projetoEntitie,
-                            storeEstimativaEsforco:
-                                widget.storeEstimativaEsforco,
-                          )
-                        : const SizedBox();
+                    widget.storeEstimativaEsforco.tamanhoListaEsforco;
+
+                    return ConteudoEsforco(
+                      scrollController: widget.scroll,
+                      projetoEntitie: widget.projetoEntitie,
+                      storeEstimativaEsforco: widget.storeEstimativaEsforco,
+                    );
                   }),
                 ]),
                 const SizedBox(
@@ -255,7 +254,12 @@ class _EstimativaEsforcoPageState extends State<EstimativaEsforcoPage> {
                                     .first);
                           }
                           widget.storeEstimativaEsforco.esforcosValidos =
-                              widget.controller.estimativasController.esforcos;
+                              await widget.controller.estimativasController
+                                  .recuperarEsforcos(
+                                      widget.projetoEntitie.uidProjeto,
+                                      Modular.get<UsuarioAutenticado>()
+                                          .store
+                                          .uid);
                           widget.storeEstimativaEsforco.alteracores = false;
                           widget.storeEstimativaEsforco.carregando = false;
                           AlertaSnack.exbirSnackBar(context, "Esforço salvo!");

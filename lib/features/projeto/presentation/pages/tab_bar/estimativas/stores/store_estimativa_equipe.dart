@@ -2,6 +2,8 @@ import 'package:estimasoft/core/shared/utils/snackbar.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/equipe_entity.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/esforco_entitie.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/prazo_entitie.dart';
+import 'package:estimasoft/features/projeto/presentation/projeto_controller.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
 part 'store_estimativa_equipe.g.dart';
@@ -11,8 +13,10 @@ class StoreEstimativaEquipe = StoreEstimativaEquipeBase
 
 abstract class StoreEstimativaEquipeBase with Store {
   List<EquipeEntity> equipesValidas = [];
-  List<EsforcoEntity> esforcosValidos = [];
-  List<PrazoEntity> prazosValidos = [];
+  List<EsforcoEntity> esforcosValidos =
+      Modular.get<ProjetoController>().estimativasController.esforcos;
+  List<PrazoEntity> prazosValidos =
+      Modular.get<ProjetoController>().estimativasController.prazos;
   List<String> menuItem = [
     '1 hora',
     '2 horas',
@@ -94,6 +98,11 @@ abstract class StoreEstimativaEquipeBase with Store {
         return AlertaSnack.exbirSnackBar(
             context, "Existe uma estimativa com essa contagem");
       }
+    }
+
+    if (esforcoSelecionado.isEmpty && prazoSelecionado.isEmpty) {
+      return AlertaSnack.exbirSnackBar(
+          context, "Esforço e prazo estão vazios!");
     }
 
     if (esforcoSelecionado.split(" - ").last !=

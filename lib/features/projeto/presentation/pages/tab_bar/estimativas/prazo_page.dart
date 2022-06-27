@@ -157,13 +157,12 @@ class EstimativaPrazo extends StatelessWidget {
               height: 30,
             ),
             Observer(builder: (context) {
-              return store.tamanhoListaPrazo > 0
-                  ? ConteudoPrazo(
-                      scrollController: scrollController,
-                      projetoEntitie: projetoEntitie,
-                      storeEstimativaPrazo: store,
-                    )
-                  : const SizedBox();
+              store.tamanhoListaPrazo > 0;
+              return ConteudoPrazo(
+                scrollController: scrollController,
+                projetoEntitie: projetoEntitie,
+                storeEstimativaPrazo: store,
+              );
             }),
             const SizedBox(
               height: 30,
@@ -194,10 +193,13 @@ class EstimativaPrazo extends StatelessWidget {
                             projetoEntitie.uidProjeto,
                             Modular.get<UsuarioAutenticado>().store.uid,
                             element.contagemPontoDeFuncao.split(" - ").first);
-
-                        store.prazosValidos =
-                            controller.estimativasController.prazos;
                       }
+                      store.prazosValidos = await controller
+                          .estimativasController
+                          .recuperarPrazos(projetoEntitie.uidProjeto,
+                              Modular.get<UsuarioAutenticado>().store.uid);
+                      controller.estimativasController.prazos;
+
                       store.alteracao = false;
                       store.carregando = false;
                       AlertaSnack.exbirSnackBar(context, "Prazo salvo!");

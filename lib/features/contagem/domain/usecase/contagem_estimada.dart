@@ -12,14 +12,16 @@ class ContagemEstimadaUsecase {
   ContagemEstimadaUsecase(this.repository);
 
   Future<Either<Falha, ContagemEstimadaEntitie>> salvarContagemEstimada(
+      List<String> aie,
+      List<String> ali,
       List<String> ce,
       List<String> ee,
       List<String> se,
       String uidProjeto,
       String uidUsuario,
       int totalPf) async {
-    var resultado =
-        await repository.salvar(ce, ee, se, uidProjeto, uidUsuario, totalPf);
+    var resultado = await repository.salvar(
+        aie, ali, ce, ee, se, uidProjeto, uidUsuario, totalPf);
 
     var erro = "";
     var retorno;
@@ -56,6 +58,31 @@ class ContagemEstimadaUsecase {
     if (resultado.isLeft()) {
       return Left(
         ContagemEstimadaErro(
+            mensagem: "Não foi possível salvar a função. O erro foi: $erro"),
+      );
+    }
+
+    return Right(retorno);
+  }
+
+  Future<Either<Falha, List<ContagemEstimadaEntitie>>>
+      recuperarEstimadasCompartilhadas(String uidProjeto) async {
+    var resultado =
+        await repository.recuperarEstimadasCompartilhadas(uidProjeto);
+
+    var erro = "";
+    // ignore: prefer_typing_uninitialized_variables
+    var retorno;
+
+    resultado.fold((l) {
+      erro = l;
+    }, (r) {
+      retorno = r;
+    });
+
+    if (resultado.isLeft()) {
+      return Left(
+        ContagemIndicativaErro(
             mensagem: "Não foi possível salvar a função. O erro foi: $erro"),
       );
     }

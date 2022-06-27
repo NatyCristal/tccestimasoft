@@ -6,4 +6,7 @@ abstract class CustoDatasource {
 
   Future<CustoEntity> salvarEstimativaCusto(CustoEntity custoEntity,
       String uidProjeto, String uidUsuario, String tipoContagem);
+
+  Future<List<CustoEntity>> recuperaCustosCompartilhados(
+      String uidProjeto, String tipoContagem);
 }

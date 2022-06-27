@@ -52,23 +52,23 @@ class ContagemDetalhadaFirebase extends ContagemDetalhadaDatasource {
     await firestore
         .collection("Contagem")
         .doc(uidProjeto)
-        .collection(uidUsuario)
-        .doc("Detalhada")
+        .collection("Detalhada")
+        .doc(uidUsuario)
         .get()
         .then((value) async {
       if (value.exists) {
         await firestore
             .collection("Contagem")
             .doc(uidProjeto)
-            .collection(uidUsuario)
-            .doc("Detalhada")
+            .collection("Detalhada")
+            .doc(uidUsuario)
             .update(contagemDetalhada.toMap());
-      } else if (!value.exists) {
+      } else {
         await firestore
             .collection("Contagem")
             .doc(uidProjeto)
-            .collection(uidUsuario)
-            .doc("Estimada")
+            .collection("Detalhada")
+            .doc(uidUsuario)
             .set(contagemDetalhada.toMap());
       }
     });

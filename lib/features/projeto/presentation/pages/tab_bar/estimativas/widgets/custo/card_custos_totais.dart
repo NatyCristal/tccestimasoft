@@ -1,5 +1,6 @@
 import 'package:estimasoft/core/shared/utils.dart';
 import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
+import 'package:estimasoft/core/shared/utils/formatadores.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_custo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
@@ -12,12 +13,6 @@ class CardCustosTotais extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controllerCustoTotalProjeto = MoneyMaskedTextController(
-        decimalSeparator: ',', thousandSeparator: '.', leftSymbol: "R\$");
-
-    final controllerValorTotalProjeto = MoneyMaskedTextController(
-        decimalSeparator: ',', thousandSeparator: '.', leftSymbol: "R\$");
-
     return Container(
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
@@ -38,14 +33,13 @@ class CardCustosTotais extends StatelessWidget {
                     fontWeight: Fontes.weightTextoNormal),
               ),
               Observer(builder: (context) {
-                controllerCustoTotalProjeto.text = storeEstimativaCusto
-                    .custoProjeto
-                    .ceilToDouble()
-                    .toStringAsFixed(2);
                 return SizedBox(
                   width: 150,
                   child: Text(
-                    controllerCustoTotalProjeto.text,
+                    Formatadores.formatadorMonetario(storeEstimativaCusto
+                        .custoProjeto
+                        .ceilToDouble()
+                        .toStringAsFixed(2)),
                     textAlign: TextAlign.right,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
@@ -72,12 +66,12 @@ class CardCustosTotais extends StatelessWidget {
                     fontWeight: Fontes.weightTextoNormal),
               ),
               Observer(builder: (context) {
-                controllerValorTotalProjeto.text =
-                    storeEstimativaCusto.valorTotalProjeto.toString() + "0";
                 return SizedBox(
                   width: 150,
                   child: Text(
-                    controllerValorTotalProjeto.text,
+                    Formatadores.formatadorMonetario(
+                        storeEstimativaCusto.valorTotalProjeto.toString() +
+                            "0"),
                     textAlign: TextAlign.right,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,

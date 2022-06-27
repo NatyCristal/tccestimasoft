@@ -8,4 +8,7 @@ abstract class CustoRepository {
 
   Future<Either<Falha, CustoEntity>> salvarCusto(CustoEntity custoEntity,
       String uidProjeto, String uidUsuario, String tipoContagem);
+
+  Future<Either<Falha, List<CustoEntity>>> recuperaCustosCompartilhados(
+      String uidProjeto, String tipoContagem);
 }

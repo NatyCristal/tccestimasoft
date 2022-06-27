@@ -11,4 +11,8 @@ abstract class PrazoRepository {
       String uidProjeto,
       String uidUsuario,
       String tipoContagem);
+
+  @override
+  Future<Either<Falha, List<PrazoEntity>>> recuperarPrazosCompartilhados(
+      String uidProjeto, String tipoContagem);
 }

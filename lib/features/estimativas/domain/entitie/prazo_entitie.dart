@@ -1,4 +1,5 @@
 class PrazoEntity {
+  String uidUsuario = "";
   bool compartilhada;
   String contagemPontoDeFuncao;
   String tipoSistema;

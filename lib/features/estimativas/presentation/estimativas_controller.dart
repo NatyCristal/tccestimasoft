@@ -128,6 +128,58 @@ class EstimativasController {
     return custos;
   }
 
+  Future<List<PrazoEntity>> recuperarPrazosCompartilhados(
+      String uidProjeto, String tipoContagem) async {
+    var retorno = await _estimativaPrazoUsecase.recuperarPrazosCompartilhados(
+        uidProjeto, tipoContagem);
+    List<PrazoEntity> todosCustosCompartilhados = [];
+
+    retorno.fold((l) {}, (r) {
+      todosCustosCompartilhados = r;
+    });
+
+    return todosCustosCompartilhados;
+  }
+
+  Future<List<EquipeEntity>> recuperarEquipesCompartilhadas(
+      String uidProjeto, String tipoContagem) async {
+    var retorno = await _equipeUsecase.recuperarEquipesCompartilhadas(
+        uidProjeto, tipoContagem);
+    List<EquipeEntity> todosCustosCompartilhados = [];
+
+    retorno.fold((l) {}, (r) {
+      todosCustosCompartilhados = r;
+    });
+
+    return todosCustosCompartilhados;
+  }
+
+  Future<List<EsforcoEntity>> recuperarEsforcosCompartilhados(
+      String uidProjeto, String tipoContagem) async {
+    var retorno = await _estimativaEsforco.recuperaEsforcosCompartilhados(
+        uidProjeto, tipoContagem);
+    List<EsforcoEntity> todosCustosCompartilhados = [];
+
+    retorno.fold((l) {}, (r) {
+      todosCustosCompartilhados = r;
+    });
+
+    return todosCustosCompartilhados;
+  }
+
+  Future<List<CustoEntity>> recuperarCustosCompartilhados(
+      String uidProjeto, String tipoContagem) async {
+    var retorno = await _custoUsecase.recuperaCustosCompartilhados(
+        uidProjeto, tipoContagem);
+    List<CustoEntity> todosCustosCompartilhados = [];
+
+    retorno.fold((l) {}, (r) {
+      todosCustosCompartilhados = r;
+    });
+
+    return todosCustosCompartilhados;
+  }
+
   carregarEstimativas(String uidProjeto, uidUsuario) async {
     esforcos = await recuperarEsforcos(uidProjeto, uidUsuario);
     prazos = await recuperarPrazos(uidProjeto, uidUsuario);

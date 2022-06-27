@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dio/dio.dart';
 import 'package:estimasoft/features/login/data/models/login_usuario_firebase_model.dart';
 import 'package:estimasoft/features/login/domain/entities/login_entitie.dart';
 import 'package:estimasoft/features/projeto/data/datasource/projeto_datasource.dart';
@@ -7,6 +8,7 @@ import 'package:estimasoft/features/projeto/data/model/projeto_firebase_model.da
 import 'package:estimasoft/features/projeto/domain/entitie/projeto_entitie.dart';
 import 'package:estimasoft/features/usuario/data/datasource/usuario_datasource.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:gallery_saver/gallery_saver.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -194,11 +196,30 @@ class ProjetoFirebaseDatasource extends ProjetoDatasource {
         FirebaseStorage.instance.ref(caminhoDocumento); //.getDownloadURL();
 
     final dir = await getApplicationDocumentsDirectory();
-    // print("Diretorio: " + dir.path);
-    final file =
-        File("${dir.path}/Downloads/${caminhoDocumento.split("/").last}");
+    print("Diretorio: " + dir.path);
+    File file = File("${dir.path}/${caminhoDocumento.split("/").last}");
+
+    print(file);
 
     await ref.writeToFile(file);
+    print(ref.name);
+
+    final url = await ref.getDownloadURL();
+    final tempDir = await getTemporaryDirectory();
+    final path = '${tempDir.path}/${ref.name}';
+
+    Response response = await Dio().download(url, path);
+
+    //
+    //
+    //await file.writeAsBytes(response.);
+    //await ref.writeToFile(file);
+
+    if (url.contains(".jpg")) {
+      await GallerySaver.saveImage(path, toDcim: true);
+    }
+
+    print("Baixou");
 
     // //First you get the documents folder location on the device...
     // Directory appDocDir = await getApplicationDocumentsDirectory();

@@ -6,4 +6,7 @@ abstract class EstimativaEquipeDatasource {
 
   Future<EquipeEntity> salvarEstimativaEquipe(EquipeEntity equipeEntity,
       String uidProjeto, String uidUsuario, String tipoContagem);
+
+  Future<List<EquipeEntity>> recuperarEquipesCompartilhadas(
+      String uidProjeto, String tipoContagem);
 }

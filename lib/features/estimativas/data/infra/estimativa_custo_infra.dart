@@ -33,4 +33,16 @@ class EstimativaCustoFirebase extends CustoRepository {
       return Left(Falha(mensagem: e.code));
     }
   }
+
+  @override
+  Future<Either<Falha, List<CustoEntity>>> recuperaCustosCompartilhados(
+      String uidProjeto, String tipoContagem) async {
+    try {
+      var custo = await datasource.recuperaCustosCompartilhados(
+          uidProjeto, tipoContagem);
+      return Right(custo);
+    } on FirebaseException catch (e) {
+      return Left(Falha(mensagem: e.code));
+    }
+  }
 }

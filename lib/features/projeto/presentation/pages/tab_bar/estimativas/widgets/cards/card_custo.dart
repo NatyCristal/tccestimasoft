@@ -1,9 +1,9 @@
 import 'package:estimasoft/core/shared/utils.dart';
 import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
+import 'package:estimasoft/core/shared/utils/formatadores.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/custo_entity.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_custo.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 
 class CardCustoEstimativa extends StatelessWidget {
   final StoreEstimativaCusto store;
@@ -14,31 +14,6 @@ class CardCustoEstimativa extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controllerCustoTotalProjeto = MoneyMaskedTextController(
-        decimalSeparator: ',', thousandSeparator: '.', leftSymbol: "R\$");
-
-    controllerCustoTotalProjeto.text =
-        custoEntity.custoTotalProjeto.toStringAsFixed(2);
-
-    final controllerValorTotalProjeto = MoneyMaskedTextController(
-        decimalSeparator: ',', thousandSeparator: '.', leftSymbol: "R\$");
-    controllerValorTotalProjeto.text =
-        custoEntity.valorTotalProjeto.toStringAsFixed(2);
-
-    final controllerCustoTotalMensal = MoneyMaskedTextController(
-        decimalSeparator: ',', thousandSeparator: '.', leftSymbol: "R\$");
-
-    controllerCustoTotalMensal.text = custoEntity.custoTotalMensal;
-
-    final controllerCustoPf = MoneyMaskedTextController(
-        decimalSeparator: ',', thousandSeparator: '.', leftSymbol: "R\$");
-    controllerCustoPf.text = custoEntity.custoPF;
-
-    final controllerCustoHora = MoneyMaskedTextController(
-        decimalSeparator: ',', thousandSeparator: '.', leftSymbol: "R\$");
-
-    controllerCustoHora.text = custoEntity.custoHora.toStringAsFixed(2);
-
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 5),
       padding: const EdgeInsets.all(10),
@@ -51,7 +26,7 @@ class CardCustoEstimativa extends StatelessWidget {
           Align(
             alignment: Alignment.center,
             child: Text(
-              "Custo ${custoEntity.tipoContagem}",
+              "Custo ${custoEntity.tipoContagem.split(" - ").first}",
               style: const TextStyle(color: corTituloTexto),
             ),
           ),
@@ -69,15 +44,15 @@ class CardCustoEstimativa extends StatelessWidget {
                     style: const TextStyle(color: corCorpoTexto),
                   ),
                   Text(
-                    "Custo Total Mensal: " + controllerCustoTotalMensal.text,
+                    "Custo Total Mensal: ${Formatadores.formatadorMonetario(custoEntity.custoTotalMensal)}",
                     style: const TextStyle(color: corCorpoTexto),
                   ),
                   Text(
-                    "Custo Hora: ${controllerCustoHora.text}",
+                    "Custo Hora: ${Formatadores.formatadorMonetario(custoEntity.custoHora.toStringAsFixed(2))}",
                     style: const TextStyle(color: corCorpoTexto),
                   ),
                   Text(
-                    "Custo do PF: ${controllerCustoPf.text}",
+                    "Custo do PF: ${Formatadores.formatadorMonetario(custoEntity.custoPF)}",
                     style: const TextStyle(color: corCorpoTexto),
                   ),
                   const SizedBox(
@@ -90,12 +65,12 @@ class CardCustoEstimativa extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          "Custo do projeto: ${controllerCustoTotalProjeto.text}",
+                          "Custo do projeto: ${Formatadores.formatadorMonetario(custoEntity.custoTotalProjeto.toStringAsFixed(2))}",
                           textAlign: TextAlign.center,
                           style: const TextStyle(color: corTituloTexto),
                         ),
                         Text(
-                          "Valor do projeto: ${controllerValorTotalProjeto.text}",
+                          "Valor do projeto: ${Formatadores.formatadorMonetario(custoEntity.valorTotalProjeto.toStringAsFixed(2))}",
                           style: const TextStyle(color: corTituloTexto),
                         ),
                       ],

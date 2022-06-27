@@ -36,4 +36,16 @@ class EstimativaEsforcoFirebase extends EsforcoRepository {
       return Left(Falha(mensagem: e.code));
     }
   }
+
+  @override
+  Future<Either<Falha, List<EsforcoEntity>>> recuperarEsforcosCompartilhados(
+      String uidProjeto, String tipoContagem) async {
+    try {
+      var custo = await datasource.recuperarEsforcosCompartilhados(
+          uidProjeto, tipoContagem);
+      return Right(custo);
+    } on FirebaseException catch (e) {
+      return Left(Falha(mensagem: e.code));
+    }
+  }
 }

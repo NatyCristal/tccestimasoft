@@ -14,23 +14,23 @@ class ContagemIndicativaFirebase extends ContagemIndicativaDatasource {
     await firestore
         .collection("Contagem")
         .doc(uidProjeto)
-        .collection(iudUsuario)
-        .doc("Indicativa")
+        .collection("Indicativa")
+        .doc(iudUsuario)
         .get()
         .then((value) async {
       if (value.exists) {
         await firestore
             .collection("Contagem")
             .doc(uidProjeto)
-            .collection(iudUsuario)
-            .doc("Indicativa")
+            .collection("Indicativa")
+            .doc(iudUsuario)
             .update(contagem.toMap());
-      } else if (!value.exists) {
+      } else {
         await firestore
             .collection("Contagem")
             .doc(uidProjeto)
-            .collection(iudUsuario)
-            .doc("Indicativa")
+            .collection("Indicativa")
+            .doc(iudUsuario)
             .set(contagem.toMap());
       }
     });
@@ -47,18 +47,48 @@ class ContagemIndicativaFirebase extends ContagemIndicativaDatasource {
     await firestore
         .collection("Contagem")
         .doc(uidProjeto)
-        .collection(uidUsuario)
-        .doc("Indicativa")
+        .collection("Indicativa")
+        .doc(uidUsuario)
         .get()
         .then((value) {
       if (value.exists) {
-        Map<String, dynamic>? valor = value.data();
-        if (valor!.isNotEmpty) {
-          contagem = ContagemIndicativaModelFirebase.fromMap(valor);
+        Map<String, dynamic>? valores = value.data();
+
+        if (valores!.isNotEmpty) {
+          contagem = ContagemIndicativaModelFirebase.fromMap(valores);
         }
       }
     });
 
     return contagem;
+  }
+
+  @override
+  Future<List<ContagemIndicativaEntitie>> recuperarIndicativasCompartilhadas(
+      String uidProjeto) async {
+    List<ContagemIndicativaEntitie> contagensEstimadas = [];
+
+    await firestore
+        .collection("Contagem")
+        .doc(uidProjeto)
+        .collection("Indicativa")
+        .get()
+        .then((value) async {
+      List<QueryDocumentSnapshot<Map<String, dynamic>>> map = value.docs;
+
+      if (map.isNotEmpty) {
+        for (var element in map) {
+          String id = element.id;
+          if (element["Compartilhada"] == true) {
+            ContagemIndicativaModelFirebase contagem =
+                ContagemIndicativaModelFirebase.fromMap(element.data());
+            contagem.uidUsuario = id;
+            contagensEstimadas.add(contagem);
+          }
+        }
+      }
+    });
+
+    return contagensEstimadas;
   }
 }

@@ -157,11 +157,11 @@ class IndexHome extends StatelessWidget {
                             ),
                           ),
                           Observer(builder: (context) {
-                            store.houveMudancaEmArquivosEdocumentos
-                                ? controller
-                                    .recuperarArquivos(projeto.uidProjeto)
-                                : store.houveMudancaEmArquivosEdocumentos =
-                                    false;
+                            store.houveMudancaEmArquivosEdocumentos;
+                            // ? controller
+                            //     .recuperarArquivos(projeto.uidProjeto)
+                            // : store.houveMudancaEmArquivosEdocumentos =
+                            //     false;
 
                             return SizedBox(
                                 width: TamanhoTela.width(context, 0.8),
@@ -324,15 +324,24 @@ class IndexHome extends StatelessWidget {
                       height: 10,
                     ),
                     Observer(builder: (context) {
-                      return !store.houveMudancaEmResultado
-                          ? CardEsforcosCompartilhados(
-                              uidProjeto: projeto.uidProjeto,
-                              scrollController: scrollControllerLateral,
-                            )
+                      store.houveMudancaEmResultado;
+
+                      return controller.resultadoController.contagens.isEmpty &&
+                              controller.resultadoController
+                                  .custosCompartilhados.isEmpty &&
+                              controller.resultadoController
+                                  .equipesCompartilhados.isEmpty &&
+                              controller.resultadoController
+                                  .esforcosCompartilhados.isEmpty &&
+                              controller.resultadoController
+                                  .prazosCompartilhados.isEmpty
+                          ? const Center(
+                              child: SizedBox(
+                                  child: Text(
+                                      "Não tem Estimativas Compartilhadas")))
                           : CardEsforcosCompartilhados(
                               uidProjeto: projeto.uidProjeto,
-                              scrollController: scrollControllerLateral,
-                            );
+                              scrollController: scrollControllerLateral);
                     }),
                   ],
                 ),

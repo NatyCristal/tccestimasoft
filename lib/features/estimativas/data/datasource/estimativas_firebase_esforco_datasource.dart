@@ -65,4 +65,35 @@ class EstimativaFirebaseEsforcoDatasource extends EstimativaEsforcoDatasource {
 
     return esforcos;
   }
+
+  @override
+  Future<List<EsforcoEntity>> recuperarEsforcosCompartilhados(
+      String uidProjeto, String tipoContagem) async {
+    List<EsforcoEntity> esforcos = [];
+
+    await firestore
+        .collection("Estimativa")
+        .doc(uidProjeto)
+        .collection("Esforco")
+        .get()
+        .then((value) async {
+      List<QueryDocumentSnapshot<Map<String, dynamic>>> map = value.docs;
+
+      if (map.isNotEmpty) {
+        for (var element in map) {
+          String id = element.id;
+
+          element.data().forEach((key, value) {
+            if (value["Compartilhada"] == true) {
+              EstimativaEsforcoModel esforco =
+                  EstimativaEsforcoModel.fromMap(value);
+              esforco.uidUsuario = id;
+              esforcos.add(esforco);
+            }
+          });
+        }
+      }
+    });
+    return esforcos;
+  }
 }

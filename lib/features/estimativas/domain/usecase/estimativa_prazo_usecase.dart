@@ -33,4 +33,16 @@ class EstimativaPrazoUsecase {
 
     return result;
   }
+
+  Future<Either<Falha, List<PrazoEntity>>> recuperarPrazosCompartilhados(
+      String uidProjeto, String tipoContagem) async {
+    var result = await repository.recuperarPrazosCompartilhados(
+        uidProjeto, tipoContagem);
+
+    if (result.isLeft()) {
+      Left(ErroEstimativas(mensagem: "Algo de errado aconteceu!"));
+    }
+
+    return result;
+  }
 }

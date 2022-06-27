@@ -12,12 +12,23 @@ class ContagemController {
   final ContagemEstimadaUsecase _contagemEstimadaUseCase;
   final ContagemDetalhadaUsecase _contagemDetalhadaUsecase;
 
+  List<ContagemIndicativaEntitie> contagensIndicativas = [];
+  List<ContagemEstimadaEntitie> contagenEstimadas = [];
+
+  List<ContagemDetalhadaEntitie> contagensDetakgadas = [];
+
   ContagemIndicativaEntitie contagemIndicativa =
       ContagemIndicativaModelFirebase(
           aie: [], ali: [], totalPf: 0, compartilhada: false);
 
   ContagemEstimadaEntitie contagemEstimada = ContagemEstimadaFirebaseModel(
-      ce: [], ee: [], se: [], totalPF: 0, compartilhada: false);
+      aie: [],
+      ali: [],
+      ce: [],
+      ee: [],
+      se: [],
+      totalPF: 0,
+      compartilhada: false);
   ContagemDetalhadaEntitie contagemDetalhada = ContagemDetalhadaEntitie(
       compartilhada: false,
       funcaoDados: [],
@@ -28,6 +39,25 @@ class ContagemController {
 
   ContagemController(this._contagemIndicativaUseCase,
       this._contagemEstimadaUseCase, this._contagemDetalhadaUsecase);
+
+  Future<List<ContagemIndicativaEntitie>> recuperarIndicativasCompartilhadas(
+      String uidProjeto) async {
+    var resultado = await _contagemIndicativaUseCase
+        .recuperarIndicativasCompartilhadas(uidProjeto);
+
+    resultado.fold((l) => null, (r) {
+      contagensIndicativas = r;
+    });
+
+    var resultado2 = await _contagemEstimadaUseCase
+        .recuperarEstimadasCompartilhadas(uidProjeto);
+
+    resultado2.fold((l) => null, (r) {
+      contagenEstimadas = r;
+    });
+
+    return contagensIndicativas;
+  }
 
   Future salvarContagemIndicativa(List<String> alis, List<String> aies,
       int totalPF, String uidProjeto, String uidUsuario) async {
@@ -70,6 +100,8 @@ class ContagemController {
   }
 
   Future salvarContagemEstimada(
+      List<String> aie,
+      List<String> ali,
       List<String> ce,
       List<String> ee,
       List<String> se,
@@ -77,7 +109,7 @@ class ContagemController {
       String uidProjeto,
       String uidUsuario) async {
     var resultado = await _contagemEstimadaUseCase.salvarContagemEstimada(
-        ce, ee, se, uidProjeto, uidUsuario, totalPF);
+        aie, ali, ce, ee, se, uidProjeto, uidUsuario, totalPF);
     var retorno = "";
     resultado.fold((l) {
       retorno = l.mensagem;

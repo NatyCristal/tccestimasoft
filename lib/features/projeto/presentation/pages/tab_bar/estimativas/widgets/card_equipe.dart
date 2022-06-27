@@ -24,7 +24,7 @@ class CardEquipe extends StatelessWidget {
 
     controllerSalario.text = insumoCustoEntity.valor;
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 5),
       child: Column(
         children: [
           Row(
@@ -46,7 +46,7 @@ class CardEquipe extends StatelessWidget {
                       ),
               ),
               SizedBox(
-                width: 180,
+                width: 150,
                 child: Text(
                   insumoCustoEntity.nome,
                   overflow: TextOverflow.ellipsis,

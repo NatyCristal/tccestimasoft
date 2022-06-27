@@ -11,4 +11,7 @@ abstract class EsforcoRepository {
       String uidProjeto,
       String uidUsuario,
       String tipoContagem);
+
+  Future<Either<Falha, List<EsforcoEntity>>> recuperarEsforcosCompartilhados(
+      String uidProjeto, String tipoContagem);
 }

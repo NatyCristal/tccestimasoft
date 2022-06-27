@@ -7,4 +7,7 @@ abstract class ContagemIndicativaRepository {
 
   Future<Either<String, ContagemIndicativaEntitie>> recuperarContagem(
       String uidProjeto, String uidUsuario);
+
+  Future<Either<String, List<ContagemIndicativaEntitie>>>
+      recuperarIndicativasCompartilhadas(String uidProjeto);
 }

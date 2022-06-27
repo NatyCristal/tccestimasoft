@@ -1,4 +1,5 @@
 class EquipeEntity {
+  String uidUsuario = "";
   bool compartilhada;
   String esforco;
   String prazo;

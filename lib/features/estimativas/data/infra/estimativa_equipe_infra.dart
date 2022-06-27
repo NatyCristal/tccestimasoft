@@ -36,4 +36,16 @@ class EstimativaEquipeFirebase extends EquipeRepository {
       return Left(Falha(mensagem: e.code));
     }
   }
+
+  @override
+  Future<Either<Falha, List<EquipeEntity>>> recuperarEquipesCompartilhadas(
+      String uidProjeto, String tipoContagem) async {
+    try {
+      var custo = await datasource.recuperarEquipesCompartilhadas(
+          uidProjeto, tipoContagem);
+      return Right(custo);
+    } on FirebaseException catch (e) {
+      return Left(Falha(mensagem: e.code));
+    }
+  }
 }
