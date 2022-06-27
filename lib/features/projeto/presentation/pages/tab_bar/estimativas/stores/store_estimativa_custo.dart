@@ -111,7 +111,6 @@ abstract class StoreEstimativaCustoBase with Store {
             esforcoEntitySelecionado.produtividadeEquipe.split(" - ").last);
 
     calcularCustoHora();
-    alteracao = true;
   }
 
   @action
@@ -179,7 +178,6 @@ abstract class StoreEstimativaCustoBase with Store {
           custoHora;
 
       custoProjeto = (custoPF * int.parse("85")).ceilToDouble();
-      alteracao = true;
     }
   }
 
@@ -202,7 +200,6 @@ abstract class StoreEstimativaCustoBase with Store {
     AlertaSnack.exbirSnackBar(
         context, "Membro ${insumoCustoEntity.nome} removido.");
     calcularCustoHora();
-    alteracao = true;
   }
 
   @action
@@ -214,7 +211,6 @@ abstract class StoreEstimativaCustoBase with Store {
     AlertaSnack.exbirSnackBar(
         context, "Custo ${insumoCustoEntity.nome} removido.");
     calcularCustoHora();
-    alteracao = true;
   }
 
   @action
@@ -228,7 +224,6 @@ abstract class StoreEstimativaCustoBase with Store {
       validarValorTotalProjeto();
       AlertaSnack.exbirSnackBar(context, "Custo adicionado");
       calcularCustoHora();
-      alteracao = true;
     }
   }
 
@@ -243,17 +238,15 @@ abstract class StoreEstimativaCustoBase with Store {
       validarValorTotalProjeto();
       AlertaSnack.exbirSnackBar(context, "Membro adicionado a equipe");
       calcularCustoHora();
-      alteracao = true;
     }
   }
 
   @action
   validarValorTotalProjeto() {
-    if (porcentagemLucro > 0) {
+    if (porcentagemLucro != 0) {
       valorTotalProjeto =
-          custoProjeto + (custoProjeto * (porcentagemLucro * 0.01));
-      alteracao = true;
-    } else {
+          custoProjeto + (custoProjeto * (porcentagemLucro / 100));
+    } else if (porcentagemLucro == 0) {
       valorTotalProjeto = custoProjeto;
     }
   }

@@ -71,69 +71,66 @@ class VisualizarEstimativas extends StatelessWidget {
           bottom: BorderSide(color: corDeLinhaAppBar, width: 1),
         ),
       ),
-      body: SingleChildScrollView(
-        controller: scrollController,
-        child: Container(
-          padding: paddingPagePrincipal,
-          height: TamanhoTela.height(context, 1),
-          child: Column(
-            children: [
-              Expanded(
-                child: FutureBuilder(
-                  future: verificaEstimativa(
-                    tipoDeEstimativa,
-                    controller,
-                    uidProjeto,
-                  ),
-                  builder: (context, AsyncSnapshot snapshot) {
-                    switch (snapshot.connectionState) {
-                      case ConnectionState.done:
-                        if (snapshot.hasError) {
-                          return const Text("Erro");
-                        }
-                        if (snapshot.hasData) {
-                          if (snapshot.data is List<EsforcoEntity>) {
-                            return ExibicaoCardEsforco(
-                                scrollController: scrollController,
-                                esforcos: snapshot.data,
-                                resultados: estimativas);
-                          } else if (snapshot.data is List<PrazoEntity>) {
-                            return ExibicaoCardPrazo(
-                                scrollController: scrollController,
-                                esforcos: snapshot.data,
-                                resultados: estimativas);
-                          } else if (snapshot.data is List<EquipeEntity>) {
-                            return ExibicaoCardEquipes(
-                                scrollController: scrollController,
-                                equipes: snapshot.data,
-                                resultados: estimativas);
-                          } else if (snapshot.data is List<CustoEntity>) {
-                            return ExibicaoCardCusto(
-                                scrollController: scrollController,
-                                custos: snapshot.data,
-                                resultados: estimativas);
-                          } else {
-                            return ExibicaoContagensCompartilhadas(
-                              scrollController: scrollController,
-                              resultados: estimativas,
-                            );
-                          }
-                        }
-
-                        break;
-                      case ConnectionState.active:
-                        return const Carregando();
-                      case ConnectionState.none:
-                        return const Text("Erro");
-                      case ConnectionState.waiting:
-                        return const Carregando();
-                    }
-                    return const SizedBox();
-                  },
+      body: Container(
+        padding: paddingPagePrincipal,
+        height: TamanhoTela.height(context, 1),
+        child: Column(
+          children: [
+            Expanded(
+              child: FutureBuilder(
+                future: verificaEstimativa(
+                  tipoDeEstimativa,
+                  controller,
+                  uidProjeto,
                 ),
+                builder: (context, AsyncSnapshot snapshot) {
+                  switch (snapshot.connectionState) {
+                    case ConnectionState.done:
+                      if (snapshot.hasError) {
+                        return const Text("Erro");
+                      }
+                      if (snapshot.hasData) {
+                        if (snapshot.data is List<EsforcoEntity>) {
+                          return ExibicaoCardEsforco(
+                              scrollController: scrollController,
+                              esforcos: snapshot.data,
+                              resultados: estimativas);
+                        } else if (snapshot.data is List<PrazoEntity>) {
+                          return ExibicaoCardPrazo(
+                              scrollController: scrollController,
+                              esforcos: snapshot.data,
+                              resultados: estimativas);
+                        } else if (snapshot.data is List<EquipeEntity>) {
+                          return ExibicaoCardEquipes(
+                              scrollController: scrollController,
+                              equipes: snapshot.data,
+                              resultados: estimativas);
+                        } else if (snapshot.data is List<CustoEntity>) {
+                          return ExibicaoCardCusto(
+                              scrollController: scrollController,
+                              custos: snapshot.data,
+                              resultados: estimativas);
+                        } else {
+                          return ExibicaoContagensCompartilhadas(
+                            scrollController: scrollController,
+                            resultados: estimativas,
+                          );
+                        }
+                      }
+
+                      break;
+                    case ConnectionState.active:
+                      return const Carregando();
+                    case ConnectionState.none:
+                      return const Text("Erro");
+                    case ConnectionState.waiting:
+                      return const Carregando();
+                  }
+                  return const SizedBox();
+                },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

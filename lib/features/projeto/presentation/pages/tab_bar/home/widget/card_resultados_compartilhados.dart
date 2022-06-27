@@ -84,7 +84,7 @@ class CardEsforcosCompartilhados extends StatelessWidget {
               ? GestureDetector(
                   onTap: () {
                     Modular.to.pushNamed("visualizar-estimativa", arguments: [
-                      controller.resultadoController.contagens,
+                      controller.resultadoController.esforcosCompartilhados,
                       "Esforco",
                       uidProjeto
                     ]);
@@ -139,7 +139,7 @@ class CardEsforcosCompartilhados extends StatelessWidget {
               ? GestureDetector(
                   onTap: () {
                     Modular.to.pushNamed("visualizar-estimativa", arguments: [
-                      controller.resultadoController.contagens,
+                      controller.resultadoController.prazosCompartilhados,
                       "Prazo",
                       uidProjeto
                     ]);
@@ -194,7 +194,7 @@ class CardEsforcosCompartilhados extends StatelessWidget {
               ? GestureDetector(
                   onTap: () {
                     Modular.to.pushNamed("visualizar-estimativa", arguments: [
-                      controller.resultadoController.contagens,
+                      controller.resultadoController.equipesCompartilhados,
                       "Equipe",
                       uidProjeto
                     ]);
@@ -249,7 +249,7 @@ class CardEsforcosCompartilhados extends StatelessWidget {
               ? GestureDetector(
                   onTap: () {
                     Modular.to.pushNamed("visualizar-estimativa", arguments: [
-                      controller.resultadoController.contagens,
+                      controller.resultadoController.custosCompartilhados,
                       "Custo",
                       uidProjeto
                     ]);

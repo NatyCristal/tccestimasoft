@@ -69,9 +69,9 @@ class CardCustosTotais extends StatelessWidget {
                 return SizedBox(
                   width: 150,
                   child: Text(
-                    Formatadores.formatadorMonetario(
-                        storeEstimativaCusto.valorTotalProjeto.toString() +
-                            "0"),
+                    Formatadores.formatadorMonetario(storeEstimativaCusto
+                        .valorTotalProjeto
+                        .toStringAsFixed(2)),
                     textAlign: TextAlign.right,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,

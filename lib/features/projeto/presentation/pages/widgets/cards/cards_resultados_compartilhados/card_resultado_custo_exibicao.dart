@@ -58,11 +58,11 @@ class ExibicaoCardCusto extends StatelessWidget {
               LinhaEstimativas(
                   nome: "Custo Total Projeto",
                   resultado: Formatadores.formatadorMonetario(
-                      (custo.custoTotalProjeto * 10).toString())),
+                      (custo.custoTotalProjeto).toStringAsFixed(2))),
               LinhaEstimativas(
                   nome: "Valor Total Projeto",
                   resultado: Formatadores.formatadorMonetario(
-                      (custo.valorTotalProjeto * 10).toString())),
+                      (custo.valorTotalProjeto).toStringAsFixed(2))),
             ],
             membro: Modular.get<ProjetoController>()
                 .membrosProjetoAtual

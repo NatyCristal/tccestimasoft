@@ -20,32 +20,35 @@ class ExibicaoCardEquipes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      controller: scrollController,
+      shrinkWrap: true,
       itemCount: equipes.length,
       itemBuilder: ((context, index) {
         EquipeEntity equipe = equipes[index];
         if (resultados[index].uidMembro == equipe.uidUsuario) {
-          return ComponenteEstimativasPadrao(
-            resultadoEntity: resultados[index],
-            corpoEstimativas: [
-              LinhaEstimativas(
-                  nome: "Tipo Contagem",
-                  resultado: equipe.esforco.split(" - ").last),
-              LinhaEstimativas(nome: "Esforço", resultado: equipe.esforco),
-              LinhaEstimativas(
-                  nome: "Prazo", resultado: "${equipe.prazo} Dias"),
-              LinhaEstimativas(
-                  nome: "Produção Diária",
-                  resultado: "${equipe.producaoDiaria} Horas"),
-              LinhaEstimativas(
-                  nome: "Equipe Estimada",
-                  resultado: "${equipe.equipeEstimada} Recursos"),
-            ],
-            membro: Modular.get<ProjetoController>()
-                .membrosProjetoAtual
-                .singleWhere((element) {
-              return element.uid == equipe.uidUsuario;
-            }),
+          return Container(
+            height: 250,
+            child: ComponenteEstimativasPadrao(
+              resultadoEntity: resultados[index],
+              corpoEstimativas: [
+                LinhaEstimativas(
+                    nome: "Tipo Contagem",
+                    resultado: equipe.esforco.split(" - ").last),
+                LinhaEstimativas(nome: "Esforço", resultado: equipe.esforco),
+                LinhaEstimativas(
+                    nome: "Prazo", resultado: "${equipe.prazo} Dias"),
+                LinhaEstimativas(
+                    nome: "Produção Diária",
+                    resultado: "${equipe.producaoDiaria} Horas"),
+                LinhaEstimativas(
+                    nome: "Equipe Estimada",
+                    resultado: "${equipe.equipeEstimada} Recursos"),
+              ],
+              membro: Modular.get<ProjetoController>()
+                  .membrosProjetoAtual
+                  .singleWhere((element) {
+                return element.uid == equipe.uidUsuario;
+              }),
+            ),
           );
         }
         return const SizedBox();
