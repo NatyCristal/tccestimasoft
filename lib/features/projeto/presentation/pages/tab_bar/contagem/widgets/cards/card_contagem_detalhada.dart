@@ -26,6 +26,8 @@ class ContagemDetalhadaCard extends StatelessWidget {
                 width: 120,
                 child: Text(
                   indiceDetalhada.nome,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
                   style: const TextStyle(color: corCorpoTexto),
                 ),
               ),

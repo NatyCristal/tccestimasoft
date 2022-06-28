@@ -16,7 +16,6 @@ abstract class ContagemEstimadaRepository {
   Future<Either<String, ContagemEstimadaEntitie>> recuperarContagem(
       String uidProjeto, String uidUsuario);
 
-  @override
   Future<Either<String, List<ContagemEstimadaEntitie>>>
       recuperarEstimadasCompartilhadas(String uidProjeto);
 }

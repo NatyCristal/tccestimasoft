@@ -407,6 +407,8 @@ class IndexResultado extends StatelessWidget {
                       FormarTextoCompartilhar.funcaoEstimada(
                           storeContagemEstimada.contagemEstimadaValida,
                           storeContagemIndicativa.contagemIndicativaValida) +
+                      FormarTextoCompartilhar.funcaoDetaljada(
+                          storeContagemDetalhada.contagemDetalhadaEntitie) +
                       FormarTextoCompartilhar.funcaoTextoEsforco(
                           storeEstimativaEsforco.esforcosValidos) +
                       FormarTextoCompartilhar.funcaoTextoPrazo(

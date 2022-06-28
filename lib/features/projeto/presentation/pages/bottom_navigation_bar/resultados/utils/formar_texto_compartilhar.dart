@@ -49,7 +49,7 @@ class FormarTextoCompartilhar {
       texto +=
           "Tipo Contagem: ${element.tipoContagem}\nDisponibilidade Equipe:${element.disponibilidadeEquipe} HH\nCusto Total Mensal: ${Formatadores.formatadorMonetario(element.custoTotalMensal)} \nCusto Hora: ${Formatadores.formatadorMonetario(element.custoHora.toString())}\nCusto Pf ${element.custoPF}\nProcentagem: ${element.porcentagemLucro}%\n\nCusto total projeto: ${Formatadores.formatadorMonetario(element.custoTotalProjeto.toString())}\nValor Total Projeto: ${Formatadores.formatadorMonetario(element.valorTotalProjeto.toString())}\n";
     }
-    texto = "**Estimativas de custo**\n\n" + texto;
+    texto = "\n\n**Estimativas de custo**\n\n" + texto;
     return texto;
   }
 

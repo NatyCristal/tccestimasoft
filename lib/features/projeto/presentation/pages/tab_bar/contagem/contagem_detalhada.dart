@@ -235,6 +235,11 @@ class ContagemDetalhada extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
+            storeContagemDetalhada.contagemDetalhadaValida.totalPf > 0
+                ? SizedBox(
+                    child: Text("Olá"),
+                  )
+                : SizedBox(),
             Observer(builder: (context) {
               return storeContagemDetalhada.alteracoes
                   ? const Text(
@@ -252,8 +257,7 @@ class ContagemDetalhada extends StatelessWidget {
               return BotaoPadrao(
                   corDeTextoBotao: corTextoSobCorPrimaria,
                   acao: () async {
-                    if (storeContagemDetalhada.alteracoes &&
-                        storeContagemDetalhada.validar(context)) {
+                    if (storeContagemDetalhada.validar(context)) {
                       storeContagemDetalhada.carregando = true;
                       var retorno = await controller.salvarContagemDetalhada(
                           storeContagemDetalhada.contagemDetalhadaEntitie,

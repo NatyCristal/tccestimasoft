@@ -102,11 +102,11 @@ abstract class StoreContagemDetalhadaBase with Store {
       return false;
     }
 
-    contagemDetalhadaEntitie.funcaoDados.forEach((element) {
+    for (var element in contagemDetalhadaEntitie.funcaoDados) {
       if (element.pontoDeFuncao == 0) {
         erro = false;
       }
-    });
+    }
 
     if (!erro) {
       AlertaSnack.exbirSnackBar(
@@ -114,11 +114,11 @@ abstract class StoreContagemDetalhadaBase with Store {
       return false;
     }
 
-    contagemDetalhadaEntitie.funcaoTransacional.forEach((element) {
+    for (var element in contagemDetalhadaEntitie.funcaoTransacional) {
       if (element.pontoDeFuncao == 0) {
         erro = false;
       }
-    });
+    }
 
     if (!erro) {
       AlertaSnack.exbirSnackBar(
@@ -178,7 +178,7 @@ abstract class StoreContagemDetalhadaBase with Store {
           quantidadeTRs: 1,
           quantidadeTrsEArs: 0,
           complexidade: 'Baixa',
-          pontoFuncao: 0));
+          pontoFuncao: 3));
     }
 
     for (var element in contagemEstimada.ee) {
@@ -188,7 +188,7 @@ abstract class StoreContagemDetalhadaBase with Store {
           quantidadeTRs: 1,
           quantidadeTrsEArs: 0,
           complexidade: 'Baixa',
-          pontoFuncao: 0));
+          pontoFuncao: 3));
     }
     for (var element in contagemEstimada.se) {
       listaTransacional.add(IndiceDetalhadaModel(
@@ -197,7 +197,7 @@ abstract class StoreContagemDetalhadaBase with Store {
           quantidadeTRs: 1,
           quantidadeTrsEArs: 0,
           complexidade: 'Baixa',
-          pontoFuncao: 0));
+          pontoFuncao: 4));
     }
 
     contagemDetalhadaEntitie.funcaoTransacional = listaTransacional;
@@ -209,7 +209,7 @@ abstract class StoreContagemDetalhadaBase with Store {
           quantidadeTRs: 1,
           quantidadeTrsEArs: 0,
           complexidade: 'Baixa',
-          pontoFuncao: 0));
+          pontoFuncao: 5));
     }
 
     for (var element in contagemIndicativa.ali) {
@@ -219,10 +219,13 @@ abstract class StoreContagemDetalhadaBase with Store {
           quantidadeTRs: 1,
           quantidadeTrsEArs: 0,
           complexidade: 'Baixa',
-          pontoFuncao: 0));
+          pontoFuncao: 7));
     }
 
     contagemDetalhadaEntitie.funcaoDados = listaFuncaoDados;
+
+    calcularPFFuncaoDados();
+    calcularPFFuncaoTransacional();
   }
 
   @action
