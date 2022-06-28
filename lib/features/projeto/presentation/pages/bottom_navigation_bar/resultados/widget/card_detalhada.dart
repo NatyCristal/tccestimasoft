@@ -46,7 +46,7 @@ class CardDetalhadaResultado extends StatelessWidget {
               });
       },
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 5),
+        margin: const EdgeInsets.all(5),
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
             borderRadius: arredondamentoBordas,
@@ -68,15 +68,18 @@ class CardDetalhadaResultado extends StatelessWidget {
               }),
               child: Observer(builder: (context) {
                 return CircleAvatar(
+                  radius: 15,
                   backgroundColor: corDeFundoCards,
                   child: !store.compartilhada
                       ? const Icon(
-                          Icons.send,
+                          Icons.check_rounded,
                           color: corCorpoTexto,
+                          size: 20,
                         )
-                      : const Icon(
+                      : Icon(
                           Icons.lock,
-                          color: corCorpoTexto,
+                          color: corCorpoTexto.withOpacity(0.5),
+                          size: 20,
                         ),
                 );
               }),

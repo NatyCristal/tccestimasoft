@@ -62,7 +62,7 @@ class EstimativaCustoPage extends StatelessWidget {
                   items: [
                     "Indicativa - ${storeContagemIndicativa.contagemIndicativaValida.totalPf.toString()} PF",
                     "Estimada - ${storeContagemEstimada.contagemEstimadaValida.totalPF.toString()} PF",
-                    "Detalhada - ${storeContagemDetalhada.totalPf.toString()} PF",
+                    "Detalhada - ${storeContagemDetalhada.contagemDetalhadaValida.totalPf.toString()} PF",
                   ],
                   dropdownSearchDecoration: const InputDecoration(
                     labelText: "Contagem de ponto de função",

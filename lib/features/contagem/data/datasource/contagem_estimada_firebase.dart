@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:estimasoft/features/contagem/data/datasource/interfaces/contagem_estimada.dart';
 import 'package:estimasoft/features/contagem/data/model/contagem_estimada_firebase_model.dart';
 import 'package:estimasoft/features/contagem/domain/entitie/contagem_estimada_entitie.dart';
-import 'package:estimasoft/features/contagem/domain/entitie/contagem_indicativa_entitie.dart';
 
 class ContagemEstimadaFirebase extends ContagemEstimadaDatasource {
   final firestore = FirebaseFirestore.instance;

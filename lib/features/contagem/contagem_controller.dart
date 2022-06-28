@@ -132,7 +132,7 @@ class ContagemController {
     }, (r) {
       contagemDetalhada = r;
     });
-    return contagemIndicativa;
+    return contagemDetalhada;
   }
 
   Future salvarContagemDetalhada(
@@ -157,7 +157,7 @@ class ContagemController {
         await recuperarContagemIndicativa(uidProjeto, uidUsuario);
     contagemIndicativa =
         await recuperarContagemEstimada(uidProjeto, uidUsuario);
-    // contagemDetalhada =
-    //   await recuperarContagemDetalhada(uidProjeto, uidUsuario);
+    contagemDetalhada =
+        await recuperarContagemDetalhada(uidProjeto, uidUsuario);
   }
 }

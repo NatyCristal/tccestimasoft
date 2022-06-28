@@ -1,4 +1,5 @@
 import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
+import 'package:estimasoft/core/shared/utils/snackbar.dart';
 import 'package:estimasoft/core/shared/widgets/botao.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_detalhada.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_estimada.dart';
@@ -49,31 +50,11 @@ class ContagemDetalhada extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  const Text(
-                    "Total  ",
-                    style: TextStyle(
-                      color: corTituloTexto,
-                    ),
-                  ),
-                  Observer(builder: (context) {
-                    return const Text(
-                      "0 PF",
-                      style: TextStyle(
-                        color: corTituloTexto,
-                      ),
-                    );
-                  }),
-                ],
-              ),
-              Observer(builder: (context) {
-                return Text(
-                    "Quantidade de funções  ${(storeEstimada.contagemEstimadaValida.ce.length + storeEstimada.contagemEstimadaValida.ee.length + storeEstimada.contagemEstimadaValida.se.length + storeIndicativa.contagemIndicativaValida.aie.length + storeIndicativa.contagemIndicativaValida.ali.length).toString()}");
-              }),
-            ]),
+            const Text(
+              "Altere os valores de TDs, TRr e ARs",
+              style: TextStyle(
+                  color: corCorpoTexto, fontWeight: Fontes.weightTextoNormal),
+            ),
             Align(
               alignment: Alignment.centerRight,
               child: IconButton(
@@ -145,30 +126,6 @@ class ContagemDetalhada extends StatelessWidget {
                 ),
               ),
             ),
-            //   store.alteracoes
-            // ?
-            //  Column(
-            //     mainAxisAlignment: MainAxisAlignment.center,
-            //     crossAxisAlignment: CrossAxisAlignment.center,
-            //     children: const [
-            //       SizedBox(
-            //         height: 20,
-            //       ),
-            //       Text(
-            //         "Salve as alterações!",
-            //         style: TextStyle(
-            //           color: Colors.red,
-            //           fontWeight: Fontes.weightTextoNormal,
-            //         ),
-            //       ),
-            //     ],
-            //   )
-            //const SizedBox(),
-
-            const SizedBox(
-              height: 5,
-            ),
-
             Column(
               children: const [
                 SizedBox(
@@ -184,7 +141,6 @@ class ContagemDetalhada extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-
             storeContagemDetalhada
                     .contagemDetalhadaEntitie.funcaoDados.isNotEmpty
                 ? FuncaoDeDadosDetalhada(
@@ -196,7 +152,6 @@ class ContagemDetalhada extends StatelessWidget {
                       style: TextStyle(color: corCorpoTexto.withOpacity(0.5)),
                     ),
                   ),
-
             const SizedBox(
               height: 20,
             ),
@@ -219,11 +174,10 @@ class ContagemDetalhada extends StatelessWidget {
                 : SizedBox(
                     height: 30,
                     child: Text(
-                      "Não existe CE cadastrado",
+                      "Não possuí função Transacional cadastrada",
                       style: TextStyle(color: corCorpoTexto.withOpacity(0.5)),
                     ),
                   ),
-
             const SizedBox(
               height: 20,
             ),
@@ -250,11 +204,37 @@ class ContagemDetalhada extends StatelessWidget {
                 ],
               ),
             ),
-
             const SizedBox(
               height: 20,
             ),
-
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  const Text(
+                    "Total  ",
+                    style: TextStyle(
+                      color: corTituloTexto,
+                    ),
+                  ),
+                  Observer(builder: (context) {
+                    return Text(
+                      "${storeContagemDetalhada.totalPf} PF",
+                      style: const TextStyle(
+                        color: corTituloTexto,
+                      ),
+                    );
+                  }),
+                ],
+              ),
+              Observer(builder: (context) {
+                return Text(
+                    "Quantidade de funções  ${(storeEstimada.contagemEstimadaValida.ce.length + storeEstimada.contagemEstimadaValida.ee.length + storeEstimada.contagemEstimadaValida.se.length + storeIndicativa.contagemIndicativaValida.aie.length + storeIndicativa.contagemIndicativaValida.ali.length).toString()}");
+              }),
+            ]),
+            const SizedBox(
+              height: 20,
+            ),
             Observer(builder: (context) {
               return storeContagemDetalhada.alteracoes
                   ? const Text(
@@ -268,20 +248,23 @@ class ContagemDetalhada extends StatelessWidget {
                       height: 20,
                     );
             }),
-
             Observer(builder: (context) {
               return BotaoPadrao(
                   corDeTextoBotao: corTextoSobCorPrimaria,
                   acao: () async {
-                    // var retorno = await controller.salvarContagem(
-                    //   "Indicativa",
-                    //   store.alis,
-                    //   store.aies,
-                    //   projetoUid,
-                    //   store.totalPf,
-                    // );
-                    // store.alteracoes = false;
-                    // AlertaSnack.exbirSnackBar(context, retorno);
+                    if (storeContagemDetalhada.alteracoes &&
+                        storeContagemDetalhada.validar(context)) {
+                      storeContagemDetalhada.carregando = true;
+                      var retorno = await controller.salvarContagemDetalhada(
+                          storeContagemDetalhada.contagemDetalhadaEntitie,
+                          projetoUid);
+
+                      storeContagemDetalhada.salvar(
+                          controller.contagemController.contagemDetalhada);
+                      storeContagemDetalhada.carregando = false;
+                      storeContagemDetalhada.alteracoes = false;
+                      AlertaSnack.exbirSnackBar(context, retorno);
+                    }
                   },
                   tituloBotao: "Salvar",
                   corBotao: corDeFundoBotaoPrimaria,

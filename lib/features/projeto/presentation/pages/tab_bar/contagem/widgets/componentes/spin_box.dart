@@ -1,16 +1,30 @@
 import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
+import 'package:estimasoft/features/contagem/domain/entitie/indice_detalhada.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_detalhada.dart';
 import 'package:flutter/material.dart';
 
 class SpinBox extends StatelessWidget {
-  int valorAlterado;
-  SpinBox({
+  final StoreContagemDetalhada storeContagemDetalhada;
+  final IndiceDetalhada indiceDetalhada;
+  final bool ehQuantidadeTd;
+  final String nomeTipoFuncao;
+
+  const SpinBox({
     Key? key,
-    required this.valorAlterado,
+    required this.nomeTipoFuncao,
+    required this.ehQuantidadeTd,
+    required this.indiceDetalhada,
+    required this.storeContagemDetalhada,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController valueController = TextEditingController()..text = "0";
+    TextEditingController valueController = TextEditingController();
+    if (ehQuantidadeTd) {
+      valueController.text = indiceDetalhada.quantidadeTDs.toString();
+    } else {
+      valueController.text = indiceDetalhada.quantidadeTrsEArs.toString();
+    }
 
     return Column(
       children: [
@@ -33,7 +47,17 @@ class SpinBox extends StatelessWidget {
                               ? (int.parse(valueController.text) - 1).toString()
                               : valueController.text;
 
-                      valorAlterado = int.parse(valueController.text);
+                      if (ehQuantidadeTd) {
+                        indiceDetalhada.quantidadeTDs =
+                            int.parse(valueController.text);
+                        storeContagemDetalhada.adicionarQuantidade(
+                            indiceDetalhada, nomeTipoFuncao);
+                      } else {
+                        indiceDetalhada.quantidadeTrsEArs =
+                            int.parse(valueController.text);
+                        storeContagemDetalhada.adicionarQuantidade(
+                            indiceDetalhada, nomeTipoFuncao);
+                      }
                     },
                     icon: const Icon(
                       Icons.remove,
@@ -46,7 +70,20 @@ class SpinBox extends StatelessWidget {
                   child: TextField(
                     onChanged: (value) {
                       value.toString();
-                      valorAlterado = int.parse(value.toString());
+
+                      if (ehQuantidadeTd) {
+                        indiceDetalhada.quantidadeTDs =
+                            int.parse(value.toString());
+
+                        storeContagemDetalhada.adicionarQuantidade(
+                            indiceDetalhada, nomeTipoFuncao);
+                      } else {
+                        indiceDetalhada.quantidadeTrsEArs =
+                            int.parse(value.toString());
+
+                        storeContagemDetalhada.adicionarQuantidade(
+                            indiceDetalhada, nomeTipoFuncao);
+                      }
                     },
                     textAlign: TextAlign.center,
                     onTap: () {
@@ -71,7 +108,21 @@ class SpinBox extends StatelessWidget {
                       valueController.text =
                           (int.parse(valueController.text) + 1).toString();
                       //   valor = (int.parse(valueController.text) + 1).toString();
-                      valorAlterado = int.parse(valueController.text);
+                      // valorAlterado = int.parse(valueController.text);
+
+                      if (ehQuantidadeTd) {
+                        indiceDetalhada.quantidadeTDs =
+                            int.parse(valueController.text);
+
+                        storeContagemDetalhada.adicionarQuantidade(
+                            indiceDetalhada, nomeTipoFuncao);
+                      } else {
+                        indiceDetalhada.quantidadeTrsEArs =
+                            int.parse(valueController.text);
+
+                        storeContagemDetalhada.adicionarQuantidade(
+                            indiceDetalhada, nomeTipoFuncao);
+                      }
                     },
                     icon: const Icon(
                       Icons.add,

@@ -34,12 +34,26 @@ class ContagemDetalhadaModel extends ContagemDetalhadaEntitie {
   }
 
   factory ContagemDetalhadaModel.fromMap(Map<String, dynamic> map) {
+    List<IndiceDetalhadaModel> dadosTransacionais = [];
+    List<IndiceDetalhadaModel> funcaoDados = [];
+
+    Map<String, dynamic>? lista = map["FuncaoTransacional"];
+
+    lista!.forEach((key, value) {
+      dadosTransacionais.add(IndiceDetalhadaModel.fromMap(value));
+    });
+
+    Map<String, dynamic> lista2 = map["FuncaoDeDados"];
+    lista2.forEach((key, value) {
+      funcaoDados.add(IndiceDetalhadaModel.fromMap(value));
+    });
+
     return ContagemDetalhadaModel(
         compartilhada: map["Compartilhada"] ?? false,
         totalFuncaoTransacional: map['TotalFuncaoDeDados'],
         totalPf: map["TotalPF"],
         totalFuncaoDados: map["TotalFuncaoDeDados"],
-        funcaoDados: map["FuncaoDeDados"],
-        funcaoTransacional: map["FuncaoTransacional"]);
+        funcaoDados: funcaoDados,
+        funcaoTransacional: dadosTransacionais);
   }
 }

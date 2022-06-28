@@ -9,6 +9,24 @@ part of 'store_contagem_detalhada.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$StoreContagemDetalhada on StoreContagemDetalhadaBase, Store {
+  late final _$houveMudancaComplexidadeAtom = Atom(
+      name: 'StoreContagemDetalhadaBase.houveMudancaComplexidade',
+      context: context);
+
+  @override
+  bool get houveMudancaComplexidade {
+    _$houveMudancaComplexidadeAtom.reportRead();
+    return super.houveMudancaComplexidade;
+  }
+
+  @override
+  set houveMudancaComplexidade(bool value) {
+    _$houveMudancaComplexidadeAtom
+        .reportWrite(value, super.houveMudancaComplexidade, () {
+      super.houveMudancaComplexidade = value;
+    });
+  }
+
   late final _$contagemDetalhadaEntitieAtom = Atom(
       name: 'StoreContagemDetalhadaBase.contagemDetalhadaEntitie',
       context: context);
@@ -115,7 +133,7 @@ mixin _$StoreContagemDetalhada on StoreContagemDetalhadaBase, Store {
       ActionController(name: 'StoreContagemDetalhadaBase', context: context);
 
   @override
-  dynamic adicionarQuantidade(IndiceDetalhadaModel indice, String tipoFuncao) {
+  dynamic adicionarQuantidade(IndiceDetalhada indice, String tipoFuncao) {
     final _$actionInfo = _$StoreContagemDetalhadaBaseActionController
         .startAction(name: 'StoreContagemDetalhadaBase.adicionarQuantidade');
     try {
@@ -126,11 +144,25 @@ mixin _$StoreContagemDetalhada on StoreContagemDetalhadaBase, Store {
   }
 
   @override
-  dynamic alteracaoFuncaoDados(IndiceDetalhadaModel indiceDetalhadaModel) {
-    final _$actionInfo = _$StoreContagemDetalhadaBaseActionController
-        .startAction(name: 'StoreContagemDetalhadaBase.alteracaoFuncaoDados');
+  dynamic verificaValorTiposFuncoes(
+      IndiceDetalhada indiceDetalhadaModel, List<IndiceDetalhada> dados) {
+    final _$actionInfo =
+        _$StoreContagemDetalhadaBaseActionController.startAction(
+            name: 'StoreContagemDetalhadaBase.verificaValorTiposFuncoes');
     try {
-      return super.alteracaoFuncaoDados(indiceDetalhadaModel);
+      return super.verificaValorTiposFuncoes(indiceDetalhadaModel, dados);
+    } finally {
+      _$StoreContagemDetalhadaBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic calcularPFFuncaoTransacional() {
+    final _$actionInfo =
+        _$StoreContagemDetalhadaBaseActionController.startAction(
+            name: 'StoreContagemDetalhadaBase.calcularPFFuncaoTransacional');
+    try {
+      return super.calcularPFFuncaoTransacional();
     } finally {
       _$StoreContagemDetalhadaBaseActionController.endAction(_$actionInfo);
     }
@@ -162,6 +194,7 @@ mixin _$StoreContagemDetalhada on StoreContagemDetalhadaBase, Store {
   @override
   String toString() {
     return '''
+houveMudancaComplexidade: ${houveMudancaComplexidade},
 contagemDetalhadaEntitie: ${contagemDetalhadaEntitie},
 totalPfFuncaoDeDados: ${totalPfFuncaoDeDados},
 totalPfFuncaTransacional: ${totalPfFuncaTransacional},

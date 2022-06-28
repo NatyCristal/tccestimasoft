@@ -10,6 +10,7 @@ import 'package:estimasoft/features/projeto/domain/entitie/projeto_entitie.dart'
 import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/home/store/store_projeto_index_menu.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/resultados/utils/formar_texto_compartilhar.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/resultados/widget/card_custo.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/resultados/widget/card_detalhada.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/resultados/widget/card_equipe.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/resultados/widget/card_esforco.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/resultados/widget/card_estimada.dart';
@@ -22,10 +23,8 @@ import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativ
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_equipe.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_esforco.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_prazo.dart';
-import 'package:estimasoft/features/projeto/presentation/projeto_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:share_plus/share_plus.dart';
 
 class IndexResultado extends StatelessWidget {
@@ -81,7 +80,10 @@ class IndexResultado extends StatelessWidget {
                                     storeContagemEstimada
                                         .contagemEstimadaValida,
                                     storeContagemIndicativa
-                                        .contagemIndicativaValida));
+                                        .contagemIndicativaValida) +
+                                FormarTextoCompartilhar.funcaoDetaljada(
+                                    storeContagemDetalhada
+                                        .contagemDetalhadaValida));
                       } else if (storeContagemIndicativa
                               .contagemIndicativaValida.totalPf >
                           0) {
@@ -145,18 +147,17 @@ class IndexResultado extends StatelessWidget {
                           : const SizedBox();
                     }),
                     Observer(builder: (context) {
-                      return storeContagemEstimada
-                                  .contagemEstimadaValida.totalPF >
+                      return storeContagemDetalhada
+                                  .contagemDetalhadaValida.totalPf >
                               0
-                          ? CardEstimadaResultado(
+                          ? CardDetalhadaResultado(
                               storeIndex: store,
-                              contagemEstimadaEntitie:
-                                  storeContagemEstimada.contagemEstimadaValida,
+                              contagemDetalhadaEntitie: storeContagemDetalhada
+                                  .contagemDetalhadaValida,
                               projetoEntitie: projeto,
                             )
                           : const SizedBox();
                     }),
-                    //TODO Card Estimativa Detalhada
                   ],
                 ),
               ),

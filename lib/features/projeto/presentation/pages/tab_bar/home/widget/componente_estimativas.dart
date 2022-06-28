@@ -25,10 +25,13 @@ class ComponenteEstimativas extends StatelessWidget {
       child: Row(
         children: [
           resultadoEntity.anonimo
-              ? const Text(
-                  "Anônimo",
-                  style: TextStyle(
-                    color: corCorpoTexto,
+              ? const SizedBox(
+                  width: 120,
+                  child: Text(
+                    "Anônimo",
+                    style: TextStyle(
+                      color: corCorpoTexto,
+                    ),
                   ),
                 )
               : SizedBox(
@@ -72,7 +75,7 @@ class ComponenteEstimativas extends StatelessWidget {
               : SizedBox(
                   width: 100,
                   child: Text(
-                      "${Formatadores.formatadorMonetario(resultadoEntity.valor)} asdasd asda s",
+                      "${Formatadores.formatadorMonetario(resultadoEntity.valor)}",
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(

@@ -3,7 +3,7 @@ class IndiceDetalhada {
   String complexidade;
   String nome;
   String tipo;
-  int quantidadeTRs;
+  int quantidadeTDs;
   int quantidadeTrsEArs;
 
   IndiceDetalhada(
@@ -11,6 +11,6 @@ class IndiceDetalhada {
       required this.complexidade,
       required this.nome,
       required this.tipo,
-      required this.quantidadeTRs,
+      required this.quantidadeTDs,
       required this.quantidadeTrsEArs});
 }

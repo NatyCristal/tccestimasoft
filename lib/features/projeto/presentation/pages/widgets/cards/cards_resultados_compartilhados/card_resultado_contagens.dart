@@ -18,34 +18,36 @@ class ExibicaoContagensCompartilhadas extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const Text(
-          "Indicativas",
-          style:
-              TextStyle(color: corDeAcao, fontWeight: Fontes.weightTextoTitulo),
-        ),
-        ExibicaoCardContagemIndicativa(
-          scrollController: scrollController,
-          resultados: resultados,
-        ),
-        controller.contagemController.contagenEstimadas.isNotEmpty
-            ? const Text(
-                "Estimadas",
-                style: TextStyle(
-                    color: corDeAcao, fontWeight: Fontes.weightTextoTitulo),
-              )
-            : const SizedBox(),
-        Expanded(
-          child: ExibicaoCardContagemEstimada(
-              scrollController: scrollController, resultados: resultados),
-        ),
-        const Text(
-          "Detalhadas",
-          style:
-              TextStyle(color: corDeAcao, fontWeight: Fontes.weightTextoTitulo),
-        ),
-      ],
+    return Container(
+      child: Column(
+        children: [
+          const Text(
+            "Indicativas",
+            style: TextStyle(
+                color: corDeAcao, fontWeight: Fontes.weightTextoTitulo),
+          ),
+          ExibicaoCardContagemIndicativa(
+            scrollController: scrollController,
+            resultados: resultados,
+          ),
+          controller.contagemController.contagenEstimadas.isNotEmpty
+              ? const Text(
+                  "Estimadas",
+                  style: TextStyle(
+                      color: corDeAcao, fontWeight: Fontes.weightTextoTitulo),
+                )
+              : const SizedBox(),
+          Expanded(
+            child: ExibicaoCardContagemEstimada(
+                scrollController: scrollController, resultados: resultados),
+          ),
+          const Text(
+            "Detalhadas",
+            style: TextStyle(
+                color: corDeAcao, fontWeight: Fontes.weightTextoTitulo),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -79,7 +79,7 @@ class _EstimativaEsforcoPageState extends State<EstimativaEsforcoPage> {
                     items: [
                       "Indicativa - ${widget.storeIndicativa.contagemIndicativaValida.totalPf.toString()} PF",
                       "Estimada - ${widget.storeContagemEstimada.contagemEstimadaValida.totalPF.toString()} PF",
-                      "Detalhada - ${widget.storeContagemDetalhada.totalPf.toString()} PF",
+                      "Detalhada - ${widget.storeContagemDetalhada.contagemDetalhadaValida.totalPf.toString()} PF",
                     ],
                     dropdownSearchDecoration: const InputDecoration(
                       labelText: "Contagem de ponto de função",

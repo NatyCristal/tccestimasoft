@@ -51,7 +51,7 @@ class EstimativaPrazo extends StatelessWidget {
                 items: [
                   "Indicativa - ${storeIndicativa.contagemIndicativaValida.totalPf.toString()} PF",
                   "Estimada - ${storeEstimada.contagemEstimadaValida.totalPF.toString()} PF",
-                  "Detalhada - ${storeContagemDetalhada.totalPf.toString()} PF",
+                  "Detalhada - ${storeContagemDetalhada.contagemDetalhadaValida.totalPf.toString()} PF",
                 ],
                 dropdownSearchDecoration: const InputDecoration(
                   labelText: "Contagem de ponto de função",

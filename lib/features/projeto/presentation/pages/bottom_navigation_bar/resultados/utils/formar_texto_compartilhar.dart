@@ -1,4 +1,5 @@
 import 'package:estimasoft/core/shared/utils/formatadores.dart';
+import 'package:estimasoft/features/contagem/domain/entitie/contagem_detalhada_entitie.dart';
 import 'package:estimasoft/features/contagem/domain/entitie/contagem_estimada_entitie.dart';
 import 'package:estimasoft/features/contagem/domain/entitie/contagem_indicativa_entitie.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/custo_entity.dart';
@@ -76,5 +77,28 @@ class FormarTextoCompartilhar {
     texto =
         "\n**Contagem Estimada**\n\n" + textoStringIndicativa + texto + totalPF;
     return texto.replaceAll("[", "").replaceAll("]", "");
+  }
+
+  static funcaoDetaljada(ContagemDetalhadaEntitie detalhadaEntitie) {
+    String listaDadosDefuncao = "";
+    for (var element in detalhadaEntitie.funcaoDados) {
+      listaDadosDefuncao =
+          "Nome da Função: ${element.nome}\nTipo Função: ${element.tipo}\nComplexidade: ${element.complexidade}\nPF: ${element.pontoDeFuncao}\nQuantidade TDs: ${element.quantidadeTDs}\nQuantidade TRs: ${element.quantidadeTrsEArs}\n\n ";
+    }
+
+    String listaTransacional = "";
+    for (var element in detalhadaEntitie.funcaoTransacional) {
+      listaDadosDefuncao =
+          "Nome da Função: ${element.nome}\nTipo Função: ${element.tipo}\nComplexidade: ${element.complexidade}\nPF: ${element.pontoDeFuncao}\nQuantidade TDs: ${element.quantidadeTDs}\nQuantidade ARs: ${element.quantidadeTrsEArs} ";
+    }
+    String texto = "";
+    String totais =
+        "\n\nTotal Função de dados: ${detalhadaEntitie.totalFuncaoDados}\nTotal Função Transacional: ${detalhadaEntitie.totalFuncaoTransacional}\n\nTotal: ${detalhadaEntitie.totalPf} PF";
+    texto = "\n**Contagem Detalhada**\n\n" +
+        listaDadosDefuncao +
+        listaTransacional +
+        totais;
+
+    return texto;
   }
 }

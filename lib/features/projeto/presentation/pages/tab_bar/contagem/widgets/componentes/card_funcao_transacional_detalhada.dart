@@ -1,6 +1,5 @@
 import 'package:estimasoft/core/shared/utils.dart';
 import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
-import 'package:estimasoft/core/shared/utils/tamanho_tela.dart';
 import 'package:estimasoft/features/contagem/domain/entitie/indice_detalhada.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_detalhada.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/widgets/cards/card_contagem_detalhada.dart';
@@ -26,7 +25,7 @@ class CardFuncaoTransacionalDetalhada extends StatelessWidget {
             borderRadius: arredondamentoBordas,
             color: Colors.yellow.withOpacity(0.2)),
         padding: const EdgeInsets.all(10),
-        width: TamanhoTela.width(context, 1.3),
+        width: 650,
         child: Column(
           children: [
             Row(
@@ -42,6 +41,20 @@ class CardFuncaoTransacionalDetalhada extends StatelessWidget {
                   width: 80,
                   child: Text(
                     "Tipo",
+                    style: TextStyle(color: corTituloTexto),
+                  ),
+                ),
+                SizedBox(
+                  width: 40,
+                  child: Text(
+                    "PF",
+                    style: TextStyle(color: corTituloTexto),
+                  ),
+                ),
+                SizedBox(
+                  width: 100,
+                  child: Text(
+                    "Complexidade",
                     style: TextStyle(color: corTituloTexto),
                   ),
                 ),

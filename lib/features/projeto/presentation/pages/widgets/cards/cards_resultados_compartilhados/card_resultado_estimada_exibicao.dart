@@ -21,7 +21,6 @@ class ExibicaoCardContagemEstimada extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      shrinkWrap: false,
       itemCount: projetoController.contagemController.contagenEstimadas.length,
       itemBuilder: ((context, index) {
         ContagemEstimadaEntitie custo =

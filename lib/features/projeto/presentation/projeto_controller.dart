@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:estimasoft/core/auth/usuario_autenticado.dart';
 import 'package:estimasoft/features/contagem/contagem_controller.dart';
+import 'package:estimasoft/features/contagem/domain/entitie/contagem_detalhada_entitie.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/custo_entity.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/equipe_entity.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/esforco_entitie.dart';
@@ -156,15 +157,11 @@ class ProjetoController {
     // final usuarioLogado = Modular.get<UsuarioAutenticado>();
     var resultado = _arquivosUsecase.uparArquivos(uidProjeto, file);
 
-    var retorno;
-
-    resultado.fold((l) {
-      retorno = l.mensagem;
+    return resultado.fold((l) {
+      l.mensagem;
     }, (r) {
-      retorno = r;
+      r;
     });
-
-    return retorno;
   }
 
   Future recuperarContagem(String nomeContagem, String uidProjeto) async {
@@ -178,6 +175,16 @@ class ProjetoController {
       default:
         break;
     }
+  }
+
+  Future salvarContagemDetalhada(
+      ContagemDetalhadaEntitie contagem, String uidProjeto) async {
+    final usuarioLogado = Modular.get<UsuarioAutenticado>();
+
+    var resultado = contagemController.salvarContagemDetalhada(
+        contagem, uidProjeto, usuarioLogado.store.uid);
+
+    return resultado;
   }
 
   Future salvarContagem(

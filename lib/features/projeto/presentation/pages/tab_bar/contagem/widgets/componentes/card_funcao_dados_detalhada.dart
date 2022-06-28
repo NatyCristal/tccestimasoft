@@ -1,6 +1,5 @@
 import 'package:estimasoft/core/shared/utils.dart';
 import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
-import 'package:estimasoft/core/shared/utils/tamanho_tela.dart';
 import 'package:estimasoft/features/contagem/domain/entitie/indice_detalhada.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_detalhada.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +25,7 @@ class FuncaoDeDadosDetalhada extends StatelessWidget {
         decoration: BoxDecoration(
             borderRadius: arredondamentoBordas,
             color: Colors.yellow.withOpacity(0.2)),
-        width: TamanhoTela.width(context, 1.3),
+        width: 650,
         child: Column(
           children: [
             Row(
@@ -42,6 +41,20 @@ class FuncaoDeDadosDetalhada extends StatelessWidget {
                   width: 80,
                   child: Text(
                     "Tipo",
+                    style: TextStyle(color: corTituloTexto),
+                  ),
+                ),
+                SizedBox(
+                  width: 40,
+                  child: Text(
+                    "PF",
+                    style: TextStyle(color: corTituloTexto),
+                  ),
+                ),
+                SizedBox(
+                  width: 100,
+                  child: Text(
+                    "Complexidade",
                     style: TextStyle(color: corTituloTexto),
                   ),
                 ),
@@ -66,9 +79,6 @@ class FuncaoDeDadosDetalhada extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(
-              width: 20,
-            ),
             ListView.builder(
               controller: scrollController,
               shrinkWrap: true,
@@ -84,22 +94,6 @@ class FuncaoDeDadosDetalhada extends StatelessWidget {
                 );
               },
             ),
-            // ListView.builder(
-            //   controller: scrollController,
-            //   shrinkWrap: true,
-            //   itemCount:
-            //       storeContagemIndicativa.contagemIndicativaValida.aie.length,
-            //   itemBuilder: (context, index) {
-            //     String nomeFuncao =
-            //         storeContagemIndicativa.contagemIndicativaValida.aie[index];
-
-            //     return ContagemDetalhadaCard(
-            //       store: storeContagemDetalhada,
-            //       tipoFuncao: "AIE",
-            //       nomeDaFuncao: nomeFuncao,
-            //     );
-            //   },
-            // )
           ],
         ),
       ),

@@ -66,6 +66,13 @@ class IndexHome extends StatelessWidget {
                           controller.contagemController.contagemIndicativa);
                       estimada.iniciarSessao(
                           controller.contagemController.contagemEstimada);
+                      detalhada.iniciarSessao(
+                          controller.contagemController.contagemDetalhada);
+                      detalhada.receberDados(
+                        estimada.contagemEstimadaValida,
+                        indicativa.contagemIndicativaValida,
+                      );
+
                       esforco.buscarListaEsforc(
                           controller.estimativasController.esforcos);
                       prazo.buscarListaPrazp(

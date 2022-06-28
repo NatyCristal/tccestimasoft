@@ -20,8 +20,8 @@ class ContagemDetalhadaFirebase extends ContagemDetalhadaDatasource {
     await firestore
         .collection("Contagem")
         .doc(uidProjeto)
-        .collection(uidUsuario)
-        .doc("Detalhada")
+        .collection("Detalhada")
+        .doc(uidUsuario)
         .get()
         .then((value) {
       if (value.exists) {

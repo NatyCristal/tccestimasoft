@@ -25,7 +25,7 @@ class ExibicaoCardEquipes extends StatelessWidget {
       itemBuilder: ((context, index) {
         EquipeEntity equipe = equipes[index];
         if (resultados[index].uidMembro == equipe.uidUsuario) {
-          return Container(
+          return SizedBox(
             height: 250,
             child: ComponenteEstimativasPadrao(
               resultadoEntity: resultados[index],

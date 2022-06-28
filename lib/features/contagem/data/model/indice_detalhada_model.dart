@@ -7,14 +7,14 @@ class IndiceDetalhadaModel extends IndiceDetalhada {
       required String nome,
       required String tipo,
       required int quantidadeTRs,
-      required int quantidadeTdsEArs})
+      required int quantidadeTrsEArs})
       : super(
             pontoDeFuncao: pontoFuncao,
             complexidade: complexidade,
             nome: nome,
             tipo: tipo,
-            quantidadeTRs: quantidadeTRs,
-            quantidadeTrsEArs: quantidadeTdsEArs);
+            quantidadeTDs: quantidadeTRs,
+            quantidadeTrsEArs: quantidadeTrsEArs);
 
   Map<String, dynamic> toMap() {
     return {
@@ -22,19 +22,19 @@ class IndiceDetalhadaModel extends IndiceDetalhada {
       "Complexidade": complexidade,
       "Nome": nome,
       'Tipo': tipo,
-      'QuantidadeTRs': quantidadeTRs,
+      'QuantidadeTRs': quantidadeTDs,
       'QuantidadeTDsARs': quantidadeTrsEArs,
     };
   }
 
   factory IndiceDetalhadaModel.fromMap(Map<String, dynamic> map) {
     return IndiceDetalhadaModel(
-      pontoFuncao: map["PontoDeFuncao"],
+      pontoFuncao: map["PontoFuncao"],
       complexidade: map["Complexidade"],
       nome: map['Nome'],
       tipo: map["Tipo"],
       quantidadeTRs: map["QuantidadeTRs"],
-      quantidadeTdsEArs: map["QuantidadeTDsARs"],
+      quantidadeTrsEArs: map["QuantidadeTDsARs"],
     );
   }
 }
