@@ -32,6 +32,8 @@ class CardEstimadaResultado extends StatelessWidget {
             ? Alerta.alertaSimplesTextoOk(
                 "", "Estimativa já compartilhada", context)
             : Alerta.alertaSimOuNao(context, store, () async {
+                contagemEstimadaEntitie.uidUsuario =
+                    Modular.get<UsuarioAutenticado>().store.uid;
                 await Modular.get<ProjetoController>()
                     .resultadoController
                     .enviarContagemEstimada(
@@ -49,7 +51,7 @@ class CardEstimadaResultado extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
             borderRadius: arredondamentoBordas,
-            color: Colors.red.withOpacity(0.5)),
+            color: Colors.green.withOpacity(0.5)),
         width: 140,
         height: 100,
         child: Stack(

@@ -126,6 +126,7 @@ class _EstimativaEsforcoPageState extends State<EstimativaEsforcoPage> {
                         buscaValorDaLinguagem(
                             widget.storeEstimativaEsforco.linguagemSelecionada,
                             dados);
+                    widget.storeEstimativaEsforco.validarContagem();
                   },
                   showSearchBox: true,
                 ),
@@ -147,6 +148,7 @@ class _EstimativaEsforcoPageState extends State<EstimativaEsforcoPage> {
                     onChanged: (value) {
                       widget.storeEstimativaEsforco.produtividadeEquipe =
                           value.toString();
+                      widget.storeEstimativaEsforco.validarContagem();
                     },
                   );
                 }),

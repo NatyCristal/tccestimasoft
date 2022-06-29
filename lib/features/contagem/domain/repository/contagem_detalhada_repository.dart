@@ -10,4 +10,7 @@ abstract class ContagemDetalhadaRepository {
 
   Future<Either<String, ContagemDetalhadaEntitie>> recuperarContagem(
       String uidProjeto, String uidUsuario);
+
+  Future<Either<String, List<ContagemDetalhadaEntitie>>>
+      recuperarDetalhadasCompartilhadas(String uidProjeto);
 }

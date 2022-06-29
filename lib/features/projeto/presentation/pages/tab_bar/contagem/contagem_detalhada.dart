@@ -235,11 +235,6 @@ class ContagemDetalhada extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            storeContagemDetalhada.contagemDetalhadaValida.totalPf > 0
-                ? SizedBox(
-                    child: Text("Olá"),
-                  )
-                : SizedBox(),
             Observer(builder: (context) {
               return storeContagemDetalhada.alteracoes
                   ? const Text(

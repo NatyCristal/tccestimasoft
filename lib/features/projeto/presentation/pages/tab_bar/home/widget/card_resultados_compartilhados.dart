@@ -26,12 +26,12 @@ class CardEsforcosCompartilhados extends StatelessWidget {
       width: TamanhoTela.width(context, 1),
       child: Column(
         children: [
-          controller.resultadoController.contagens.isNotEmpty
+          controller.resultadoController.contagensIndicativas.isNotEmpty
               ? GestureDetector(
                   onTap: () {
                     Modular.to.pushNamed("visualizar-estimativa", arguments: [
-                      controller.resultadoController.contagens,
-                      "Contagem",
+                      controller.resultadoController.contagensIndicativas,
+                      "Indicativa",
                       uidProjeto
                     ]);
                   },
@@ -39,12 +39,12 @@ class CardEsforcosCompartilhados extends StatelessWidget {
                     margin: const EdgeInsets.all(5),
                     padding: const EdgeInsets.all(5),
                     decoration: BoxDecoration(
-                        color: Colors.red.withOpacity(0.5),
+                        color: Colors.blue.withOpacity(0.5),
                         borderRadius: arredondamentoBordas),
                     child: Column(
                       children: [
                         const Text(
-                          "Estimativas de Contagem",
+                          "Estimativas de Contagem Indicativa",
                           style: TextStyle(
                               color: corCorpoTexto,
                               fontWeight: Fontes.weightTextoNormal),
@@ -59,11 +59,122 @@ class CardEsforcosCompartilhados extends StatelessWidget {
                           child: ListView.builder(
                             controller: scrollController,
                             shrinkWrap: true,
-                            itemCount:
-                                controller.resultadoController.contagens.length,
+                            itemCount: controller.resultadoController
+                                .contagensIndicativas.length,
                             itemBuilder: ((context, index) {
                               ResultadoEntity resultadoEntity = controller
-                                  .resultadoController.contagens[index];
+                                  .resultadoController
+                                  .contagensIndicativas[index];
+
+                              return ComponenteEstimativas(
+                                resultadoEntity: resultadoEntity,
+                                valor: "PF",
+                              );
+                            }),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              : const SizedBox(),
+          const SizedBox(
+            height: 10,
+          ),
+          controller.resultadoController.contagensEstimadas.isNotEmpty
+              ? GestureDetector(
+                  onTap: () {
+                    Modular.to.pushNamed("visualizar-estimativa", arguments: [
+                      controller.resultadoController.contagensEstimadas,
+                      "Estimada",
+                      uidProjeto
+                    ]);
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.all(5),
+                    padding: const EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                        color: Colors.green.withOpacity(0.5),
+                        borderRadius: arredondamentoBordas),
+                    child: Column(
+                      children: [
+                        const Text(
+                          "Estimativas de Contagem Estimada",
+                          style: TextStyle(
+                              color: corCorpoTexto,
+                              fontWeight: Fontes.weightTextoNormal),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: arredondamentoBordas),
+                          child: ListView.builder(
+                            controller: scrollController,
+                            shrinkWrap: true,
+                            itemCount: controller
+                                .resultadoController.contagensEstimadas.length,
+                            itemBuilder: ((context, index) {
+                              ResultadoEntity resultadoEntity = controller
+                                  .resultadoController
+                                  .contagensEstimadas[index];
+
+                              return ComponenteEstimativas(
+                                resultadoEntity: resultadoEntity,
+                                valor: "PF",
+                              );
+                            }),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              : const SizedBox(),
+          const SizedBox(
+            height: 10,
+          ),
+          controller.resultadoController.contagensDetalhadas.isNotEmpty
+              ? GestureDetector(
+                  onTap: () {
+                    Modular.to.pushNamed("visualizar-estimativa", arguments: [
+                      controller.resultadoController.contagensDetalhadas,
+                      "Detalhada",
+                      uidProjeto
+                    ]);
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.all(5),
+                    padding: const EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                        color: Colors.red.withOpacity(0.5),
+                        borderRadius: arredondamentoBordas),
+                    child: Column(
+                      children: [
+                        const Text(
+                          "Estimativas de Contagem Detalhada",
+                          style: TextStyle(
+                              color: corCorpoTexto,
+                              fontWeight: Fontes.weightTextoNormal),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: arredondamentoBordas),
+                          child: ListView.builder(
+                            controller: scrollController,
+                            shrinkWrap: true,
+                            itemCount: controller
+                                .resultadoController.contagensDetalhadas.length,
+                            itemBuilder: ((context, index) {
+                              ResultadoEntity resultadoEntity = controller
+                                  .resultadoController
+                                  .contagensDetalhadas[index];
 
                               return ComponenteEstimativas(
                                 resultadoEntity: resultadoEntity,
@@ -93,7 +204,7 @@ class CardEsforcosCompartilhados extends StatelessWidget {
                     margin: const EdgeInsets.all(5),
                     padding: const EdgeInsets.all(5),
                     decoration: BoxDecoration(
-                        color: Colors.lime.withOpacity(0.5),
+                        color: Colors.pink.withOpacity(0.4),
                         borderRadius: arredondamentoBordas),
                     child: Column(
                       children: [

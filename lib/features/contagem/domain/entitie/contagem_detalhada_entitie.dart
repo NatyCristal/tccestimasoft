@@ -1,6 +1,7 @@
 import 'package:estimasoft/features/contagem/data/model/indice_detalhada_model.dart';
 
 class ContagemDetalhadaEntitie {
+  String uidUsuario = "";
   bool compartilhada;
   List<IndiceDetalhadaModel> funcaoDados;
   List<IndiceDetalhadaModel> funcaoTransacional;

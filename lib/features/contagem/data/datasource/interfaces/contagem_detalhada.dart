@@ -8,4 +8,7 @@ abstract class ContagemDetalhadaDatasource {
       ContagemDetalhadaEntitie contagemDetalhadaEntitie,
       String uidProjeto,
       String uidUsuario);
+
+  Future<List<ContagemDetalhadaEntitie>> recuperarDetalhadasCompartilhadas(
+      String uidProjeto);
 }

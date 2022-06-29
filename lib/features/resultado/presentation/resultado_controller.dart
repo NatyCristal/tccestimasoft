@@ -16,7 +16,9 @@ class ResultadoController {
   ResultadoController(
       this._resultadoCompartilharUsecase, this._resultadoRecuperarUsecase);
 
-  List<ResultadoEntity> contagens = [];
+  List<ResultadoEntity> contagensDetalhadas = [];
+  List<ResultadoEntity> contagensIndicativas = [];
+  List<ResultadoEntity> contagensEstimadas = [];
   List<ResultadoEntity> esforcosCompartilhados = [];
   List<ResultadoEntity> prazosCompartilhados = [];
   List<ResultadoEntity> equipesCompartilhados = [];
@@ -31,7 +33,17 @@ class ResultadoController {
         anonimamente, contagemDetalhada, uidProjeto, uidUsuario);
 
     resultado.fold((l) {}, (r) {
-      contagens.add(r);
+      bool entrou = false;
+      for (var element in contagensDetalhadas) {
+        if (element.uidMembro == contagemDetalhada.uidUsuario &&
+            element.nome == "Detalhada") {
+          element.valor = r.valor;
+          entrou = true;
+        }
+      }
+      if (!entrou) {
+        contagensDetalhadas.add(r);
+      }
     });
 
     if (resultado.isRight()) {
@@ -41,14 +53,24 @@ class ResultadoController {
 
   enviarContagemEstimada(
       bool anonimamente,
-      ContagemEstimadaEntitie conagemIndicativa,
+      ContagemEstimadaEntitie conagemEstimada,
       String uidProjeto,
       String uidUsuario) async {
     var resultado = await _resultadoCompartilharUsecase.enviarContagemEstimada(
-        anonimamente, conagemIndicativa, uidProjeto, uidUsuario);
+        anonimamente, conagemEstimada, uidProjeto, uidUsuario);
 
     resultado.fold((l) {}, (r) {
-      contagens.add(r);
+      bool entrou = false;
+      for (var element in contagensEstimadas) {
+        if (element.uidMembro == conagemEstimada.uidUsuario &&
+            element.nome == "Estimada") {
+          element.valor = r.valor;
+          entrou = true;
+        }
+      }
+      if (!entrou) {
+        contagensEstimadas.add(r);
+      }
     });
 
     if (resultado.isRight()) {
@@ -66,7 +88,17 @@ class ResultadoController {
             anonimamente, conagemIndicativa, uidProjeto, uidUsuario);
 
     resultado.fold((l) {}, (r) {
-      contagens.add(r);
+      bool entrou = false;
+      for (var element in contagensIndicativas) {
+        if (element.uidMembro == conagemIndicativa.uidUsuario &&
+            element.nome == "Indicativa") {
+          element.valor = r.valor;
+          entrou = true;
+        }
+      }
+      if (!entrou) {
+        contagensIndicativas.add(r);
+      }
     });
 
     if (resultado.isRight()) {
@@ -81,7 +113,17 @@ class ResultadoController {
             anonimamente, esforcos, uidProjeto, uidUsuario);
 
     resultado.fold((l) {}, (r) {
-      esforcosCompartilhados.add(r);
+      bool entrou = false;
+      for (var element in esforcosCompartilhados) {
+        if (element.uidMembro == esforcos.uidUsuario &&
+            element.nome == esforcos.contagemPontoDeFuncao.split(" - ").first) {
+          element.valor = r.valor;
+          entrou = true;
+        }
+      }
+      if (!entrou) {
+        esforcosCompartilhados.add(r);
+      }
     });
 
     if (resultado.isRight()) {
@@ -95,7 +137,17 @@ class ResultadoController {
         anonimamente, custos, uidProjeto, uidUsuario);
 
     resultado.fold((l) {}, (r) {
-      custosCompartilhados.add(r);
+      bool entrou = false;
+      for (var element in custosCompartilhados) {
+        if (element.uidMembro == custos.uidUsuario &&
+            element.nome == custos.tipoContagem) {
+          element.valor = r.valor;
+          entrou = true;
+        }
+      }
+      if (!entrou) {
+        custosCompartilhados.add(r);
+      }
     });
 
     if (resultado.isRight()) {
@@ -109,7 +161,17 @@ class ResultadoController {
         anonimamente, prazos, uidProjeto, uidUsuario);
 
     resultado.fold((l) {}, (r) {
-      prazosCompartilhados.add(r);
+      bool entrou = false;
+      for (var element in prazosCompartilhados) {
+        if (element.uidMembro == prazos.uidUsuario &&
+            element.nome == prazos.contagemPontoDeFuncao.split(" - ").first) {
+          element.valor = r.valor;
+          entrou = true;
+        }
+      }
+      if (!entrou) {
+        prazosCompartilhados.add(r);
+      }
     });
 
     if (resultado.isRight()) {
@@ -117,13 +179,23 @@ class ResultadoController {
     }
   }
 
-  enviarEstimativaEquipe(bool anonimamente, EquipeEntity custos,
+  enviarEstimativaEquipe(bool anonimamente, EquipeEntity equipe,
       String uidProjeto, String uidUsuario) async {
     var resultado = await _resultadoCompartilharUsecase.enviarEstimativasEquipe(
-        anonimamente, custos, uidProjeto, uidUsuario);
+        anonimamente, equipe, uidProjeto, uidUsuario);
 
     resultado.fold((l) {}, (r) {
-      equipesCompartilhados.add(r);
+      bool entrou = false;
+      for (var element in equipesCompartilhados) {
+        if (element.uidMembro == equipe.uidUsuario &&
+            element.nome == equipe.esforco.split(" - ").last) {
+          element.valor = r.valor;
+          entrou = true;
+        }
+      }
+      if (!entrou) {
+        equipesCompartilhados.add(r);
+      }
     });
 
     if (resultado.isRight()) {
@@ -160,11 +232,25 @@ class ResultadoController {
       custosCompartilhados = r;
     });
 
-    var resultadoContagens =
-        await _resultadoRecuperarUsecase.recuperarContagens(uidProjeto);
+    var resultadoContagens = await _resultadoRecuperarUsecase
+        .recuperarContagensIndicativas(uidProjeto);
 
     resultadoContagens.fold((l) => null, (r) {
-      contagens = r;
+      contagensIndicativas = r;
+    });
+
+    var resultadoEstimada =
+        await _resultadoRecuperarUsecase.recuperarContagensEstimada(uidProjeto);
+
+    resultadoEstimada.fold((l) => null, (r) {
+      contagensEstimadas = r;
+    });
+
+    var resultadoDetalhada = await _resultadoRecuperarUsecase
+        .recuperarContagensDetalhadas(uidProjeto);
+
+    resultadoDetalhada.fold((l) => null, (r) {
+      contagensDetalhadas = r;
     });
   }
 }

@@ -192,22 +192,25 @@ class ProjetoFirebaseDatasource extends ProjetoDatasource {
       String uidProjeto, String caminhoDocumento) async {
     final ref = FirebaseStorage.instance.ref(caminhoDocumento);
 
+    // ignore: unused_local_variable
     var resultado =
         FirebaseStorage.instance.ref(caminhoDocumento); //.getDownloadURL();
 
     final dir = await getApplicationDocumentsDirectory();
-    print("Diretorio: " + dir.path);
+    //print("Diretorio: " + dir.path);
     File file = File("${dir.path}/${caminhoDocumento.split("/").last}");
 
-    print(file);
+//TODO FINALIZAR DOWNLOAD ARQUIVOS
+    //  print(file);
 
     await ref.writeToFile(file);
-    print(ref.name);
+    // print(ref.name);
 
     final url = await ref.getDownloadURL();
     final tempDir = await getTemporaryDirectory();
     final path = '${tempDir.path}/${ref.name}';
 
+    // ignore: unused_local_variable
     Response response = await Dio().download(url, path);
 
     //
@@ -219,7 +222,7 @@ class ProjetoFirebaseDatasource extends ProjetoDatasource {
       await GallerySaver.saveImage(path, toDcim: true);
     }
 
-    print("Baixou");
+    //print("Baixou");
 
     // //First you get the documents folder location on the device...
     // Directory appDocDir = await getApplicationDocumentsDirectory();

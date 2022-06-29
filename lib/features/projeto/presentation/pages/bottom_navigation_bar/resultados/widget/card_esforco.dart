@@ -33,6 +33,9 @@ class CardEsforcoResultado extends StatelessWidget {
             ? Alerta.alertaSimplesTextoOk(
                 "", "Estimativa já compartilhada", context)
             : Alerta.alertaSimOuNao(context, store, () async {
+                esforcoEntity.uidUsuario =
+                    Modular.get<UsuarioAutenticado>().store.uid;
+
                 await Modular.get<ProjetoController>()
                     .resultadoController
                     .enviarEstimativasEsforco(
@@ -51,7 +54,7 @@ class CardEsforcoResultado extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           borderRadius: arredondamentoBordas,
-          color: Colors.lime.withOpacity(0.4),
+          color: Colors.pink.withOpacity(0.4),
         ),
         child: Stack(
           alignment: Alignment.bottomRight,

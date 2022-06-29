@@ -71,7 +71,6 @@ class ContagemEstimadaUsecase {
         await repository.recuperarEstimadasCompartilhadas(uidProjeto);
 
     var erro = "";
-    // ignore: prefer_typing_uninitialized_variables
     var retorno;
 
     resultado.fold((l) {

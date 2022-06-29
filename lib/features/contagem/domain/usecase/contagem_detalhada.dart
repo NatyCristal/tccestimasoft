@@ -60,4 +60,29 @@ class ContagemDetalhadaUsecase {
 
     return Right(retorno);
   }
+
+  Future<Either<Falha, List<ContagemDetalhadaEntitie>>>
+      recuperarEstimadasCompartilhadas(String uidProjeto) async {
+    var resultado =
+        await repository.recuperarDetalhadasCompartilhadas(uidProjeto);
+
+    var erro = "";
+    // ignore: prefer_typing_uninitialized_variables
+    var retorno;
+
+    resultado.fold((l) {
+      erro = l;
+    }, (r) {
+      retorno = r;
+    });
+
+    if (resultado.isLeft()) {
+      return Left(
+        ContagemIndicativaErro(
+            mensagem: "Não foi possível salvar a função. O erro foi: $erro"),
+      );
+    }
+
+    return Right(retorno);
+  }
 }

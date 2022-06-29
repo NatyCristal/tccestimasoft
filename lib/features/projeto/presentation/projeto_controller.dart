@@ -86,7 +86,9 @@ class ProjetoController {
 
   Future recuperarMembrosProjeto(String uidProjeto) async {
     var resultado = await _recuperarMembrosUsecase.recuperarMembros(uidProjeto);
+    // ignore: unused_local_variable
     var erro = "";
+    // ignore: unused_local_variable
     List<UsuarioEntitie> membros = [];
     resultado.fold((l) {
       erro = l.mensagem;
@@ -106,6 +108,7 @@ class ProjetoController {
     final usuarioLogado = Modular.get<UsuarioAutenticado>();
     var resultado = await _recuperarProjetosUsecase
         .recuperarProjetos(usuarioLogado.store.uid);
+    // ignore: unused_local_variable
     var erro = "";
     resultado.fold((l) {
       erro = l.mensagem;
@@ -122,6 +125,7 @@ class ProjetoController {
 
   Future fazerDownloadArquivos(
       String uidProjeto, String caminhoDocumento) async {
+    // ignore: unused_local_variable
     var resultado = await _arquivosUsecase.realizarDownloadArquivo(
         uidProjeto, caminhoDocumento);
   }
@@ -165,7 +169,7 @@ class ProjetoController {
   }
 
   Future recuperarContagem(String nomeContagem, String uidProjeto) async {
-    final usuarioLogado = Modular.get<UsuarioAutenticado>();
+    //  final usuarioLogado = Modular.get<UsuarioAutenticado>();
 
     switch (nomeContagem) {
       case "Indicativa":
@@ -198,6 +202,7 @@ class ProjetoController {
       int totalPF) async {
     final usuarioLogado = Modular.get<UsuarioAutenticado>();
 
+    // ignore: prefer_typing_uninitialized_variables
     var resultado;
 
     switch (nomeContagem) {

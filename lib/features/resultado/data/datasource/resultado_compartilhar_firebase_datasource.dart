@@ -278,7 +278,7 @@ class ResultadoFirebaseDatasource extends CompartilharResultadoDatasource {
     await firestore
         .collection("Resultados")
         .doc(uidProjeto)
-        .collection("Contagem")
+        .collection("Detalhada")
         .doc(uidUsuario)
         .get()
         .then((value) async {
@@ -286,7 +286,7 @@ class ResultadoFirebaseDatasource extends CompartilharResultadoDatasource {
         await firestore
             .collection("Resultados")
             .doc(uidProjeto)
-            .collection("Contagem")
+            .collection("Detalhada")
             .doc(uidUsuario)
             .update({
           "Detalhada": {
@@ -298,7 +298,7 @@ class ResultadoFirebaseDatasource extends CompartilharResultadoDatasource {
         await firestore
             .collection("Resultados")
             .doc(uidProjeto)
-            .collection("Contagem")
+            .collection("Detalhada")
             .doc(uidUsuario)
             .set({
           "Detalhada": {
@@ -340,7 +340,7 @@ class ResultadoFirebaseDatasource extends CompartilharResultadoDatasource {
     await firestore
         .collection("Resultados")
         .doc(uidProjeto)
-        .collection("Contagem")
+        .collection("Estimada")
         .doc(uidUsuario)
         .get()
         .then((value) async {
@@ -348,7 +348,7 @@ class ResultadoFirebaseDatasource extends CompartilharResultadoDatasource {
         await firestore
             .collection("Resultados")
             .doc(uidProjeto)
-            .collection("Contagem")
+            .collection("Estimada")
             .doc(uidUsuario)
             .update({
           "Estimada": {
@@ -360,7 +360,7 @@ class ResultadoFirebaseDatasource extends CompartilharResultadoDatasource {
         await firestore
             .collection("Resultados")
             .doc(uidProjeto)
-            .collection("Contagem")
+            .collection("Estimada")
             .doc(uidUsuario)
             .set({
           "Estimada": {
@@ -401,7 +401,7 @@ class ResultadoFirebaseDatasource extends CompartilharResultadoDatasource {
     await firestore
         .collection("Resultados")
         .doc(uidProjeto)
-        .collection("Contagem")
+        .collection("Indicativa")
         .doc(uidUsuario)
         .get()
         .then((value) async {
@@ -409,7 +409,7 @@ class ResultadoFirebaseDatasource extends CompartilharResultadoDatasource {
         await firestore
             .collection("Resultados")
             .doc(uidProjeto)
-            .collection("Contagem")
+            .collection("Indicativa")
             .doc(uidUsuario)
             .update({
           "Indicativa": {
@@ -421,7 +421,7 @@ class ResultadoFirebaseDatasource extends CompartilharResultadoDatasource {
         await firestore
             .collection("Resultados")
             .doc(uidProjeto)
-            .collection("Contagem")
+            .collection("Indicativa")
             .doc(uidUsuario)
             .set({
           "Indicativa": {

@@ -104,12 +104,60 @@ class ResultadoRecuperarFirebaseDatasource
   }
 
   @override
-  Future<List<ResultadoEntity>> recuperarContagens(String uidProjeto) async {
+  Future<List<ResultadoEntity>> recuperarContagenIndicativas(
+      String uidProjeto) async {
     List<ResultadoEntity> resultadosContagens = [];
     await firestore
         .collection("Resultados")
         .doc(uidProjeto)
-        .collection("Contagem")
+        .collection("Indicativa")
+        .get()
+        .then((value) {
+      List<QueryDocumentSnapshot<Map<String, dynamic>>> map = value.docs;
+
+      if (map.isNotEmpty) {
+        for (var element in map) {
+          element.data().forEach((key, value) {
+            resultadosContagens
+                .add(ResultadoModel.fromMap(value, element.id, key.toString()));
+          });
+        }
+      }
+    });
+    return resultadosContagens;
+  }
+
+  @override
+  Future<List<ResultadoEntity>> recuperarContagensDetalhadas(
+      String uidProjeto) async {
+    List<ResultadoEntity> resultadosContagens = [];
+    await firestore
+        .collection("Resultados")
+        .doc(uidProjeto)
+        .collection("Detalhada")
+        .get()
+        .then((value) {
+      List<QueryDocumentSnapshot<Map<String, dynamic>>> map = value.docs;
+
+      if (map.isNotEmpty) {
+        for (var element in map) {
+          element.data().forEach((key, value) {
+            resultadosContagens
+                .add(ResultadoModel.fromMap(value, element.id, key.toString()));
+          });
+        }
+      }
+    });
+    return resultadosContagens;
+  }
+
+  @override
+  Future<List<ResultadoEntity>> recuperarEstimadas(String uidProjeto) async {
+    List<ResultadoEntity> resultadosContagens = [];
+    await firestore
+        .collection("Resultados")
+        .doc(uidProjeto)
+        .collection("Estimada")
         .get()
         .then((value) {
       List<QueryDocumentSnapshot<Map<String, dynamic>>> map = value.docs;

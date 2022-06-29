@@ -107,9 +107,57 @@ class ResultadoRecuperarUsecase {
     return Right(retorno);
   }
 
-  Future<Either<Falha, List<ResultadoEntity>>> recuperarContagens(
+  Future<Either<Falha, List<ResultadoEntity>>> recuperarContagensIndicativas(
       String uidProjeto) async {
-    var resultado = await repository.recuperarContagens(uidProjeto);
+    var resultado = await repository.recuperaContagensIndicativas(uidProjeto);
+
+    var erro = "";
+    // ignore: prefer_typing_uninitialized_variables
+    var retorno;
+
+    resultado.fold((l) {
+      erro = l.mensagem;
+    }, (r) {
+      retorno = r;
+    });
+
+    if (resultado.isLeft()) {
+      return Left(
+        ContagemEstimadaErro(
+            mensagem: "Não foi possível salvar a função. O erro foi: $erro"),
+      );
+    }
+
+    return Right(retorno);
+  }
+
+  Future<Either<Falha, List<ResultadoEntity>>> recuperarContagensDetalhadas(
+      String uidProjeto) async {
+    var resultado = await repository.recuperarContagensDetalhada(uidProjeto);
+
+    var erro = "";
+    // ignore: prefer_typing_uninitialized_variables
+    var retorno;
+
+    resultado.fold((l) {
+      erro = l.mensagem;
+    }, (r) {
+      retorno = r;
+    });
+
+    if (resultado.isLeft()) {
+      return Left(
+        ContagemEstimadaErro(
+            mensagem: "Não foi possível salvar a função. O erro foi: $erro"),
+      );
+    }
+
+    return Right(retorno);
+  }
+
+  Future<Either<Falha, List<ResultadoEntity>>> recuperarContagensEstimada(
+      String uidProjeto) async {
+    var resultado = await repository.recuperarContagemEstimada(uidProjeto);
 
     var erro = "";
     // ignore: prefer_typing_uninitialized_variables

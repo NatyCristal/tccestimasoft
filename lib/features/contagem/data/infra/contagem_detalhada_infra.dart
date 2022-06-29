@@ -35,4 +35,16 @@ class ContagemDetalhadaInfra extends ContagemDetalhadaRepository {
       return Left(e.code);
     }
   }
+
+  @override
+  Future<Either<String, List<ContagemDetalhadaEntitie>>>
+      recuperarDetalhadasCompartilhadas(String uidProjeto) async {
+    try {
+      var resultado =
+          await datasource.recuperarDetalhadasCompartilhadas(uidProjeto);
+      return Right(resultado);
+    } on FirebaseException catch (e) {
+      return Left(e.code);
+    }
+  }
 }

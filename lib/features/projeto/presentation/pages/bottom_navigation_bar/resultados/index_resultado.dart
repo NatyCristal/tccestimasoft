@@ -400,8 +400,6 @@ class IndexResultado extends StatelessWidget {
             BotaoPadrao(
                 corDeTextoBotao: corTextoSobCorPrimaria,
                 acao: () {
-                  //   String texto = verificaEstimativas()
-
                   Share.share(FormarTextoCompartilhar.funcaoTextoIndicativa(
                           storeContagemIndicativa.contagemIndicativaValida) +
                       FormarTextoCompartilhar.funcaoEstimada(

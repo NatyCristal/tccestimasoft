@@ -1,15 +1,19 @@
 import 'package:estimasoft/core/shared/anim/lotties.dart';
 import 'package:estimasoft/core/shared/utils.dart';
 import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
-import 'package:estimasoft/core/shared/utils/tamanho_tela.dart';
+import 'package:estimasoft/features/contagem/domain/entitie/contagem_detalhada_entitie.dart';
+import 'package:estimasoft/features/contagem/domain/entitie/contagem_estimada_entitie.dart';
+import 'package:estimasoft/features/contagem/domain/entitie/contagem_indicativa_entitie.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/custo_entity.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/equipe_entity.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/esforco_entitie.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/prazo_entitie.dart';
-import 'package:estimasoft/features/projeto/presentation/pages/widgets/cards/cards_resultados_compartilhados/card_resultado_contagens.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/widgets/cards/cards_resultados_compartilhados/card_resultado_custo_exibicao.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/widgets/cards/cards_resultados_compartilhados/card_resultado_detalhada_exibicao.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/widgets/cards/cards_resultados_compartilhados/card_resultado_equipe_exibicao.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/widgets/cards/cards_resultados_compartilhados/card_resultado_esforco_exibicao.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/widgets/cards/cards_resultados_compartilhados/card_resultado_estimada_exibicao.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/widgets/cards/cards_resultados_compartilhados/card_resultado_indicativa_exibicao.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/widgets/cards/cards_resultados_compartilhados/card_resultado_prazo_exibicao.dart';
 import 'package:estimasoft/features/projeto/presentation/projeto_controller.dart';
 import 'package:estimasoft/features/resultado/domain/entity/resultado_entity.dart';
@@ -38,10 +42,15 @@ class VisualizarEstimativas extends StatelessWidget {
       String uidProjeto,
     ) async {
       switch (estimativa) {
-        case "Contagem":
+        case "Indicativa":
           return await controller.contagemController
-              .recuperarIndicativasCompartilhadas(uidProjeto);
-
+              .recuperarContagensIndicativas(uidProjeto);
+        case "Estimada":
+          return await controller.contagemController
+              .recuperarContagensEstimadas(uidProjeto);
+        case "Detalhada":
+          return await controller.contagemController
+              .recuperarContagensDetalhadas(uidProjeto);
         case "Esforco":
           return await controller.estimativasController
               .recuperarEsforcosCompartilhados(uidProjeto, estimativa);
@@ -73,7 +82,6 @@ class VisualizarEstimativas extends StatelessWidget {
       ),
       body: Container(
         padding: paddingPagePrincipal,
-        height: TamanhoTela.height(context, 1),
         child: Column(
           children: [
             Expanded(
@@ -110,8 +118,21 @@ class VisualizarEstimativas extends StatelessWidget {
                               scrollController: scrollController,
                               custos: snapshot.data,
                               resultados: estimativas);
-                        } else {
-                          return ExibicaoContagensCompartilhadas(
+                        } else if (snapshot.data
+                            is List<ContagemIndicativaEntitie>) {
+                          return ExibicaoCardContagemIndicativa(
+                            scrollController: scrollController,
+                            resultados: estimativas,
+                          );
+                        } else if (snapshot.data
+                            is List<ContagemDetalhadaEntitie>) {
+                          return CardExibicaoResultadoDetalhada(
+                            scrollController: scrollController,
+                            resultados: estimativas,
+                          );
+                        } else if (snapshot.data
+                            is List<ContagemEstimadaEntitie>) {
+                          return ExibicaoCardContagemEstimada(
                             scrollController: scrollController,
                             resultados: estimativas,
                           );

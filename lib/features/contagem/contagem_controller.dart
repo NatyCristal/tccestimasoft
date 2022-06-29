@@ -40,20 +40,36 @@ class ContagemController {
   ContagemController(this._contagemIndicativaUseCase,
       this._contagemEstimadaUseCase, this._contagemDetalhadaUsecase);
 
-  Future<List<ContagemIndicativaEntitie>> recuperarIndicativasCompartilhadas(
+  Future<List<ContagemEstimadaEntitie>> recuperarContagensEstimadas(
+      String uidProjeto) async {
+    var resultado = await _contagemEstimadaUseCase
+        .recuperarEstimadasCompartilhadas(uidProjeto);
+
+    resultado.fold((l) => null, (r) {
+      contagenEstimadas = r;
+    });
+    return contagenEstimadas;
+  }
+
+  Future<List<ContagemDetalhadaEntitie>> recuperarContagensDetalhadas(
+      String uidProjeto) async {
+    var resultado = await _contagemDetalhadaUsecase
+        .recuperarEstimadasCompartilhadas(uidProjeto);
+
+    resultado.fold((l) => null, (r) {
+      contagensDetakgadas = r;
+    });
+
+    return contagensDetakgadas;
+  }
+
+  Future<List<ContagemIndicativaEntitie>> recuperarContagensIndicativas(
       String uidProjeto) async {
     var resultado = await _contagemIndicativaUseCase
         .recuperarIndicativasCompartilhadas(uidProjeto);
 
     resultado.fold((l) => null, (r) {
       contagensIndicativas = r;
-    });
-
-    var resultado2 = await _contagemEstimadaUseCase
-        .recuperarEstimadasCompartilhadas(uidProjeto);
-
-    resultado2.fold((l) => null, (r) {
-      contagenEstimadas = r;
     });
 
     return contagensIndicativas;

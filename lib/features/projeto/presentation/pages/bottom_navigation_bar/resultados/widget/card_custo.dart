@@ -32,6 +32,9 @@ class CardResultadoCustoCompartilhar extends StatelessWidget {
             ? Alerta.alertaSimplesTextoOk(
                 "", "Estimativa já compartilhada", context)
             : Alerta.alertaSimOuNao(context, store, () async {
+                custoEntity.uidUsuario =
+                    Modular.get<UsuarioAutenticado>().store.uid;
+
                 await Modular.get<ProjetoController>()
                     .resultadoController
                     .enviarEstimativaCusto(

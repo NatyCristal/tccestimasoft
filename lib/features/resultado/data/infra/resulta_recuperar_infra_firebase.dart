@@ -57,10 +57,32 @@ class ResultadoInfraRecuperarFirebase extends ResultadoRecuperarRepository {
   }
 
   @override
-  Future<Either<Falha, List<ResultadoEntity>>> recuperarContagens(
+  Future<Either<Falha, List<ResultadoEntity>>> recuperaContagensIndicativas(
       String uidProjeto) async {
     try {
-      var resultado = await datasource.recuperarContagens(uidProjeto);
+      var resultado = await datasource.recuperarContagenIndicativas(uidProjeto);
+      return Right(resultado);
+    } on FirebaseException catch (e) {
+      return Left(Falha(mensagem: e.code));
+    }
+  }
+
+  @override
+  Future<Either<Falha, List<ResultadoEntity>>> recuperarContagensDetalhada(
+      String uidProjeto) async {
+    try {
+      var resultado = await datasource.recuperarContagensDetalhadas(uidProjeto);
+      return Right(resultado);
+    } on FirebaseException catch (e) {
+      return Left(Falha(mensagem: e.code));
+    }
+  }
+
+  @override
+  Future<Either<Falha, List<ResultadoEntity>>> recuperarContagemEstimada(
+      String uidProjeto) async {
+    try {
+      var resultado = await datasource.recuperarEstimadas(uidProjeto);
       return Right(resultado);
     } on FirebaseException catch (e) {
       return Left(Falha(mensagem: e.code));

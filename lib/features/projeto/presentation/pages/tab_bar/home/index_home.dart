@@ -333,11 +333,12 @@ class IndexHome extends StatelessWidget {
                     Observer(builder: (context) {
                       store.houveMudancaEmResultado;
 
-                      return controller.resultadoController.contagens.isEmpty &&
-                              controller.resultadoController
-                                  .custosCompartilhados.isEmpty &&
-                              controller.resultadoController
-                                  .equipesCompartilhados.isEmpty &&
+                      return controller
+                                  .resultadoController.contagensIndicativas.isEmpty &&
+                              controller.resultadoController.custosCompartilhados
+                                  .isEmpty &&
+                              controller.resultadoController.equipesCompartilhados
+                                  .isEmpty &&
                               controller.resultadoController
                                   .esforcosCompartilhados.isEmpty &&
                               controller.resultadoController

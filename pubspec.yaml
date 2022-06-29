@@ -50,7 +50,8 @@ dependencies:
   share_plus: ^4.0.4
   dio: ^4.0.4
   gallery_saver: ^2.3.2
-  permission_handler: ^9.2.0
+  pdf: ^3.8.1
+
 
  
   # The following adds the Cupertino Icons font to your application.

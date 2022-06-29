@@ -75,4 +75,33 @@ class ContagemDetalhadaFirebase extends ContagemDetalhadaDatasource {
 
     return contagemDetalhada;
   }
+
+  @override
+  Future<List<ContagemDetalhadaEntitie>> recuperarDetalhadasCompartilhadas(
+      String uidProjeto) async {
+    List<ContagemDetalhadaEntitie> contagensIndicativas = [];
+
+    await firestore
+        .collection("Contagem")
+        .doc(uidProjeto)
+        .collection("Detalhada")
+        .get()
+        .then((value) async {
+      List<QueryDocumentSnapshot<Map<String, dynamic>>> map = value.docs;
+
+      if (map.isNotEmpty) {
+        for (var element in map) {
+          String id = element.id;
+          if (element["Compartilhada"] == true) {
+            ContagemDetalhadaModel custo =
+                ContagemDetalhadaModel.fromMap(element.data());
+            custo.uidUsuario = id;
+            contagensIndicativas.add(custo);
+          }
+        }
+      }
+    });
+
+    return contagensIndicativas;
+  }
 }

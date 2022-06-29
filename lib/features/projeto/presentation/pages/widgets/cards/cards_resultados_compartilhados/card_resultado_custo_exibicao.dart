@@ -26,6 +26,7 @@ class ExibicaoCardCusto extends StatelessWidget {
       itemCount: custos.length,
       itemBuilder: ((context, index) {
         CustoEntity custo = custos[index];
+
         if (resultados[index].uidMembro == custo.uidUsuario) {
           return ComponenteEstimativasPadrao(
             resultadoEntity: resultados[index],

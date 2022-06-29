@@ -16,6 +16,12 @@ abstract class ResultadoRecuperarRepository {
   Future<Either<Falha, List<ResultadoEntity>>> recuperarEstimativasCustos(
       String uidProjeto);
 
-  Future<Either<Falha, List<ResultadoEntity>>> recuperarContagens(
+  Future<Either<Falha, List<ResultadoEntity>>> recuperaContagensIndicativas(
+      String uidProjeto);
+
+  Future<Either<Falha, List<ResultadoEntity>>> recuperarContagensDetalhada(
+      String uidProjeto);
+
+  Future<Either<Falha, List<ResultadoEntity>>> recuperarContagemEstimada(
       String uidProjeto);
 }

@@ -166,8 +166,7 @@ class _InsercaoArquivosUploadState extends State<InsercaoArquivosUpload> {
                                               ),
                                               GestureDetector(
                                                 onTap: () async {
-                                                  var retorno = await widget
-                                                      .controller
+                                                  await widget.controller
                                                       .fazerDownloadArquivos(
                                                           widget.projetoEntitie
                                                               .uidProjeto,
