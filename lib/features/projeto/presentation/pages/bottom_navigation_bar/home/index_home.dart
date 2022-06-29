@@ -322,7 +322,7 @@ class IndexHome extends StatelessWidget {
                       height: 10,
                     ),
                     const Text(
-                      "Estimativas Compartilhadas",
+                      "Compartilhados",
                       style: TextStyle(
                           color: corCorpoTexto,
                           fontSize: tamanhoTextoCorpoTexto),

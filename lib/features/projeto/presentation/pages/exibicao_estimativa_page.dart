@@ -8,17 +8,18 @@ import 'package:estimasoft/features/estimativas/domain/entitie/custo_entity.dart
 import 'package:estimasoft/features/estimativas/domain/entitie/equipe_entity.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/esforco_entitie.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/prazo_entitie.dart';
-import 'package:estimasoft/features/projeto/presentation/pages/widgets/cards/cards_resultados_compartilhados/card_resultado_custo_exibicao.dart';
-import 'package:estimasoft/features/projeto/presentation/pages/widgets/cards/cards_resultados_compartilhados/card_resultado_detalhada_exibicao.dart';
-import 'package:estimasoft/features/projeto/presentation/pages/widgets/cards/cards_resultados_compartilhados/card_resultado_equipe_exibicao.dart';
-import 'package:estimasoft/features/projeto/presentation/pages/widgets/cards/cards_resultados_compartilhados/card_resultado_esforco_exibicao.dart';
-import 'package:estimasoft/features/projeto/presentation/pages/widgets/cards/cards_resultados_compartilhados/card_resultado_estimada_exibicao.dart';
-import 'package:estimasoft/features/projeto/presentation/pages/widgets/cards/cards_resultados_compartilhados/card_resultado_indicativa_exibicao.dart';
-import 'package:estimasoft/features/projeto/presentation/pages/widgets/cards/cards_resultados_compartilhados/card_resultado_prazo_exibicao.dart';
 import 'package:estimasoft/features/projeto/presentation/projeto_controller.dart';
 import 'package:estimasoft/features/resultado/domain/entity/resultado_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+
+import 'bottom_navigation_bar/home/cards_resultados_compartilhados/card_resultado_custo_exibicao.dart';
+import 'bottom_navigation_bar/home/cards_resultados_compartilhados/card_resultado_detalhada_exibicao.dart';
+import 'bottom_navigation_bar/home/cards_resultados_compartilhados/card_resultado_equipe_exibicao.dart';
+import 'bottom_navigation_bar/home/cards_resultados_compartilhados/card_resultado_esforco_exibicao.dart';
+import 'bottom_navigation_bar/home/cards_resultados_compartilhados/card_resultado_estimada_exibicao.dart';
+import 'bottom_navigation_bar/home/cards_resultados_compartilhados/card_resultado_indicativa_exibicao.dart';
+import 'bottom_navigation_bar/home/cards_resultados_compartilhados/card_resultado_prazo_exibicao.dart';
 
 class VisualizarEstimativas extends StatelessWidget {
   final ScrollController scrollController = ScrollController();

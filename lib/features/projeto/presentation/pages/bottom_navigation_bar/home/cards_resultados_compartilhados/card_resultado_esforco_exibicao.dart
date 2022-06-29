@@ -1,16 +1,17 @@
-import 'package:estimasoft/features/estimativas/domain/entitie/prazo_entitie.dart';
-import 'package:estimasoft/features/projeto/presentation/pages/widgets/cards/linha_estimativas.dart';
+import 'package:estimasoft/features/estimativas/domain/entitie/esforco_entitie.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/widgets/components/componente_estimativa_padrao.dart';
 import 'package:estimasoft/features/projeto/presentation/projeto_controller.dart';
 import 'package:estimasoft/features/resultado/domain/entity/resultado_entity.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-class ExibicaoCardPrazo extends StatelessWidget {
+import '../widgets/linha_estimativas.dart';
+
+class ExibicaoCardEsforco extends StatelessWidget {
   final ScrollController scrollController;
   final List<ResultadoEntity> resultados;
-  final List<PrazoEntity> esforcos;
-  const ExibicaoCardPrazo(
+  final List<EsforcoEntity> esforcos;
+  const ExibicaoCardEsforco(
       {Key? key,
       required this.esforcos,
       required this.resultados,
@@ -21,9 +22,10 @@ class ExibicaoCardPrazo extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       controller: scrollController,
+      shrinkWrap: true,
       itemCount: esforcos.length,
       itemBuilder: ((context, index) {
-        PrazoEntity esforco = esforcos[index];
+        EsforcoEntity esforco = esforcos[index];
         if (resultados[index].uidMembro == esforco.uidUsuario) {
           return ComponenteEstimativasPadrao(
             resultadoEntity: resultados[index],
@@ -31,13 +33,13 @@ class ExibicaoCardPrazo extends StatelessWidget {
               LinhaEstimativas(
                   nome: "Tipo Contagem",
                   resultado: esforco.contagemPontoDeFuncao.split(" - ").first),
+              LinhaEstimativas(nome: "Linguagem", resultado: esforco.linguagem),
               LinhaEstimativas(
-                  nome: "Tipo Sistema", resultado: esforco.tipoSistema),
+                  nome: "Produtividade Equipe",
+                  resultado: esforco.produtividadeEquipe),
               LinhaEstimativas(
-                  nome: "Prazo Mínimo",
-                  resultado: "${esforco.prazoMinimo} Dias"),
-              LinhaEstimativas(
-                  nome: "Prazo Total", resultado: "${esforco.prazoTotal} Dias"),
+                  nome: "Esforco Total",
+                  resultado: "${esforco.esforcoTotal} Horas"),
             ],
             membro: Modular.get<ProjetoController>()
                 .membrosProjetoAtual

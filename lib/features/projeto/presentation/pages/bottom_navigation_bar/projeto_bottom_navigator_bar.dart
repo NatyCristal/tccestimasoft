@@ -21,7 +21,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import '../tab_bar/contagem/contagem_estimada.dart';
 import '../tab_bar/contagem/contagem_indicativa.dart';
-import '../tab_bar/home/index_home.dart';
+import 'home/index_home.dart';
 
 class ProjetoMenuPage extends StatelessWidget {
   final ProjetoEntitie projeto;
