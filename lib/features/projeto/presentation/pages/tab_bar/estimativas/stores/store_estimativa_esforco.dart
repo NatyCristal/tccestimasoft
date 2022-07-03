@@ -113,12 +113,13 @@ abstract class StoreEstimativaEsforcoBase with Store {
       String text = contagemPF.split(" - ").last.split(" PF").first;
       int pf = int.parse(text);
       valorTotalEsforco = pf * produtividade;
-      validarFasesDesenvolvimento();
+      validarFasesDesenvolvimento(valorTotalEsforco);
     }
   }
 
   @action
-  validarFasesDesenvolvimento() {
+  validarFasesDesenvolvimento(int valor) {
+    valorTotalEsforco = valor;
     if (valorTotalEsforco > 0) {
       valorEngenhariaRequisitos = _engenhariaRequisitos * valorTotalEsforco;
       valorDesign = _design * valorTotalEsforco;

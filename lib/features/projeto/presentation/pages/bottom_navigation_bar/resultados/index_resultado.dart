@@ -1,5 +1,8 @@
+// ignore_for_file: avoid_init_to_null
+
 import 'package:estimasoft/core/shared/utils.dart';
 import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
+import 'package:estimasoft/core/shared/utils/snackbar.dart';
 import 'package:estimasoft/core/shared/utils/tamanho_tela.dart';
 import 'package:estimasoft/core/shared/widgets/botao.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/custo_entity.dart';
@@ -8,6 +11,7 @@ import 'package:estimasoft/features/estimativas/domain/entitie/esforco_entitie.d
 import 'package:estimasoft/features/estimativas/domain/entitie/prazo_entitie.dart';
 import 'package:estimasoft/features/projeto/domain/entitie/projeto_entitie.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/home/store/store_projeto_index_menu.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/resultados/pdf/gerador_pdf.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/resultados/utils/formar_texto_compartilhar.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/resultados/widget/card_custo.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/resultados/widget/card_detalhada.dart';
@@ -247,16 +251,15 @@ class IndexResultado extends StatelessWidget {
                 )
               ],
             ),
-            Observer(builder: (context) {
-              return storeEstimativaPrazo.prazosValidos.isNotEmpty
-                  ? Container(
-                      padding: const EdgeInsets.all(10),
-                      height: 120,
-                      width: TamanhoTela.width(context, 0.9),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          ListView.builder(
+            Row(
+              children: [
+                Observer(builder: (context) {
+                  return storeEstimativaPrazo.prazosValidos.isNotEmpty
+                      ? Container(
+                          padding: const EdgeInsets.all(10),
+                          height: 120,
+                          width: TamanhoTela.width(context, 0.9),
+                          child: ListView.builder(
                               scrollDirection: Axis.horizontal,
                               shrinkWrap: true,
                               itemCount:
@@ -269,16 +272,16 @@ class IndexResultado extends StatelessWidget {
                                     projetoEntitie: projeto,
                                     prazoEntity: prazoEntity);
                               }),
-                        ],
-                      ),
-                    )
-                  : const SizedBox(
-                      child: Text(
-                        "Não Realizado",
-                        style: TextStyle(color: corCorpoTexto),
-                      ),
-                    );
-            }),
+                        )
+                      : const SizedBox(
+                          child: Text(
+                            "Não Realizado",
+                            style: TextStyle(color: corCorpoTexto),
+                          ),
+                        );
+                }),
+              ],
+            ),
             const SizedBox(
               height: 20,
             ),
@@ -419,9 +422,81 @@ class IndexResultado extends StatelessWidget {
                 tituloBotao: "     Enviar Estimativas",
                 corBotao: corDeFundoBotaoPrimaria,
                 carregando: false),
+            BotaoPadrao(
+                tituloBotao: "Gerar PDF",
+                corBotao: corDeFundoBotaoSecundaria,
+                carregando: false,
+                icone: const Icon(Icons.file_download_outlined),
+                acao: () async {
+                  if (validarContagens(
+                      context,
+                      storeEstimativaEsforco,
+                      storeEstimativaEquipe,
+                      storeEstimativaPrazo,
+                      storeEstimativaCusto)) {
+                    if (storeContagemDetalhada.totalPf > 0) {
+                      GeradorPdf pdf = GeradorPdf(
+                        storeContagemDetalhada,
+                        storeContagemEstimada,
+                        storeContagemIndicativa,
+                        storeEstimativaEsforco,
+                        storeEstimativaPrazo,
+                        storeEstimativaEquipe,
+                        storeEstimativaCusto,
+                      );
+
+                      pdf.gerarDocument(projeto);
+                    } else {
+                      AlertaSnack.exbirSnackBar(context,
+                          "Finalize sua contagem detalhada para compartilhar PDF");
+                    }
+                  }
+                }),
           ],
         ),
       ),
     );
+  }
+}
+
+validarContagens(context, storeEstimativaEsforco, storeEstimativaEquipe,
+    storeEstimativaPrazo, storeEstimativaCusto) {
+  var esforcoDetalhada = null;
+  var equipeDetalhada = null;
+  var prazoDetalhado = null;
+  var custoDetalhado = null;
+  for (var element in storeEstimativaEsforco.esforcosValidos) {
+    if (element.contagemPontoDeFuncao.contains("Detalhada")) {
+      esforcoDetalhada = element;
+    }
+  }
+
+  for (var element in storeEstimativaEquipe.equipesValidas) {
+    if (element.esforco.contains("Detalhada")) {
+      equipeDetalhada = element;
+    }
+  }
+
+  for (var element in storeEstimativaPrazo.prazosValidos) {
+    if (element.contagemPontoDeFuncao.contains("Detalhada")) {
+      prazoDetalhado = element;
+    }
+  }
+
+  for (var element in storeEstimativaCusto.custosValidos) {
+    if (element.tipoContagem.contains("Detalhada")) {
+      custoDetalhado = element;
+    }
+  }
+
+  if (esforcoDetalhada != null &&
+      equipeDetalhada != null &&
+      prazoDetalhado != null &&
+      custoDetalhado != null) {
+    return true;
+  } else {
+    AlertaSnack.exbirSnackBar(
+        context, "Finalize suas estimativas para compartihar o PDF");
+    return false;
   }
 }

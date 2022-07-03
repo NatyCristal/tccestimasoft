@@ -34,6 +34,10 @@ class EstimativaCustoFirebaseDatasource extends CustoDatasource {
   Future<CustoEntity> salvarEstimativaCusto(CustoEntity custoEntity,
       String uidProjeto, String uidUsuario, String tipoContagem) async {
     CustoModel custo = CustoModel(
+      valorPorcentagem: custoEntity.valorPorcentagem,
+      despesasTotaisDurantePrazoProjeto:
+          custoEntity.despesasTotaisDurantePrazoProjeto,
+      custoBasico: custoEntity.custoBasico,
       compartilhada: false,
       tipoContagem: tipoContagem,
       custoHora: custoEntity.custoHora,

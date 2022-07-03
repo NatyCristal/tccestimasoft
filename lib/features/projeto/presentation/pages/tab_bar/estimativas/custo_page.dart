@@ -14,6 +14,7 @@ import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativ
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_custo.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_equipe.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_esforco.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_prazo.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/widgets/custo/card_custos_gerais.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/widgets/custo/card_custos_totais.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/widgets/custo/card_custos_variaveis.dart';
@@ -32,6 +33,7 @@ class EstimativaCustoPage extends StatelessWidget {
   final StoreEstimativaCusto storeEstimativaCusto;
   final StoreEstimativaEquipe storeEstimativaEquipe;
   final StoreEstimativaEsforco storeEstimativaEsforco;
+  final StoreEstimativaPrazo storeEstimativaPrazo;
   EstimativaCustoPage(
       {Key? key,
       required this.storeEstimativaCusto,
@@ -40,7 +42,8 @@ class EstimativaCustoPage extends StatelessWidget {
       required this.storeContagemEstimada,
       required this.storeContagemDetalhada,
       required this.storeEstimativaEsforco,
-      required this.projetoEntitie})
+      required this.projetoEntitie,
+      required this.storeEstimativaPrazo})
       : super(key: key);
 
   @override
@@ -81,6 +84,13 @@ class EstimativaCustoPage extends StatelessWidget {
                     return temIgual;
                   },
                   onChanged: (value) {
+                    storeEstimativaCusto.quantidadePFSelecionada = int.parse(
+                        value
+                            .toString()
+                            .split(" - ")
+                            .last
+                            .replaceAll(" PF", ""));
+
                     storeEstimativaCusto.tipoContagem = value.toString();
                   },
                 );
@@ -117,6 +127,21 @@ class EstimativaCustoPage extends StatelessWidget {
                         storeEstimativaCusto.esforcoEntitySelecionado = element;
                       }
                     }
+
+                    double prazoFinal = 0;
+                    for (var element in storeEstimativaPrazo.prazosValidos) {
+                      if (element.contagemPontoDeFuncao
+                          .split(" - ")
+                          .first
+                          .contains(storeEstimativaCusto.tipoContagem
+                              .split(" - ")
+                              .first)) {
+                        prazoFinal = element.prazoTotal;
+                      }
+                    }
+                    //FIXME: passar apropriadamente o przo
+
+                    storeEstimativaCusto.prazo = prazoFinal / 30;
                   },
                   emptyBuilder: (context, searchEntry) => const Center(
                       child: Text('Cadastre um esforço para continuar.',
@@ -189,6 +214,12 @@ class EstimativaCustoPage extends StatelessWidget {
                       if (storeEstimativaCusto
                           .validarCamposPreenchidos(context)) {
                         CustoEntity novoCusto = CustoEntity(
+                          valorPorcentagem:
+                              storeEstimativaCusto.valorPorcentagem,
+                          despesasTotaisDurantePrazoProjeto:
+                              storeEstimativaCusto
+                                  .despesasTotaisDurantePrazoProjeto,
+                          custoBasico: storeEstimativaCusto.custoBasico,
                           compartilhada: false,
                           tipoContagem: storeEstimativaCusto.tipoContagem,
                           equipe: storeEstimativaCusto.equipe,

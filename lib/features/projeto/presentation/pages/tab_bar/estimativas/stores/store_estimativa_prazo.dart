@@ -98,9 +98,9 @@ abstract class StoreEstimativaPrazoBase with Store {
   }
 
   @action
-  buscarExpoenteT() {
-    if (tipoSistemaSelecionado != "") {
-      switch (tipoSistemaSelecionado) {
+  buscarExpoenteT(String tipoSistemaBusca) {
+    if (tipoSistemaBusca != "") {
+      switch (tipoSistemaBusca) {
         case "Sistema Comum - Mainframe":
           return 0.32;
         case "Sistema Comum - Web":
@@ -128,9 +128,9 @@ abstract class StoreEstimativaPrazoBase with Store {
       String text = contagemPF.split(" - ").last.split(" PF").first;
       tamanhoPf = int.parse(text);
       if (tamanhoPf <= 110) {
-        prazoTotal = calcularTamanhoComplexidadeMedia();
+        prazoTotal = calcularTamanhoMinimo();
         valorTotalEmDias = prazoTotal.toString();
-        regiaoDoImpossivel = calcularTamanhoMinimo();
+        regiaoDoImpossivel = (0.75 * prazoTotal);
         valorEmDiasReagiaoDoImpossivel = regiaoDoImpossivel.toString();
       } else {
         prazoTotal = calcularPrazo();
@@ -144,7 +144,7 @@ abstract class StoreEstimativaPrazoBase with Store {
   }
 
   calcularPrazo() {
-    return pow(tamanhoPf, buscarExpoenteT());
+    return pow(tamanhoPf, buscarExpoenteT(tipoSistemaSelecionado));
   }
 
   calcularTamanhoMinimo() {

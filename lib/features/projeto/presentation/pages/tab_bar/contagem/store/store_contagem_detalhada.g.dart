@@ -144,6 +144,17 @@ mixin _$StoreContagemDetalhada on StoreContagemDetalhadaBase, Store {
   }
 
   @override
+  dynamic validar(dynamic context) {
+    final _$actionInfo = _$StoreContagemDetalhadaBaseActionController
+        .startAction(name: 'StoreContagemDetalhadaBase.validar');
+    try {
+      return super.validar(context);
+    } finally {
+      _$StoreContagemDetalhadaBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic verificaValorTiposFuncoes(
       IndiceDetalhada indiceDetalhadaModel, List<IndiceDetalhada> dados) {
     final _$actionInfo =
@@ -186,6 +197,28 @@ mixin _$StoreContagemDetalhada on StoreContagemDetalhadaBase, Store {
         .startAction(name: 'StoreContagemDetalhadaBase.receberDados');
     try {
       return super.receberDados(contagemEstimada, contagemIndicativa);
+    } finally {
+      _$StoreContagemDetalhadaBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic iniciarSessao(ContagemDetalhadaEntitie contagemRecuperadaFirebase) {
+    final _$actionInfo = _$StoreContagemDetalhadaBaseActionController
+        .startAction(name: 'StoreContagemDetalhadaBase.iniciarSessao');
+    try {
+      return super.iniciarSessao(contagemRecuperadaFirebase);
+    } finally {
+      _$StoreContagemDetalhadaBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic salvar(ContagemDetalhadaEntitie novaContagem) {
+    final _$actionInfo = _$StoreContagemDetalhadaBaseActionController
+        .startAction(name: 'StoreContagemDetalhadaBase.salvar');
+    try {
+      return super.salvar(novaContagem);
     } finally {
       _$StoreContagemDetalhadaBaseActionController.endAction(_$actionInfo);
     }

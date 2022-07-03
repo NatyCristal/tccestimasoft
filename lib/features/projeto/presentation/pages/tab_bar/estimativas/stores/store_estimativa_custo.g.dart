@@ -9,6 +9,74 @@ part of 'store_estimativa_custo.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$StoreEstimativaCusto on StoreEstimativaCustoBase, Store {
+  late final _$valorPorcentagemAtom =
+      Atom(name: 'StoreEstimativaCustoBase.valorPorcentagem', context: context);
+
+  @override
+  double get valorPorcentagem {
+    _$valorPorcentagemAtom.reportRead();
+    return super.valorPorcentagem;
+  }
+
+  @override
+  set valorPorcentagem(double value) {
+    _$valorPorcentagemAtom.reportWrite(value, super.valorPorcentagem, () {
+      super.valorPorcentagem = value;
+    });
+  }
+
+  late final _$despesasTotaisDurantePrazoProjetoAtom = Atom(
+      name: 'StoreEstimativaCustoBase.despesasTotaisDurantePrazoProjeto',
+      context: context);
+
+  @override
+  double get despesasTotaisDurantePrazoProjeto {
+    _$despesasTotaisDurantePrazoProjetoAtom.reportRead();
+    return super.despesasTotaisDurantePrazoProjeto;
+  }
+
+  @override
+  set despesasTotaisDurantePrazoProjeto(double value) {
+    _$despesasTotaisDurantePrazoProjetoAtom
+        .reportWrite(value, super.despesasTotaisDurantePrazoProjeto, () {
+      super.despesasTotaisDurantePrazoProjeto = value;
+    });
+  }
+
+  late final _$custoBasicoAtom =
+      Atom(name: 'StoreEstimativaCustoBase.custoBasico', context: context);
+
+  @override
+  double get custoBasico {
+    _$custoBasicoAtom.reportRead();
+    return super.custoBasico;
+  }
+
+  @override
+  set custoBasico(double value) {
+    _$custoBasicoAtom.reportWrite(value, super.custoBasico, () {
+      super.custoBasico = value;
+    });
+  }
+
+  late final _$quantidadePFSelecionadaAtom = Atom(
+      name: 'StoreEstimativaCustoBase.quantidadePFSelecionada',
+      context: context);
+
+  @override
+  int get quantidadePFSelecionada {
+    _$quantidadePFSelecionadaAtom.reportRead();
+    return super.quantidadePFSelecionada;
+  }
+
+  @override
+  set quantidadePFSelecionada(int value) {
+    _$quantidadePFSelecionadaAtom
+        .reportWrite(value, super.quantidadePFSelecionada, () {
+      super.quantidadePFSelecionada = value;
+    });
+  }
+
   late final _$alteracaoAtom =
       Atom(name: 'StoreEstimativaCustoBase.alteracao', context: context);
 
@@ -714,6 +782,10 @@ mixin _$StoreEstimativaCusto on StoreEstimativaCustoBase, Store {
   @override
   String toString() {
     return '''
+valorPorcentagem: ${valorPorcentagem},
+despesasTotaisDurantePrazoProjeto: ${despesasTotaisDurantePrazoProjeto},
+custoBasico: ${custoBasico},
+quantidadePFSelecionada: ${quantidadePFSelecionada},
 alteracao: ${alteracao},
 custos: ${custos},
 tamanhoListaCustos: ${tamanhoListaCustos},

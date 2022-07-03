@@ -51,6 +51,7 @@ dependencies:
   dio: ^4.0.4
   gallery_saver: ^2.3.2
   pdf: ^3.8.1
+  open_file: ^3.2.1
 
 
  
@@ -85,6 +86,7 @@ flutter:
   assets:
     - assets/
     - assets/arquivos/indices.json
+    - assets/imagens/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

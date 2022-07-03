@@ -1,12 +1,11 @@
 import 'package:estimasoft/core/shared/utils/formatadores.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/custo_entity.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/home/linha_estimativas.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/widgets/components/componente_estimativa_padrao.dart';
 import 'package:estimasoft/features/projeto/presentation/projeto_controller.dart';
 import 'package:estimasoft/features/resultado/domain/entity/resultado_entity.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-
-import '../widgets/linha_estimativas.dart';
 
 class ExibicaoCardCusto extends StatelessWidget {
   final ScrollController scrollController;

@@ -13,6 +13,20 @@ class StoreEstimativaCusto = StoreEstimativaCustoBase
 
 abstract class StoreEstimativaCustoBase with Store {
   @observable
+  double valorPorcentagem = 0;
+
+  double prazo = 0;
+
+  @observable
+  double despesasTotaisDurantePrazoProjeto = 0.0;
+
+  @observable
+  double custoBasico = 0.0;
+
+  @observable
+  int quantidadePFSelecionada = 0;
+
+  @observable
   bool alteracao = false;
 
   @observable
@@ -177,7 +191,12 @@ abstract class StoreEstimativaCustoBase with Store {
               esforcoEntitySelecionado.produtividadeEquipe.split(" - ").last) *
           custoHora;
 
-      custoProjeto = (custoPF * int.parse("85")).ceilToDouble();
+      custoBasico = (custoPF * quantidadePFSelecionada);
+
+      despesasTotaisDurantePrazoProjeto = custoTotalMensal * prazo;
+      //FIXME: prazo -  adicionar o prazo;
+
+      custoProjeto = custoBasico + despesasTotaisDurantePrazoProjeto;
     }
   }
 
@@ -244,8 +263,8 @@ abstract class StoreEstimativaCustoBase with Store {
   @action
   validarValorTotalProjeto() {
     if (porcentagemLucro != 0) {
-      valorTotalProjeto =
-          custoProjeto + (custoProjeto * (porcentagemLucro / 100));
+      valorPorcentagem = (custoBasico * (porcentagemLucro / 100));
+      valorTotalProjeto = custoProjeto + valorPorcentagem;
     } else if (porcentagemLucro == 0) {
       valorTotalProjeto = custoProjeto;
     }

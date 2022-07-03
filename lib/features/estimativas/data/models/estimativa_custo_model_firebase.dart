@@ -3,8 +3,11 @@ import 'package:estimasoft/features/estimativas/domain/entitie/custo_entity.dart
 
 class CustoModel extends CustoEntity {
   CustoModel(
-      {required compartilhada,
-      required tipoContagem,
+      {required double valorPorcentagem,
+      required double despesasTotaisDurantePrazoProjeto,
+      required double custoBasico,
+      required bool compartilhada,
+      required String tipoContagem,
       required List<InsumoEstimativaCustoModel> equipe,
       required List<InsumoEstimativaCustoModel> custosVariaisFixos,
       required String disponibilidadeEquipe,
@@ -15,6 +18,10 @@ class CustoModel extends CustoEntity {
       required double valorTotalProjeto,
       required String custoPF})
       : super(
+            valorPorcentagem: valorPorcentagem,
+            despesasTotaisDurantePrazoProjeto:
+                despesasTotaisDurantePrazoProjeto,
+            custoBasico: custoBasico,
             compartilhada: compartilhada,
             tipoContagem: tipoContagem,
             equipe: equipe,
@@ -29,6 +36,10 @@ class CustoModel extends CustoEntity {
 
   Map<String, dynamic> toMap() {
     return {
+      "ValorPorcentagem": valorPorcentagem.toStringAsFixed(2),
+      "DespesasTotaisDurantePrazoProjeto":
+          despesasTotaisDurantePrazoProjeto.toStringAsFixed(2),
+      "CustoBasico": custoBasico.toStringAsFixed(2),
       "Compartilhada": compartilhada,
       "Equipe": {for (var e in equipe) equipe.indexOf(e).toString(): e.toMap()},
       'CustosVariaveisEFixos': {
@@ -40,8 +51,8 @@ class CustoModel extends CustoEntity {
       'CustoTotalMensal': custoTotalMensal,
       'CustoHora': custoHora.toStringAsFixed(2),
       'PorcentagemLucro': porcentagemLucro,
-      'CustoTotalDoProjeto': custoTotalProjeto,
-      'ValorTotalProjeto': valorTotalProjeto,
+      'CustoTotalDoProjeto': custoTotalProjeto.toStringAsFixed(2),
+      'ValorTotalProjeto': valorTotalProjeto.toStringAsFixed(2),
       'CustoPF': custoPF
     };
   }
@@ -64,6 +75,10 @@ class CustoModel extends CustoEntity {
     }
 
     return CustoModel(
+      valorPorcentagem: double.parse(map['ValorPorcentagem']),
+      despesasTotaisDurantePrazoProjeto:
+          double.parse((map['DespesasTotaisDurantePrazoProjeto'] ?? 0.0)),
+      custoBasico: double.parse(map["CustoBasico"] ?? 0.0),
       compartilhada: map["Compartilhada"] ?? false,
       tipoContagem: map["TipoContagem"],
       equipe: equipe,
@@ -72,8 +87,8 @@ class CustoModel extends CustoEntity {
       custoTotalMensal: map["CustoTotalMensal"],
       custoHora: double.parse(map["CustoHora"]),
       porcentagemLucro: map["PorcentagemLucro"],
-      custoTotalProjeto: map["CustoTotalDoProjeto"],
-      valorTotalProjeto: map["ValorTotalProjeto"],
+      custoTotalProjeto: double.parse(map["CustoTotalDoProjeto"]),
+      valorTotalProjeto: double.parse(map["ValorTotalProjeto"]),
       custoPF: map['CustoPF'],
     );
   }

@@ -242,11 +242,11 @@ mixin _$StoreEstimativaPrazo on StoreEstimativaPrazoBase, Store {
   }
 
   @override
-  dynamic buscarExpoenteT() {
+  dynamic buscarExpoenteT(String tipoSistemaBusca) {
     final _$actionInfo = _$StoreEstimativaPrazoBaseActionController.startAction(
         name: 'StoreEstimativaPrazoBase.buscarExpoenteT');
     try {
-      return super.buscarExpoenteT();
+      return super.buscarExpoenteT(tipoSistemaBusca);
     } finally {
       _$StoreEstimativaPrazoBaseActionController.endAction(_$actionInfo);
     }

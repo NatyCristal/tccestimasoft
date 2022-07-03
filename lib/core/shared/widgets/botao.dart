@@ -3,6 +3,7 @@ import 'package:estimasoft/core/shared/utils.dart';
 import 'package:flutter/material.dart';
 
 class BotaoPadrao extends StatelessWidget {
+  final Color corBordas;
   final bool carregando;
   final Color corBotao;
   final String tituloBotao;
@@ -16,7 +17,8 @@ class BotaoPadrao extends StatelessWidget {
       required this.corBotao,
       this.corDeTextoBotao = corDeTextoBotaoSecundaria,
       this.icone = const SizedBox(),
-      required this.carregando})
+      required this.carregando,
+      this.corBordas = Colors.transparent})
       : super(key: key);
 
   @override
@@ -56,7 +58,14 @@ class BotaoPadrao extends StatelessWidget {
         ),
         style: ButtonStyle(
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              RoundedRectangleBorder(borderRadius: arredondamentoBordas)),
+            RoundedRectangleBorder(
+                side: BorderSide(
+                  width: 2.0,
+                  color:
+                      corBordas != Colors.transparent ? corBordas : corBordas,
+                ),
+                borderRadius: arredondamentoBordas),
+          ),
           backgroundColor: MaterialStateProperty.all(corBotao),
         ),
       ),

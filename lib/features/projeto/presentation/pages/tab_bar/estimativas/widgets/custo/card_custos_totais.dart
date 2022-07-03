@@ -25,7 +25,7 @@ class CardCustosTotais extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text(
-                "Custo do projeto",
+                "Custo Basico (CP)",
                 style: TextStyle(
                     fontSize: tamanhoSubtitulo,
                     color: corTituloTexto,
@@ -36,8 +36,66 @@ class CardCustosTotais extends StatelessWidget {
                   width: 150,
                   child: Text(
                     Formatadores.formatadorMonetario(storeEstimativaCusto
-                        .custoProjeto
+                        .custoBasico
                         .ceilToDouble()
+                        .toStringAsFixed(2)),
+                    textAlign: TextAlign.right,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: const TextStyle(
+                      fontSize: tamanhoSubtitulo,
+                      color: corTituloTexto,
+                    ),
+                  ),
+                );
+              }),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                "Valor da reserva técnica",
+                style: TextStyle(
+                    fontSize: tamanhoSubtitulo,
+                    color: corTituloTexto,
+                    fontWeight: Fontes.weightTextoNormal),
+              ),
+              Observer(builder: (context) {
+                return SizedBox(
+                  width: 100,
+                  child: Text(
+                    Formatadores.formatadorMonetario(storeEstimativaCusto
+                        .valorPorcentagem
+                        .toStringAsFixed(2)),
+                    textAlign: TextAlign.right,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: const TextStyle(
+                      fontSize: tamanhoSubtitulo,
+                      color: corTituloTexto,
+                    ),
+                  ),
+                );
+              }),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                "Despesas Totais por prazo",
+                style: TextStyle(
+                    fontSize: tamanhoSubtitulo,
+                    color: corTituloTexto,
+                    fontWeight: Fontes.weightTextoNormal),
+              ),
+              Observer(builder: (context) {
+                return SizedBox(
+                  width: 100,
+                  child: Text(
+                    Formatadores.formatadorMonetario(storeEstimativaCusto
+                        .despesasTotaisDurantePrazoProjeto
                         .toStringAsFixed(2)),
                     textAlign: TextAlign.right,
                     overflow: TextOverflow.ellipsis,

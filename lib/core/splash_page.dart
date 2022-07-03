@@ -28,7 +28,7 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     return Material(
         child: Container(
-      color: const Color(0xFFB2DCFF),
+      color: Colors.white,
       child: Center(
         child: SizedBox(
             width: 200, height: 200, child: Lottie.asset('assets/splash.json')),

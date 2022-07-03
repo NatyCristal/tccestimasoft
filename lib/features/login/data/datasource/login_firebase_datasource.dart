@@ -102,6 +102,11 @@ class LoginFirebaseDatasource extends LoginDatasource {
               .collection("Usuarios")
               .doc(usuario.uid)
               .set(usuario.toMap());
+        } else {
+          await firestore
+              .collection("Usuarios")
+              .doc(usuario.uid)
+              .update(usuario.toMap());
         }
       });
     }

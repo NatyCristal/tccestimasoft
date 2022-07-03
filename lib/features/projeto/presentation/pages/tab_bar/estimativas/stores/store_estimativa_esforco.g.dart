@@ -317,12 +317,12 @@ mixin _$StoreEstimativaEsforco on StoreEstimativaEsforcoBase, Store {
   }
 
   @override
-  dynamic validarFasesDesenvolvimento() {
+  dynamic validarFasesDesenvolvimento(int valor) {
     final _$actionInfo =
         _$StoreEstimativaEsforcoBaseActionController.startAction(
             name: 'StoreEstimativaEsforcoBase.validarFasesDesenvolvimento');
     try {
-      return super.validarFasesDesenvolvimento();
+      return super.validarFasesDesenvolvimento(valor);
     } finally {
       _$StoreEstimativaEsforcoBaseActionController.endAction(_$actionInfo);
     }

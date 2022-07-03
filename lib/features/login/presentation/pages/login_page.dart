@@ -69,10 +69,10 @@ class LoginPrincipalPage extends StatelessWidget {
                                   size: 150,
                                   styles: BlobStyles(
                                       fillType: BlobFillType.fill,
-                                      color: Colors.red.withOpacity(0.3)),
+                                      color: corDeFundoBotaoSecundaria),
                                   child: Center(
                                     child: Image.asset(
-                                      "assets/logo.png",
+                                      "assets/imagens/logo_estatica.png",
                                       scale: 1.5,
                                     ),
                                   ),
@@ -152,6 +152,7 @@ class LoginPrincipalPage extends StatelessWidget {
                       ),
                       Observer(builder: (context) {
                         return BotaoPadrao(
+                          corBordas: corTituloTexto,
                           carregando: store.carregandogoogle,
                           icone: SvgPicture.asset(
                             "assets/google_logo.svg",
@@ -164,7 +165,7 @@ class LoginPrincipalPage extends StatelessWidget {
                             AlertaSnack.exbirSnackBar(context, resultado);
                           },
                           tituloBotao: "Entrar com Google",
-                          corBotao: corDeFundoBotaoSecundaria,
+                          corBotao: background,
                         );
                       }),
                     ],

@@ -24,6 +24,10 @@ class ResultadoFirebaseDatasource extends CompartilharResultadoDatasource {
   Future enviarEstimativasCustos(bool anonimamente, CustoEntity custos,
       String uidProjeto, String uidUsuario) async {
     CustoModel custoModel = CustoModel(
+      valorPorcentagem: custos.valorPorcentagem,
+      despesasTotaisDurantePrazoProjeto:
+          custos.despesasTotaisDurantePrazoProjeto,
+      custoBasico: custos.custoBasico,
       compartilhada: true,
       tipoContagem: custos.tipoContagem,
       equipe: custos.equipe,

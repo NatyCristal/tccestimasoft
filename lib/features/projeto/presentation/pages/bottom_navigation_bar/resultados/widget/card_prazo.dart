@@ -49,7 +49,8 @@ class CardResultadoPrazoCompartilhar extends StatelessWidget {
       },
       child: Container(
         width: 140,
-        margin: const EdgeInsets.symmetric(horizontal: 5),
+        height: 100,
+        margin: const EdgeInsets.all(5),
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
             borderRadius: arredondamentoBordas,
@@ -59,7 +60,7 @@ class CardResultadoPrazoCompartilhar extends StatelessWidget {
           children: [
             Center(
                 child: Align(
-              alignment: Alignment.topCenter,
+              alignment: Alignment.bottomRight,
               child: Column(
                 children: [
                   const Text("Estimativa Prazo"),
