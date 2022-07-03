@@ -62,49 +62,10 @@ class IndexResultado extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    "Contagens",
-                    style: TextStyle(
-                        color: corCorpoTexto,
-                        fontWeight: Fontes.weightTextoNormal),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      if (storeContagemEstimada.contagemEstimadaValida.totalPF >
-                          0) {
-                        Share.share(
-                            FormarTextoCompartilhar.funcaoTextoIndicativa(
-                                    storeContagemIndicativa
-                                        .contagemIndicativaValida) +
-                                FormarTextoCompartilhar.funcaoEstimada(
-                                    storeContagemEstimada
-                                        .contagemEstimadaValida,
-                                    storeContagemIndicativa
-                                        .contagemIndicativaValida) +
-                                FormarTextoCompartilhar.funcaoDetaljada(
-                                    storeContagemDetalhada
-                                        .contagemDetalhadaValida));
-                      } else if (storeContagemIndicativa
-                              .contagemIndicativaValida.totalPf >
-                          0) {
-                        Share.share(
-                            FormarTextoCompartilhar.funcaoTextoIndicativa(
-                                storeContagemIndicativa
-                                    .contagemIndicativaValida));
-                      }
-                    },
-                    child: const Icon(
-                      Icons.share,
-                      color: corCorpoTexto,
-                      size: 20,
-                    ),
-                  )
-                ],
-              ),
+            const Text(
+              "Contagens",
+              style: TextStyle(
+                  color: corCorpoTexto, fontWeight: Fontes.weightTextoNormal),
             ),
             Observer(builder: (context) {
               if (storeContagemIndicativa.contagemIndicativaValida.totalPf ==
@@ -169,29 +130,10 @@ class IndexResultado extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  "Esforços",
-                  style: TextStyle(
-                      color: corCorpoTexto,
-                      fontWeight: Fontes.weightTextoNormal),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    if (storeEstimativaEsforco.esforcosValidos.isNotEmpty) {
-                      Share.share(FormarTextoCompartilhar.funcaoTextoEsforco(
-                          storeEstimativaEsforco.esforcosValidos));
-                    }
-                  },
-                  child: const Icon(
-                    Icons.share,
-                    color: corCorpoTexto,
-                    size: 20,
-                  ),
-                )
-              ],
+            const Text(
+              "Esforços",
+              style: TextStyle(
+                  color: corCorpoTexto, fontWeight: Fontes.weightTextoNormal),
             ),
             Row(
               children: [
@@ -229,28 +171,10 @@ class IndexResultado extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text("Prazos",
-                    style: TextStyle(
-                        color: corCorpoTexto,
-                        fontWeight: Fontes.weightTextoNormal)),
-                GestureDetector(
-                  onTap: () {
-                    if (storeEstimativaPrazo.prazosValidos.isNotEmpty) {
-                      Share.share(FormarTextoCompartilhar.funcaoTextoPrazo(
-                          storeEstimativaPrazo.prazosValidos));
-                    }
-                  },
-                  child: const Icon(
-                    Icons.share,
+            const Text("Prazos",
+                style: TextStyle(
                     color: corCorpoTexto,
-                    size: 20,
-                  ),
-                )
-              ],
-            ),
+                    fontWeight: Fontes.weightTextoNormal)),
             Row(
               children: [
                 Observer(builder: (context) {
@@ -285,29 +209,10 @@ class IndexResultado extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  "Equipes",
-                  style: TextStyle(
-                      color: corCorpoTexto,
-                      fontWeight: Fontes.weightTextoNormal),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    if (storeEstimativaEquipe.equipesValidas.isNotEmpty) {
-                      Share.share(FormarTextoCompartilhar.funcaoTextoEquipes(
-                          storeEstimativaEquipe.equipesValidas));
-                    }
-                  },
-                  child: const Icon(
-                    Icons.share,
-                    color: corCorpoTexto,
-                    size: 20,
-                  ),
-                )
-              ],
+            const Text(
+              "Equipes",
+              style: TextStyle(
+                  color: corCorpoTexto, fontWeight: Fontes.weightTextoNormal),
             ),
             Row(
               children: [
@@ -344,29 +249,10 @@ class IndexResultado extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  "Custos",
-                  style: TextStyle(
-                      color: corCorpoTexto,
-                      fontWeight: Fontes.weightTextoNormal),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    if (storeEstimativaCusto.custosValidos.isNotEmpty) {
-                      Share.share(FormarTextoCompartilhar.funcaoTextoCustos(
-                          storeEstimativaCusto.custosValidos));
-                    }
-                  },
-                  child: const Icon(
-                    Icons.share,
-                    color: corCorpoTexto,
-                    size: 20,
-                  ),
-                )
-              ],
+            const Text(
+              "Custos",
+              style: TextStyle(
+                  color: corCorpoTexto, fontWeight: Fontes.weightTextoNormal),
             ),
             Row(
               children: [

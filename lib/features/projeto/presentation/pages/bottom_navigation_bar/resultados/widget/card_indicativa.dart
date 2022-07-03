@@ -47,7 +47,7 @@ class CardIndicativaResultado extends StatelessWidget {
               });
       },
       child: Container(
-        margin: const EdgeInsets.all(5),
+        margin: const EdgeInsets.symmetric(horizontal: 5),
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
             borderRadius: arredondamentoBordas,
@@ -61,30 +61,23 @@ class CardIndicativaResultado extends StatelessWidget {
                 child: Align(
                     alignment: Alignment.topCenter,
                     child: Text("Contagem Indicativa"))),
-            GestureDetector(
-              onTap: (() {
-                String texto =
-                    "Contagem Indicativa\n\nTotal de PF:  ${contagemIndicativaEntitie.totalPf}\n";
-                Alerta.alertaCopiar(context, texto, texto);
-              }),
-              child: Observer(builder: (context) {
-                return CircleAvatar(
-                  radius: 15,
-                  backgroundColor: corDeFundoCards,
-                  child: !store.compartilhada
-                      ? const Icon(
-                          Icons.check_rounded,
-                          color: corCorpoTexto,
-                          size: 20,
-                        )
-                      : Icon(
-                          Icons.lock,
-                          color: corCorpoTexto.withOpacity(0.5),
-                          size: 20,
-                        ),
-                );
-              }),
-            ),
+            Observer(builder: (context) {
+              return CircleAvatar(
+                radius: 15,
+                backgroundColor: corDeFundoCards,
+                child: !store.compartilhada
+                    ? const Icon(
+                        Icons.check_rounded,
+                        color: corCorpoTexto,
+                        size: 20,
+                      )
+                    : Icon(
+                        Icons.lock,
+                        color: corCorpoTexto.withOpacity(0.5),
+                        size: 20,
+                      ),
+              );
+            }),
           ],
         ),
       ),

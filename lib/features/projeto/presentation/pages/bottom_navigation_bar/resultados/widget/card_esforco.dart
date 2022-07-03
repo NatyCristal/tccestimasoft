@@ -50,6 +50,7 @@ class CardEsforcoResultado extends StatelessWidget {
       },
       child: Container(
         width: 140,
+        height: 100,
         margin: const EdgeInsets.symmetric(horizontal: 5),
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
@@ -69,29 +70,23 @@ class CardEsforcoResultado extends StatelessWidget {
                 ],
               ),
             )),
-            GestureDetector(
-              onTap: () {
-                //        String texto =
-                //    Alerta.alertaCopiar(context, texto, texto);
-              },
-              child: Observer(builder: (context) {
-                return CircleAvatar(
-                  radius: 15,
-                  backgroundColor: corDeFundoCards,
-                  child: !store.compartilhada
-                      ? const Icon(
-                          Icons.check_rounded,
-                          color: corCorpoTexto,
-                          size: 20,
-                        )
-                      : Icon(
-                          Icons.lock,
-                          color: corCorpoTexto.withOpacity(0.5),
-                          size: 20,
-                        ),
-                );
-              }),
-            )
+            Observer(builder: (context) {
+              return CircleAvatar(
+                radius: 15,
+                backgroundColor: corDeFundoCards,
+                child: !store.compartilhada
+                    ? const Icon(
+                        Icons.check_rounded,
+                        color: corCorpoTexto,
+                        size: 20,
+                      )
+                    : Icon(
+                        Icons.lock,
+                        color: corCorpoTexto.withOpacity(0.5),
+                        size: 20,
+                      ),
+              );
+            })
           ],
         ),
       ),

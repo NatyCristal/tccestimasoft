@@ -50,7 +50,7 @@ class CardResultadoPrazoCompartilhar extends StatelessWidget {
       child: Container(
         width: 140,
         height: 100,
-        margin: const EdgeInsets.all(5),
+        margin: const EdgeInsets.symmetric(horizontal: 5),
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
             borderRadius: arredondamentoBordas,
