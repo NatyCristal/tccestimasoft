@@ -9,6 +9,42 @@ part of 'store_contagem_detalhada.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$StoreContagemDetalhada on StoreContagemDetalhadaBase, Store {
+  late final _$tamanhoFuncaoDeDadosAtom = Atom(
+      name: 'StoreContagemDetalhadaBase.tamanhoFuncaoDeDados',
+      context: context);
+
+  @override
+  int get tamanhoFuncaoDeDados {
+    _$tamanhoFuncaoDeDadosAtom.reportRead();
+    return super.tamanhoFuncaoDeDados;
+  }
+
+  @override
+  set tamanhoFuncaoDeDados(int value) {
+    _$tamanhoFuncaoDeDadosAtom.reportWrite(value, super.tamanhoFuncaoDeDados,
+        () {
+      super.tamanhoFuncaoDeDados = value;
+    });
+  }
+
+  late final _$tamanhoFuncaoTransacionalAtom = Atom(
+      name: 'StoreContagemDetalhadaBase.tamanhoFuncaoTransacional',
+      context: context);
+
+  @override
+  int get tamanhoFuncaoTransacional {
+    _$tamanhoFuncaoTransacionalAtom.reportRead();
+    return super.tamanhoFuncaoTransacional;
+  }
+
+  @override
+  set tamanhoFuncaoTransacional(int value) {
+    _$tamanhoFuncaoTransacionalAtom
+        .reportWrite(value, super.tamanhoFuncaoTransacional, () {
+      super.tamanhoFuncaoTransacional = value;
+    });
+  }
+
   late final _$houveMudancaComplexidadeAtom = Atom(
       name: 'StoreContagemDetalhadaBase.houveMudancaComplexidade',
       context: context);
@@ -227,6 +263,8 @@ mixin _$StoreContagemDetalhada on StoreContagemDetalhadaBase, Store {
   @override
   String toString() {
     return '''
+tamanhoFuncaoDeDados: ${tamanhoFuncaoDeDados},
+tamanhoFuncaoTransacional: ${tamanhoFuncaoTransacional},
 houveMudancaComplexidade: ${houveMudancaComplexidade},
 contagemDetalhadaEntitie: ${contagemDetalhadaEntitie},
 totalPfFuncaoDeDados: ${totalPfFuncaoDeDados},

@@ -31,6 +31,7 @@ class BotaoPadrao extends StatelessWidget {
         onPressed: () => acao(),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
               tituloBotao,

@@ -141,17 +141,18 @@ class ContagemDetalhada extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            storeContagemDetalhada
-                    .contagemDetalhadaEntitie.funcaoDados.isNotEmpty
-                ? FuncaoDeDadosDetalhada(
-                    storeContagemDetalhada: storeContagemDetalhada,
-                    scrollController: scrollControllerLateral)
-                : SizedBox(
-                    child: Text(
-                      "Não possui nenhuma função de dados cadastrada",
-                      style: TextStyle(color: corCorpoTexto.withOpacity(0.5)),
-                    ),
-                  ),
+            Observer(builder: (context) {
+              return storeContagemDetalhada.tamanhoFuncaoDeDados > 0
+                  ? FuncaoDeDadosDetalhada(
+                      storeContagemDetalhada: storeContagemDetalhada,
+                      scrollController: scrollControllerLateral)
+                  : SizedBox(
+                      child: Text(
+                        "Não possui nenhuma função de dados cadastrada",
+                        style: TextStyle(color: corCorpoTexto.withOpacity(0.5)),
+                      ),
+                    );
+            }),
             const SizedBox(
               height: 20,
             ),
@@ -166,18 +167,19 @@ class ContagemDetalhada extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            storeContagemDetalhada
-                    .contagemDetalhadaEntitie.funcaoTransacional.isNotEmpty
-                ? CardFuncaoTransacionalDetalhada(
-                    contagemDetalhada: storeContagemDetalhada,
-                    scrollController: scrollControllerLateral)
-                : SizedBox(
-                    height: 30,
-                    child: Text(
-                      "Não possuí função Transacional cadastrada",
-                      style: TextStyle(color: corCorpoTexto.withOpacity(0.5)),
-                    ),
-                  ),
+            Observer(builder: (context) {
+              return storeContagemDetalhada.tamanhoFuncaoTransacional > 0
+                  ? CardFuncaoTransacionalDetalhada(
+                      contagemDetalhada: storeContagemDetalhada,
+                      scrollController: scrollControllerLateral)
+                  : SizedBox(
+                      height: 30,
+                      child: Text(
+                        "Não possuí função Transacional cadastrada",
+                        style: TextStyle(color: corCorpoTexto.withOpacity(0.5)),
+                      ),
+                    );
+            }),
             const SizedBox(
               height: 20,
             ),

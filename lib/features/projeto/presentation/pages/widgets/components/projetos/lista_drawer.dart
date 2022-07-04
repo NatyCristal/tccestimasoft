@@ -24,7 +24,8 @@ class ListaDrawer extends StatelessWidget {
                 'projetos-compartilhados',
               );
             }),
-        CardDrawer(nomeCard: "Compartilhar", acao: () {}),
+        CardDrawer(nomeCard: "Notificações", acao: () {}),
+        CardDrawer(nomeCard: "Sobre", acao: () {}),
       ],
     );
   }

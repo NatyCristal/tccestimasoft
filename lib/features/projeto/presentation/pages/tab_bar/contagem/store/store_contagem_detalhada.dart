@@ -15,6 +15,12 @@ class StoreContagemDetalhada = StoreContagemDetalhadaBase
 
 abstract class StoreContagemDetalhadaBase with Store {
   @observable
+  int tamanhoFuncaoDeDados = 0;
+
+  @observable
+  int tamanhoFuncaoTransacional = 0;
+
+  @observable
   bool houveMudancaComplexidade = false;
   ArquivosHandler arquivosHandler = IndiceChain.getChainAie();
   ContagemDetalhadaEntitie contagemDetalhadaValida = ContagemDetalhadaEntitie(
@@ -201,6 +207,7 @@ abstract class StoreContagemDetalhadaBase with Store {
     }
 
     contagemDetalhadaEntitie.funcaoTransacional = listaTransacional;
+    tamanhoFuncaoTransacional = listaTransacional.length;
 
     for (var element in contagemIndicativa.aie) {
       listaFuncaoDados.add(IndiceDetalhadaModel(
@@ -223,6 +230,7 @@ abstract class StoreContagemDetalhadaBase with Store {
     }
 
     contagemDetalhadaEntitie.funcaoDados = listaFuncaoDados;
+    tamanhoFuncaoDeDados = listaFuncaoDados.length;
 
     calcularPFFuncaoDados();
     calcularPFFuncaoTransacional();

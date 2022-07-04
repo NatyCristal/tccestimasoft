@@ -294,6 +294,7 @@ class EstimativaCustoPage extends StatelessWidget {
                                     Modular.get<UsuarioAutenticado>()
                                         .store
                                         .uid);
+                        storeEstimativaCusto.alteracao = false;
                         storeEstimativaCusto.carregando = false;
                         AlertaSnack.exbirSnackBar(
                             context, "Custo salvo com sucesso!");

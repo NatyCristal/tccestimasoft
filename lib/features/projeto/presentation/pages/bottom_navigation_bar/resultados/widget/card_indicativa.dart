@@ -51,7 +51,7 @@ class CardIndicativaResultado extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
             borderRadius: arredondamentoBordas,
-            color: Colors.blue.withOpacity(0.5)),
+            color: Colors.red.withOpacity(0.5)),
         width: 140,
         height: 100,
         child: Stack(

@@ -57,7 +57,8 @@ class ConteudoContagemDetalhada extends StatelessWidget {
   }
 }
 
-recuperarParametros(ProjetoController controller, String projetos) async {
+Future recuperarParametros(
+    ProjetoController controller, String projetos) async {
   await controller.contagemController.recuperarContagemIndicativa(
       projetos, Modular.get<UsuarioAutenticado>().store.uid);
   return await controller.contagemController.recuperarContagemEstimada(

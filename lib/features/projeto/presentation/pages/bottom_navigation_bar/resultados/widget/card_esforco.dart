@@ -54,9 +54,8 @@ class CardEsforcoResultado extends StatelessWidget {
         margin: const EdgeInsets.symmetric(horizontal: 5),
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          borderRadius: arredondamentoBordas,
-          color: Colors.pink.withOpacity(0.4),
-        ),
+            borderRadius: arredondamentoBordas,
+            color: Colors.lime.withOpacity(0.5)),
         child: Stack(
           alignment: Alignment.bottomRight,
           children: [

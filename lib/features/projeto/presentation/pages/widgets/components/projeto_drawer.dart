@@ -22,152 +22,154 @@ class ProjetoDrawer extends StatelessWidget {
     return Container(
       color: background,
       height: TamanhoTela.height(context, 1),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            children: [
-              Container(
-                  margin: const EdgeInsets.only(top: 76),
-                  padding: paddingPagePrincipal,
-                  width: double.infinity,
-                  color: background,
-                  child: Column(
-                    children: const [
-                      SizedBox(
-                        height: 30,
-                      ),
-                      AvatarUsuario(),
-                    ],
-                  )),
-              Container(
-                color: Colors.white,
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Container(
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              children: [
+                Container(
+                    margin: const EdgeInsets.only(top: 56),
                     padding: paddingPagePrincipal,
-                    // height: 100,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(
-                              height: 8,
-                            ),
-                            Text(
-                              usuarioLogado.store.nome,
-                              style: const TextStyle(
-                                  fontSize: tamanhoTextoCorpoTexto,
-                                  color: corCorpoTexto,
-                                  fontWeight: Fontes.weightTextoNormal),
-                            ),
-                            const SizedBox(
-                              height: 2,
-                            ),
-                            Text(
-                              usuarioLogado.store.email,
-                              style: const TextStyle(
-                                  fontSize: tamanhoTextoCorpoTexto,
-                                  color: corCorpoTexto,
-                                  fontWeight: Fontes.weightTextoNormal),
-                            )
-                          ],
+                    width: double.infinity,
+                    color: background,
+                    child: Column(
+                      children: const [
+                        SizedBox(
+                          height: 30,
                         ),
-                        IconButton(
-                            onPressed: () {
-                              Modular.to.pushNamed("/usuario");
-                            },
-                            icon: Container(
-                              decoration: BoxDecoration(
-                                  color: corDeAcao.withOpacity(0.2),
-                                  borderRadius: BorderRadius.circular(8)),
-                              height: 25,
-                              width: 25,
-                              child: const Icon(
-                                Icons.edit,
-                                color: corDeAcao,
-                                size: 18,
-                              ),
-                            ))
+                        AvatarUsuario(),
                       ],
-                    ),
-                  ),
-                ),
-              ),
-              ListaDrawer(
-                controller: controller,
-              )
-            ],
-          ),
-          GestureDetector(
-            onTap: () => {
-              Alert(
-                context: context,
-                type: AlertType.warning,
-                title: "Deseja deslogar do aplicativo?",
-                style: const AlertStyle(
-                  titleStyle: TextStyle(color: corTituloTexto, fontSize: 18),
-                ),
-                buttons: [
-                  DialogButton(
-                    color: corDeFundoBotaoSecundaria,
-                    child: const Text(
-                      "SIM",
-                      style: TextStyle(
-                          fontWeight: Fontes.weightTextoNormal,
-                          color: corDeTextoBotaoSecundaria,
-                          fontSize: 14),
-                    ),
-                    onPressed: () async {
-                      var retorno = await controller.usuarioDeslogar();
-                      AlertaSnack.exbirSnackBar(context, retorno);
-                      Navigator.of(context, rootNavigator: true).pop();
-                    },
-                    width: 120,
-                  ),
-                  DialogButton(
-                    color: Colors.indigo,
-                    child: const Text(
-                      "NÃO",
-                      style: TextStyle(
-                        fontWeight: Fontes.weightTextoNormal,
-                        color: corTextoSobCorPrimaria,
-                        fontSize: 14,
+                    )),
+                Container(
+                  color: Colors.white,
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      padding: paddingPagePrincipal,
+                      // height: 100,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(
+                                height: 8,
+                              ),
+                              Text(
+                                usuarioLogado.store.nome,
+                                style: const TextStyle(
+                                    fontSize: tamanhoTextoCorpoTexto,
+                                    color: corCorpoTexto,
+                                    fontWeight: Fontes.weightTextoNormal),
+                              ),
+                              const SizedBox(
+                                height: 2,
+                              ),
+                              Text(
+                                usuarioLogado.store.email,
+                                style: const TextStyle(
+                                    fontSize: tamanhoTextoCorpoTexto,
+                                    color: corCorpoTexto,
+                                    fontWeight: Fontes.weightTextoNormal),
+                              )
+                            ],
+                          ),
+                          IconButton(
+                              onPressed: () {
+                                Modular.to.pushNamed("/usuario");
+                              },
+                              icon: Container(
+                                decoration: BoxDecoration(
+                                    color: corDeAcao.withOpacity(0.2),
+                                    borderRadius: BorderRadius.circular(8)),
+                                height: 25,
+                                width: 25,
+                                child: const Icon(
+                                  Icons.edit,
+                                  color: corDeAcao,
+                                  size: 18,
+                                ),
+                              ))
+                        ],
                       ),
                     ),
-                    onPressed: () =>
-                        Navigator.of(context, rootNavigator: true).pop(),
-                    width: 120,
-                  )
-                ],
-              ).show()
-            },
-            child: Container(
-              padding: paddingPagePrincipal,
-              height: 50,
-              width: TamanhoTela.width(context, 1),
-              child: Row(
-                children: const [
-                  Icon(
-                    Icons.logout_outlined,
-                    color: corTituloTexto,
-                    size: 22,
                   ),
-                  SizedBox(
-                    width: 20,
+                ),
+                ListaDrawer(
+                  controller: controller,
+                )
+              ],
+            ),
+            GestureDetector(
+              onTap: () => {
+                Alert(
+                  context: context,
+                  type: AlertType.warning,
+                  title: "Deseja deslogar do aplicativo?",
+                  style: const AlertStyle(
+                    titleStyle: TextStyle(color: corTituloTexto, fontSize: 18),
                   ),
-                  Text("Sair",
-                      style: TextStyle(
-                        fontSize: tamanhoSubtitulo,
-                        color: corTituloTexto,
-                      )),
-                ],
+                  buttons: [
+                    DialogButton(
+                      color: corDeFundoBotaoSecundaria,
+                      child: const Text(
+                        "SIM",
+                        style: TextStyle(
+                            fontWeight: Fontes.weightTextoNormal,
+                            color: corDeTextoBotaoSecundaria,
+                            fontSize: 14),
+                      ),
+                      onPressed: () async {
+                        var retorno = await controller.usuarioDeslogar();
+                        AlertaSnack.exbirSnackBar(context, retorno);
+                        Navigator.of(context, rootNavigator: true).pop();
+                      },
+                      width: 120,
+                    ),
+                    DialogButton(
+                      color: Colors.indigo,
+                      child: const Text(
+                        "NÃO",
+                        style: TextStyle(
+                          fontWeight: Fontes.weightTextoNormal,
+                          color: corTextoSobCorPrimaria,
+                          fontSize: 14,
+                        ),
+                      ),
+                      onPressed: () =>
+                          Navigator.of(context, rootNavigator: true).pop(),
+                      width: 120,
+                    )
+                  ],
+                ).show()
+              },
+              child: Container(
+                padding: paddingPagePrincipal,
+                height: 50,
+                width: TamanhoTela.width(context, 1),
+                child: Row(
+                  children: const [
+                    Icon(
+                      Icons.logout_outlined,
+                      color: corTituloTexto,
+                      size: 22,
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Text("Sair",
+                        style: TextStyle(
+                          fontSize: tamanhoSubtitulo,
+                          color: corTituloTexto,
+                        )),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

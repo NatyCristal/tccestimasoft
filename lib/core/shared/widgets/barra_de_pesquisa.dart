@@ -1,6 +1,5 @@
 import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 
 class SearchBar extends StatefulWidget implements PreferredSizeWidget {
   const SearchBar({
