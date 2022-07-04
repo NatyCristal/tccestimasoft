@@ -50,7 +50,7 @@ class ProjetoController {
   criarProjeto(String nomeProjeto) async {
     final usuarioLogado = Modular.get<UsuarioAutenticado>();
     var resultado = await _criarProjetoUsecase.criarProjeto(
-        usuarioLogado.store.uid, nomeProjeto);
+        usuarioLogado.store.uid, nomeProjeto, usuarioLogado.store.nome);
     var retorno = "";
 
     resultado.fold((l) {

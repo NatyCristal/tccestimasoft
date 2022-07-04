@@ -7,7 +7,8 @@ import 'package:firebase_storage/firebase_storage.dart';
 abstract class ProjetoDatasource {
   Future<List<ProjetoFirebaseModel>> recuperarProjetos(String uid);
 
-  Future<ProjetoEntitie> criarProjeto(String uidUsuario, String nomeProjeto);
+  Future<ProjetoEntitie> criarProjeto(
+      String uidUsuario, String nomeProjeto, String nomeAdministrador);
 
   Future removerProjeto(String uidUsuario, String uidProjeto);
 

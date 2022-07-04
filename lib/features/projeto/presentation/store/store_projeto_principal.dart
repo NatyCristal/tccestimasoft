@@ -7,7 +7,10 @@ class StoreProjetos = StoreProjetosBase with _$StoreProjetos;
 
 abstract class StoreProjetosBase with Store {
   @observable
-  String pesquisa = "";
+  bool temPesquisa = false;
+
+  @observable
+  String valorPesquisa = "";
 
   @observable
   List<ProjetoEntitie> projetos = [];
@@ -30,6 +33,18 @@ abstract class StoreProjetosBase with Store {
   @observable
   String erroCodEntrarProjeto = "";
 
+  pesquisarProjetos(String valor) {
+    projetosPesquisa = [];
+    for (var element in projetos) {
+      if (element.nomeProjeto.contains(valor)) {
+        projetosPesquisa.add(element);
+      }
+    }
+
+    return projetosPesquisa;
+  }
+
+  @action
   validarCodProjeto() {
     if (codEntrarProjeto.length < 3) {
       erroCodEntrarProjeto = "Código pequeno";
@@ -63,15 +78,5 @@ abstract class StoreProjetosBase with Store {
 
     nomeProjetoErro = "";
     return true;
-  }
-
-  @action
-  pesquisarProjetos() {
-    for (var element in projetos) {
-      if (element.nomeProjeto.contains(nomeProjeto)) {
-        projetosPesquisa.add(element);
-      }
-    }
-    return projetosPesquisa.length;
   }
 }

@@ -10,8 +10,9 @@ class CriarProjetoUsecase {
   CriarProjetoUsecase(this.repository);
 
   Future<Either<Falha, ProjetoEntitie>> criarProjeto(
-      String uid, String nomeProjeto) async {
-    var result = await repository.criarProjeto(uid, nomeProjeto);
+      String uid, String nomeProjeto, String nomeAdministrador) async {
+    var result =
+        await repository.criarProjeto(uid, nomeProjeto, nomeAdministrador);
     var erro = "";
 
     result.fold((l) {

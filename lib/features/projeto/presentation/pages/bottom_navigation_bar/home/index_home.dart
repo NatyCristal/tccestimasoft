@@ -109,23 +109,93 @@ class IndexHome extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      "Membros",
-                      style: TextStyle(
-                          color: corCorpoTexto,
-                          fontSize: tamanhoTextoCorpoTexto),
-                    ),
-                    ListaMembros(
-                      projeto: projeto,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          "Projeto criado por:",
+                          style: TextStyle(
+                            color: corCorpoTexto,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 200,
+                          child: Text(
+                            controller.membrosProjetoAtual
+                                .singleWhere((element) {
+                              return element.uid == projeto.admin;
+                            }).nome,
+                            textAlign: TextAlign.end,
+                            style: const TextStyle(
+                                color: corCorpoTexto,
+                                fontWeight: Fontes.weightTextoNormal),
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(
                       height: 10,
                     ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          "Data criação",
+                          style: TextStyle(
+                            color: corCorpoTexto,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 200,
+                          child: Text(
+                            projeto.dataCriacao,
+                            textAlign: TextAlign.end,
+                            style: const TextStyle(
+                              color: corCorpoTexto,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    const Text(
+                      "Compartilhados",
+                      style: TextStyle(
+                        color: corCorpoTexto,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Observer(builder: (context) {
+                      store.houveMudancaEmResultado;
+
+                      return controller
+                                  .resultadoController.contagensIndicativas.isEmpty &&
+                              controller.resultadoController.custosCompartilhados
+                                  .isEmpty &&
+                              controller.resultadoController.equipesCompartilhados
+                                  .isEmpty &&
+                              controller.resultadoController
+                                  .esforcosCompartilhados.isEmpty &&
+                              controller.resultadoController
+                                  .prazosCompartilhados.isEmpty
+                          ? const Center(
+                              child: SizedBox(
+                                  child: Text(
+                                      "Não tem Estimativas Compartilhadas")))
+                          : const SizedBox();
+                      // CardEsforcosCompartilhados(
+                      //     uidProjeto: projeto.uidProjeto,
+                      //     scrollController: scrollControllerLateral);
+                    }),
                     const Text(
                       "Arquivos e Documentos",
                       style: TextStyle(
-                          color: corCorpoTexto,
-                          fontSize: tamanhoTextoCorpoTexto),
+                        color: corCorpoTexto,
+                      ),
                     ),
                     Container(
                       decoration: BoxDecoration(
@@ -165,10 +235,6 @@ class IndexHome extends StatelessWidget {
                           ),
                           Observer(builder: (context) {
                             store.houveMudancaEmArquivosEdocumentos;
-                            // ? controller
-                            //     .recuperarArquivos(projeto.uidProjeto)
-                            // : store.houveMudancaEmArquivosEdocumentos =
-                            //     false;
 
                             return SizedBox(
                                 width: TamanhoTela.width(context, 0.8),
@@ -321,36 +387,6 @@ class IndexHome extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    const Text(
-                      "Compartilhados",
-                      style: TextStyle(
-                          color: corCorpoTexto,
-                          fontSize: tamanhoTextoCorpoTexto),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Observer(builder: (context) {
-                      store.houveMudancaEmResultado;
-
-                      return controller
-                                  .resultadoController.contagensIndicativas.isEmpty &&
-                              controller.resultadoController.custosCompartilhados
-                                  .isEmpty &&
-                              controller.resultadoController.equipesCompartilhados
-                                  .isEmpty &&
-                              controller.resultadoController
-                                  .esforcosCompartilhados.isEmpty &&
-                              controller.resultadoController
-                                  .prazosCompartilhados.isEmpty
-                          ? const Center(
-                              child: SizedBox(
-                                  child: Text(
-                                      "Não tem Estimativas Compartilhadas")))
-                          : CardEsforcosCompartilhados(
-                              uidProjeto: projeto.uidProjeto,
-                              scrollController: scrollControllerLateral);
-                    }),
                   ],
                 ),
               ),

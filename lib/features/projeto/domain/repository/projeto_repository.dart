@@ -9,7 +9,7 @@ abstract class ProjetoRepository {
   Future<Either<Falha, List<ProjetoEntitie>>> rrecuperarProjetos(String uid);
 
   Future<Either<Falha, ProjetoEntitie>> criarProjeto(
-      String uidUsuario, String nomeProjeto);
+      String uidUsuario, String nomeProjeto, String nomeAdministrador);
 
   Future<Either<Falha, String>> removerProjeto(
       String uidUsuario, String uidProjeto);

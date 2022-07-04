@@ -16,9 +16,10 @@ class ProjetoFirebaseInfra extends ProjetoRepository {
 
   @override
   Future<Either<Falha, ProjetoEntitie>> criarProjeto(
-      String uidUsuario, String nomeProjeto) async {
+      String uidUsuario, String nomeProjeto, String nomeAdministrador) async {
     try {
-      var resultado = await datasource.criarProjeto(uidUsuario, nomeProjeto);
+      var resultado = await datasource.criarProjeto(
+          uidUsuario, nomeProjeto, nomeAdministrador);
       return Right(resultado);
     } on FirebaseException catch (e) {
       return Left(throw Exception(e.code));

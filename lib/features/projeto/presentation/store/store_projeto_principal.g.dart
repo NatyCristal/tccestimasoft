@@ -9,19 +9,35 @@ part of 'store_projeto_principal.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$StoreProjetos on StoreProjetosBase, Store {
-  late final _$pesquisaAtom =
-      Atom(name: 'StoreProjetosBase.pesquisa', context: context);
+  late final _$temPesquisaAtom =
+      Atom(name: 'StoreProjetosBase.temPesquisa', context: context);
 
   @override
-  String get pesquisa {
-    _$pesquisaAtom.reportRead();
-    return super.pesquisa;
+  bool get temPesquisa {
+    _$temPesquisaAtom.reportRead();
+    return super.temPesquisa;
   }
 
   @override
-  set pesquisa(String value) {
-    _$pesquisaAtom.reportWrite(value, super.pesquisa, () {
-      super.pesquisa = value;
+  set temPesquisa(bool value) {
+    _$temPesquisaAtom.reportWrite(value, super.temPesquisa, () {
+      super.temPesquisa = value;
+    });
+  }
+
+  late final _$valorPesquisaAtom =
+      Atom(name: 'StoreProjetosBase.valorPesquisa', context: context);
+
+  @override
+  String get valorPesquisa {
+    _$valorPesquisaAtom.reportRead();
+    return super.valorPesquisa;
+  }
+
+  @override
+  set valorPesquisa(String value) {
+    _$valorPesquisaAtom.reportWrite(value, super.valorPesquisa, () {
+      super.valorPesquisa = value;
     });
   }
 
@@ -174,6 +190,17 @@ mixin _$StoreProjetos on StoreProjetosBase, Store {
       ActionController(name: 'StoreProjetosBase', context: context);
 
   @override
+  dynamic validarCodProjeto() {
+    final _$actionInfo = _$StoreProjetosBaseActionController.startAction(
+        name: 'StoreProjetosBase.validarCodProjeto');
+    try {
+      return super.validarCodProjeto();
+    } finally {
+      _$StoreProjetosBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic validarNomeProjeto() {
     final _$actionInfo = _$StoreProjetosBaseActionController.startAction(
         name: 'StoreProjetosBase.validarNomeProjeto');
@@ -185,20 +212,10 @@ mixin _$StoreProjetos on StoreProjetosBase, Store {
   }
 
   @override
-  dynamic pesquisarProjetos() {
-    final _$actionInfo = _$StoreProjetosBaseActionController.startAction(
-        name: 'StoreProjetosBase.pesquisarProjetos');
-    try {
-      return super.pesquisarProjetos();
-    } finally {
-      _$StoreProjetosBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String toString() {
     return '''
-pesquisa: ${pesquisa},
+temPesquisa: ${temPesquisa},
+valorPesquisa: ${valorPesquisa},
 projetos: ${projetos},
 projetosPesquisa: ${projetosPesquisa},
 tamanhoProjetos: ${tamanhoProjetos},

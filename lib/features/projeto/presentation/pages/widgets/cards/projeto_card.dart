@@ -7,9 +7,11 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 
 class ProjetoCard extends StatelessWidget {
   final ProjetoEntitie projeto;
+  final Color corBackground;
   const ProjetoCard({
     Key? key,
     required this.projeto,
+    this.corBackground = const Color(0XFFD8DCDF),
   }) : super(key: key);
 
   @override
@@ -22,10 +24,11 @@ class ProjetoCard extends StatelessWidget {
         padding: paddingPagePrincipal,
         decoration: BoxDecoration(
             image: const DecorationImage(
-              opacity: 0.2,
+              opacity: 0.3,
               image: AssetImage("assets/projeto3.png"),
             ),
-            color: const Color(0XFFD8DCDF).withOpacity(0.3),
+            color: corBackground
+                .withOpacity(0.4), // const Color(0XFFD8DCDF).withOpacity(0.3),
             borderRadius: arredondamentoBordas),
         margin: const EdgeInsets.all(5),
         height: 100,
@@ -112,12 +115,40 @@ class ProjetoCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 10),
-            Text(projeto.dataCriacao,
-                style: const TextStyle(
-                  fontSize: tamanhoTextoCorpoTexto,
-                  color: corCorpoTexto,
-                  fontWeight: Fontes.weightTextoNormal,
-                )),
+            Text(
+              projeto.dataCriacao,
+              style: const TextStyle(
+                fontSize: tamanhoTextoCorpoTexto,
+                color: corCorpoTexto,
+                fontWeight: Fontes.weightTextoNormal,
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                const Text(
+                  "Criado por: ",
+                  style: TextStyle(
+                      color: corCorpoTexto,
+                      fontSize: tamanhoTextoCorpoTexto,
+                      fontWeight: Fontes.weightTextoNormal),
+                ),
+                SizedBox(
+                  width: 200,
+                  child: Text(
+                    projeto.nomeAdministrador,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                        color: corCorpoTexto,
+                        fontSize: tamanhoTextoCorpoTexto,
+                        fontWeight: Fontes.weightTextoNormal),
+                  ),
+                )
+              ],
+            ),
           ],
         ),
       ),

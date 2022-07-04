@@ -19,7 +19,7 @@ class ProjetoFirebaseDatasource extends ProjetoDatasource {
   ProjetoFirebaseDatasource(this.usuarioDatasource);
   @override
   Future<ProjetoEntitie> criarProjeto(
-      String uidUsuario, String nomeProjeto) async {
+      String uidUsuario, String nomeProjeto, String nomeAdminstrador) async {
     DateTime now = DateTime.now();
 
     String formattedDate = DateFormat('dd/MM/yyyy – kk:mm').format(now);
@@ -39,6 +39,7 @@ class ProjetoFirebaseDatasource extends ProjetoDatasource {
         email: "", nome: "", uid: uidUsuario, urlFoto: ""));
 
     ProjetoFirebaseModel novoProjeto = ProjetoFirebaseModel(
+        nomeAdminstrador: nomeAdminstrador,
         uidProjeto: uidProjeto,
         admin: uidUsuario,
         dataCriacao: dateTime.toString(),
