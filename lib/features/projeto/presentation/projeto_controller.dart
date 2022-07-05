@@ -12,6 +12,7 @@ import 'package:estimasoft/features/projeto/domain/entitie/projeto_entitie.dart'
 import 'package:estimasoft/features/projeto/domain/usecase/entrar_projeto_usecase.dart';
 import 'package:estimasoft/features/projeto/domain/usecase/recuperar_membros_usecase.dart';
 import 'package:estimasoft/features/projeto/domain/usecase/arquivo_usecase.dart';
+import 'package:estimasoft/features/projeto/domain/usecase/sair_projeto_usecase.dart';
 import 'package:estimasoft/features/resultado/presentation/resultado_controller.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -39,13 +40,23 @@ class ProjetoController {
   final CriarProjetoUsecase _criarProjetoUsecase;
   final EntraProjetoUsecase _entraProjetoUsecase;
   final ArquivoUsecase _arquivosUsecase;
+  final SairProjetoUsecase _sairProjetoUsecase;
 
   ProjetoController(
       this._criarProjetoUsecase,
       this._recuperarProjetosUsecase,
       this._recuperarMembrosUsecase,
       this._entraProjetoUsecase,
-      this._arquivosUsecase);
+      this._arquivosUsecase,
+      this._sairProjetoUsecase);
+
+  sairProjeto(String uidProjeto) async {
+    await _sairProjetoUsecase.sairProjeto(
+        Modular.get<UsuarioAutenticado>().store.uid, uidProjeto);
+    await recuperarProjetos();
+
+    return "Você saiu do projeto";
+  }
 
   criarProjeto(String nomeProjeto) async {
     final usuarioLogado = Modular.get<UsuarioAutenticado>();
@@ -67,7 +78,7 @@ class ProjetoController {
     final usuarioLogado = Modular.get<UsuarioAutenticado>();
     var resultado = await _entraProjetoUsecase.entrarEmProjeto(
         usuarioLogado.store.uid, uidProjeto);
-    var retorno = "";
+    String retorno = "";
     resultado.fold((l) {
       retorno = l.mensagem;
     }, (r) {

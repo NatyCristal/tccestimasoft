@@ -133,4 +133,35 @@ class UsuarioFirebaseDataSource extends PerfilDatasource {
 
     return usuario;
   }
+
+  @override
+  Future removerProjetoUsuario(String uidUsuario, String uidProjeto) async {
+    List<String> listaProjetos = [];
+
+    await _firestore
+        .collection("Usuarios")
+        .doc(uidUsuario)
+        .get()
+        .then((resultado) async {
+      if (resultado.exists) {
+        Map<String, List<String>> mapFinal;
+        Map<String, dynamic>? dados = resultado.data();
+
+        List<dynamic> lista = dados?["projetosUids"];
+
+        for (var element in lista) {
+          if (element != uidProjeto) {
+            listaProjetos.add(element.toString());
+          }
+        }
+
+        mapFinal = {"projetosUids": listaProjetos};
+
+        await _firestore
+            .collection("Usuarios")
+            .doc(uidUsuario)
+            .update(mapFinal);
+      }
+    });
+  }
 }

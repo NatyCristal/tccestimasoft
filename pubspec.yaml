@@ -53,6 +53,7 @@ dependencies:
   pdf: ^3.8.1
   open_file: ^3.2.1
   flutter_launcher_icons: ^0.9.3
+  smooth_page_indicator: ^1.0.0+2
 
 
  
@@ -93,6 +94,7 @@ flutter:
     - assets/
     - assets/arquivos/indices.json
     - assets/imagens/
+    - assets/imagens/informativo/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

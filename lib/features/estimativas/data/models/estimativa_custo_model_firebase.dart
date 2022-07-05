@@ -75,7 +75,7 @@ class CustoModel extends CustoEntity {
     }
 
     return CustoModel(
-      valorPorcentagem: double.parse(map['ValorPorcentagem']),
+      valorPorcentagem: double.parse(map['ValorPorcentagem'] ?? "0.0"),
       despesasTotaisDurantePrazoProjeto:
           double.parse((map['DespesasTotaisDurantePrazoProjeto'] ?? 0.0)),
       custoBasico: double.parse(map["CustoBasico"] ?? 0.0),

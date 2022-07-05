@@ -28,16 +28,8 @@ class ProjetosPrincipalPage extends StatelessWidget {
         store: store,
         tituloPagina: "EstimaSoft",
       ),
-      //  AppBar(
-      //   elevation: 0,
-      //   backgroundColor: Colors.transparent,
-      //   title: const Text("EstimaSoft"),
-      //   shape: const Border(
-      //     bottom: BorderSide(color: corDeLinhaAppBar, width: 1),
-      //   ),
-      // ),
-
       drawer: Drawer(
+        backgroundColor: corDeTextoBotaoPrimaria,
         child: ProjetoDrawer(),
       ),
       body: Container(

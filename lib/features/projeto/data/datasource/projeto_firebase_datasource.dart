@@ -128,14 +128,49 @@ class ProjetoFirebaseDatasource extends ProjetoDatasource {
 
   @override
   Future removerProjeto(String uidUsuario, String uidProjeto) {
-    // TODO: implement removerProjeto
+//TODO removerProjeto
     throw UnimplementedError();
   }
 
   @override
-  Future sairProjeto(String uidUsuario, String uidProjeto) {
-    // TODO: implement sairProjeto
-    throw UnimplementedError();
+  Future sairProjeto(String uidUsuario, String uidProjeto) async {
+    await firestore
+        .collection('Projetos')
+        .doc(uidProjeto)
+        .get()
+        .then((value) async {
+      if (value.exists) {
+        List<String> membros = [];
+
+        List<dynamic> teste = value['membros'];
+
+        for (var element in teste) {
+          if (element != uidUsuario) {}
+          membros.add(element);
+        }
+
+        if (membros.length > 1) {
+          membros.remove(uidUsuario);
+          Map<String, List<String>> mapFinal;
+          mapFinal = {"membros": membros};
+
+          await firestore
+              .collection("Projetos")
+              .doc(uidProjeto)
+              .update(mapFinal)
+              .then((value) async {
+            await usuarioDatasource.removerProjetoUsuario(
+                uidUsuario, uidProjeto);
+          });
+        } else {
+          await usuarioDatasource
+              .removerProjetoUsuario(uidUsuario, uidProjeto)
+              .then((value) async {
+            await firestore.collection("Projetos").doc(uidProjeto).delete();
+          });
+        }
+      }
+    });
   }
 
   @override

@@ -5,7 +5,6 @@ import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
 import 'package:estimasoft/core/shared/utils/tamanho_tela.dart';
 import 'package:estimasoft/features/projeto/domain/entitie/projeto_entitie.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/home/store/store_projeto_index_menu.dart';
-import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/home/widget/card_resultados_compartilhados.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_detalhada.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_estimada.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_indicativa.dart';
@@ -13,7 +12,6 @@ import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativ
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_equipe.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_esforco.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_prazo.dart';
-import 'package:estimasoft/features/projeto/presentation/pages/widgets/components/membros/lista_membros.dart';
 import 'package:estimasoft/features/projeto/presentation/projeto_controller.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';

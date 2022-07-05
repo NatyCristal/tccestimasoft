@@ -40,9 +40,8 @@ class ProjetoFirebaseInfra extends ProjetoRepository {
   }
 
   @override
-  Future<Either<Falha, String>> removerProjeto(
-      String uidUsuario, String uidProjeto) {
-    // TODO: implement removerProjeto
+  Future removerProjeto(String uidUsuario, String uidProjeto) async {
+    // TODO: implement sairProjeto
     throw UnimplementedError();
   }
 
@@ -59,10 +58,14 @@ class ProjetoFirebaseInfra extends ProjetoRepository {
   }
 
   @override
-  Future<Either<Falha, String>> sairProjeto(
-      String uidUsuario, String uidProjeto) {
-    // TODO: implement sairProjeto
-    throw UnimplementedError();
+  Future sairProjeto(String uidUsuario, String uidProjeto) async {
+    try {
+      await datasource.sairProjeto(uidUsuario, uidProjeto);
+    } on FirebaseException catch (e) {
+      return Left(throw Exception(e.code));
+    } on Exception catch (e) {
+      return Left(throw Exception(e));
+    }
   }
 
   @override

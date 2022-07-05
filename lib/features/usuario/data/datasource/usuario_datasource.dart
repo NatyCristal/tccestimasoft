@@ -14,4 +14,6 @@ abstract class PerfilDatasource {
   Future<List<UsuarioEntitie>> recuperarMembros(List<String> uidUsuarios);
 
   UsuarioEntitie usuarioLogado();
+
+  Future removerProjetoUsuario(String uidUsuario, String uidProjeto);
 }

@@ -1,6 +1,8 @@
 import 'package:estimasoft/core/shared/utils.dart';
 import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
+import 'package:estimasoft/core/shared/utils/snackbar.dart';
 import 'package:estimasoft/features/projeto/domain/entitie/projeto_entitie.dart';
+import 'package:estimasoft/features/projeto/presentation/projeto_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -56,14 +58,19 @@ class ProjetoCard extends StatelessWidget {
                       Alert(
                         context: context,
                         type: AlertType.warning,
-                        title: "Selecione uma das opções",
+                        title: "Deseja sair do projeto?",
                         style: const AlertStyle(
-                          titleStyle:
-                              TextStyle(color: corTituloTexto, fontSize: 18),
+                          titleStyle: TextStyle(
+                              color: corTituloTexto,
+                              fontSize: 18,
+                              fontWeight: FontWeight.normal),
                         ),
                         content: Column(
-                          children: [
-                            Checkbox(value: (false), onChanged: (value) {}),
+                          children: const [
+                            // Text(
+                            //   "Deseja Sair do projeto?",
+                            //   style: TextStyle(fontSize: 14),
+                            // )
                           ],
                         ),
                         buttons: [
@@ -77,9 +84,11 @@ class ProjetoCard extends StatelessWidget {
                                   fontSize: 14),
                             ),
                             onPressed: () async {
-                              // var retorno = await controller.usuarioDeslogar();
-                              // AlertaSnack.exbirSnackBar(context, retorno);
-                              Navigator.of(context, rootNavigator: true).pop();
+                              var retorno =
+                                  await Modular.get<ProjetoController>()
+                                      .sairProjeto(projeto.uidProjeto);
+
+                              AlertaSnack.exbirSnackBar(context, retorno);
                             },
                             width: 120,
                           ),

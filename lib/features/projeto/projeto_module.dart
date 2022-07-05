@@ -5,11 +5,13 @@ import 'package:estimasoft/features/projeto/data/datasource/projeto_firebase_dat
 import 'package:estimasoft/features/projeto/domain/usecase/entrar_projeto_usecase.dart';
 import 'package:estimasoft/features/projeto/domain/usecase/recuperar_membros_usecase.dart';
 import 'package:estimasoft/features/projeto/domain/usecase/arquivo_usecase.dart';
+import 'package:estimasoft/features/projeto/domain/usecase/sair_projeto_usecase.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/projeto_bottom_navigator_bar.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/exibicao_estimativa_page.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/exibicao_projetos_compartilhados_page.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/exibicao_meus_projetos_page.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/insercao_arquivos_projetos_page.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/instrucoes_page.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/projetos_principal_page.dart';
 import 'package:estimasoft/features/projeto/presentation/projeto_controller.dart';
 import 'package:estimasoft/features/resultado/resultado_module.dart';
@@ -31,7 +33,9 @@ class ProjetoModule extends Module {
         Bind.factory((i) => RecuperarProjetosUsecase(i())),
         Bind.factory((i) => EntraProjetoUsecase(i())),
         Bind.factory((i) => ArquivoUsecase(i())),
-        Bind.lazySingleton((i) => ProjetoController(i(), i(), i(), i(), i())),
+        Bind.factory((i) => SairProjetoUsecase(i())),
+        Bind.lazySingleton(
+            (i) => ProjetoController(i(), i(), i(), i(), i(), i())),
       ];
 
   @override
@@ -45,6 +49,9 @@ class ProjetoModule extends Module {
   @override
   List<ModularRoute> get routes => [
         ChildRoute('/',
+            child: (context, args) => InformacoesInstrucoesPage(),
+            guards: [AutorizadoGuard()]),
+        ChildRoute('/exibicao-projetos',
             child: (context, args) => ProjetosPrincipalPage(),
             guards: [AutorizadoGuard()]),
         ChildRoute('/projeto-informacao',
