@@ -5,13 +5,16 @@ import 'package:estimasoft/core/shared/utils/tamanho_tela.dart';
 import 'package:estimasoft/features/projeto/domain/entitie/projeto_entitie.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/widgets/cards/projeto_card.dart';
 import 'package:estimasoft/features/projeto/presentation/projeto_controller.dart';
+import 'package:estimasoft/features/projeto/presentation/store/store_projeto_principal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class ExibicaoMeusProjetosPage extends StatelessWidget {
+  final StoreProjetos storeProjetos;
   final ScrollController scroll = ScrollController();
   final ProjetoController controller = Modular.get<ProjetoController>();
-  ExibicaoMeusProjetosPage({Key? key}) : super(key: key);
+  ExibicaoMeusProjetosPage({Key? key, required this.storeProjetos})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +55,8 @@ class ExibicaoMeusProjetosPage extends StatelessWidget {
                       itemBuilder: (context, index) {
                         ProjetoEntitie projeto = meusProjetos[index];
 
-                        return ProjetoCard(projeto: projeto);
+                        return ProjetoCard(
+                            projeto: projeto, storeProjetos: storeProjetos);
                       },
                     ),
                   ),

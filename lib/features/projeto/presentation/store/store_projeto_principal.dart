@@ -13,7 +13,7 @@ abstract class StoreProjetosBase with Store {
   String valorPesquisa = "";
 
   @observable
-  List<ProjetoEntitie> projetos = [];
+  ObservableList<ProjetoEntitie> projetos = ObservableList<ProjetoEntitie>();
 
   @observable
   List<ProjetoEntitie> projetosPesquisa = [];

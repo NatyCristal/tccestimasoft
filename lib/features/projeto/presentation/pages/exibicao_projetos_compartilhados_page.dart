@@ -4,16 +4,19 @@ import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
 import 'package:estimasoft/core/shared/utils/tamanho_tela.dart';
 import 'package:estimasoft/features/projeto/domain/entitie/projeto_entitie.dart';
 import 'package:estimasoft/features/projeto/presentation/projeto_controller.dart';
+import 'package:estimasoft/features/projeto/presentation/store/store_projeto_principal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import 'widgets/cards/projeto_card.dart';
 
 class ExibicaoProjetosCompartilhadosPage extends StatelessWidget {
+  final StoreProjetos storeProjetos;
   final ProjetoController controller = Modular.get<ProjetoController>();
   final ScrollController scroll = ScrollController();
 
-  ExibicaoProjetosCompartilhadosPage({Key? key}) : super(key: key);
+  ExibicaoProjetosCompartilhadosPage({Key? key, required this.storeProjetos})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +55,8 @@ class ExibicaoProjetosCompartilhadosPage extends StatelessWidget {
                       itemBuilder: (context, index) {
                         ProjetoEntitie projeto = projetosCompartilhados[index];
 
-                        return ProjetoCard(projeto: projeto);
+                        return ProjetoCard(
+                            storeProjetos: storeProjetos, projeto: projeto);
                       },
                     ),
                   ),

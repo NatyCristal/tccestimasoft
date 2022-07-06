@@ -25,7 +25,8 @@ class ProjetosConteudoPesquisa extends StatelessWidget {
             itemCount: projetos.length,
             itemBuilder: (context, index) {
               ProjetoEntitie projeto = projetos[index];
-              return ProjetoCard(projeto: projeto);
+              return ProjetoCard(
+                  storeProjetos: projetosStore, projeto: projeto);
             })
         : Center(
             child: Column(

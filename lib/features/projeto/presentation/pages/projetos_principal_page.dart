@@ -15,10 +15,10 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 class ProjetosPrincipalPage extends StatelessWidget {
-  final StoreProjetos store = StoreProjetos();
+  final StoreProjetos store;
   final ProjetoController controller = Modular.get<ProjetoController>();
   final ScrollController scroll = ScrollController();
-  ProjetosPrincipalPage({Key? key}) : super(key: key);
+  ProjetosPrincipalPage({Key? key, required this.store}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +29,9 @@ class ProjetosPrincipalPage extends StatelessWidget {
         tituloPagina: "EstimaSoft",
       ),
       drawer: Drawer(
-        backgroundColor: corDeTextoBotaoPrimaria,
-        child: ProjetoDrawer(),
+        child: ProjetoDrawer(
+          storeProjetos: store,
+        ),
       ),
       body: Container(
         padding: paddingPagePrincipal,
@@ -59,8 +60,8 @@ class ProjetosPrincipalPage extends StatelessWidget {
         overlayColor: Colors.black,
         overlayOpacity: 0.4,
         icon: Icons.add,
-        iconTheme: const IconThemeData(color: Colors.white),
-        backgroundColor: Colors.black,
+        iconTheme: const IconThemeData(color: Colors.black),
+        backgroundColor: corDeAcao.withOpacity(0.7),
         children: [
           SpeedDialChild(
               shape: const RoundedRectangleBorder(

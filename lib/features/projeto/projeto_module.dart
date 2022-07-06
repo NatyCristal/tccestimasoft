@@ -12,8 +12,11 @@ import 'package:estimasoft/features/projeto/presentation/pages/exibicao_projetos
 import 'package:estimasoft/features/projeto/presentation/pages/exibicao_meus_projetos_page.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/insercao_arquivos_projetos_page.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/instrucoes_page.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/notificacao_page.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/projetos_principal_page.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/sobre_page.dart';
 import 'package:estimasoft/features/projeto/presentation/projeto_controller.dart';
+import 'package:estimasoft/features/projeto/presentation/store/store_projeto_principal.dart';
 import 'package:estimasoft/features/resultado/resultado_module.dart';
 import 'package:estimasoft/features/usuario/usuario_module.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -51,8 +54,15 @@ class ProjetoModule extends Module {
         ChildRoute('/',
             child: (context, args) => InformacoesInstrucoesPage(),
             guards: [AutorizadoGuard()]),
+        ChildRoute('/notificacoes',
+            child: (context, args) => const NotificacaoPage(),
+            guards: [AutorizadoGuard()]),
+        ChildRoute('/sobre',
+            child: (context, args) => const SobrePage(),
+            guards: [AutorizadoGuard()]),
         ChildRoute('/exibicao-projetos',
-            child: (context, args) => ProjetosPrincipalPage(),
+            child: (context, args) =>
+                ProjetosPrincipalPage(store: StoreProjetos()),
             guards: [AutorizadoGuard()]),
         ChildRoute('/projeto-informacao',
             child: (context, args) => ProjetoMenuPage(
@@ -60,10 +70,14 @@ class ProjetoModule extends Module {
                 ),
             guards: [AutorizadoGuard()]),
         ChildRoute('/meus-projetos',
-            child: (context, args) => ExibicaoMeusProjetosPage(),
+            child: (context, args) => ExibicaoMeusProjetosPage(
+                  storeProjetos: args.data[0],
+                ),
             guards: [AutorizadoGuard()]),
         ChildRoute('/projetos-compartilhados',
-            child: (context, args) => ExibicaoProjetosCompartilhadosPage(),
+            child: (context, args) => ExibicaoProjetosCompartilhadosPage(
+                  storeProjetos: args.data,
+                ),
             guards: [AutorizadoGuard()]),
         ChildRoute('/inserir-arquivos',
             child: (context, args) => InsercaoArquivosUpload(

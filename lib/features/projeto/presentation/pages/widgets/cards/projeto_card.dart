@@ -3,17 +3,20 @@ import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
 import 'package:estimasoft/core/shared/utils/snackbar.dart';
 import 'package:estimasoft/features/projeto/domain/entitie/projeto_entitie.dart';
 import 'package:estimasoft/features/projeto/presentation/projeto_controller.dart';
+import 'package:estimasoft/features/projeto/presentation/store/store_projeto_principal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 class ProjetoCard extends StatelessWidget {
+  final StoreProjetos storeProjetos;
   final ProjetoEntitie projeto;
   final Color corBackground;
   const ProjetoCard({
     Key? key,
     required this.projeto,
     this.corBackground = const Color(0XFFD8DCDF),
+    required this.storeProjetos,
   }) : super(key: key);
 
   @override
@@ -66,12 +69,7 @@ class ProjetoCard extends StatelessWidget {
                               fontWeight: FontWeight.normal),
                         ),
                         content: Column(
-                          children: const [
-                            // Text(
-                            //   "Deseja Sair do projeto?",
-                            //   style: TextStyle(fontSize: 14),
-                            // )
-                          ],
+                          children: const [],
                         ),
                         buttons: [
                           DialogButton(
@@ -88,6 +86,10 @@ class ProjetoCard extends StatelessWidget {
                                   await Modular.get<ProjetoController>()
                                       .sairProjeto(projeto.uidProjeto);
 
+                              storeProjetos.projetos.setAll(
+                                  0, Modular.get<ProjetoController>().projetos);
+
+                              Navigator.of(context, rootNavigator: true).pop();
                               AlertaSnack.exbirSnackBar(context, retorno);
                             },
                             width: 120,

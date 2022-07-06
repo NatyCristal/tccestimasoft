@@ -13,7 +13,7 @@ import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativ
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_esforco.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_prazo.dart';
 import 'package:estimasoft/features/projeto/presentation/projeto_controller.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -155,236 +155,236 @@ class IndexHome extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const Text(
-                      "Compartilhados",
-                      style: TextStyle(
-                        color: corCorpoTexto,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Observer(builder: (context) {
-                      store.houveMudancaEmResultado;
+                    // const SizedBox(
+                    //   height: 20,
+                    // ),
+                    // const Text(
+                    //   "Compartilhados",
+                    //   style: TextStyle(
+                    //     color: corCorpoTexto,
+                    //   ),
+                    // ),
+                    // const SizedBox(
+                    //   height: 10,
+                    // ),
+                    // Observer(builder: (context) {
+                    //   store.houveMudancaEmResultado;
 
-                      return controller
-                                  .resultadoController.contagensIndicativas.isEmpty &&
-                              controller.resultadoController.custosCompartilhados
-                                  .isEmpty &&
-                              controller.resultadoController.equipesCompartilhados
-                                  .isEmpty &&
-                              controller.resultadoController
-                                  .esforcosCompartilhados.isEmpty &&
-                              controller.resultadoController
-                                  .prazosCompartilhados.isEmpty
-                          ? const Center(
-                              child: SizedBox(
-                                  child: Text(
-                                      "Não tem Estimativas Compartilhadas")))
-                          : const SizedBox();
-                      // CardEsforcosCompartilhados(
-                      //     uidProjeto: projeto.uidProjeto,
-                      //     scrollController: scrollControllerLateral);
-                    }),
-                    const Text(
-                      "Arquivos e Documentos",
-                      style: TextStyle(
-                        color: corCorpoTexto,
-                      ),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                          color: background.withOpacity(0.5),
-                          borderRadius: arredondamentoBordas),
-                      height: 70,
-                      width: TamanhoTela.width(context, 1),
-                      child: Row(
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 4),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 1,
-                                  blurRadius: 7,
-                                  offset: const Offset(0, 3),
-                                ),
-                              ],
-                            ),
-                            height: 30,
-                            width: 30,
-                            child: GestureDetector(
-                              onTap: () {
-                                Modular.to.pushNamed("inserir-arquivos",
-                                    arguments: [projeto, store]);
-                              },
-                              child: const Icon(
-                                Icons.add,
-                                size: 20,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                          Observer(builder: (context) {
-                            store.houveMudancaEmArquivosEdocumentos;
+                    //   return controller
+                    //               .resultadoController.contagensIndicativas.isEmpty &&
+                    //           controller.resultadoController.custosCompartilhados
+                    //               .isEmpty &&
+                    //           controller.resultadoController.equipesCompartilhados
+                    //               .isEmpty &&
+                    //           controller.resultadoController
+                    //               .esforcosCompartilhados.isEmpty &&
+                    //           controller.resultadoController
+                    //               .prazosCompartilhados.isEmpty
+                    //       ? const Center(
+                    //           child: SizedBox(
+                    //               child: Text(
+                    //                   "Não tem Estimativas Compartilhadas")))
+                    //       : const SizedBox();
+                    //   // CardEsforcosCompartilhados(
+                    //   //     uidProjeto: projeto.uidProjeto,
+                    //   //     scrollController: scrollControllerLateral);
+                    // }),
+                    // const Text(
+                    //   "Arquivos e Documentos",
+                    //   style: TextStyle(
+                    //     color: corCorpoTexto,
+                    //   ),
+                    // ),
+                    // Container(
+                    //   decoration: BoxDecoration(
+                    //       color: background.withOpacity(0.5),
+                    //       borderRadius: arredondamentoBordas),
+                    //   height: 70,
+                    //   width: TamanhoTela.width(context, 1),
+                    //   child: Row(
+                    //     children: [
+                    //       Container(
+                    //         margin: const EdgeInsets.symmetric(horizontal: 4),
+                    //         decoration: BoxDecoration(
+                    //           color: Colors.white,
+                    //           borderRadius: BorderRadius.circular(20),
+                    //           boxShadow: [
+                    //             BoxShadow(
+                    //               color: Colors.grey.withOpacity(0.5),
+                    //               spreadRadius: 1,
+                    //               blurRadius: 7,
+                    //               offset: const Offset(0, 3),
+                    //             ),
+                    //           ],
+                    //         ),
+                    //         height: 30,
+                    //         width: 30,
+                    //         child: GestureDetector(
+                    //           onTap: () {
+                    //             Modular.to.pushNamed("inserir-arquivos",
+                    //                 arguments: [projeto, store]);
+                    //           },
+                    //           child: const Icon(
+                    //             Icons.add,
+                    //             size: 20,
+                    //             color: Colors.black,
+                    //           ),
+                    //         ),
+                    //       ),
+                    // Observer(builder: (context) {
+                    //   store.houveMudancaEmArquivosEdocumentos;
 
-                            return SizedBox(
-                                width: TamanhoTela.width(context, 0.8),
-                                child: FutureBuilder<ListResult>(
-                                  future: controller
-                                      .recuperarArquivos(projeto.uidProjeto),
-                                  builder: (BuildContext context, snapshot) {
-                                    switch (snapshot.connectionState) {
-                                      case ConnectionState.done:
-                                        if (snapshot.hasError) {
-                                          return const Text("Erro");
-                                        }
-                                        if (snapshot.hasData) {
-                                          final arquivosConcretos =
-                                              snapshot.data!.items;
-                                          return arquivosConcretos.isNotEmpty
-                                              ? ListView.builder(
-                                                  controller:
-                                                      scrollControllerLateral,
-                                                  shrinkWrap: false,
-                                                  itemCount: controller
-                                                      .arquivos.items.length,
-                                                  scrollDirection:
-                                                      Axis.horizontal,
-                                                  itemBuilder:
-                                                      (context, index) {
-                                                    final arquivo =
-                                                        arquivosConcretos[
-                                                            index];
-                                                    return GestureDetector(
-                                                      onTap: () => Modular.to
-                                                          .pushNamed(
-                                                              "inserir-arquivos",
-                                                              arguments: [
-                                                            projeto,
-                                                            store
-                                                          ]),
-                                                      child: Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          const SizedBox(
-                                                            width: 80,
-                                                            child: Icon(
-                                                              Icons
-                                                                  .drive_file_move,
-                                                              size: 40,
-                                                              color:
-                                                                  Colors.grey,
-                                                            ),
-                                                          ),
-                                                          Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .start,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              SizedBox(
-                                                                width: 60,
-                                                                child: Text(
-                                                                  arquivo
-                                                                      .fullPath
-                                                                      .split(
-                                                                          "/")
-                                                                      .last
-                                                                      .split(
-                                                                          ".")[0],
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .right,
-                                                                  maxLines: 1,
-                                                                  overflow:
-                                                                      TextOverflow
-                                                                          .ellipsis,
-                                                                  style: (const TextStyle(
-                                                                      fontSize:
-                                                                          tamanhoTextoCorpoTexto,
-                                                                      color:
-                                                                          corCorpoTexto)),
-                                                                ),
-                                                              ),
-                                                              SizedBox(
-                                                                width: 40,
-                                                                child: Text(
-                                                                  "." +
-                                                                      arquivo
-                                                                          .fullPath
-                                                                          .split(
-                                                                              ".")[1],
-                                                                  maxLines: 1,
-                                                                  style: (const TextStyle(
-                                                                      fontSize:
-                                                                          tamanhoTextoCorpoTexto,
-                                                                      color:
-                                                                          corCorpoTexto)),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    );
-                                                  },
-                                                )
-                                              : GestureDetector(
-                                                  onTap: () {
-                                                    Modular.to.pushNamed(
-                                                      "inserir-arquivos",
-                                                      arguments: [
-                                                        projeto,
-                                                        store
-                                                      ],
-                                                    );
-                                                  },
-                                                  child: Container(
-                                                      margin: const EdgeInsets
-                                                              .symmetric(
-                                                          horizontal: 5),
-                                                      child: const Text(
-                                                          "Clique para adicionar arquivos",
-                                                          style: TextStyle(
-                                                              fontSize:
-                                                                  tamanhoTextoCorpoTexto,
-                                                              color:
-                                                                  corCorpoTexto))),
-                                                );
-                                        }
+                    // return SizedBox(
+                    //     width: TamanhoTela.width(context, 0.8),
+                    //     child: FutureBuilder<ListResult>(
+                    //       future: controller
+                    //           .recuperarArquivos(projeto.uidProjeto),
+                    //       builder: (BuildContext context, snapshot) {
+                    //         switch (snapshot.connectionState) {
+                    //           case ConnectionState.done:
+                    //             if (snapshot.hasError) {
+                    //               return const Text("Erro");
+                    //             }
+                    //             if (snapshot.hasData) {
+                    //               final arquivosConcretos =
+                    //                   snapshot.data!.items;
+                    //               return arquivosConcretos.isNotEmpty
+                    //                   ? ListView.builder(
+                    //                       controller:
+                    //                           scrollControllerLateral,
+                    //                       shrinkWrap: false,
+                    //                       itemCount: controller
+                    //                           .arquivos.items.length,
+                    //                       scrollDirection:
+                    //                           Axis.horizontal,
+                    //                       itemBuilder:
+                    //                           (context, index) {
+                    //                         final arquivo =
+                    //                             arquivosConcretos[
+                    //                                 index];
+                    //                         return GestureDetector(
+                    //                           onTap: () => Modular.to
+                    //                               .pushNamed(
+                    //                                   "inserir-arquivos",
+                    //                                   arguments: [
+                    //                                 projeto,
+                    //                                 store
+                    //                               ]),
+                    //                           child: Column(
+                    //                             mainAxisAlignment:
+                    //                                 MainAxisAlignment
+                    //                                     .center,
+                    //                             crossAxisAlignment:
+                    //                                 CrossAxisAlignment
+                    //                                     .center,
+                    //                             children: [
+                    //                               const SizedBox(
+                    //                                 width: 80,
+                    //                                 child: Icon(
+                    //                                   Icons
+                    //                                       .drive_file_move,
+                    //                                   size: 40,
+                    //                                   color:
+                    //                                       Colors.grey,
+                    //                                 ),
+                    //                               ),
+                    //                               Row(
+                    //                                 mainAxisAlignment:
+                    //                                     MainAxisAlignment
+                    //                                         .start,
+                    //                                 crossAxisAlignment:
+                    //                                     CrossAxisAlignment
+                    //                                         .start,
+                    //                                 children: [
+                    //                                   SizedBox(
+                    //                                     width: 60,
+                    //                                     child: Text(
+                    //                                       arquivo
+                    //                                           .fullPath
+                    //                                           .split(
+                    //                                               "/")
+                    //                                           .last
+                    //                                           .split(
+                    //                                               ".")[0],
+                    //                                       textAlign:
+                    //                                           TextAlign
+                    //                                               .right,
+                    //                                       maxLines: 1,
+                    //                                       overflow:
+                    //                                           TextOverflow
+                    //                                               .ellipsis,
+                    //                                       style: (const TextStyle(
+                    //                                           fontSize:
+                    //                                               tamanhoTextoCorpoTexto,
+                    //                                           color:
+                    //                                               corCorpoTexto)),
+                    //                                     ),
+                    //                                   ),
+                    //                                   SizedBox(
+                    //                                     width: 40,
+                    //                                     child: Text(
+                    //                                       "." +
+                    //                                           arquivo
+                    //                                               .fullPath
+                    //                                               .split(
+                    //                                                   ".")[1],
+                    //                                       maxLines: 1,
+                    //                                       style: (const TextStyle(
+                    //                                           fontSize:
+                    //                                               tamanhoTextoCorpoTexto,
+                    //                                           color:
+                    //                                               corCorpoTexto)),
+                    //                                     ),
+                    //                                   ),
+                    //                                 ],
+                    //                               ),
+                    //                             ],
+                    //                           ),
+                    //                         );
+                    //                       },
+                    //                     )
+                    //                   : GestureDetector(
+                    //                       onTap: () {
+                    //                         Modular.to.pushNamed(
+                    //                           "inserir-arquivos",
+                    //                           arguments: [
+                    //                             projeto,
+                    //                             store
+                    //                           ],
+                    //                         );
+                    //                       },
+                    //                       child: Container(
+                    //                           margin: const EdgeInsets
+                    //                                   .symmetric(
+                    //                               horizontal: 5),
+                    //                           child: const Text(
+                    //                               "Clique para adicionar arquivos",
+                    //                               style: TextStyle(
+                    //                                   fontSize:
+                    //                                       tamanhoTextoCorpoTexto,
+                    //                                   color:
+                    //                                       corCorpoTexto))),
+                    //                     );
+                    //             }
 
-                                        break;
-                                      case ConnectionState.active:
-                                        return const SizedBox();
-                                      case ConnectionState.none:
-                                        return const Text("Erro nenhum");
-                                      case ConnectionState.waiting:
-                                        return const SizedBox(); // Carregando();
-                                    }
-                                    return const SizedBox();
-                                  },
-                                ));
-                          })
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                    //             break;
+                    //           case ConnectionState.active:
+                    //             return const SizedBox();
+                    //           case ConnectionState.none:
+                    //             return const Text("Erro nenhum");
+                    //           case ConnectionState.waiting:
+                    //             return const SizedBox(); // Carregando();
+                    //         }
+                    //         return const SizedBox();
+                    //       },
+                    //     ));
+                    //   })
+                    //     ],
+                    //   ),
+                    // ),
+                    // const SizedBox(
+                    //   height: 10,
+                    // ),
                   ],
                 ),
               ),

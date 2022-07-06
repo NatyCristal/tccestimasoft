@@ -194,7 +194,6 @@ abstract class StoreEstimativaCustoBase with Store {
       custoBasico = (custoPF * quantidadePFSelecionada);
 
       despesasTotaisDurantePrazoProjeto = custoTotalMensal * prazo;
-      //FIXME: prazo -  adicionar o prazo;
 
       custoProjeto = custoBasico + despesasTotaisDurantePrazoProjeto;
     }

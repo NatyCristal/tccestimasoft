@@ -60,7 +60,8 @@ class ProjetoFirebaseInfra extends ProjetoRepository {
   @override
   Future sairProjeto(String uidUsuario, String uidProjeto) async {
     try {
-      await datasource.sairProjeto(uidUsuario, uidProjeto);
+      var resultado = await datasource.sairProjeto(uidUsuario, uidProjeto);
+      return resultado;
     } on FirebaseException catch (e) {
       return Left(throw Exception(e.code));
     } on Exception catch (e) {

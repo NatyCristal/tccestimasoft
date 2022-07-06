@@ -45,13 +45,13 @@ mixin _$StoreProjetos on StoreProjetosBase, Store {
       Atom(name: 'StoreProjetosBase.projetos', context: context);
 
   @override
-  List<ProjetoEntitie> get projetos {
+  ObservableList<ProjetoEntitie> get projetos {
     _$projetosAtom.reportRead();
     return super.projetos;
   }
 
   @override
-  set projetos(List<ProjetoEntitie> value) {
+  set projetos(ObservableList<ProjetoEntitie> value) {
     _$projetosAtom.reportWrite(value, super.projetos, () {
       super.projetos = value;
     });

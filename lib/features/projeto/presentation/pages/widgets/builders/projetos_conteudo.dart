@@ -7,6 +7,7 @@ import 'package:estimasoft/features/projeto/presentation/projeto_controller.dart
 import 'package:estimasoft/features/projeto/presentation/store/store_projeto_principal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class ProjetosConteudo extends StatelessWidget {
@@ -43,11 +44,12 @@ class ProjetosConteudo extends StatelessWidget {
                         itemCount: controller.projetos.length,
                         itemBuilder: (context, index) {
                           store.projetos.isEmpty
-                              ? store.projetos = controller.projetos
+                              ? store.projetos.addAll(controller.projetos)
                               : store.projetos;
                           ProjetoEntitie projeto = controller.projetos[index];
 
                           return ProjetoCard(
+                            storeProjetos: store,
                             projeto: projeto,
                           );
                         },
@@ -69,17 +71,21 @@ class ProjetosConteudo extends StatelessWidget {
               return const Text("Erro");
             },
           )
-        : ListView.builder(
-            controller: scroll,
-            shrinkWrap: false,
-            itemCount: controller.projetos.length,
-            itemBuilder: (context, index) {
-              ProjetoEntitie projeto = controller.projetos[index];
+        : Observer(builder: (context) {
+            store.projetos.isNotEmpty;
+            return ListView.builder(
+              controller: scroll,
+              shrinkWrap: false,
+              itemCount: controller.projetos.length,
+              itemBuilder: (context, index) {
+                ProjetoEntitie projeto = controller.projetos[index];
 
-              return ProjetoCard(
-                projeto: projeto,
-              );
-            },
-          );
+                return ProjetoCard(
+                  storeProjetos: store,
+                  projeto: projeto,
+                );
+              },
+            );
+          });
   }
 }

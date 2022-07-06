@@ -6,7 +6,7 @@ class MyPainter extends CustomPainter {
   final double radius, containerHeight;
   final BuildContext context;
 
-  Color color = Colors.white;
+  Color color = corDeAcao;
   double statusBarHeight = 0, screenWidth = 0;
 
   MyPainter(
@@ -14,7 +14,7 @@ class MyPainter extends CustomPainter {
       required this.containerHeight,
       required this.center,
       required this.radius}) {
-    color = background;
+    color = const Color.fromARGB(255, 252, 141, 85);
     statusBarHeight = MediaQuery.of(context).padding.top;
     screenWidth = MediaQuery.of(context).size.width;
   }

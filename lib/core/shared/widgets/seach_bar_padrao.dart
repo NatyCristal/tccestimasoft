@@ -1,6 +1,7 @@
 import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import '../../../../../core/shared/widgets/barra_de_pesquisa.dart';
 import '../../../../../core/shared/widgets/fundo_cor_barra_pesquisa.dart';
 import '../../../features/projeto/presentation/store/store_projeto_principal.dart';
@@ -80,7 +81,7 @@ class _DefaultAppBarState extends State<DefaultAppBar>
 
     return Stack(children: [
       AppBar(
-        backgroundColor: corDeFundoBotaoSecundaria,
+        backgroundColor: Colors.transparent,
         elevation: 0,
         title: Text(
           widget.tituloPagina,
@@ -112,16 +113,30 @@ class _DefaultAppBarState extends State<DefaultAppBar>
               ),
             ),
           ),
+          IconButton(
+            onPressed: () {
+              Modular.to.pushNamed("/projeto/");
+            },
+            icon: const Icon(
+              Icons.help_outlined,
+              color: corTituloTexto,
+            ),
+          ),
           widget.notificacao
               ? IconButton(
                   icon: const Icon(
-                    Icons.notifications,
+                    Icons.notifications_none_outlined,
                     color: corTituloTexto,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Modular.to.pushNamed('notificacoes');
+                  },
                 )
               : const SizedBox()
         ],
+        shape: Border(
+          bottom: BorderSide(color: corDeAcao.withOpacity(0.7), width: 1),
+        ),
       ),
       AnimatedBuilder(
         animation: _animation,

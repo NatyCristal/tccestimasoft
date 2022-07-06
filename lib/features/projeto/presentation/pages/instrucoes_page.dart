@@ -6,7 +6,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class InformacoesInstrucoesPage extends StatefulWidget {
-  InformacoesInstrucoesPage({Key? key}) : super(key: key);
+  const InformacoesInstrucoesPage({Key? key}) : super(key: key);
 
   @override
   State<InformacoesInstrucoesPage> createState() =>
@@ -414,7 +414,10 @@ class _InformacoesInstrucoesPageState extends State<InformacoesInstrucoesPage> {
                       Modular.to.pushNamedAndRemoveUntil(
                           "exibicao-projetos", (Route<dynamic> route) => false);
                     },
-                    child: const Text("Pular"),
+                    child: const Text(
+                      "PULAR",
+                      style: TextStyle(color: corDeAcao),
+                    ),
                   ),
                   Center(
                       child: SmoothPageIndicator(
@@ -423,12 +426,16 @@ class _InformacoesInstrucoesPageState extends State<InformacoesInstrucoesPage> {
                         curve: Curves.easeOut)),
                     controller: controller,
                     count: 5,
+                    effect: const WormEffect(activeDotColor: corDeAcao),
                   )),
                   TextButton(
                     onPressed: () => controller.nextPage(
                         duration: const Duration(milliseconds: 500),
                         curve: Curves.easeOut),
-                    child: const Text("Próximo"),
+                    child: const Text(
+                      "PRÓXIMO",
+                      style: TextStyle(color: corDeAcao),
+                    ),
                   ),
                 ],
               ),

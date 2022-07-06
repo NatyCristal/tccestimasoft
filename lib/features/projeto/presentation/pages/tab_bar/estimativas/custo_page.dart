@@ -139,7 +139,6 @@ class EstimativaCustoPage extends StatelessWidget {
                         prazoFinal = element.prazoTotal;
                       }
                     }
-                    //FIXME: passar apropriadamente o przo
 
                     storeEstimativaCusto.prazo = prazoFinal / 30;
                   },

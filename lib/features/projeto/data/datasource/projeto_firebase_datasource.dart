@@ -145,12 +145,12 @@ class ProjetoFirebaseDatasource extends ProjetoDatasource {
         List<dynamic> teste = value['membros'];
 
         for (var element in teste) {
-          if (element != uidUsuario) {}
-          membros.add(element);
+          if (element != uidUsuario) {
+            membros.add(element);
+          }
         }
 
-        if (membros.length > 1) {
-          membros.remove(uidUsuario);
+        if (membros.isNotEmpty && value["admin"] != uidUsuario) {
           Map<String, List<String>> mapFinal;
           mapFinal = {"membros": membros};
 
@@ -162,6 +162,35 @@ class ProjetoFirebaseDatasource extends ProjetoDatasource {
             await usuarioDatasource.removerProjetoUsuario(
                 uidUsuario, uidProjeto);
           });
+        } else if (membros.isNotEmpty && value["admin"] == uidUsuario) {
+          String nomeNovoAdmin = "";
+          await firestore
+              .collection("Usuarios")
+              .doc(membros[0].toString())
+              .get()
+              .then((value) {
+            nomeNovoAdmin = value["nome"];
+          });
+
+          Map<String, String> mapFinal = {
+            "admin": membros[0].toString(),
+            "nomeAdministrador": nomeNovoAdmin
+          };
+
+          await firestore
+              .collection("Projetos")
+              .doc(uidProjeto)
+              .update(mapFinal);
+
+          Map<String, List<String>> mapFinal2;
+          mapFinal2 = {"membros": membros};
+
+          await firestore
+              .collection("Projetos")
+              .doc(uidProjeto)
+              .update(mapFinal2);
+
+          await usuarioDatasource.removerProjetoUsuario(uidUsuario, uidProjeto);
         } else {
           await usuarioDatasource
               .removerProjetoUsuario(uidUsuario, uidProjeto)
