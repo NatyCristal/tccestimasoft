@@ -55,7 +55,7 @@ dependencies:
   flutter_launcher_icons: ^0.9.3
   smooth_page_indicator: ^1.0.0+2
   url_launcher: ^6.1.2
-
+  syncfusion_flutter_pdfviewer: ^19.4.41-beta
 
 
 

@@ -10,6 +10,7 @@ import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation
 import 'package:estimasoft/features/projeto/presentation/pages/exibicao_estimativa_page.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/exibicao_projetos_compartilhados_page.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/exibicao_meus_projetos_page.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/guia_contagem.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/insercao_arquivos_projetos_page.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/instrucoes_page.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/notificacao_page.dart';
@@ -52,10 +53,13 @@ class ProjetoModule extends Module {
   @override
   List<ModularRoute> get routes => [
         ChildRoute('/',
-            child: (context, args) => InformacoesInstrucoesPage(),
+            child: (context, args) => const InformacoesInstrucoesPage(),
             guards: [AutorizadoGuard()]),
         ChildRoute('/notificacoes',
             child: (context, args) => const NotificacaoPage(),
+            guards: [AutorizadoGuard()]),
+        ChildRoute('/exibir-pdf',
+            child: (context, args) => const GuiaContagemSobre(),
             guards: [AutorizadoGuard()]),
         ChildRoute('/sobre',
             child: (context, args) => const SobrePage(),

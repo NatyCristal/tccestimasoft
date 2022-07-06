@@ -1,6 +1,7 @@
 import 'package:estimasoft/core/shared/utils.dart';
 import 'package:estimasoft/core/shared/utils/tamanho_tela.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:url_launcher/link.dart';
 
 import '../../../../core/shared/utils/cores_fontes.dart';
@@ -45,28 +46,23 @@ class SobrePage extends StatelessWidget {
                     const SizedBox(
                       height: 30,
                     ),
-                    Link(
-                      uri: Uri.parse(
-                          'https://firebasestorage.googleapis.com/v0/b/estimasoft-e45b0.appspot.com/o/JhoneySLopes-JoseLBraga-2011.pdf?alt=media&token=2abc378d-6062-44b9-8882-a51918cde96c'),
-                      builder: (context, openLink) => GestureDetector(
-                        onTap: openLink,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
-                            Text(
-                              "Guia Prático em Análise de Ponto de Função",
-                              style: TextStyle(
-                                  fontWeight: Fontes.weightTextoNormal),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              'https://bityli.com/VFLHnr',
-                              style: TextStyle(color: Colors.blueAccent),
-                            ),
-                          ],
-                        ),
+                    const Text(
+                      "Guia Prático em Análise ponto de função",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        Modular.to.pushNamed("exibir-pdf");
+                      },
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(
+                              corDeFundoBotaoPrimaria)),
+                      child: const Text(
+                        "Exibir Guia de Contgem",
+                        style: TextStyle(color: corDeTextoBotaoPrimaria),
                       ),
                     ),
                     const SizedBox(
