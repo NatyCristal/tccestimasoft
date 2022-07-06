@@ -32,8 +32,8 @@ class SobrePage extends StatelessWidget {
             children: [
               Container(
                 decoration: BoxDecoration(
-                    //color: corDeAcao.withOpacity(0.3),
-                    borderRadius: arredondamentoBordas),
+                  borderRadius: arredondamentoBordas,
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

@@ -107,7 +107,7 @@ class ProjetoMenuPage extends StatelessWidget {
                       bottom: TabBar(
                         indicatorWeight: 2,
                         overlayColor: MaterialStateProperty.all(background),
-                        indicatorColor: corDeFundoBotaoSecundaria,
+                        indicatorColor: corDeAcao,
                         tabs: const [
                           Tab(
                             text: "Indicativa",
@@ -193,7 +193,7 @@ class ProjetoMenuPage extends StatelessWidget {
                           bottom: TabBar(
                             indicatorWeight: 2,
                             overlayColor: MaterialStateProperty.all(background),
-                            indicatorColor: corDeFundoBotaoSecundaria,
+                            indicatorColor: corDeAcao,
                             tabs: const [
                               Tab(
                                 text: "Esforço",
