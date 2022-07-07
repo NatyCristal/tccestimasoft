@@ -45,6 +45,23 @@ mixin _$StoreContagemIndicativa on StoreContagemIndicativaBase, Store {
     });
   }
 
+  late final _$descricaoControllerAtom = Atom(
+      name: 'StoreContagemIndicativaBase.descricaoController',
+      context: context);
+
+  @override
+  TextEditingController get descricaoController {
+    _$descricaoControllerAtom.reportRead();
+    return super.descricaoController;
+  }
+
+  @override
+  set descricaoController(TextEditingController value) {
+    _$descricaoControllerAtom.reportWrite(value, super.descricaoController, () {
+      super.descricaoController = value;
+    });
+  }
+
   late final _$carregouBotaoAtom =
       Atom(name: 'StoreContagemIndicativaBase.carregouBotao', context: context);
 
@@ -125,6 +142,22 @@ mixin _$StoreContagemIndicativa on StoreContagemIndicativaBase, Store {
     });
   }
 
+  late final _$descricaoAtom =
+      Atom(name: 'StoreContagemIndicativaBase.descricao', context: context);
+
+  @override
+  String get descricao {
+    _$descricaoAtom.reportRead();
+    return super.descricao;
+  }
+
+  @override
+  set descricao(String value) {
+    _$descricaoAtom.reportWrite(value, super.descricao, () {
+      super.descricao = value;
+    });
+  }
+
   late final _$totalPfAtom =
       Atom(name: 'StoreContagemIndicativaBase.totalPf', context: context);
 
@@ -199,11 +232,12 @@ mixin _$StoreContagemIndicativa on StoreContagemIndicativaBase, Store {
   }
 
   @override
-  dynamic editar(String nomeDaFuncao, String tipoFuncao) {
+  dynamic editar(String nomeDaFuncaoalterada, String tipoFuncao,
+      String descricaoALterada) {
     final _$actionInfo = _$StoreContagemIndicativaBaseActionController
         .startAction(name: 'StoreContagemIndicativaBase.editar');
     try {
-      return super.editar(nomeDaFuncao, tipoFuncao);
+      return super.editar(nomeDaFuncaoalterada, tipoFuncao, descricaoALterada);
     } finally {
       _$StoreContagemIndicativaBaseActionController.endAction(_$actionInfo);
     }
@@ -236,11 +270,13 @@ mixin _$StoreContagemIndicativa on StoreContagemIndicativaBase, Store {
     return '''
 contagemIndicativaValida: ${contagemIndicativaValida},
 nomeDaFuncaoController: ${nomeDaFuncaoController},
+descricaoController: ${descricaoController},
 carregouBotao: ${carregouBotao},
 alteracoes: ${alteracoes},
 carregou: ${carregou},
 nomeDafuncao: ${nomeDafuncao},
 tipoFuncao: ${tipoFuncao},
+descricao: ${descricao},
 totalPf: ${totalPf},
 tamanhoListaALI: ${tamanhoListaALI},
 tamanhoListaAIE: ${tamanhoListaAIE}

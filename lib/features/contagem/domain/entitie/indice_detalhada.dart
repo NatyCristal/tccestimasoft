@@ -1,4 +1,5 @@
 class IndiceDetalhada {
+  String descricao;
   int pontoDeFuncao;
   String complexidade;
   String nome;
@@ -7,7 +8,8 @@ class IndiceDetalhada {
   int quantidadeTrsEArs;
 
   IndiceDetalhada(
-      {required this.pontoDeFuncao,
+      {required this.descricao,
+      required this.pontoDeFuncao,
       required this.complexidade,
       required this.nome,
       required this.tipo,

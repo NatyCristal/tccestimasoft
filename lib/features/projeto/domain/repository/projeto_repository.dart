@@ -31,4 +31,7 @@ abstract class ProjetoRepository {
   Future removerArquivo(String uidProjeto, String nomeArquivo);
 
   Future realizarLoginArquivo(String uidProjeto, String nomeArquivo);
+
+  Future<Either<Falha, String>> adicionarDescricaoProjeto(
+      String uidProjeto, String descricao);
 }

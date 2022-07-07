@@ -7,6 +7,8 @@ import 'package:estimasoft/features/contagem/domain/usecase/contagem_detalhada.d
 import 'package:estimasoft/features/contagem/domain/usecase/contagem_estimada.dart';
 import 'package:estimasoft/features/contagem/domain/usecase/contagem_indicativa.dart';
 
+import 'data/model/indice_descricao_contagens_model.dart';
+
 class ContagemController {
   final ContagemIndicativaUseCase _contagemIndicativaUseCase;
   final ContagemEstimadaUsecase _contagemEstimadaUseCase;
@@ -75,8 +77,12 @@ class ContagemController {
     return contagensIndicativas;
   }
 
-  Future salvarContagemIndicativa(List<String> alis, List<String> aies,
-      int totalPF, String uidProjeto, String uidUsuario) async {
+  Future salvarContagemIndicativa(
+      List<IndiceDescricaoContagenModel> alis,
+      List<IndiceDescricaoContagenModel> aies,
+      int totalPF,
+      String uidProjeto,
+      String uidUsuario) async {
     var resultado = await _contagemIndicativaUseCase.salvarContagemIndicativa(
         alis, aies, uidProjeto, uidUsuario, totalPF);
     var retorno = "";
@@ -116,11 +122,11 @@ class ContagemController {
   }
 
   Future salvarContagemEstimada(
-      List<String> aie,
-      List<String> ali,
-      List<String> ce,
-      List<String> ee,
-      List<String> se,
+      List<IndiceDescricaoContagenModel> aie,
+      List<IndiceDescricaoContagenModel> ali,
+      List<IndiceDescricaoContagenModel> ce,
+      List<IndiceDescricaoContagenModel> ee,
+      List<IndiceDescricaoContagenModel> se,
       int totalPF,
       String uidProjeto,
       String uidUsuario) async {

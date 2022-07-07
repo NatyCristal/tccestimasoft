@@ -1,11 +1,12 @@
+import 'package:estimasoft/features/contagem/data/model/indice_descricao_contagens_model.dart';
 import 'package:estimasoft/features/contagem/domain/entitie/contagem_indicativa_entitie.dart';
 
 class ContagemIndicativaModelFirebase extends ContagemIndicativaEntitie {
   ContagemIndicativaModelFirebase(
       {required bool compartilhada,
       required int totalPf,
-      required List<String> aie,
-      required List<String> ali})
+      required List<IndiceDescricaoContagenModel> aie,
+      required List<IndiceDescricaoContagenModel> ali})
       : super(
           compartilhada: compartilhada,
           totalPf: totalPf,
@@ -17,27 +18,27 @@ class ContagemIndicativaModelFirebase extends ContagemIndicativaEntitie {
     return {
       "Compartilhada": compartilhada,
       "total": totalPf,
-      'AIE': aie,
-      'ALI': ali,
+      'AIE': {for (var e in aie) aie.indexOf(e).toString(): e.toMap()},
+      'ALI': {for (var e in ali) ali.indexOf(e).toString(): e.toMap()},
     };
   }
 
   factory ContagemIndicativaModelFirebase.fromMap(
     Map<String, dynamic> map,
   ) {
-    List<String> listaAIE = [];
-    List<String> listaALI = [];
+    List<IndiceDescricaoContagenModel> listaAIE = [];
+    List<IndiceDescricaoContagenModel> listaALI = [];
 
-    List<dynamic>? lista = map["AIE"];
+    Map<String, dynamic>? lista = map["AIE"];
+    lista!.forEach((key, value) {
+      listaAIE.add(IndiceDescricaoContagenModel.fromMap(value));
+    });
 
-    for (var element in lista!) {
-      listaAIE.add(element);
-    }
+    Map<String, dynamic>? lista2 = map["ALI"];
 
-    List<dynamic>? lista2 = map["ALI"];
-    for (var element in lista2!) {
-      listaALI.add(element);
-    }
+    lista2!.forEach((key, value) {
+      listaALI.add(IndiceDescricaoContagenModel.fromMap(value));
+    });
 
     return ContagemIndicativaModelFirebase(
         compartilhada: map["Compartilhada"] ?? false,

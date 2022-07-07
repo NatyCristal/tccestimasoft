@@ -51,6 +51,16 @@ class ContagemIndicativa extends StatelessWidget {
                               labelText: "Nome da função"),
                         );
                       }),
+                      Observer(builder: (context) {
+                        return TextField(
+                          controller: store.descricaoController,
+                          onChanged: (value) {
+                            store.descricao = value.toString();
+                          },
+                          decoration: const InputDecoration(
+                              labelText: "Descrição da função"),
+                        );
+                      }),
                       Container(
                         alignment: Alignment.centerLeft,
                         child: Observer(builder: (context) {
@@ -243,10 +253,16 @@ class ContagemIndicativa extends StatelessWidget {
                                 shrinkWrap: true,
                                 itemCount: store.tamanhoListaALI,
                                 itemBuilder: (context, index) {
-                                  String nomeFuncao = store.alis[index];
+                                  String nomeFuncao =
+                                      store.alis[index].nomeFuncao;
+
+                                  String descricao =
+                                      store.alis[index].descricao;
                                   return CardAdicaoContagem(
+                                    descricao: descricao,
                                     editar: () {
-                                      store.editar(nomeFuncao, "ALI");
+                                      store.editar(
+                                          nomeFuncao, "ALI", descricao);
                                     },
                                     remover: () {
                                       store.removerFuncao(nomeFuncao, "ALI");
@@ -280,11 +296,15 @@ class ContagemIndicativa extends StatelessWidget {
                                 shrinkWrap: true,
                                 itemCount: store.tamanhoListaAIE,
                                 itemBuilder: (context, index) {
-                                  String nomeFuncao = store.aies[index];
-
+                                  String nomeFuncao =
+                                      store.aies[index].nomeFuncao;
+                                  String descricao =
+                                      store.aies[index].descricao;
                                   return CardAdicaoContagem(
+                                    descricao: descricao,
                                     editar: () {
-                                      store.editar(nomeFuncao, "AIE");
+                                      store.editar(
+                                          nomeFuncao, "AIE", descricao);
                                     },
                                     remover: () {
                                       store.removerFuncao(nomeFuncao, "AIE");

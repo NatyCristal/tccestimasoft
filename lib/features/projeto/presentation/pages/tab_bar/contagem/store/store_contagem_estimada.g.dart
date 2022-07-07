@@ -27,6 +27,22 @@ mixin _$StoreContagemEstimada on StoreContagemEstimadaBase, Store {
     });
   }
 
+  late final _$descricaoAtom =
+      Atom(name: 'StoreContagemEstimadaBase.descricao', context: context);
+
+  @override
+  String get descricao {
+    _$descricaoAtom.reportRead();
+    return super.descricao;
+  }
+
+  @override
+  set descricao(String value) {
+    _$descricaoAtom.reportWrite(value, super.descricao, () {
+      super.descricao = value;
+    });
+  }
+
   late final _$nomeDaFuncaoControllerAtom = Atom(
       name: 'StoreContagemEstimadaBase.nomeDaFuncaoController',
       context: context);
@@ -42,6 +58,22 @@ mixin _$StoreContagemEstimada on StoreContagemEstimadaBase, Store {
     _$nomeDaFuncaoControllerAtom
         .reportWrite(value, super.nomeDaFuncaoController, () {
       super.nomeDaFuncaoController = value;
+    });
+  }
+
+  late final _$descricaoControllerAtom = Atom(
+      name: 'StoreContagemEstimadaBase.descricaoController', context: context);
+
+  @override
+  TextEditingController get descricaoController {
+    _$descricaoControllerAtom.reportRead();
+    return super.descricaoController;
+  }
+
+  @override
+  set descricaoController(TextEditingController value) {
+    _$descricaoControllerAtom.reportWrite(value, super.descricaoController, () {
+      super.descricaoController = value;
     });
   }
 
@@ -193,13 +225,13 @@ mixin _$StoreContagemEstimada on StoreContagemEstimadaBase, Store {
       Atom(name: 'StoreContagemEstimadaBase.ee', context: context);
 
   @override
-  List<String> get ee {
+  List<IndiceDescricaoContagenModel> get ee {
     _$eeAtom.reportRead();
     return super.ee;
   }
 
   @override
-  set ee(List<String> value) {
+  set ee(List<IndiceDescricaoContagenModel> value) {
     _$eeAtom.reportWrite(value, super.ee, () {
       super.ee = value;
     });
@@ -209,13 +241,13 @@ mixin _$StoreContagemEstimada on StoreContagemEstimadaBase, Store {
       Atom(name: 'StoreContagemEstimadaBase.se', context: context);
 
   @override
-  List<String> get se {
+  List<IndiceDescricaoContagenModel> get se {
     _$seAtom.reportRead();
     return super.se;
   }
 
   @override
-  set se(List<String> value) {
+  set se(List<IndiceDescricaoContagenModel> value) {
     _$seAtom.reportWrite(value, super.se, () {
       super.se = value;
     });
@@ -225,13 +257,13 @@ mixin _$StoreContagemEstimada on StoreContagemEstimadaBase, Store {
       Atom(name: 'StoreContagemEstimadaBase.ce', context: context);
 
   @override
-  List<String> get ce {
+  List<IndiceDescricaoContagenModel> get ce {
     _$ceAtom.reportRead();
     return super.ce;
   }
 
   @override
-  set ce(List<String> value) {
+  set ce(List<IndiceDescricaoContagenModel> value) {
     _$ceAtom.reportWrite(value, super.ce, () {
       super.ce = value;
     });
@@ -268,22 +300,23 @@ mixin _$StoreContagemEstimada on StoreContagemEstimadaBase, Store {
   }
 
   @override
-  dynamic removerFuncao(String nomeDaFuncao, dynamic tipoFuncao) {
+  dynamic removerFuncao(String nomeDaFuncaoDelete, dynamic tipoFuncao) {
     final _$actionInfo = _$StoreContagemEstimadaBaseActionController
         .startAction(name: 'StoreContagemEstimadaBase.removerFuncao');
     try {
-      return super.removerFuncao(nomeDaFuncao, tipoFuncao);
+      return super.removerFuncao(nomeDaFuncaoDelete, tipoFuncao);
     } finally {
       _$StoreContagemEstimadaBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  dynamic editar(String nomeDaFuncao, String tipoFuncao) {
+  dynamic editar(
+      String nomeDaFuncaoDelete, String tipoFuncao, String descricaoEditada) {
     final _$actionInfo = _$StoreContagemEstimadaBaseActionController
         .startAction(name: 'StoreContagemEstimadaBase.editar');
     try {
-      return super.editar(nomeDaFuncao, tipoFuncao);
+      return super.editar(nomeDaFuncaoDelete, tipoFuncao, descricaoEditada);
     } finally {
       _$StoreContagemEstimadaBaseActionController.endAction(_$actionInfo);
     }
@@ -315,7 +348,9 @@ mixin _$StoreContagemEstimada on StoreContagemEstimadaBase, Store {
   String toString() {
     return '''
 contagemEstimadaValida: ${contagemEstimadaValida},
+descricao: ${descricao},
 nomeDaFuncaoController: ${nomeDaFuncaoController},
+descricaoController: ${descricaoController},
 carregouBotao: ${carregouBotao},
 alteracoes: ${alteracoes},
 carregou: ${carregou},

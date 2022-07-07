@@ -30,4 +30,26 @@ class CriarProjetoUsecase {
 
     return result;
   }
+
+  Future<Either<Falha, String>> adicionarDescricaoProjeto(
+      String uidProjeto, String descricao) async {
+    var result =
+        await repository.adicionarDescricaoProjeto(uidProjeto, descricao);
+    var erro = "";
+
+    result.fold((l) {
+      erro = l.mensagem;
+    }, (r) {});
+
+    if (result.isLeft()) {
+      switch (erro) {
+        default:
+          return Left(
+            ErroProjeto(mensagem: "Algo de errado aconteceu!"),
+          );
+      }
+    }
+
+    return result;
+  }
 }

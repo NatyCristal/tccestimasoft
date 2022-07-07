@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:estimasoft/core/auth/usuario_autenticado.dart';
 import 'package:estimasoft/features/contagem/contagem_controller.dart';
+import 'package:estimasoft/features/contagem/data/model/indice_descricao_contagens_model.dart';
 import 'package:estimasoft/features/contagem/domain/entitie/contagem_detalhada_entitie.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/custo_entity.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/equipe_entity.dart';
@@ -69,6 +70,20 @@ class ProjetoController {
     }, (r) {
       projetos.add(r);
       retorno = "Projeto cadastrado com sucesso!";
+    });
+
+    return retorno;
+  }
+
+  adicionarDescricaoProjeto(String uidProjeto, String descricao) async {
+    var resultado = await _criarProjetoUsecase.adicionarDescricaoProjeto(
+        uidProjeto, descricao);
+    var retorno = "";
+
+    resultado.fold((l) {
+      retorno = l.mensagem;
+    }, (r) {
+      retorno = r;
     });
 
     return retorno;
@@ -180,6 +195,7 @@ class ProjetoController {
     // final usuarioLogado = Modular.get<UsuarioAutenticado>();
     var resultado = await _arquivosUsecase.uparArquivos(uidProjeto, file);
 
+    // ignore: prefer_typing_uninitialized_variables
     var retorno;
     resultado.fold((l) {
       l.mensagem;
@@ -215,11 +231,11 @@ class ProjetoController {
 
   Future salvarContagem(
       String nomeContagem,
-      List<String> alis,
-      List<String> aies,
-      List<String> ce,
-      List<String> ee,
-      List<String> se,
+      List<IndiceDescricaoContagenModel> alis,
+      List<IndiceDescricaoContagenModel> aies,
+      List<IndiceDescricaoContagenModel> ce,
+      List<IndiceDescricaoContagenModel> ee,
+      List<IndiceDescricaoContagenModel> se,
       String uidProjeto,
       int totalPF) async {
     final usuarioLogado = Modular.get<UsuarioAutenticado>();
@@ -230,7 +246,13 @@ class ProjetoController {
     switch (nomeContagem) {
       case "Indicativa":
         resultado = await contagemController.salvarContagemIndicativa(
-            alis, aies, totalPF, uidProjeto, usuarioLogado.store.uid);
+
+            //fix me tipo
+            alis,
+            aies,
+            totalPF,
+            uidProjeto,
+            usuarioLogado.store.uid);
         break;
       case "Estimada":
         resultado = await contagemController.salvarContagemEstimada(aies, alis,

@@ -2,6 +2,7 @@ import 'package:estimasoft/core/auth/usuario_autenticado.dart';
 import 'package:estimasoft/core/shared/anim/lotties.dart';
 import 'package:estimasoft/core/shared/utils.dart';
 import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
+import 'package:estimasoft/core/shared/utils/snackbar.dart';
 import 'package:estimasoft/core/shared/utils/tamanho_tela.dart';
 import 'package:estimasoft/features/projeto/domain/entitie/projeto_entitie.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/home/store/store_projeto_index_menu.dart';
@@ -15,7 +16,7 @@ import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativ
 import 'package:estimasoft/features/projeto/presentation/projeto_controller.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
+
 import 'package:flutter_modular/flutter_modular.dart';
 
 class IndexHome extends StatelessWidget {
@@ -47,365 +48,443 @@ class IndexHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Observer(builder: (context) {
-      return !store.carregou
-          ? FutureBuilder(
-              future: controller.carregarTodosDados(projeto.uidProjeto,
-                  Modular.get<UsuarioAutenticado>().store.uid),
-              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                switch (snapshot.connectionState) {
-                  case ConnectionState.done:
-                    if (snapshot.hasError) {
-                      store.carregou = true;
-                      return const Text("Erro");
-                    }
-                    if (snapshot.hasData && !store.carregou) {
-                      indicativa.iniciarSessao(
-                          controller.contagemController.contagemIndicativa);
-                      estimada.iniciarSessao(
-                          controller.contagemController.contagemEstimada);
-                      detalhada.iniciarSessao(
-                          controller.contagemController.contagemDetalhada);
-                      detalhada.receberDados(
-                        estimada.contagemEstimadaValida,
-                        indicativa.contagemIndicativaValida,
-                      );
+    store.descricaoProjetoController.text = projeto.descricao;
 
-                      esforco.buscarListaEsforc(
-                          controller.estimativasController.esforcos);
-                      prazo.buscarListaPrazp(
-                          controller.estimativasController.prazos);
-                      equipe.buscarListaEquipe(
-                          controller.estimativasController.equipe);
-                      custo.buscarListaCusto(
-                          controller.estimativasController.custos);
-
-                      controller.resultadoController
-                          .recuperarResultados(projeto.uidProjeto);
-                      controller.recuperarArquivos(projeto.uidProjeto);
-
-                      store.carregou = true;
-                    }
-
-                    break;
-                  case ConnectionState.active:
-                    return const Carregando();
-                  case ConnectionState.none:
+    return !store.carregou
+        ? FutureBuilder(
+            future: controller.carregarTodosDados(projeto.uidProjeto,
+                Modular.get<UsuarioAutenticado>().store.uid),
+            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.done:
+                  if (snapshot.hasError) {
                     store.carregou = true;
-                    return const Text("Erro nenhum");
-                  case ConnectionState.waiting:
-                    return const Carregando();
-                }
-                return const SizedBox();
-              },
-            )
-          : Container(
-              padding: paddingPagePrincipal,
-              height: TamanhoTela.height(context, 1),
-              width: double.infinity,
-              child: SingleChildScrollView(
-                controller: scrollControllerLateral,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          "Projeto criado por:",
-                          style: TextStyle(
-                            color: corCorpoTexto,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 200,
-                          child: Text(
-                            controller.membrosProjetoAtual
-                                .singleWhere((element) {
-                              return element.uid == projeto.admin;
-                            }).nome,
-                            textAlign: TextAlign.end,
-                            style: const TextStyle(
-                                color: corCorpoTexto,
+                    return const Text("Erro");
+                  }
+                  if (snapshot.hasData && !store.carregou) {
+                    indicativa.iniciarSessao(
+                        controller.contagemController.contagemIndicativa);
+                    estimada.iniciarSessao(
+                        controller.contagemController.contagemEstimada);
+                    detalhada.iniciarSessao(
+                        controller.contagemController.contagemDetalhada);
+                    detalhada.receberDados(
+                      estimada.contagemEstimadaValida,
+                      indicativa.contagemIndicativaValida,
+                    );
+
+                    esforco.buscarListaEsforc(
+                        controller.estimativasController.esforcos);
+                    prazo.buscarListaPrazp(
+                        controller.estimativasController.prazos);
+                    equipe.buscarListaEquipe(
+                        controller.estimativasController.equipe);
+                    custo.buscarListaCusto(
+                        controller.estimativasController.custos);
+
+                    controller.resultadoController
+                        .recuperarResultados(projeto.uidProjeto);
+                    controller.recuperarArquivos(projeto.uidProjeto);
+
+                    store.carregou = true;
+
+                    if (snapshot.hasData) {
+                      return newMethod(context);
+                    }
+                  }
+
+                  break;
+                case ConnectionState.active:
+                  return const Carregando();
+                case ConnectionState.none:
+                  return const Text("Erro nenhum");
+                case ConnectionState.waiting:
+                  return const Carregando();
+              }
+              return const SizedBox();
+            },
+          )
+        : newMethod(context);
+  }
+
+  Container newMethod(BuildContext context) {
+    return Container(
+      padding: paddingPagePrincipal,
+      height: TamanhoTela.height(context, 1),
+      width: double.infinity,
+      child: SingleChildScrollView(
+        controller: scrollControllerLateral,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  "Projeto criado por:",
+                  style: TextStyle(
+                    color: corCorpoTexto,
+                  ),
+                ),
+                SizedBox(
+                  width: 200,
+                  child: Text(
+                    controller.membrosProjetoAtual.singleWhere((element) {
+                      return element.uid == projeto.admin;
+                    }).nome,
+                    textAlign: TextAlign.end,
+                    style: const TextStyle(
+                        color: corCorpoTexto,
+                        fontWeight: Fontes.weightTextoNormal),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  "Data criação",
+                  style: TextStyle(
+                    color: corCorpoTexto,
+                  ),
+                ),
+                SizedBox(
+                  width: 200,
+                  child: Text(
+                    projeto.dataCriacao,
+                    textAlign: TextAlign.end,
+                    style: const TextStyle(
+                      color: corCorpoTexto,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
+            const SizedBox(
+              height: 30,
+            ),
+
+            const Text("Descrição do projeto",
+                style: TextStyle(
+                    color: corTituloTexto,
+                    fontWeight: Fontes.weightTextoNormal)),
+
+            Modular.get<UsuarioAutenticado>().store.uid == projeto.admin
+                ? Column(
+                    children: [
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      TextField(
+                        onChanged: (value) {
+                          store.descricaoProjeto = value.toString();
+                        },
+                        controller: store.descricaoProjetoController,
+                        maxLines: 8,
+                        decoration: const InputDecoration.collapsed(
+                            filled: true,
+                            fillColor: corDeFundoBotaoSecundaria,
+                            hintText: "Adicione uma descrição ao projeto."),
+                      ),
+                      ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(
+                                  corDeFundoBotaoPrimaria)),
+                          onPressed: () async {
+                            var resultado =
+                                await controller.adicionarDescricaoProjeto(
+                                    projeto.uidProjeto, store.descricaoProjeto);
+
+                            AlertaSnack.exbirSnackBar(context, resultado);
+                          },
+                          child: const Text(
+                            "Salvar Descrição",
+                            style: TextStyle(
+                                color: corDeTextoBotaoPrimaria,
                                 fontWeight: Fontes.weightTextoNormal),
-                          ),
+                          ))
+                    ],
+                  )
+                : Column(
+                    children: [
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(5),
+                        height: 80,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: corDeFundoBotaoSecundaria,
                         ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          "Data criação",
-                          style: TextStyle(
-                            color: corCorpoTexto,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 200,
+                        child: SingleChildScrollView(
                           child: Text(
-                            projeto.dataCriacao,
-                            textAlign: TextAlign.end,
+                            projeto.descricao,
                             style: const TextStyle(
-                              color: corCorpoTexto,
+                              color: corTituloTexto,
                             ),
                           ),
                         ),
-                      ],
-                    ),
-
-                    ElevatedButton(
-                      onPressed: () {
-                        Modular.to.pushNamed("inserir-arquivos",
-                            arguments: [projeto, store]);
-                      },
-                      child: const Text(
-                        "Visualizar Arquivos do projeto",
                       ),
-                      style: ButtonStyle(
-                          overlayColor: MaterialStateProperty.all(
-                              Colors.white.withOpacity(0.4)),
-                          backgroundColor: MaterialStateProperty.all(
-                              corDeAcao.withOpacity(0.7))),
-                    ),
+                    ],
+                  ),
 
-                    // const SizedBox(
-                    //   height: 20,
-                    // ),
-                    // const Text(
-                    //   "Compartilhados",
-                    //   style: TextStyle(
-                    //     color: corCorpoTexto,
-                    //   ),
-                    // ),
-                    // const SizedBox(
-                    //   height: 10,
-                    // ),
-                    // Observer(builder: (context) {
-                    //   store.houveMudancaEmResultado;
+            //TODO Tela arquivo
 
-                    //   return controller
-                    //               .resultadoController.contagensIndicativas.isEmpty &&
-                    //           controller.resultadoController.custosCompartilhados
-                    //               .isEmpty &&
-                    //           controller.resultadoController.equipesCompartilhados
-                    //               .isEmpty &&
-                    //           controller.resultadoController
-                    //               .esforcosCompartilhados.isEmpty &&
-                    //           controller.resultadoController
-                    //               .prazosCompartilhados.isEmpty
-                    //       ? const Center(
-                    //           child: SizedBox(
-                    //               child: Text(
-                    //                   "Não tem Estimativas Compartilhadas")))
-                    //       : const SizedBox();
-                    //   // CardEsforcosCompartilhados(
-                    //   //     uidProjeto: projeto.uidProjeto,
-                    //   //     scrollController: scrollControllerLateral);
-                    // }),
-                    // const Text(
-                    //   "Arquivos e Documentos",
-                    //   style: TextStyle(
-                    //     color: corCorpoTexto,
-                    //   ),
-                    // ),
-                    // Container(
-                    //   decoration: BoxDecoration(
-                    //       color: background.withOpacity(0.5),
-                    //       borderRadius: arredondamentoBordas),
-                    //   height: 70,
-                    //   width: TamanhoTela.width(context, 1),
-                    //   child: Row(
-                    //     children: [
-                    //       Container(
-                    //         margin: const EdgeInsets.symmetric(horizontal: 4),
-                    //         decoration: BoxDecoration(
-                    //           color: Colors.white,
-                    //           borderRadius: BorderRadius.circular(20),
-                    //           boxShadow: [
-                    //             BoxShadow(
-                    //               color: Colors.grey.withOpacity(0.5),
-                    //               spreadRadius: 1,
-                    //               blurRadius: 7,
-                    //               offset: const Offset(0, 3),
-                    //             ),
-                    //           ],
-                    //         ),
-                    //         height: 30,
-                    //         width: 30,
-                    //         child: GestureDetector(
-                    //           onTap: () {
-                    //             Modular.to.pushNamed("inserir-arquivos",
-                    //                 arguments: [projeto, store]);
-                    //           },
-                    //           child: const Icon(
-                    //             Icons.add,
-                    //             size: 20,
-                    //             color: Colors.black,
-                    //           ),
-                    //         ),
-                    //       ),
-                    // Observer(builder: (context) {
-                    //   store.houveMudancaEmArquivosEdocumentos;
+            // ElevatedButton(
+            //   onPressed: () {
+            //     Modular.to
+            //         .pushNamed("inserir-arquivos", arguments: [projeto, store]);
+            //   },
+            //   child: const Text(
+            //     "Visualizar Arquivos do projeto",
+            //   ),
+            //   style: ButtonStyle(
+            //       overlayColor:
+            //           MaterialStateProperty.all(Colors.white.withOpacity(0.4)),
+            //       backgroundColor:
+            //           MaterialStateProperty.all(corDeAcao.withOpacity(0.7))),
+            // ),
 
-                    // return SizedBox(
-                    //     width: TamanhoTela.width(context, 0.8),
-                    //     child: FutureBuilder<ListResult>(
-                    //       future: controller
-                    //           .recuperarArquivos(projeto.uidProjeto),
-                    //       builder: (BuildContext context, snapshot) {
-                    //         switch (snapshot.connectionState) {
-                    //           case ConnectionState.done:
-                    //             if (snapshot.hasError) {
-                    //               return const Text("Erro");
-                    //             }
-                    //             if (snapshot.hasData) {
-                    //               final arquivosConcretos =
-                    //                   snapshot.data!.items;
-                    //               return arquivosConcretos.isNotEmpty
-                    //                   ? ListView.builder(
-                    //                       controller:
-                    //                           scrollControllerLateral,
-                    //                       shrinkWrap: false,
-                    //                       itemCount: controller
-                    //                           .arquivos.items.length,
-                    //                       scrollDirection:
-                    //                           Axis.horizontal,
-                    //                       itemBuilder:
-                    //                           (context, index) {
-                    //                         final arquivo =
-                    //                             arquivosConcretos[
-                    //                                 index];
-                    //                         return GestureDetector(
-                    //                           onTap: () => Modular.to
-                    //                               .pushNamed(
-                    //                                   "inserir-arquivos",
-                    //                                   arguments: [
-                    //                                 projeto,
-                    //                                 store
-                    //                               ]),
-                    //                           child: Column(
-                    //                             mainAxisAlignment:
-                    //                                 MainAxisAlignment
-                    //                                     .center,
-                    //                             crossAxisAlignment:
-                    //                                 CrossAxisAlignment
-                    //                                     .center,
-                    //                             children: [
-                    //                               const SizedBox(
-                    //                                 width: 80,
-                    //                                 child: Icon(
-                    //                                   Icons
-                    //                                       .drive_file_move,
-                    //                                   size: 40,
-                    //                                   color:
-                    //                                       Colors.grey,
-                    //                                 ),
-                    //                               ),
-                    //                               Row(
-                    //                                 mainAxisAlignment:
-                    //                                     MainAxisAlignment
-                    //                                         .start,
-                    //                                 crossAxisAlignment:
-                    //                                     CrossAxisAlignment
-                    //                                         .start,
-                    //                                 children: [
-                    //                                   SizedBox(
-                    //                                     width: 60,
-                    //                                     child: Text(
-                    //                                       arquivo
-                    //                                           .fullPath
-                    //                                           .split(
-                    //                                               "/")
-                    //                                           .last
-                    //                                           .split(
-                    //                                               ".")[0],
-                    //                                       textAlign:
-                    //                                           TextAlign
-                    //                                               .right,
-                    //                                       maxLines: 1,
-                    //                                       overflow:
-                    //                                           TextOverflow
-                    //                                               .ellipsis,
-                    //                                       style: (const TextStyle(
-                    //                                           fontSize:
-                    //                                               tamanhoTextoCorpoTexto,
-                    //                                           color:
-                    //                                               corCorpoTexto)),
-                    //                                     ),
-                    //                                   ),
-                    //                                   SizedBox(
-                    //                                     width: 40,
-                    //                                     child: Text(
-                    //                                       "." +
-                    //                                           arquivo
-                    //                                               .fullPath
-                    //                                               .split(
-                    //                                                   ".")[1],
-                    //                                       maxLines: 1,
-                    //                                       style: (const TextStyle(
-                    //                                           fontSize:
-                    //                                               tamanhoTextoCorpoTexto,
-                    //                                           color:
-                    //                                               corCorpoTexto)),
-                    //                                     ),
-                    //                                   ),
-                    //                                 ],
-                    //                               ),
-                    //                             ],
-                    //                           ),
-                    //                         );
-                    //                       },
-                    //                     )
-                    //                   : GestureDetector(
-                    //                       onTap: () {
-                    //                         Modular.to.pushNamed(
-                    //                           "inserir-arquivos",
-                    //                           arguments: [
-                    //                             projeto,
-                    //                             store
-                    //                           ],
-                    //                         );
-                    //                       },
-                    //                       child: Container(
-                    //                           margin: const EdgeInsets
-                    //                                   .symmetric(
-                    //                               horizontal: 5),
-                    //                           child: const Text(
-                    //                               "Clique para adicionar arquivos",
-                    //                               style: TextStyle(
-                    //                                   fontSize:
-                    //                                       tamanhoTextoCorpoTexto,
-                    //                                   color:
-                    //                                       corCorpoTexto))),
-                    //                     );
-                    //             }
+            // const SizedBox(
+            //   height: 20,
+            // ),
+            // const Text(
+            //   "Compartilhados",
+            //   style: TextStyle(
+            //     color: corCorpoTexto,
+            //   ),
+            // ),
+            // const SizedBox(
+            //   height: 10,
+            // ),
+            // Observer(builder: (context) {
+            //   store.houveMudancaEmResultado;
 
-                    //             break;
-                    //           case ConnectionState.active:
-                    //             return const SizedBox();
-                    //           case ConnectionState.none:
-                    //             return const Text("Erro nenhum");
-                    //           case ConnectionState.waiting:
-                    //             return const SizedBox(); // Carregando();
-                    //         }
-                    //         return const SizedBox();
-                    //       },
-                    //     ));
-                    //   })
-                    //     ],
-                    //   ),
-                    // ),
-                    // const SizedBox(
-                    //   height: 10,
-                    // ),
-                  ],
-                ),
-              ),
-            );
-    });
+            //   return controller
+            //               .resultadoController.contagensIndicativas.isEmpty &&
+            //           controller.resultadoController.custosCompartilhados
+            //               .isEmpty &&
+            //           controller.resultadoController.equipesCompartilhados
+            //               .isEmpty &&
+            //           controller.resultadoController
+            //               .esforcosCompartilhados.isEmpty &&
+            //           controller.resultadoController
+            //               .prazosCompartilhados.isEmpty
+            //       ? const Center(
+            //           child: SizedBox(
+            //               child: Text(
+            //                   "Não tem Estimativas Compartilhadas")))
+            //       : const SizedBox();
+            //   // CardEsforcosCompartilhados(
+            //   //     uidProjeto: projeto.uidProjeto,
+            //   //     scrollController: scrollControllerLateral);
+            // }),
+            // const Text(
+            //   "Arquivos e Documentos",
+            //   style: TextStyle(
+            //     color: corCorpoTexto,
+            //   ),
+            // ),
+            // Container(
+            //   decoration: BoxDecoration(
+            //       color: background.withOpacity(0.5),
+            //       borderRadius: arredondamentoBordas),
+            //   height: 70,
+            //   width: TamanhoTela.width(context, 1),
+            //   child: Row(
+            //     children: [
+            //       Container(
+            //         margin: const EdgeInsets.symmetric(horizontal: 4),
+            //         decoration: BoxDecoration(
+            //           color: Colors.white,
+            //           borderRadius: BorderRadius.circular(20),
+            //           boxShadow: [
+            //             BoxShadow(
+            //               color: Colors.grey.withOpacity(0.5),
+            //               spreadRadius: 1,
+            //               blurRadius: 7,
+            //               offset: const Offset(0, 3),
+            //             ),
+            //           ],
+            //         ),
+            //         height: 30,
+            //         width: 30,
+            //         child: GestureDetector(
+            //           onTap: () {
+            //             Modular.to.pushNamed("inserir-arquivos",
+            //                 arguments: [projeto, store]);
+            //           },
+            //           child: const Icon(
+            //             Icons.add,
+            //             size: 20,
+            //             color: Colors.black,
+            //           ),
+            //         ),
+            //       ),
+            // Observer(builder: (context) {
+            //   store.houveMudancaEmArquivosEdocumentos;
+
+            // return SizedBox(
+            //     width: TamanhoTela.width(context, 0.8),
+            //     child: FutureBuilder<ListResult>(
+            //       future: controller
+            //           .recuperarArquivos(projeto.uidProjeto),
+            //       builder: (BuildContext context, snapshot) {
+            //         switch (snapshot.connectionState) {
+            //           case ConnectionState.done:
+            //             if (snapshot.hasError) {
+            //               return const Text("Erro");
+            //             }
+            //             if (snapshot.hasData) {
+            //               final arquivosConcretos =
+            //                   snapshot.data!.items;
+            //               return arquivosConcretos.isNotEmpty
+            //                   ? ListView.builder(
+            //                       controller:
+            //                           scrollControllerLateral,
+            //                       shrinkWrap: false,
+            //                       itemCount: controller
+            //                           .arquivos.items.length,
+            //                       scrollDirection:
+            //                           Axis.horizontal,
+            //                       itemBuilder:
+            //                           (context, index) {
+            //                         final arquivo =
+            //                             arquivosConcretos[
+            //                                 index];
+            //                         return GestureDetector(
+            //                           onTap: () => Modular.to
+            //                               .pushNamed(
+            //                                   "inserir-arquivos",
+            //                                   arguments: [
+            //                                 projeto,
+            //                                 store
+            //                               ]),
+            //                           child: Column(
+            //                             mainAxisAlignment:
+            //                                 MainAxisAlignment
+            //                                     .center,
+            //                             crossAxisAlignment:
+            //                                 CrossAxisAlignment
+            //                                     .center,
+            //                             children: [
+            //                               const SizedBox(
+            //                                 width: 80,
+            //                                 child: Icon(
+            //                                   Icons
+            //                                       .drive_file_move,
+            //                                   size: 40,
+            //                                   color:
+            //                                       Colors.grey,
+            //                                 ),
+            //                               ),
+            //                               Row(
+            //                                 mainAxisAlignment:
+            //                                     MainAxisAlignment
+            //                                         .start,
+            //                                 crossAxisAlignment:
+            //                                     CrossAxisAlignment
+            //                                         .start,
+            //                                 children: [
+            //                                   SizedBox(
+            //                                     width: 60,
+            //                                     child: Text(
+            //                                       arquivo
+            //                                           .fullPath
+            //                                           .split(
+            //                                               "/")
+            //                                           .last
+            //                                           .split(
+            //                                               ".")[0],
+            //                                       textAlign:
+            //                                           TextAlign
+            //                                               .right,
+            //                                       maxLines: 1,
+            //                                       overflow:
+            //                                           TextOverflow
+            //                                               .ellipsis,
+            //                                       style: (const TextStyle(
+            //                                           fontSize:
+            //                                               tamanhoTextoCorpoTexto,
+            //                                           color:
+            //                                               corCorpoTexto)),
+            //                                     ),
+            //                                   ),
+            //                                   SizedBox(
+            //                                     width: 40,
+            //                                     child: Text(
+            //                                       "." +
+            //                                           arquivo
+            //                                               .fullPath
+            //                                               .split(
+            //                                                   ".")[1],
+            //                                       maxLines: 1,
+            //                                       style: (const TextStyle(
+            //                                           fontSize:
+            //                                               tamanhoTextoCorpoTexto,
+            //                                           color:
+            //                                               corCorpoTexto)),
+            //                                     ),
+            //                                   ),
+            //                                 ],
+            //                               ),
+            //                             ],
+            //                           ),
+            //                         );
+            //                       },
+            //                     )
+            //                   : GestureDetector(
+            //                       onTap: () {
+            //                         Modular.to.pushNamed(
+            //                           "inserir-arquivos",
+            //                           arguments: [
+            //                             projeto,
+            //                             store
+            //                           ],
+            //                         );
+            //                       },
+            //                       child: Container(
+            //                           margin: const EdgeInsets
+            //                                   .symmetric(
+            //                               horizontal: 5),
+            //                           child: const Text(
+            //                               "Clique para adicionar arquivos",
+            //                               style: TextStyle(
+            //                                   fontSize:
+            //                                       tamanhoTextoCorpoTexto,
+            //                                   color:
+            //                                       corCorpoTexto))),
+            //                     );
+            //             }
+
+            //             break;
+            //           case ConnectionState.active:
+            //             return const SizedBox();
+            //           case ConnectionState.none:
+            //             return const Text("Erro nenhum");
+            //           case ConnectionState.waiting:
+            //             return const SizedBox(); // Carregando();
+            //         }
+            //         return const SizedBox();
+            //       },
+            //     ));
+            //   })
+            //     ],
+            //   ),
+            // ),
+            // const SizedBox(
+            //   height: 10,
+            // ),
+          ],
+        ),
+      ),
+    );
   }
 }

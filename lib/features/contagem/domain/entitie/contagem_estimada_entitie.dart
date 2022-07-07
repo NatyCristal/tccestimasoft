@@ -1,11 +1,13 @@
+import 'package:estimasoft/features/contagem/data/model/indice_descricao_contagens_model.dart';
+
 class ContagemEstimadaEntitie {
   String uidUsuario = "";
   bool compartilhada;
-  final List<String> aie;
-  final List<String> ali;
-  final List<String> ee;
-  final List<String> ce;
-  final List<String> se;
+  final List<IndiceDescricaoContagenModel> aie;
+  final List<IndiceDescricaoContagenModel> ali;
+  final List<IndiceDescricaoContagenModel> ee;
+  final List<IndiceDescricaoContagenModel> ce;
+  final List<IndiceDescricaoContagenModel> se;
 
   final int totalPF;
 

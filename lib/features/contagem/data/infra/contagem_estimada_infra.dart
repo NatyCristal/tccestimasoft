@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
+import 'package:estimasoft/features/contagem/data/model/indice_descricao_contagens_model.dart';
 import 'package:estimasoft/features/contagem/domain/entitie/contagem_estimada_entitie.dart';
 import '../../domain/repository/contagem_estimada_repository.dart';
 import '../datasource/interfaces/contagem_estimada.dart';
@@ -11,11 +12,11 @@ class ContagemEstimadaInfra extends ContagemEstimadaRepository {
 
   @override
   Future<Either<String, ContagemEstimadaEntitie>> salvar(
-      List<String> aie,
-      List<String> ali,
-      List<String> ce,
-      List<String> ee,
-      List<String> se,
+      List<IndiceDescricaoContagenModel> aie,
+      List<IndiceDescricaoContagenModel> ali,
+      List<IndiceDescricaoContagenModel> ce,
+      List<IndiceDescricaoContagenModel> ee,
+      List<IndiceDescricaoContagenModel> se,
       String uidProjeto,
       String uidUsuario,
       int totalPF) async {

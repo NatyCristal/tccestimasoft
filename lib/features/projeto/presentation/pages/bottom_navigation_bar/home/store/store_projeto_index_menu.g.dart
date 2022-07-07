@@ -9,6 +9,56 @@ part of 'store_projeto_index_menu.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$StoreProjetosIndexMenu on StoreProjetosIndexMenuBase, Store {
+  late final _$descricaoProjetoControllerAtom = Atom(
+      name: 'StoreProjetosIndexMenuBase.descricaoProjetoController',
+      context: context);
+
+  @override
+  TextEditingController get descricaoProjetoController {
+    _$descricaoProjetoControllerAtom.reportRead();
+    return super.descricaoProjetoController;
+  }
+
+  @override
+  set descricaoProjetoController(TextEditingController value) {
+    _$descricaoProjetoControllerAtom
+        .reportWrite(value, super.descricaoProjetoController, () {
+      super.descricaoProjetoController = value;
+    });
+  }
+
+  late final _$descricaoProjetoAtom = Atom(
+      name: 'StoreProjetosIndexMenuBase.descricaoProjeto', context: context);
+
+  @override
+  String get descricaoProjeto {
+    _$descricaoProjetoAtom.reportRead();
+    return super.descricaoProjeto;
+  }
+
+  @override
+  set descricaoProjeto(String value) {
+    _$descricaoProjetoAtom.reportWrite(value, super.descricaoProjeto, () {
+      super.descricaoProjeto = value;
+    });
+  }
+
+  late final _$linkDownloadAtom =
+      Atom(name: 'StoreProjetosIndexMenuBase.linkDownload', context: context);
+
+  @override
+  String get linkDownload {
+    _$linkDownloadAtom.reportRead();
+    return super.linkDownload;
+  }
+
+  @override
+  set linkDownload(String value) {
+    _$linkDownloadAtom.reportWrite(value, super.linkDownload, () {
+      super.linkDownload = value;
+    });
+  }
+
   late final _$carregouAtom =
       Atom(name: 'StoreProjetosIndexMenuBase.carregou', context: context);
 
@@ -80,6 +130,9 @@ mixin _$StoreProjetosIndexMenu on StoreProjetosIndexMenuBase, Store {
   @override
   String toString() {
     return '''
+descricaoProjetoController: ${descricaoProjetoController},
+descricaoProjeto: ${descricaoProjeto},
+linkDownload: ${linkDownload},
 carregou: ${carregou},
 index: ${index},
 houveMudancaEmResultado: ${houveMudancaEmResultado},

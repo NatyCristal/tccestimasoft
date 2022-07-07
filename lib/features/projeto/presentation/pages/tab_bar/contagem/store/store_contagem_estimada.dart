@@ -1,4 +1,5 @@
 import 'package:estimasoft/core/shared/utils/snackbar.dart';
+import 'package:estimasoft/features/contagem/data/model/indice_descricao_contagens_model.dart';
 import 'package:estimasoft/features/contagem/domain/entitie/contagem_estimada_entitie.dart';
 import 'package:estimasoft/features/projeto/presentation/projeto_controller.dart';
 import 'package:flutter/widgets.dart';
@@ -23,7 +24,13 @@ abstract class StoreContagemEstimadaBase with Store {
   );
 
   @observable
+  String descricao = "";
+
+  @observable
   TextEditingController nomeDaFuncaoController = TextEditingController();
+
+  @observable
+  TextEditingController descricaoController = TextEditingController();
 
   @observable
   bool carregouBotao = false;
@@ -53,11 +60,11 @@ abstract class StoreContagemEstimadaBase with Store {
   int tamanhoListaCE = 0;
 
   @observable
-  List<String> ee = [];
+  List<IndiceDescricaoContagenModel> ee = [];
   @observable
-  List<String> se = [];
+  List<IndiceDescricaoContagenModel> se = [];
   @observable
-  List<String> ce = [];
+  List<IndiceDescricaoContagenModel> ce = [];
 
   @observable
   int totalIndicativa = 0;
@@ -73,7 +80,12 @@ abstract class StoreContagemEstimadaBase with Store {
     switch (tipoFuncao) {
       case "EE":
         if (!temIgual) {
-          ee.add(nomeDafuncao);
+          ee.add(IndiceDescricaoContagenModel(
+              complexidade: "Média",
+              nomeFuncao: nomeDafuncao,
+              descricao: descricao,
+              quantidadePF: 4,
+              tipoFuncao: "EE"));
           totalPf += 4;
           tamanhoListaEE = ee.length;
           alteracoes = true;
@@ -81,7 +93,12 @@ abstract class StoreContagemEstimadaBase with Store {
         break;
       case "SE":
         if (!temIgual) {
-          se.add(nomeDafuncao);
+          se.add(IndiceDescricaoContagenModel(
+              complexidade: "Média",
+              nomeFuncao: nomeDafuncao,
+              descricao: descricao,
+              quantidadePF: 5,
+              tipoFuncao: "SE"));
           totalPf += 5;
           tamanhoListaSE = se.length;
           alteracoes = true;
@@ -89,7 +106,12 @@ abstract class StoreContagemEstimadaBase with Store {
         break;
       case "CE":
         if (!temIgual) {
-          ce.add(nomeDafuncao);
+          ce.add(IndiceDescricaoContagenModel(
+              complexidade: "Média",
+              nomeFuncao: nomeDafuncao,
+              descricao: descricao,
+              quantidadePF: 4,
+              tipoFuncao: "CE"));
           totalPf += 4;
           tamanhoListaCE = ce.length;
           alteracoes = true;
@@ -101,26 +123,28 @@ abstract class StoreContagemEstimadaBase with Store {
 
     nomeDafuncao = "";
     nomeDaFuncaoController.text = "";
+    descricao = "";
+    descricaoController.text = "";
     tipoFuncao = "CE";
   }
 
   @action
-  removerFuncao(String nomeDaFuncao, tipoFuncao) {
+  removerFuncao(String nomeDaFuncaoDelete, tipoFuncao) {
     switch (tipoFuncao) {
       case "CE":
-        ce.remove(nomeDaFuncao);
+        ce.removeWhere((element) => element.nomeFuncao == nomeDaFuncaoDelete);
         tamanhoListaCE = ce.length;
         totalPf -= 4;
         alteracoes = true;
         break;
       case "SE":
-        se.remove(nomeDaFuncao);
+        se.removeWhere((element) => element.nomeFuncao == nomeDaFuncaoDelete);
         tamanhoListaSE = se.length;
         totalPf -= 5;
         alteracoes = true;
         break;
       case "EE":
-        ee.remove(nomeDaFuncao);
+        ee.removeWhere((element) => element.nomeFuncao == nomeDaFuncaoDelete);
         tamanhoListaEE = ee.length;
         totalPf -= 4;
         alteracoes = true;
@@ -131,22 +155,23 @@ abstract class StoreContagemEstimadaBase with Store {
   }
 
   @action
-  editar(String nomeDaFuncao, String tipoFuncao) {
+  editar(
+      String nomeDaFuncaoDelete, String tipoFuncao, String descricaoEditada) {
     switch (tipoFuncao) {
       case "CE":
-        ce.remove(nomeDaFuncao);
+        ce.removeWhere((element) => element.nomeFuncao == nomeDaFuncaoDelete);
         tamanhoListaCE = ce.length;
         totalPf -= 4;
         alteracoes = true;
         break;
       case "SE":
-        se.remove(nomeDaFuncao);
+        se.removeWhere((element) => element.nomeFuncao == nomeDaFuncaoDelete);
         tamanhoListaSE = se.length;
         totalPf -= 5;
         alteracoes = true;
         break;
       case "EE":
-        ee.remove(nomeDaFuncao);
+        ee.removeWhere((element) => element.nomeFuncao == nomeDaFuncaoDelete);
         tamanhoListaEE = ee.length;
         totalPf -= 4;
         alteracoes = true;
@@ -154,25 +179,28 @@ abstract class StoreContagemEstimadaBase with Store {
       default:
     }
 
+    descricaoController.text = descricaoEditada;
+    descricao = descricaoEditada;
     alteracoes = true;
-    nomeDaFuncaoController.text = nomeDaFuncao;
+    nomeDaFuncaoController.text = nomeDaFuncaoDelete;
+    nomeDafuncao = nomeDaFuncaoDelete;
     this.tipoFuncao = tipoFuncao;
   }
 
   validar(String nomeFuncao) {
     for (var element in ee) {
-      if (element == nomeDafuncao) {
+      if (element.nomeFuncao == nomeDafuncao) {
         return true;
       }
     }
     for (var element in se) {
-      if (element == nomeDafuncao) {
+      if (element.nomeFuncao == nomeDafuncao) {
         return true;
       }
     }
 
     for (var element in ce) {
-      if (element == nomeDafuncao) {
+      if (element.nomeFuncao == nomeDafuncao) {
         return true;
       }
     }

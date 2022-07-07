@@ -1,13 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:estimasoft/features/contagem/data/datasource/interfaces/contagem_indicativa.dart';
 import 'package:estimasoft/features/contagem/data/model/contagem_indicativa_firebase_model.dart';
+import 'package:estimasoft/features/contagem/data/model/indice_descricao_contagens_model.dart';
 import 'package:estimasoft/features/contagem/domain/entitie/contagem_indicativa_entitie.dart';
 
 class ContagemIndicativaFirebase extends ContagemIndicativaDatasource {
   final firestore = FirebaseFirestore.instance;
   @override
-  Future<ContagemIndicativaEntitie> salvar(List<String> alis, List<String> aies,
-      String uidProjeto, String iudUsuario, int totalPf) async {
+  Future<ContagemIndicativaEntitie> salvar(
+      List<IndiceDescricaoContagenModel> alis,
+      List<IndiceDescricaoContagenModel> aies,
+      String uidProjeto,
+      String iudUsuario,
+      int totalPf) async {
     ContagemIndicativaModelFirebase contagem = ContagemIndicativaModelFirebase(
         aie: aies, ali: alis, totalPf: totalPf, compartilhada: false);
 

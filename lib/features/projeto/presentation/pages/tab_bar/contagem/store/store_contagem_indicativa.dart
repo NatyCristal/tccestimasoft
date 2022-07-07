@@ -1,5 +1,6 @@
 import 'package:estimasoft/core/shared/utils/snackbar.dart';
 import 'package:estimasoft/features/contagem/data/model/contagem_indicativa_firebase_model.dart';
+import 'package:estimasoft/features/contagem/data/model/indice_descricao_contagens_model.dart';
 import 'package:estimasoft/features/contagem/domain/entitie/contagem_indicativa_entitie.dart';
 import 'package:estimasoft/features/projeto/presentation/projeto_controller.dart';
 import 'package:flutter/widgets.dart';
@@ -25,6 +26,9 @@ abstract class StoreContagemIndicativaBase with Store {
   TextEditingController nomeDaFuncaoController = TextEditingController();
 
   @observable
+  TextEditingController descricaoController = TextEditingController();
+
+  @observable
   bool carregouBotao = false;
 
   @observable
@@ -39,9 +43,12 @@ abstract class StoreContagemIndicativaBase with Store {
   @observable
   String tipoFuncao = "ALI";
 
-  List<String> alis = [];
+  @observable
+  String descricao = "";
 
-  List<String> aies = [];
+  List<IndiceDescricaoContagenModel> alis = [];
+
+  List<IndiceDescricaoContagenModel> aies = [];
 
   @observable
   int totalPf = 0;
@@ -57,12 +64,12 @@ abstract class StoreContagemIndicativaBase with Store {
     bool temIgual = false;
 
     for (var element in alis) {
-      if (element == nomeDafuncao) {
+      if (element.nomeFuncao == nomeDafuncao) {
         temIgual = true;
       }
     }
     for (var element in aies) {
-      if (element == nomeDafuncao) {
+      if (element.nomeFuncao == nomeDafuncao) {
         temIgual = true;
       }
     }
@@ -74,7 +81,12 @@ abstract class StoreContagemIndicativaBase with Store {
     switch (tipoFuncao) {
       case "ALI":
         if (!temIgual) {
-          alis.add(nomeDafuncao);
+          alis.add(IndiceDescricaoContagenModel(
+              complexidade: "Baixa",
+              nomeFuncao: nomeDafuncao,
+              descricao: descricao,
+              quantidadePF: 35,
+              tipoFuncao: tipoFuncao));
           totalPf += 35;
           tamanhoListaALI = alis.length;
           alteracoes = true;
@@ -82,7 +94,12 @@ abstract class StoreContagemIndicativaBase with Store {
         break;
       case "AIE":
         if (!temIgual) {
-          aies.add(nomeDafuncao);
+          aies.add(IndiceDescricaoContagenModel(
+              complexidade: "Baixa",
+              nomeFuncao: nomeDafuncao,
+              descricao: descricao,
+              quantidadePF: 15,
+              tipoFuncao: tipoFuncao));
           totalPf += 15;
           tamanhoListaAIE = aies.length;
           alteracoes = true;
@@ -95,19 +112,21 @@ abstract class StoreContagemIndicativaBase with Store {
     nomeDafuncao = "";
     nomeDaFuncaoController.text = "";
     tipoFuncao = "ALI";
+    descricao = "";
+    descricaoController.text = "";
   }
 
   @action
   removerFuncao(String nomeDaFuncao, tipoFuncao) {
     switch (tipoFuncao) {
       case "ALI":
-        alis.remove(nomeDaFuncao);
+        alis.removeWhere((element) => element.nomeFuncao == nomeDaFuncao);
         tamanhoListaALI = alis.length;
         totalPf -= 35;
         alteracoes = true;
         break;
       case "AIE":
-        aies.remove(nomeDaFuncao);
+        aies.removeWhere((element) => element.nomeFuncao == nomeDaFuncao);
         tamanhoListaAIE = aies.length;
         totalPf -= 15;
         alteracoes = true;
@@ -117,16 +136,19 @@ abstract class StoreContagemIndicativaBase with Store {
   }
 
   @action
-  editar(String nomeDaFuncao, String tipoFuncao) {
+  editar(String nomeDaFuncaoalterada, String tipoFuncao,
+      String descricaoALterada) {
     switch (tipoFuncao) {
       case "ALI":
-        alis.remove(nomeDaFuncao);
+        alis.removeWhere(
+            (element) => element.nomeFuncao == nomeDaFuncaoalterada);
         tamanhoListaALI = alis.length;
         totalPf -= 35;
         alteracoes = true;
         break;
       case "AIE":
-        aies.remove(nomeDaFuncao);
+        aies.removeWhere(
+            (element) => element.nomeFuncao == nomeDaFuncaoalterada);
         tamanhoListaAIE = aies.length;
         totalPf -= 15;
         alteracoes = true;
@@ -134,8 +156,11 @@ abstract class StoreContagemIndicativaBase with Store {
       default:
     }
 
+    descricaoController.text = descricaoALterada;
+    descricao = descricaoALterada;
     alteracoes = true;
-    nomeDaFuncaoController.text = nomeDaFuncao;
+    nomeDaFuncaoController.text = nomeDaFuncaoalterada;
+    nomeDafuncao = nomeDaFuncaoalterada;
     this.tipoFuncao = tipoFuncao;
   }
 

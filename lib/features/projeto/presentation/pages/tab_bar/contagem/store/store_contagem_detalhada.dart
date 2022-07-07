@@ -179,7 +179,8 @@ abstract class StoreContagemDetalhadaBase with Store {
     List<IndiceDetalhadaModel> listaFuncaoDados = [];
     for (var element in contagemEstimada.ce) {
       listaTransacional.add(IndiceDetalhadaModel(
-          nome: element,
+          descricao: element.descricao,
+          nome: element.nomeFuncao,
           tipo: "CE",
           quantidadeTRs: 1,
           quantidadeTrsEArs: 0,
@@ -189,7 +190,8 @@ abstract class StoreContagemDetalhadaBase with Store {
 
     for (var element in contagemEstimada.ee) {
       listaTransacional.add(IndiceDetalhadaModel(
-          nome: element,
+          descricao: element.descricao,
+          nome: element.nomeFuncao,
           tipo: "EE",
           quantidadeTRs: 1,
           quantidadeTrsEArs: 0,
@@ -198,7 +200,8 @@ abstract class StoreContagemDetalhadaBase with Store {
     }
     for (var element in contagemEstimada.se) {
       listaTransacional.add(IndiceDetalhadaModel(
-          nome: element,
+          descricao: element.descricao,
+          nome: element.nomeFuncao,
           tipo: "SE",
           quantidadeTRs: 1,
           quantidadeTrsEArs: 0,
@@ -211,7 +214,8 @@ abstract class StoreContagemDetalhadaBase with Store {
 
     for (var element in contagemIndicativa.aie) {
       listaFuncaoDados.add(IndiceDetalhadaModel(
-          nome: element,
+          descricao: element.descricao,
+          nome: element.nomeFuncao,
           tipo: "AIE",
           quantidadeTRs: 1,
           quantidadeTrsEArs: 0,
@@ -221,7 +225,8 @@ abstract class StoreContagemDetalhadaBase with Store {
 
     for (var element in contagemIndicativa.ali) {
       listaFuncaoDados.add(IndiceDetalhadaModel(
-          nome: element,
+          descricao: element.descricao,
+          nome: element.nomeFuncao,
           tipo: "ALI",
           quantidadeTRs: 1,
           quantidadeTrsEArs: 0,

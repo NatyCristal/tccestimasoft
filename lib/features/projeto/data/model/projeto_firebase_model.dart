@@ -3,14 +3,15 @@ import '../../domain/entitie/projeto_entitie.dart';
 
 class ProjetoFirebaseModel extends ProjetoEntitie {
   ProjetoFirebaseModel({
-    requerid,
-    nomeAdminstrador,
+    required descricao,
+    required nomeAdminstrador,
     required dataCriacao,
     required nomeProjeto,
     required membros,
     required admin,
     required uidProjeto,
   }) : super(
+          descricao: descricao,
           nomeAdministrador: nomeAdminstrador,
           admin: admin,
           nomeProjeto: nomeProjeto,
@@ -21,6 +22,7 @@ class ProjetoFirebaseModel extends ProjetoEntitie {
 
   Map<String, dynamic> toMap() {
     return {
+      "descricao": descricao,
       "nomeAdministrador": nomeAdministrador,
       "admin": admin,
       'nomeProjeto': nomeProjeto,
@@ -33,6 +35,7 @@ class ProjetoFirebaseModel extends ProjetoEntitie {
       Map<String, dynamic> map, String projetoUid) {
     List<UsuarioEntitie> membros = [];
     return ProjetoFirebaseModel(
+        descricao: map["descricao"] ?? "",
         nomeAdminstrador: map["nomeAdministrador"] ?? "",
         uidProjeto: projetoUid,
         admin: map["admin"],

@@ -39,6 +39,7 @@ class ProjetoFirebaseDatasource extends ProjetoDatasource {
         email: "", nome: "", uid: uidUsuario, urlFoto: ""));
 
     ProjetoFirebaseModel novoProjeto = ProjetoFirebaseModel(
+        descricao: "",
         nomeAdminstrador: nomeAdministrador,
         uidProjeto: uidProjeto,
         admin: uidUsuario,
@@ -62,6 +63,7 @@ class ProjetoFirebaseDatasource extends ProjetoDatasource {
     List<String> listaMembros = [];
 
     ProjetoFirebaseModel novoProjeto = ProjetoFirebaseModel(
+        descricao: "",
         nomeAdminstrador: "",
         uidProjeto: "",
         admin: "",
@@ -289,6 +291,15 @@ class ProjetoFirebaseDatasource extends ProjetoDatasource {
     }
 
     return url;
+  }
+
+  @override
+  Future<String> adicionarDescricaoProjeto(
+      String uidProjeto, String descricao) async {
+    Map<String, String> map = {"descricao": descricao};
+
+    await firestore.collection("Projetos").doc(uidProjeto).update(map);
+    return "Descrição salva com sucesso!";
   }
 }
 

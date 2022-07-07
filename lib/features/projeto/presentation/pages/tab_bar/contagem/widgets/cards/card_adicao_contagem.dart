@@ -4,6 +4,7 @@ import 'package:estimasoft/core/shared/utils/tamanho_tela.dart';
 import 'package:flutter/material.dart';
 
 class CardAdicaoContagem extends StatelessWidget {
+  final String descricao;
   final Function remover;
   final Function editar;
   final String complexidade;
@@ -20,7 +21,8 @@ class CardAdicaoContagem extends StatelessWidget {
       this.ehExibicao = false,
       this.complexidade = "default",
       required this.remover,
-      required this.editar})
+      required this.editar,
+      required this.descricao})
       : super(key: key);
 
   @override
@@ -98,6 +100,21 @@ class CardAdicaoContagem extends StatelessWidget {
                         ),
                       ),
                     ),
+              Row(
+                children: [
+                  SizedBox(
+                    width: 220,
+                    child: Text(
+                      "Descrição:   $descricao",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: ehExibicao ? Colors.grey : corTituloTexto,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
           Row(

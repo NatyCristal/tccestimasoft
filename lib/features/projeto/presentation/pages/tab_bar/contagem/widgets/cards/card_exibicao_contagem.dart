@@ -1,12 +1,13 @@
 import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
 import 'package:estimasoft/core/shared/utils/tamanho_tela.dart';
+import 'package:estimasoft/features/contagem/data/model/indice_descricao_contagens_model.dart';
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 class CardExibicaoContagem extends StatelessWidget {
   final String tipo;
   final String tituloCard;
-  final List<String> storeIndicativa;
+  final List<IndiceDescricaoContagenModel> storeIndicativa;
   const CardExibicaoContagem({
     Key? key,
     required this.storeIndicativa,
@@ -30,7 +31,7 @@ class CardExibicaoContagem extends StatelessWidget {
                 shrinkWrap: true,
                 itemCount: storeIndicativa.length,
                 itemBuilder: (context, index) {
-                  String nomeFuncao = storeIndicativa[index];
+                  String nomeFuncao = storeIndicativa[index].nomeFuncao;
                   return Row(children: [
                     SizedBox(
                       width: 120,

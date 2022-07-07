@@ -56,22 +56,47 @@ class GeradorPdf {
 
     final pdf = pw.Document();
 
+    Map<int, pw.FixedColumnWidth> mapTabela1 = {
+      0: const pw.FixedColumnWidth(100),
+      1: const pw.FixedColumnWidth(200),
+      2: const pw.FixedColumnWidth(250),
+      3: const pw.FixedColumnWidth(120),
+      4: const pw.FixedColumnWidth(120),
+      5: const pw.FixedColumnWidth(160),
+      6: const pw.FixedColumnWidth(240),
+    };
+
+    Map<int, pw.FixedColumnWidth> mapTabela2 = {
+      0: const pw.FixedColumnWidth(100),
+      1: const pw.FixedColumnWidth(200),
+      2: const pw.FixedColumnWidth(250),
+      3: const pw.FixedColumnWidth(120),
+      4: const pw.FixedColumnWidth(120),
+      5: const pw.FixedColumnWidth(160),
+      6: const pw.FixedColumnWidth(240),
+    };
+
+    Map<int, pw.FixedColumnWidth> mapTabela3 = {};
+    Map<int, pw.FixedColumnWidth> mapTabela4 = {};
+
     pdf.addPage(pw.MultiPage(build: (context) {
       return [
         pw.Header(child: ConstrutorPdf.cabecalho(data, imageAsset)),
         ConstrutorPdf.linha("Nome do projeto: ", projeto.nomeProjeto),
+        ConstrutorPdf.linha("Descrição: ", projeto.descricao),
         ConstrutorPdf.linha("Responsável pela contagem: ",
             Modular.get<UsuarioAutenticado>().store.nome),
         ConstrutorPdf.tituloSessao("1. Contagem detalhada"),
         ConstrutorPdf.subtitulo("1.1. Função de Dados"),
         ConstrutorPdf.tabela([
           'Tipo',
-          'Nome das Funções',
-          '# Tipos de\n Resgistro',
-          '# Tipos de\n Dados',
-          'Complexidade',
+          'Função',
+          'Descrição',
+          '# TRs',
+          '# TDs',
+          'Complex.',
           'Comtribuição',
-        ], _dadosFuncaoDeDados),
+        ], _dadosFuncaoDeDados, mapTabela1),
         ConstrutorPdf.totalTabela(
             "Contribuição total das funções de dados: ",
             _storeDetalhada.contagemDetalhadaValida.totalFuncaoDados
@@ -80,12 +105,13 @@ class GeradorPdf {
         ConstrutorPdf.subtitulo('1.2. Funções Transacionais'),
         ConstrutorPdf.tabela([
           'Tipo',
-          'Nome das Funções',
-          '# Arquivos\n Referenciados ',
-          '# Tipos de\n Dados',
-          'Complexidade',
+          'Função',
+          'Descrição',
+          '# ARs ',
+          '# TDs',
+          'Complex.',
           'Comtribuição',
-        ], _dadosFuncaoTransacional),
+        ], _dadosFuncaoTransacional, mapTabela2),
         ConstrutorPdf.totalTabela(
             "Contribuição total das funções transacionais: ",
             _storeDetalhada.contagemDetalhadaValida.totalFuncaoTransacional
@@ -98,6 +124,7 @@ class GeradorPdf {
         ConstrutorPdf.tituloSessao('2. Parâmetros de entrada'),
         ConstrutorPdf.tabelaSemTitulo(
           [
+            [],
             ['Produtividade (H/PF)', _esforcoDetalhado.produtividadeEquipe],
             ['Dias úteis no mês', "21"],
             [
@@ -115,43 +142,41 @@ class GeradorPdf {
           ],
         ),
         ConstrutorPdf.tituloSessao('3. Resumo por tipo de contagem'),
-        ConstrutorPdf.tabela(
+        ConstrutorPdf.tabela([
+          'Tipo de contagem',
+          'Tamanho (PF)',
+          'Custo estimado',
+        ], [
           [
-            'Tipo de contagem',
-            'Tamanho (PF)',
-            'Custo estimado',
+            "Indicativa",
+            _storeIndicativa.contagemIndicativaValida.totalPf.toString(),
+            Formatadores.formatadorMonetario(
+                (double.parse(_custoDetalhado.custoPF) *
+                        _storeIndicativa.totalPf)
+                    .toStringAsFixed(2)),
           ],
           [
-            [
-              "Indicativa",
-              _storeIndicativa.contagemIndicativaValida.totalPf.toString(),
-              Formatadores.formatadorMonetario(
-                  (double.parse(_custoDetalhado.custoPF) *
-                          _storeIndicativa.totalPf)
-                      .toStringAsFixed(2)),
-            ],
-            [
-              "Estimada",
-              _storeEstimada.contagemEstimadaValida.totalPF.toString(),
-              Formatadores.formatadorMonetario(
-                  (double.parse(_custoDetalhado.custoPF) *
-                          _storeEstimada.contagemEstimadaValida.totalPF)
-                      .toStringAsFixed(2)),
-            ],
-            [
-              "Detalhada",
-              _storeDetalhada.contagemDetalhadaValida.totalPf.toString(),
-              Formatadores.formatadorMonetario(
-                  (double.parse(_custoDetalhado.custoPF) *
-                          _storeDetalhada.contagemDetalhadaValida.totalPf)
-                      .toStringAsFixed(2)),
-            ]
+            "Estimada",
+            _storeEstimada.contagemEstimadaValida.totalPF.toString(),
+            Formatadores.formatadorMonetario(
+                (double.parse(_custoDetalhado.custoPF) *
+                        _storeEstimada.contagemEstimadaValida.totalPF)
+                    .toStringAsFixed(2)),
           ],
-        ),
+          [
+            "Detalhada",
+            _storeDetalhada.contagemDetalhadaValida.totalPf.toString(),
+            Formatadores.formatadorMonetario(
+                (double.parse(_custoDetalhado.custoPF) *
+                        _storeDetalhada.contagemDetalhadaValida.totalPf)
+                    .toStringAsFixed(2)),
+          ]
+        ], mapTabela3),
         ConstrutorPdf.tituloSessao(
             '4. Estimativas baseadas na contagem Detalhada'),
         ConstrutorPdf.tabelaSemTitulo(
           [
+            [],
             ['Esforço (horas)', _esforcoDetalhado.esforcoTotal],
             ['Prazo (em meses)', _prazoDetalhado.prazoTotal / 30],
             ['Prazo (em semanas)', _prazoDetalhado.prazoTotal / 30 * 4],
@@ -173,6 +198,7 @@ class GeradorPdf {
             '5. Estimativas de Custo para contagem Detalhada'),
         ConstrutorPdf.tabelaSemTitulo(
           [
+            [],
             [
               'Tamanho funcional (PF)',
               _storeDetalhada.contagemDetalhadaValida.totalPf
@@ -208,80 +234,71 @@ class GeradorPdf {
         ),
         ConstrutorPdf.tituloSessao(
             '6. Distribuição do custo e esforço e prazo por etapa'),
-        pw.Table.fromTextArray(
-          headerAlignment: pw.Alignment.center,
-          headers: [
-            'Etapa',
-            'Percentual',
-            'R\$/Etapa',
-            'Esforço(horas)/Etapa',
-            'Semanas/Etapa',
+        ConstrutorPdf.tabela([
+          'Etapa',
+          'Percentual',
+          'R\$/Etapa',
+          'Esforço(horas)/Etapa',
+          'Semanas/Etapa',
+        ], [
+          [
+            "Requisitos",
+            "25%",
+            Formatadores.formatadorMonetario(
+                (_custoDetalhado.valorTotalProjeto * 0.25).toStringAsFixed(2)),
+            (double.parse(_esforcoDetalhado.esforcoTotal) * 0.25)
+                .toStringAsFixed(2),
+            (_prazoDetalhado.prazoTotal / 30 * 0.25 * 4).toStringAsFixed(2)
           ],
-          data: [
-            [
-              "Requisitos",
-              "25%",
-              Formatadores.formatadorMonetario(
-                  (_custoDetalhado.valorTotalProjeto * 0.25)
-                      .toStringAsFixed(2)),
-              (double.parse(_esforcoDetalhado.esforcoTotal) * 0.25)
-                  .toStringAsFixed(2),
-              (_prazoDetalhado.prazoTotal / 30 * 0.25 * 4).toStringAsFixed(2)
-            ],
-            [
-              "Design",
-              "10%",
-              Formatadores.formatadorMonetario(
-                  (_custoDetalhado.valorTotalProjeto * 0.10)
-                      .toStringAsFixed(2)),
-              (double.parse(_esforcoDetalhado.esforcoTotal) * 0.10)
-                  .toStringAsFixed(2),
-              (_prazoDetalhado.prazoTotal / 30 * 0.10 * 4).toStringAsFixed(2)
-            ],
-            [
-              "Codificação",
-              "40%",
-              Formatadores.formatadorMonetario(
-                  (_custoDetalhado.valorTotalProjeto * 0.40)
-                      .toStringAsFixed(2)),
-              (double.parse(_esforcoDetalhado.esforcoTotal) * 0.40)
-                  .toStringAsFixed(2),
-              (_prazoDetalhado.prazoTotal / 30 * 0.40 * 4).toStringAsFixed(2)
-            ],
-            [
-              "Testes",
-              "15%",
-              Formatadores.formatadorMonetario(
-                  (_custoDetalhado.valorTotalProjeto * 0.15)
-                      .toStringAsFixed(2)),
-              (double.parse(_esforcoDetalhado.esforcoTotal) * 0.15)
-                  .toStringAsFixed(2),
-              (_prazoDetalhado.prazoTotal / 30 * 0.15 * 4).toStringAsFixed(2)
-            ],
-            [
-              "Homologação",
-              "5%",
-              Formatadores.formatadorMonetario(
-                  (_custoDetalhado.valorTotalProjeto * 0.05)
-                      .toStringAsFixed(2)),
-              (double.parse(_esforcoDetalhado.esforcoTotal) * 0.05)
-                  .toStringAsFixed(2),
-              (_prazoDetalhado.prazoTotal / 30 * 0.050 * 4).toStringAsFixed(2)
-            ],
-            [
-              "Implantação",
-              "5%",
-              Formatadores.formatadorMonetario(
-                  (_custoDetalhado.valorTotalProjeto * 0.05)
-                      .toStringAsFixed(2)),
-              (double.parse(_esforcoDetalhado.esforcoTotal) * 0.05)
-                  .toStringAsFixed(2),
-              (_prazoDetalhado.prazoTotal / 30 * 0.050 * 4).toStringAsFixed(2)
-            ],
+          [
+            "Design",
+            "10%",
+            Formatadores.formatadorMonetario(
+                (_custoDetalhado.valorTotalProjeto * 0.10).toStringAsFixed(2)),
+            (double.parse(_esforcoDetalhado.esforcoTotal) * 0.10)
+                .toStringAsFixed(2),
+            (_prazoDetalhado.prazoTotal / 30 * 0.10 * 4).toStringAsFixed(2)
           ],
-        ),
+          [
+            "Codificação",
+            "40%",
+            Formatadores.formatadorMonetario(
+                (_custoDetalhado.valorTotalProjeto * 0.40).toStringAsFixed(2)),
+            (double.parse(_esforcoDetalhado.esforcoTotal) * 0.40)
+                .toStringAsFixed(2),
+            (_prazoDetalhado.prazoTotal / 30 * 0.40 * 4).toStringAsFixed(2)
+          ],
+          [
+            "Testes",
+            "15%",
+            Formatadores.formatadorMonetario(
+                (_custoDetalhado.valorTotalProjeto * 0.15).toStringAsFixed(2)),
+            (double.parse(_esforcoDetalhado.esforcoTotal) * 0.15)
+                .toStringAsFixed(2),
+            (_prazoDetalhado.prazoTotal / 30 * 0.15 * 4).toStringAsFixed(2)
+          ],
+          [
+            "Homologação",
+            "5%",
+            Formatadores.formatadorMonetario(
+                (_custoDetalhado.valorTotalProjeto * 0.05).toStringAsFixed(2)),
+            (double.parse(_esforcoDetalhado.esforcoTotal) * 0.05)
+                .toStringAsFixed(2),
+            (_prazoDetalhado.prazoTotal / 30 * 0.050 * 4).toStringAsFixed(2)
+          ],
+          [
+            "Implantação",
+            "5%",
+            Formatadores.formatadorMonetario(
+                (_custoDetalhado.valorTotalProjeto * 0.05).toStringAsFixed(2)),
+            (double.parse(_esforcoDetalhado.esforcoTotal) * 0.05)
+                .toStringAsFixed(2),
+            (_prazoDetalhado.prazoTotal / 30 * 0.050 * 4).toStringAsFixed(2)
+          ],
+        ], mapTabela4),
         ConstrutorPdf.tituloSessao('7. Orçamento do projeto para o cliente'),
         ConstrutorPdf.tabelaSemTitulo([
+          [],
           [
             'Percentual de Lucro desejado',
             '50%',
@@ -298,6 +315,7 @@ class GeradorPdf {
           ]
         ]),
         pw.Column(children: [
+          pw.SizedBox(height: 30),
           pw.Text("Referências",
               style: pw.TextStyle(
                   color: PdfColor.fromInt(
@@ -355,6 +373,7 @@ class GeradorPdf {
       return [
         item.tipo,
         item.nome,
+        item.descricao,
         item.quantidadeTrsEArs,
         item.quantidadeTDs,
         item.complexidade,
@@ -370,6 +389,7 @@ class GeradorPdf {
       return [
         item.tipo,
         item.nome,
+        item.descricao,
         item.quantidadeTrsEArs,
         item.quantidadeTDs,
         item.complexidade,

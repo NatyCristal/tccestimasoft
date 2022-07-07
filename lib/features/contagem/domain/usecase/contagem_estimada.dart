@@ -2,6 +2,7 @@
 
 import 'package:dartz/dartz.dart';
 import 'package:estimasoft/core/errors/falha.dart';
+import 'package:estimasoft/features/contagem/data/model/indice_descricao_contagens_model.dart';
 import 'package:estimasoft/features/contagem/domain/entitie/contagem_estimada_entitie.dart';
 import 'package:estimasoft/features/contagem/domain/repository/contagem_estimada_repository.dart';
 import 'package:estimasoft/features/contagem/error/contagem_erro.dart';
@@ -12,11 +13,11 @@ class ContagemEstimadaUsecase {
   ContagemEstimadaUsecase(this.repository);
 
   Future<Either<Falha, ContagemEstimadaEntitie>> salvarContagemEstimada(
-      List<String> aie,
-      List<String> ali,
-      List<String> ce,
-      List<String> ee,
-      List<String> se,
+      List<IndiceDescricaoContagenModel> aie,
+      List<IndiceDescricaoContagenModel> ali,
+      List<IndiceDescricaoContagenModel> ce,
+      List<IndiceDescricaoContagenModel> ee,
+      List<IndiceDescricaoContagenModel> se,
       String uidProjeto,
       String uidUsuario,
       int totalPf) async {

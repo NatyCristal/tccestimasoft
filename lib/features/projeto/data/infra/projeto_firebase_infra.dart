@@ -128,4 +128,18 @@ class ProjetoFirebaseInfra extends ProjetoRepository {
       return Left(throw Exception(e));
     }
   }
+
+  @override
+  Future<Either<Falha, String>> adicionarDescricaoProjeto(
+      String uidProjeto, String descricao) async {
+    try {
+      var resultado =
+          await datasource.adicionarDescricaoProjeto(uidProjeto, descricao);
+      return Right(resultado);
+    } on FirebaseException catch (e) {
+      return Left(throw Exception(e.code));
+    } on Exception catch (e) {
+      return Left(throw Exception(e));
+    }
+  }
 }

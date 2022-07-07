@@ -29,10 +29,6 @@ class ContagemEstimada extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // store.totalIndicativa =
-    //     storeIndicativa.contagemIndicativaValida.aie.length * 7 +
-    //         storeIndicativa.contagemIndicativaValida.ali.length * 7;
-
     return Container(
       padding: paddingPagePrincipal,
       height: TamanhoTela.height(context, 1),
@@ -52,6 +48,16 @@ class ContagemEstimada extends StatelessWidget {
                   store.nomeDafuncao = value.toString();
                 },
                 decoration: const InputDecoration(labelText: "Nome da função"),
+              );
+            }),
+            Observer(builder: (context) {
+              return TextField(
+                controller: store.descricaoController,
+                onChanged: (value) {
+                  store.descricao = value.toString();
+                },
+                decoration:
+                    const InputDecoration(labelText: "Descrição da função"),
               );
             }),
             Container(
@@ -401,12 +407,18 @@ class ContagemEstimada extends StatelessWidget {
                       shrinkWrap: true,
                       itemCount: store.tamanhoListaEE,
                       itemBuilder: (context, index) {
-                        String nomeFuncao = store.ee[index];
+                        String nomeFuncao = store.ee[index].nomeFuncao;
+                        String descricao = store.ee[index].descricao;
 
                         return CardAdicaoContagem(
+                          descricao: descricao,
                           complexidade: "Média",
-                          editar: () => store.editar(nomeFuncao, "EE"),
-                          remover: () => store.removerFuncao(nomeFuncao, "EE"),
+                          editar: () =>
+                              store.editar(nomeFuncao, "EE", descricao),
+                          remover: () => store.removerFuncao(
+                            nomeFuncao,
+                            "EE",
+                          ),
                           tipoFuncao: "EE",
                           nomeFuncao: nomeFuncao,
                           pontosDeFuncao: 4,
@@ -435,11 +447,14 @@ class ContagemEstimada extends StatelessWidget {
                       shrinkWrap: true,
                       itemCount: store.tamanhoListaCE,
                       itemBuilder: (context, index) {
-                        String nomeFuncao = store.ce[index];
-
+                        String nomeFuncao = store.ce[index].nomeFuncao;
+                        String descricao = store.ce[index].descricao;
+                        //TODO Alterar o card indicativa para
                         return CardAdicaoContagem(
+                          descricao: descricao,
                           complexidade: "Média",
-                          editar: () => store.editar(nomeFuncao, "CE"),
+                          editar: () =>
+                              store.editar(nomeFuncao, "CE", descricao),
                           remover: () => store.removerFuncao(nomeFuncao, "CE"),
                           tipoFuncao: "CE",
                           nomeFuncao: nomeFuncao,
@@ -469,11 +484,14 @@ class ContagemEstimada extends StatelessWidget {
                       shrinkWrap: true,
                       itemCount: store.tamanhoListaSE,
                       itemBuilder: (context, index) {
-                        String nomeFuncao = store.se[index];
+                        String nomeFuncao = store.se[index].nomeFuncao;
+                        String descricao = store.se[index].descricao;
 
                         return CardAdicaoContagem(
+                          descricao: descricao,
                           complexidade: "Média",
-                          editar: () => store.editar(nomeFuncao, "SE"),
+                          editar: () =>
+                              store.editar(nomeFuncao, "SE", descricao),
                           remover: () => store.removerFuncao(nomeFuncao, "SE"),
                           tipoFuncao: "SE",
                           nomeFuncao: nomeFuncao,

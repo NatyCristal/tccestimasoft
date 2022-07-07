@@ -60,8 +60,8 @@ class ProjetosPrincipalPage extends StatelessWidget {
         overlayColor: Colors.black,
         overlayOpacity: 0.4,
         icon: Icons.add,
-        iconTheme: const IconThemeData(color: Colors.black),
-        backgroundColor: corDeAcao.withOpacity(0.7),
+        iconTheme: const IconThemeData(color: Colors.white),
+        backgroundColor: corDeAcao,
         children: [
           SpeedDialChild(
               shape: const RoundedRectangleBorder(

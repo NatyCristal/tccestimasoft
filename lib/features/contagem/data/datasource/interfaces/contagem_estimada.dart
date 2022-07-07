@@ -1,3 +1,4 @@
+import 'package:estimasoft/features/contagem/data/model/indice_descricao_contagens_model.dart';
 import 'package:estimasoft/features/contagem/domain/entitie/contagem_estimada_entitie.dart';
 
 abstract class ContagemEstimadaDatasource {
@@ -5,11 +6,11 @@ abstract class ContagemEstimadaDatasource {
       String uidProjeto, String uidUsuario);
 
   Future<ContagemEstimadaEntitie> salvarContagem(
-      List<String> aie,
-      List<String> ali,
-      List<String> ce,
-      List<String> ee,
-      List<String> se,
+      List<IndiceDescricaoContagenModel> aie,
+      List<IndiceDescricaoContagenModel> ali,
+      List<IndiceDescricaoContagenModel> ce,
+      List<IndiceDescricaoContagenModel> ee,
+      List<IndiceDescricaoContagenModel> se,
       String uidProjeto,
       String uidUsuario,
       int totalPF);

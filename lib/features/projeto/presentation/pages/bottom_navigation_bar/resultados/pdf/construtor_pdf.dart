@@ -57,6 +57,8 @@ class ConstrutorPdf {
       children: [
         Text(
           texto,
+          maxLines: 4,
+          overflow: TextOverflow.clip,
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         Text(valor),
@@ -64,8 +66,11 @@ class ConstrutorPdf {
     );
   }
 
-  static tabela(List<String> titulosTabela, final dados) {
+  static tabela(
+      List<String> titulosTabela, final dados, Map<int, FixedColumnWidth> map) {
     return Table.fromTextArray(
+      columnWidths: map,
+      headerStyle: TextStyle(fontWeight: FontWeight.bold),
       headerAlignment: Alignment.center,
       headers: titulosTabela,
       data: dados,

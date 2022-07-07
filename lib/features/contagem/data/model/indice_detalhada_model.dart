@@ -2,13 +2,15 @@ import 'package:estimasoft/features/contagem/domain/entitie/indice_detalhada.dar
 
 class IndiceDetalhadaModel extends IndiceDetalhada {
   IndiceDetalhadaModel(
-      {required int pontoFuncao,
+      {required String descricao,
+      required int pontoFuncao,
       required String complexidade,
       required String nome,
       required String tipo,
       required int quantidadeTRs,
       required int quantidadeTrsEArs})
       : super(
+            descricao: descricao,
             pontoDeFuncao: pontoFuncao,
             complexidade: complexidade,
             nome: nome,
@@ -18,6 +20,7 @@ class IndiceDetalhadaModel extends IndiceDetalhada {
 
   Map<String, dynamic> toMap() {
     return {
+      "Descricao": descricao,
       "PontoFuncao": pontoDeFuncao,
       "Complexidade": complexidade,
       "Nome": nome,
@@ -29,6 +32,7 @@ class IndiceDetalhadaModel extends IndiceDetalhada {
 
   factory IndiceDetalhadaModel.fromMap(Map<String, dynamic> map) {
     return IndiceDetalhadaModel(
+      descricao: map["Descricao"] ?? "",
       pontoFuncao: map["PontoFuncao"],
       complexidade: map["Complexidade"],
       nome: map['Nome'],
