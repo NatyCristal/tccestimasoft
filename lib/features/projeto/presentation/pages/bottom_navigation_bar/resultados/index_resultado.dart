@@ -289,21 +289,23 @@ class IndexResultado extends StatelessWidget {
             BotaoPadrao(
                 corDeTextoBotao: corTextoSobCorPrimaria,
                 acao: () {
-                  Share.share(FormarTextoCompartilhar.funcaoTextoIndicativa(
-                          storeContagemIndicativa.contagemIndicativaValida) +
-                      FormarTextoCompartilhar.funcaoEstimada(
-                          storeContagemEstimada.contagemEstimadaValida,
-                          storeContagemIndicativa.contagemIndicativaValida) +
-                      FormarTextoCompartilhar.funcaoDetaljada(
-                          storeContagemDetalhada.contagemDetalhadaEntitie) +
-                      FormarTextoCompartilhar.funcaoTextoEsforco(
-                          storeEstimativaEsforco.esforcosValidos) +
-                      FormarTextoCompartilhar.funcaoTextoPrazo(
-                          storeEstimativaPrazo.prazosValidos) +
-                      FormarTextoCompartilhar.funcaoTextoEquipes(
-                          storeEstimativaEquipe.equipesValidas) +
-                      FormarTextoCompartilhar.funcaoTextoCustos(
-                          storeEstimativaCusto.custosValidos));
+                  if (validarContagens(
+                    context,
+                    storeEstimativaEsforco,
+                    storeEstimativaEquipe,
+                    storeEstimativaPrazo,
+                    storeEstimativaCusto,
+                  )) {
+                    Share.share(FormarTextoCompartilhar.compartilharTexto(
+                        projeto,
+                        storeEstimativaEsforco,
+                        storeEstimativaEquipe,
+                        storeEstimativaPrazo,
+                        storeEstimativaCusto,
+                        storeContagemIndicativa,
+                        storeContagemEstimada,
+                        storeContagemDetalhada));
+                  }
                 },
                 tituloBotao: "     Enviar Estimativas",
                 corBotao: corDeFundoBotaoPrimaria,
@@ -375,14 +377,30 @@ validarContagens(context, storeEstimativaEsforco, storeEstimativaEquipe,
     }
   }
 
-  if (esforcoDetalhada != null &&
+  if (esforcoDetalhada == null) {
+    AlertaSnack.exbirSnackBar(context,
+        "Finalize a estimativa de esforço com a contagem detalhada para compartihar o PDF");
+    return false;
+  } else if (prazoDetalhado == null) {
+    AlertaSnack.exbirSnackBar(context,
+        "Finalize a estimativa de prazo com a contagem detalhada para compartihar o PDF");
+    return false;
+  } else if (equipeDetalhada == null) {
+    AlertaSnack.exbirSnackBar(context,
+        "Finalize a estimativa de equipe com a contagem detalhada para compartihar o PDF");
+    return false;
+  } else if (custoDetalhado == null) {
+    AlertaSnack.exbirSnackBar(context,
+        "Finalize a estimativa de custo com a contagem detalhada para compartihar o PDF");
+    return false;
+  } else if (esforcoDetalhada != null &&
       equipeDetalhada != null &&
       prazoDetalhado != null &&
       custoDetalhado != null) {
     return true;
   } else {
     AlertaSnack.exbirSnackBar(
-        context, "Finalize suas estimativas para compartihar o PDF");
+        context, "Finalize suas estimativas  para compartihar o PDF");
     return false;
   }
 }

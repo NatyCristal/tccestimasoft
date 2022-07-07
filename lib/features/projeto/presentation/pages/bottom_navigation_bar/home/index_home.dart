@@ -200,6 +200,8 @@ class IndexHome extends StatelessWidget {
                                 await controller.adicionarDescricaoProjeto(
                                     projeto.uidProjeto, store.descricaoProjeto);
 
+                            projeto.descricao = store.descricaoProjeto;
+
                             AlertaSnack.exbirSnackBar(context, resultado);
                           },
                           child: const Text(

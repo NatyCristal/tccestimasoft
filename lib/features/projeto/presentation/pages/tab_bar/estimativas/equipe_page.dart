@@ -88,9 +88,13 @@ class EstimativaEquipePage extends StatelessWidget {
                 bool temIgual = false;
 
                 temIgual = s.contains(' 0 ');
+                print(storeEstimativaEquipe.esforcoSelecionado);
 
                 for (var element in storeEstimativaEquipe.equipes) {
-                  if (s.contains(element.prazo)) {
+                  if (s.contains(element.prazo) &&
+                      !s.contains(storeEstimativaEquipe.esforcoSelecionado
+                          .split(" - ")
+                          .last)) {
                     temIgual = true;
                   }
                 }
