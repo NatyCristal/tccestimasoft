@@ -138,7 +138,7 @@ class ContagemIndicativa extends StatelessWidget {
                                 icon: Icon(
                                   Icons.info,
                                   size: 20,
-                                  color: Colors.indigo.withOpacity(0.8),
+                                  color: corDeAcao.withOpacity(0.7),
                                 ),
                               )
                             ],

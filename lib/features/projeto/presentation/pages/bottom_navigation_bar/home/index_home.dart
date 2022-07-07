@@ -82,6 +82,7 @@ class IndexHome extends StatelessWidget {
 
                       controller.resultadoController
                           .recuperarResultados(projeto.uidProjeto);
+                      controller.recuperarArquivos(projeto.uidProjeto);
 
                       store.carregou = true;
                     }
@@ -155,6 +156,22 @@ class IndexHome extends StatelessWidget {
                         ),
                       ],
                     ),
+
+                    ElevatedButton(
+                      onPressed: () {
+                        Modular.to.pushNamed("inserir-arquivos",
+                            arguments: [projeto, store]);
+                      },
+                      child: const Text(
+                        "Visualizar Arquivos do projeto",
+                      ),
+                      style: ButtonStyle(
+                          overlayColor: MaterialStateProperty.all(
+                              Colors.white.withOpacity(0.4)),
+                          backgroundColor: MaterialStateProperty.all(
+                              corDeAcao.withOpacity(0.7))),
+                    ),
+
                     // const SizedBox(
                     //   height: 20,
                     // ),

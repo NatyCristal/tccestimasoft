@@ -119,7 +119,7 @@ class _DefaultAppBarState extends State<DefaultAppBar>
             },
             icon: const Icon(
               Icons.help_outlined,
-              color: corTituloTexto,
+              color: corDeAcao,
             ),
           ),
           widget.notificacao

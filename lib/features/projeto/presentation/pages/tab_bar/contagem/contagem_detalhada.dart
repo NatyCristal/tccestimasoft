@@ -122,7 +122,7 @@ class ContagemDetalhada extends StatelessWidget {
                 icon: Icon(
                   Icons.info,
                   size: 24,
-                  color: Colors.indigo.withOpacity(0.8),
+                  color: corDeAcao.withOpacity(0.7),
                 ),
               ),
             ),

@@ -132,12 +132,12 @@ class ProjetoDrawer extends StatelessWidget {
                   ),
                   buttons: [
                     DialogButton(
-                      color: corDeFundoBotaoSecundaria,
+                      color: corDeAcao.withOpacity(0.7),
                       child: const Text(
                         "SIM",
                         style: TextStyle(
                             fontWeight: Fontes.weightTextoNormal,
-                            color: corDeTextoBotaoSecundaria,
+                            color: corTituloTexto,
                             fontSize: 14),
                       ),
                       onPressed: () async {
@@ -148,12 +148,12 @@ class ProjetoDrawer extends StatelessWidget {
                       width: 120,
                     ),
                     DialogButton(
-                      color: Colors.indigo,
+                      color: corDeFundoBotaoSecundaria,
                       child: const Text(
                         "NÃO",
                         style: TextStyle(
                           fontWeight: Fontes.weightTextoNormal,
-                          color: corTextoSobCorPrimaria,
+                          color: corTextoSobSecundaria,
                           fontSize: 14,
                         ),
                       ),

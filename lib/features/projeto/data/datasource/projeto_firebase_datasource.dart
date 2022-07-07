@@ -229,11 +229,11 @@ class ProjetoFirebaseDatasource extends ProjetoDatasource {
   }
 
   @override
-  uparArquivo(String uidProjeto, File file) {
+  uparArquivo(String uidProjeto, File file) async {
     try {
       final ref = FirebaseStorage.instance.ref(uidProjeto);
 
-      return ref.putFile(file);
+      return await ref.putFile(file);
     } on FirebaseException catch (e) {
       return throw Exception(e);
     }
@@ -288,55 +288,7 @@ class ProjetoFirebaseDatasource extends ProjetoDatasource {
       await GallerySaver.saveImage(path, toDcim: true);
     }
 
-    //print("Baixou");
-
-    // //First you get the documents folder location on the device...
-    // Directory appDocDir = await getApplicationDocumentsDirectory();
-    // //Here you'll specify the file it should be saved as
-    // File downloadToFile = File('${appDocDir.path}/Downloads.jpg');
-    // //Here you'll specify the file it should download from Cloud Storage
-    // String fileToDownload = 'uploads/uploaded-pdf.pdf';
-
-    // //Now you can try to download the specified file, and write it to the downloadToFile.
-    // try {
-    //   await FirebaseStorage.instance
-    //       .ref(caminhoDocumento)
-    //       .writeToFile(downloadToFile);
-    // } on FirebaseException catch (e) {
-    //   // e.g, e.code == 'canceled'
-    //   print('Download error: $e');
-    // }
-
-    // final qualquercoisa = FirebaseStorage.instance.ref("arquivos/$uidProjeto");
-    // final islandRef = qualquercoisa.child(caminhoDocumento.split("/").last);
-    // final appDocDir = await getApplicationDocumentsDirectory();
-    // //String teste = appDocDir.absolute.toString();
-    // print(appDocDir);
-    // final filePath = "${appDocDir.path}//teste.jpg";
-
-    // final file = File(filePath);
-    // print(filePath);
-
-    // final downloadTask = islandRef.writeToFile(file);
-    // downloadTask.snapshotEvents.listen((taskSnapshot) {
-    //   switch (taskSnapshot.state) {
-    //     case TaskState.running:
-    //       print("Deu running");
-    //       break;
-    //     case TaskState.paused:
-    //       print("Deu paused");
-    //       break;
-    //     case TaskState.success:
-    //       print("Deu certo");
-    //       break;
-    //     case TaskState.canceled:
-    //       print("Deu cancelado");
-    //       break;
-    //     case TaskState.error:
-    //       print("Deu erro");
-    //       break;
-    //   }
-    // });
+    return url;
   }
 }
 

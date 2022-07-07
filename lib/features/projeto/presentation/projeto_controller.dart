@@ -34,7 +34,7 @@ class ProjetoController {
 
   List<ProjetoEntitie> projetos = [];
   List<UsuarioEntitie> membrosProjetoAtual = [];
-  late ListResult arquivos;
+  ListResult? arquivos;
   final RecuperarMembrosUsecase _recuperarMembrosUsecase;
   final RecuperarProjetosUsecase _recuperarProjetosUsecase;
   final CriarProjetoUsecase _criarProjetoUsecase;
@@ -136,9 +136,17 @@ class ProjetoController {
 
   Future fazerDownloadArquivos(
       String uidProjeto, String caminhoDocumento) async {
-    // ignore: unused_local_variable
     var resultado = await _arquivosUsecase.realizarDownloadArquivo(
         uidProjeto, caminhoDocumento);
+
+    var retorno = "";
+    resultado.fold((l) {
+      retorno = l.mensagem;
+    }, (r) {
+      retorno = r;
+    });
+
+    return retorno;
   }
 
   Future removerArquivoProjeto(
@@ -165,18 +173,21 @@ class ProjetoController {
       arquivos = r;
     });
 
-    return arquivos;
+    return arquivos!;
   }
 
-  uparArquivos(String uidProjeto, File file) {
+  Future uparArquivos(String uidProjeto, File file) async {
     // final usuarioLogado = Modular.get<UsuarioAutenticado>();
-    var resultado = _arquivosUsecase.uparArquivos(uidProjeto, file);
+    var resultado = await _arquivosUsecase.uparArquivos(uidProjeto, file);
 
-    return resultado.fold((l) {
+    var retorno;
+    resultado.fold((l) {
       l.mensagem;
     }, (r) {
-      r;
+      retorno = r;
     });
+
+    return retorno;
   }
 
   Future recuperarContagem(String nomeContagem, String uidProjeto) async {

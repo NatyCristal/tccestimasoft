@@ -68,12 +68,9 @@ class ProjetoCard extends StatelessWidget {
                               fontSize: 18,
                               fontWeight: FontWeight.normal),
                         ),
-                        content: Column(
-                          children: const [],
-                        ),
                         buttons: [
                           DialogButton(
-                            color: corDeFundoBotaoSecundaria,
+                            color: corDeAcao.withOpacity(0.7),
                             child: const Text(
                               "SIM",
                               style: TextStyle(
@@ -95,12 +92,12 @@ class ProjetoCard extends StatelessWidget {
                             width: 120,
                           ),
                           DialogButton(
-                            color: Colors.indigo,
+                            color: corDeFundoBotaoSecundaria,
                             child: const Text(
                               "NÃO",
                               style: TextStyle(
                                 fontWeight: Fontes.weightTextoNormal,
-                                color: corTextoSobCorPrimaria,
+                                color: corTextoSobSecundaria,
                                 fontSize: 14,
                               ),
                             ),

@@ -10,8 +10,9 @@ class ArquivoUsecase {
 
   ArquivoUsecase(this.repository);
 
-  Either<Falha, UploadTask> uparArquivos(String uidProjeto, File file) {
-    var result = repository.uparArquivos(uidProjeto, file);
+  Future<Either<Falha, TaskSnapshot>> uparArquivos(
+      String uidProjeto, File file) async {
+    var result = await repository.uparArquivos(uidProjeto, file);
     var erro = "";
 
     result.fold((l) {
@@ -54,7 +55,25 @@ class ArquivoUsecase {
     return await repository.removerArquivo(uidProjeto, nomeArquivo);
   }
 
-  Future realizarDownloadArquivo(String uidProjeto, String nomeArquivo) async {
-    return await repository.realizarLoginArquivo(uidProjeto, nomeArquivo);
+  Future<Either<Falha, String>> realizarDownloadArquivo(
+      String uidProjeto, String nomeArquivo) async {
+    var result = await repository.realizarLoginArquivo(uidProjeto, nomeArquivo);
+
+    var erro = "";
+
+    result.fold((l) {
+      erro = l.mensagem;
+    }, (r) {});
+
+    if (result.isLeft()) {
+      switch (erro) {
+        default:
+          return Left(
+            ErroProjeto(mensagem: "Algo de errado aconteceu!"),
+          );
+      }
+    }
+
+    return result;
   }
 }

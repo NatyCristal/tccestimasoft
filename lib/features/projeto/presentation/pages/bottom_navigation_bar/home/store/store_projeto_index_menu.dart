@@ -6,6 +6,9 @@ class StoreProjetosIndexMenu = StoreProjetosIndexMenuBase
 
 abstract class StoreProjetosIndexMenuBase with Store {
   @observable
+  String linkDownload = "";
+
+  @observable
   bool carregou = false;
 
   @observable

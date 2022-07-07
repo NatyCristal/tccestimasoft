@@ -21,7 +21,7 @@ abstract class ProjetoDatasource {
 
   Future<List<UsuarioEntitie>> recuperarMembrosProjeto(String uidProjeto);
 
-  uparArquivo(String uidProjeto, File file);
+  Future uparArquivo(String uidProjeto, File file);
 
   Future<ListResult> recuperarArquivos(String uidProjeto);
 

@@ -41,7 +41,7 @@ class ProjetoFirebaseInfra extends ProjetoRepository {
 
   @override
   Future removerProjeto(String uidUsuario, String uidProjeto) async {
-    // TODO: implement sairProjeto
+    // TODO: implement removerProjeto
     throw UnimplementedError();
   }
 
@@ -82,9 +82,10 @@ class ProjetoFirebaseInfra extends ProjetoRepository {
   }
 
   @override
-  Either<Falha, UploadTask> uparArquivos(String uidProjeto, File file) {
+  Future<Either<Falha, TaskSnapshot>> uparArquivos(
+      String uidProjeto, File file) async {
     try {
-      var resultado = datasource.uparArquivo(uidProjeto, file);
+      var resultado = await datasource.uparArquivo(uidProjeto, file);
       return Right(resultado);
     } on FirebaseException catch (e) {
       return Left(ErroProjeto(
@@ -115,9 +116,12 @@ class ProjetoFirebaseInfra extends ProjetoRepository {
   }
 
   @override
-  Future realizarLoginArquivo(String uidProjeto, String nomeArquivo) async {
+  Future<Either<Falha, String>> realizarLoginArquivo(
+      String uidProjeto, String nomeArquivo) async {
     try {
-      await datasource.realizarDownloadArquivo(uidProjeto, nomeArquivo);
+      var resultado =
+          await datasource.realizarDownloadArquivo(uidProjeto, nomeArquivo);
+      return Right(resultado);
     } on FirebaseException catch (e) {
       return Left(throw Exception(e.code));
     } on Exception catch (e) {

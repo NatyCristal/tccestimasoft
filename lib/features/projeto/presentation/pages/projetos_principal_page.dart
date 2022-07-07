@@ -112,7 +112,7 @@ class ProjetosPrincipalPage extends StatelessWidget {
                   ),
                   buttons: [
                     DialogButton(
-                      color: corDeFundoBotaoSecundaria,
+                      color: corDeAcao.withOpacity(0.7),
                       child: const Text(
                         "Salvar",
                         style: TextStyle(
@@ -131,12 +131,12 @@ class ProjetosPrincipalPage extends StatelessWidget {
                       width: 120,
                     ),
                     DialogButton(
-                      color: Colors.indigo,
+                      color: corDeFundoBotaoSecundaria,
                       child: const Text(
                         "Cancelar",
                         style: TextStyle(
                           fontWeight: Fontes.weightTextoNormal,
-                          color: corTextoSobCorPrimaria,
+                          color: corDeTextoBotaoSecundaria,
                           fontSize: 14,
                         ),
                       ),
@@ -198,7 +198,7 @@ class ProjetosPrincipalPage extends StatelessWidget {
                   ),
                   buttons: [
                     DialogButton(
-                      color: corDeFundoBotaoSecundaria,
+                      color: corDeAcao.withOpacity(0.7),
                       child: const Text(
                         "Entrar",
                         style: TextStyle(
@@ -217,12 +217,12 @@ class ProjetosPrincipalPage extends StatelessWidget {
                       width: 120,
                     ),
                     DialogButton(
-                      color: Colors.indigo,
+                      color: corDeFundoBotaoSecundaria,
                       child: const Text(
                         "Cancelar",
                         style: TextStyle(
                           fontWeight: Fontes.weightTextoNormal,
-                          color: corTextoSobCorPrimaria,
+                          color: corTextoSobSecundaria,
                           fontSize: 14,
                         ),
                       ),

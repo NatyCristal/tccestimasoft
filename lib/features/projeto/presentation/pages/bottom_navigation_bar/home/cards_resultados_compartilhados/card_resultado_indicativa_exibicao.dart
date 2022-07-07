@@ -1,6 +1,6 @@
 import 'package:estimasoft/features/contagem/domain/entitie/contagem_indicativa_entitie.dart';
-import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/home/linha_contagens.dart';
-import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/home/linha_estimativas.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/home/widgets/linha_contagens.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/home/widgets/linha_estimativas.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/widgets/components/componente_estimativa_padrao.dart';
 import 'package:estimasoft/features/projeto/presentation/projeto_controller.dart';
 import 'package:estimasoft/features/resultado/domain/entity/resultado_entity.dart';

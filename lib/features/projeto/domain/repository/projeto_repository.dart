@@ -23,7 +23,8 @@ abstract class ProjetoRepository {
   Future<Either<Falha, List<UsuarioEntitie>>> recuperarMembros(
     String uidProjeto,
   );
-  Either<Falha, UploadTask> uparArquivos(String uidProjeto, File file);
+  Future<Either<Falha, TaskSnapshot>> uparArquivos(
+      String uidProjeto, File file);
 
   Future<Either<Falha, ListResult>> recuperarArquivos(String uidProjeto);
 
