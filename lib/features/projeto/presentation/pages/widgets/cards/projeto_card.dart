@@ -85,14 +85,15 @@ class ProjetoCard extends StatelessWidget {
 
                               storeProjetos.projetos.removeWhere(
                                   (element) => element.uidProjeto != "");
+                              storeProjetos.tamanhoProjetos =
+                                  Modular.get<ProjetoController>()
+                                      .projetos
+                                      .length;
                               storeProjetos.projetos.addAll(
                                   Modular.get<ProjetoController>().projetos);
 
-                              storeProjetos.projetos.setAll(
-                                  0, Modular.get<ProjetoController>().projetos);
-
-                              Navigator.of(context, rootNavigator: true).pop();
                               AlertaSnack.exbirSnackBar(context, retorno);
+                              Navigator.of(context, rootNavigator: true).pop();
                             },
                             width: 120,
                           ),

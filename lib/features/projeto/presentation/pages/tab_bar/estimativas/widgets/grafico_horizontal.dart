@@ -33,7 +33,7 @@ class GraficoHorizontal extends StatelessWidget {
                 ),
                 Observer(builder: (context) {
                   return Text(
-                    "${store.valorEngenhariaRequisitos.toString()} Hrs",
+                    "${store.valorEngenhariaRequisitos.toStringAsFixed(2)} Hrs",
                     style: const TextStyle(
                         color: corCorpoTexto,
                         fontWeight: Fontes.weightTextoNormal),
@@ -65,7 +65,7 @@ class GraficoHorizontal extends StatelessWidget {
                 ),
                 Observer(builder: (context) {
                   return Text(
-                    "${store.valorDesign.toString()} Hrs",
+                    "${store.valorDesign.toStringAsFixed(2)} Hrs",
                     style: const TextStyle(
                         color: corCorpoTexto,
                         fontWeight: Fontes.weightTextoNormal),
@@ -97,7 +97,7 @@ class GraficoHorizontal extends StatelessWidget {
                 ),
                 Observer(builder: (context) {
                   return Text(
-                    "${store.valorImplementacao.toString()} Hrs",
+                    "${store.valorImplementacao.toStringAsFixed(2)} Hrs",
                     style: const TextStyle(
                         color: corCorpoTexto,
                         fontWeight: Fontes.weightTextoNormal),
@@ -161,7 +161,7 @@ class GraficoHorizontal extends StatelessWidget {
                 ),
                 Observer(builder: (context) {
                   return Text(
-                    "${store.valorHomologacao.toString()} Hrs",
+                    "${store.valorHomologacao.toStringAsFixed(2)} Hrs",
                     style: const TextStyle(
                         color: corCorpoTexto,
                         fontWeight: Fontes.weightTextoNormal),
@@ -193,7 +193,7 @@ class GraficoHorizontal extends StatelessWidget {
                 ),
                 Observer(builder: (context) {
                   return Text(
-                    "${store.valorImplantacao.toString()} Hrs",
+                    "${store.valorImplantacao.toStringAsFixed(2)} Hrs",
                     style: const TextStyle(
                         color: corCorpoTexto,
                         fontWeight: Fontes.weightTextoNormal),

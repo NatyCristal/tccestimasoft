@@ -73,6 +73,7 @@ class ProjetosConteudo extends StatelessWidget {
           )
         : Observer(builder: (context) {
             store.projetos.isNotEmpty;
+            store.tamanhoProjetos > 0;
             return ListView.builder(
               controller: scroll,
               shrinkWrap: false,

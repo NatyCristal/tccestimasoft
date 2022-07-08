@@ -67,65 +67,69 @@ class IndexResultado extends StatelessWidget {
               style: TextStyle(fontSize: tamanhoSubtitulo),
             ),
 
-            storeContagemDetalhada.contagemDetalhadaValida.totalPf > 0 &&
-                    validarContagens(
-                        context,
-                        storeEstimativaEsforco,
-                        storeEstimativaEquipe,
-                        storeEstimativaPrazo,
-                        storeEstimativaCusto)
-                ? SizedBox(
-                    height: 200,
-                    child: Center(
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            CircleAvatar(
-                              backgroundColor: Colors.teal.withOpacity(0.4),
-                              radius: 40,
-                              child: const Icon(Icons.check_circle_sharp,
-                                  color: Colors.teal, size: 80),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            const Text(
-                              "Estimativas prontas para compartilhar",
-                              style: TextStyle(color: corCorpoTexto),
-                            ),
-                          ],
+            Observer(builder: (context) {
+              return storeContagemDetalhada.contagemDetalhadaValida.totalPf >
+                          0 &&
+                      podeCompartilhar(
+                              context,
+                              storeEstimativaEsforco,
+                              storeEstimativaEquipe,
+                              storeEstimativaPrazo,
+                              storeEstimativaCusto) ==
+                          true
+                  ? SizedBox(
+                      height: 200,
+                      child: Center(
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              CircleAvatar(
+                                backgroundColor: Colors.teal.withOpacity(0.4),
+                                radius: 40,
+                                child: const Icon(Icons.check_circle_sharp,
+                                    color: Colors.teal, size: 80),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              const Text(
+                                "Estimativas prontas para compartilhar",
+                                style: TextStyle(color: corCorpoTexto),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  )
-                : SizedBox(
-                    height: 200,
-                    child: Center(
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            CircleAvatar(
-                              backgroundColor: Colors.red.withOpacity(0.4),
-                              radius: 40,
-                              child: const Icon(Icons.cancel,
-                                  color: Colors.red, size: 80),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            const Text(
-                              "Finalize as estimativas para compartilhar",
-                              style: TextStyle(color: corCorpoTexto),
-                            ),
-                          ],
+                    )
+                  : SizedBox(
+                      height: 200,
+                      child: Center(
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              CircleAvatar(
+                                backgroundColor: Colors.red.withOpacity(0.4),
+                                radius: 40,
+                                child: const Icon(Icons.cancel,
+                                    color: Colors.red, size: 80),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              const Text(
+                                "Finalize as estimativas para compartilhar",
+                                style: TextStyle(color: corCorpoTexto),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ),
+                    );
+            })
 
             // const Text(
             //   "Contagens",
@@ -409,6 +413,49 @@ class IndexResultado extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+podeCompartilhar(context, storeEstimativaEsforco, storeEstimativaEquipe,
+    storeEstimativaPrazo, storeEstimativaCusto) {
+  var esforcoDetalhada = null;
+  var equipeDetalhada = null;
+  var prazoDetalhado = null;
+  var custoDetalhado = null;
+  for (var element in storeEstimativaEsforco.esforcosValidos) {
+    if (element.contagemPontoDeFuncao.contains("Detalhada")) {
+      esforcoDetalhada = element;
+    }
+  }
+
+  for (var element in storeEstimativaEquipe.equipesValidas) {
+    if (element.esforco.contains("Detalhada")) {
+      equipeDetalhada = element;
+    }
+  }
+
+  for (var element in storeEstimativaPrazo.prazosValidos) {
+    if (element.contagemPontoDeFuncao.contains("Detalhada")) {
+      prazoDetalhado = element;
+    }
+  }
+
+  for (var element in storeEstimativaCusto.custosValidos) {
+    if (element.tipoContagem.contains("Detalhada")) {
+      custoDetalhado = element;
+    }
+  }
+
+  if (esforcoDetalhada == null ||
+      prazoDetalhado == null ||
+      equipeDetalhada == null ||
+      custoDetalhado == null) {
+    return false;
+  } else if (esforcoDetalhada != null &&
+      equipeDetalhada != null &&
+      prazoDetalhado != null &&
+      custoDetalhado != null) {
+    return true;
   }
 }
 
