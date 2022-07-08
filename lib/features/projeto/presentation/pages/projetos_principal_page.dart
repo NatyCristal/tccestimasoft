@@ -1,3 +1,4 @@
+import 'package:estimasoft/core/shared/anim/lotties.dart';
 import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
 import 'package:estimasoft/core/shared/utils.dart';
 import 'package:estimasoft/core/shared/utils/snackbar.dart';
@@ -5,6 +6,7 @@ import 'package:estimasoft/core/shared/utils/tamanho_tela.dart';
 import 'package:estimasoft/core/shared/widgets/seach_bar_padrao.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/widgets/builders/projetos_conteudo.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/widgets/builders/projetos_conteudo_pesquisa.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/widgets/cards/projeto_card.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/widgets/components/projeto_drawer.dart';
 import 'package:estimasoft/features/projeto/presentation/projeto_controller.dart';
 import 'package:estimasoft/features/projeto/presentation/store/store_projeto_principal.dart';
@@ -13,6 +15,8 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+
+import '../../domain/entitie/projeto_entitie.dart';
 
 class ProjetosPrincipalPage extends StatelessWidget {
   final StoreProjetos store;
@@ -42,7 +46,77 @@ class ProjetosPrincipalPage extends StatelessWidget {
             Observer(builder: (context) {
               return !store.temPesquisa
                   ? Expanded(
-                      child: ProjetosConteudo(store: store, scroll: scroll),
+                      child: Observer(builder: (context) {
+                        return store.projetos.isEmpty
+                            ? FutureBuilder(
+                                future: controller.recuperarProjetos(),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot<dynamic> snapshot) {
+                                  switch (snapshot.connectionState) {
+                                    case ConnectionState.done:
+                                      if (snapshot.hasError) {
+                                        return const Text("Erro");
+                                      } else if (snapshot.hasData) {
+                                        if (controller.projetos.isEmpty) {
+                                          return SizedBox(
+                                            height: TamanhoTela.height(
+                                                context, 0.9),
+                                            child: const Center(
+                                                child: Text(
+                                                    "Não possui nenhum projeto")),
+                                          );
+                                        } else {
+                                          return ListView.builder(
+                                            controller: scroll,
+                                            shrinkWrap: false,
+                                            itemCount:
+                                                controller.projetos.length,
+                                            itemBuilder: (context, index) {
+                                              store.projetos.isEmpty
+                                                  ? store.projetos.addAll(
+                                                      controller.projetos)
+                                                  : store.projetos;
+                                              ProjetoEntitie projeto =
+                                                  controller.projetos[index];
+
+                                              return ProjetoCard(
+                                                storeProjetos: store,
+                                                projeto: projeto,
+                                              );
+                                            },
+                                          );
+                                        }
+                                      }
+
+                                      store.carregou = true;
+                                      break;
+                                    case ConnectionState.active:
+                                      store.carregou = true;
+                                      return const Carregando();
+                                    case ConnectionState.none:
+                                      store.carregou = true;
+                                      return const Text("Erro");
+                                    case ConnectionState.waiting:
+                                      return const Carregando();
+                                  }
+                                  return const Text("Erro");
+                                },
+                              )
+                            : ListView.builder(
+                                controller: scroll,
+                                shrinkWrap: false,
+                                itemCount: controller.projetos.length,
+                                itemBuilder: (context, index) {
+                                  ProjetoEntitie projeto =
+                                      controller.projetos[index];
+
+                                  return ProjetoCard(
+                                    storeProjetos: store,
+                                    projeto: projeto,
+                                  );
+                                },
+                              );
+                      }),
                     )
                   : Expanded(
                       child: ProjetosConteudoPesquisa(
