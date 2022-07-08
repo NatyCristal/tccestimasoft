@@ -19,7 +19,7 @@ class ListaDrawer extends StatelessWidget {
         CardDrawer(
             nomeCard: "Meus Projetos",
             acao: () {
-              Modular.to.pushNamed('meus-projetos', arguments: storeProjetos);
+              Modular.to.pushNamed('meus-projetos', arguments: [storeProjetos]);
             }),
         CardDrawer(
             nomeCard: "Projetos compartilhados",

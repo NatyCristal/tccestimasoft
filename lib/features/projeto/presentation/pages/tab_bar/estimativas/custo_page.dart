@@ -92,6 +92,7 @@ class EstimativaCustoPage extends StatelessWidget {
                             .replaceAll(" PF", ""));
 
                     storeEstimativaCusto.tipoContagem = value.toString();
+                    storeEstimativaCusto.validarValorTotalProjeto();
                   },
                 );
               }),
@@ -115,6 +116,11 @@ class EstimativaCustoPage extends StatelessWidget {
                       if (s.contains(element.tipoContagem)) {
                         temIgual = true;
                       }
+                    }
+
+                    if (!s.contains(
+                        storeEstimativaCusto.tipoContagem.split(" - ").first)) {
+                      temIgual = true;
                     }
 
                     return temIgual;
@@ -141,6 +147,7 @@ class EstimativaCustoPage extends StatelessWidget {
                     }
 
                     storeEstimativaCusto.prazo = prazoFinal / 30;
+                    storeEstimativaCusto.validarValorTotalProjeto();
                   },
                   emptyBuilder: (context, searchEntry) => const Center(
                       child: Text('Cadastre um esforço para continuar.',
@@ -170,6 +177,11 @@ class EstimativaCustoPage extends StatelessWidget {
                       }
                     }
 
+                    if (!s.contains(
+                        storeEstimativaCusto.tipoContagem.split(" - ").first)) {
+                      temIgual = true;
+                    }
+
                     return temIgual;
                   },
                   onChanged: (value) {
@@ -178,7 +190,8 @@ class EstimativaCustoPage extends StatelessWidget {
                           value.toString().split(" HH ").first) {
                         storeEstimativaCusto.equipeEntitySelecionado = element;
 
-                        storeEstimativaCusto.calcularDisponibiliadeEquipe();
+                        //  storeEstimativaCusto.calcularDisponibiliadeEquipe();
+                        storeEstimativaCusto.validarValorTotalProjeto();
                       }
                     }
                   },
@@ -224,13 +237,13 @@ class EstimativaCustoPage extends StatelessWidget {
                           equipe: storeEstimativaCusto.equipe,
                           custosVariaisFixos:
                               storeEstimativaCusto.custosVariaveis,
-                          disponibilidadeEquipe: storeEstimativaCusto
-                              .disponibilidadeEquipe
-                              .toStringAsFixed(2),
+                          //disponibilidadeEquipe: storeEstimativaCusto
+                          //   .disponibilidadeEquipe
+                          //    .toStringAsFixed(2),
                           custoTotalMensal: storeEstimativaCusto
                               .custoTotalMensal
                               .toStringAsFixed(2),
-                          custoHora: storeEstimativaCusto.custoHora,
+                          // custoHora: storeEstimativaCusto.custoHora,
                           porcentagemLucro:
                               storeEstimativaCusto.porcentagemLucro.toString(),
                           custoTotalProjeto: storeEstimativaCusto.custoProjeto,

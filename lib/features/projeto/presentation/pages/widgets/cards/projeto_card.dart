@@ -83,6 +83,11 @@ class ProjetoCard extends StatelessWidget {
                                   await Modular.get<ProjetoController>()
                                       .sairProjeto(projeto.uidProjeto);
 
+                              storeProjetos.projetos.removeWhere(
+                                  (element) => element.uidProjeto != "");
+                              storeProjetos.projetos.addAll(
+                                  Modular.get<ProjetoController>().projetos);
+
                               storeProjetos.projetos.setAll(
                                   0, Modular.get<ProjetoController>().projetos);
 

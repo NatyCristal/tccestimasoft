@@ -3,7 +3,6 @@ import 'package:estimasoft/core/shared/widgets/botao.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_estimada.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_indicativa.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/widgets/cards/card_adicao_contagem.dart';
-import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/widgets/cards/card_exibicao_contagem.dart';
 import 'package:estimasoft/features/projeto/presentation/projeto_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -12,6 +11,7 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import '../../../../../../core/shared/utils.dart';
 import '../../../../../../core/shared/utils/snackbar.dart';
 import '../../../../../../core/shared/utils/tamanho_tela.dart';
+import 'widgets/cards/exibicao_card_contagem_estimada.dart';
 import 'widgets/conteudo/conteudo_contagem_estimada.dart';
 
 class ContagemEstimada extends StatelessWidget {
@@ -228,152 +228,51 @@ class ContagemEstimada extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              controller: scrollController,
-              child: Container(
-                decoration: BoxDecoration(
-                    color: storeIndicativa
-                                .contagemIndicativaValida.aie.isEmpty &&
-                            storeIndicativa.contagemIndicativaValida.ali.isEmpty
-                        ? Colors.transparent
-                        : Colors.yellow.withOpacity(0.2),
-                    borderRadius: arredondamentoBordas),
-                padding: EdgeInsets.symmetric(
-                  horizontal: storeIndicativa.aies.isEmpty &&
-                          storeIndicativa.alis.isEmpty
-                      ? 0
-                      : 8,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    storeIndicativa.contagemIndicativaValida.ali.isEmpty
-                        ? Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text("Funções ALI",
-                                  style: TextStyle(color: corCorpoTexto)),
-                              SizedBox(
-                                height: 30,
-                                child: Text(
-                                  "Não nenhum ALI cadastrado",
-                                  style: TextStyle(
-                                      color: corCorpoTexto.withOpacity(0.5)),
-                                ),
-                              )
-                            ],
-                          )
-                        : storeIndicativa
-                                    .contagemIndicativaValida.aie.isNotEmpty ||
-                                storeIndicativa
-                                    .contagemIndicativaValida.ali.isNotEmpty
-                            ? Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  SizedBox(
-                                    width: TamanhoTela.width(context, 0.9),
-                                    child: const Text(
-                                      "Função de Dados",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  Row(
-                                    children: const [
-                                      SizedBox(
-                                        width: 120,
-                                        child: Text(
-                                          "Nome",
-                                          style: TextStyle(
-                                            color: corCorpoTexto,
-                                            fontWeight: Fontes.weightTextoLeve,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 40,
-                                        child: Text(
-                                          "Tipo",
-                                          style: TextStyle(
-                                            color: corCorpoTexto,
-                                            fontWeight: Fontes.weightTextoLeve,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 90,
-                                        child: Text(
-                                          "Complexidade",
-                                          style: TextStyle(
-                                            color: corCorpoTexto,
-                                            fontWeight: Fontes.weightTextoLeve,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 70,
-                                        child: Text(
-                                          "PF",
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            color: corCorpoTexto,
-                                            fontWeight: Fontes.weightTextoLeve,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    width: TamanhoTela.width(context, 1),
-                                    child: const Divider(
-                                      color: corDeLinhaAppBar,
-                                      thickness: 1,
-                                    ),
-                                  ),
-                                  CardExibicaoContagem(
-                                    tipo: "ALI",
-                                    tituloCard: "Funções ALI",
-                                    storeIndicativa: storeIndicativa
-                                        .contagemIndicativaValida.ali,
-                                  )
-                                ],
-                              )
-                            : const SizedBox(),
-                    storeIndicativa.contagemIndicativaValida.aie.isEmpty
-                        ? Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text("Funções AIE",
-                                  style: TextStyle(color: corCorpoTexto)),
-                              SizedBox(
-                                height: 30,
-                                child: Text(
-                                  "Não nenhum AIE cadastrado",
-                                  style: TextStyle(
-                                      color: corCorpoTexto.withOpacity(0.5)),
-                                ),
-                              )
-                            ],
-                          )
-                        : CardExibicaoContagem(
-                            tipo: "AIE",
-                            tituloCard: "Funções AIE",
-                            storeIndicativa:
-                                storeIndicativa.contagemIndicativaValida.aie,
-                          ),
-                    const SizedBox(
-                      height: 5,
-                    )
-                  ],
-                ),
+            SizedBox(
+              width: TamanhoTela.width(context, 1),
+              child: const Text(
+                "Função De Dados",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: tamanhoSubtitulo, color: corTituloTexto),
               ),
+            ),
+            ListView.builder(
+              controller: scrollController,
+              shrinkWrap: true,
+              itemCount: storeIndicativa.contagemIndicativaValida.ali.length,
+              itemBuilder: (context, index) {
+                String nomeFuncao = storeIndicativa
+                    .contagemIndicativaValida.ali[index].nomeFuncao;
+                String descricao = storeIndicativa
+                    .contagemIndicativaValida.ali[index].descricao;
+
+                return ExibicaoCardEstimada(
+                  complexidade: "Baixa",
+                  descricao: descricao,
+                  nome: nomeFuncao,
+                  pontoDeFuncao: 7,
+                  tipo: "ALI",
+                );
+              },
+            ),
+            ListView.builder(
+              shrinkWrap: true,
+              itemCount: storeIndicativa.contagemIndicativaValida.aie.length,
+              itemBuilder: (context, index) {
+                String nomeFuncao = storeIndicativa
+                    .contagemIndicativaValida.aie[index].nomeFuncao;
+                String descricao = storeIndicativa
+                    .contagemIndicativaValida.aie[index].descricao;
+
+                return ExibicaoCardEstimada(
+                  complexidade: "Baixa",
+                  descricao: descricao,
+                  nome: nomeFuncao,
+                  pontoDeFuncao: 7,
+                  tipo: "AIE",
+                );
+              },
             ),
             const SizedBox(
               height: 20,
@@ -383,14 +282,15 @@ class ContagemEstimada extends StatelessWidget {
               child: const Text(
                 "Função Transacional",
                 textAlign: TextAlign.center,
-                style: TextStyle(color: corTituloTexto),
+                style: TextStyle(
+                    fontSize: tamanhoSubtitulo, color: corTituloTexto),
               ),
             ),
             const SizedBox(
               height: 15,
             ),
             const Text(
-              "Funções EE",
+              "Funções - Entrada Externa (EE)",
               style: TextStyle(color: corCorpoTexto),
             ),
             Observer(builder: (context) {
@@ -398,7 +298,7 @@ class ContagemEstimada extends StatelessWidget {
                   ? SizedBox(
                       height: 30,
                       child: Text(
-                        "Não existe EE cadastrado",
+                        "Não existe nenhuma função cadastrada",
                         style: TextStyle(color: corCorpoTexto.withOpacity(0.5)),
                       ),
                     )
@@ -430,7 +330,7 @@ class ContagemEstimada extends StatelessWidget {
               height: 20,
             ),
             const Text(
-              "Funções CE",
+              "Funções - Consulta Externa (CE)",
               style: TextStyle(color: corCorpoTexto),
             ),
             Observer(builder: (context) {
@@ -438,7 +338,7 @@ class ContagemEstimada extends StatelessWidget {
                   ? SizedBox(
                       height: 30,
                       child: Text(
-                        "Não existe CE cadastrado",
+                        "Não existe nenhuma função cadastrada",
                         style: TextStyle(color: corCorpoTexto.withOpacity(0.5)),
                       ),
                     )
@@ -449,7 +349,6 @@ class ContagemEstimada extends StatelessWidget {
                       itemBuilder: (context, index) {
                         String nomeFuncao = store.ce[index].nomeFuncao;
                         String descricao = store.ce[index].descricao;
-                        //TODO Alterar o card indicativa para
                         return CardAdicaoContagem(
                           descricao: descricao,
                           complexidade: "Média",
@@ -467,7 +366,7 @@ class ContagemEstimada extends StatelessWidget {
               height: 20,
             ),
             const Text(
-              "Funções SE",
+              "Funções - Saída Externa (SE)",
               style: TextStyle(color: corCorpoTexto),
             ),
             Observer(builder: (context) {
@@ -475,7 +374,7 @@ class ContagemEstimada extends StatelessWidget {
                   ? SizedBox(
                       height: 30,
                       child: Text(
-                        "Não exite SE cadastrado",
+                        "Não existe nenhuma função cadastrada",
                         style: TextStyle(color: corCorpoTexto.withOpacity(0.5)),
                       ),
                     )

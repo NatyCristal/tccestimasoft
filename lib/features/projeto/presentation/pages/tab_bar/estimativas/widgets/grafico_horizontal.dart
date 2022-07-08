@@ -129,7 +129,7 @@ class GraficoHorizontal extends StatelessWidget {
                 ),
                 Observer(builder: (context) {
                   return Text(
-                    "${store.valorTestes.toString()} Hrs",
+                    "${store.valorTestes.toStringAsFixed(2)} Hrs",
                     style: const TextStyle(
                         color: corCorpoTexto,
                         fontWeight: Fontes.weightTextoNormal),

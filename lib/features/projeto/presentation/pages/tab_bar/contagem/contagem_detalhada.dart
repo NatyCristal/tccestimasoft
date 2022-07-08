@@ -175,7 +175,7 @@ class ContagemDetalhada extends StatelessWidget {
                   : SizedBox(
                       height: 30,
                       child: Text(
-                        "Não possuí função Transacional cadastrada",
+                        "Não possui nenhuma função Transacional cadastrada",
                         style: TextStyle(color: corCorpoTexto.withOpacity(0.5)),
                       ),
                     );

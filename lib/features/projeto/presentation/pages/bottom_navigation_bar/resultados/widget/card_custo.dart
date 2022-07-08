@@ -73,7 +73,7 @@ class CardResultadoCustoCompartilhar extends StatelessWidget {
             GestureDetector(
               onTap: () {
                 String texto =
-                    "Estimativa de Custo\nTipo Contagem: ${custoEntity.tipoContagem}\nDisponibilidade Equipe:${custoEntity.disponibilidadeEquipe}\nCusto Total Mensal: ${custoEntity.custoTotalMensal} \nCusto Hora: ${custoEntity.custoHora}\nCusto Pf ${custoEntity.custoPF}\n\nProcentagem: ${custoEntity.porcentagemLucro}\n\nCusto total projeto: ${custoEntity.custoTotalProjeto}\nValor Total Projeto: ${custoEntity.valorTotalProjeto}";
+                    "Estimativa de Custo\nTipo Contagem: ${custoEntity.tipoContagem}\nCusto Total Mensal: ${custoEntity.custoTotalMensal}\nCusto Pf ${custoEntity.custoPF}\n\nProcentagem: ${custoEntity.porcentagemLucro}\n\nCusto total projeto: ${custoEntity.custoTotalProjeto}\nValor Total Projeto: ${custoEntity.valorTotalProjeto}";
                 Alerta.alertaCopiar(context, texto, texto);
               },
               child: Observer(builder: (context) {

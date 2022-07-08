@@ -2,6 +2,7 @@ import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
 import 'package:estimasoft/core/shared/utils/formatadores.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_custo.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 class CardCustosGerais extends StatelessWidget {
@@ -11,6 +12,10 @@ class CardCustosGerais extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controllerCustoPF = MoneyMaskedTextController(
+        decimalSeparator: ',', thousandSeparator: '.', leftSymbol: "R\$");
+
+    controllerCustoPF.text = storeEstimativaCusto.custoPF.toString();
     return Column(
       children: [
         const Text(
@@ -20,23 +25,23 @@ class CardCustosGerais extends StatelessWidget {
         const SizedBox(
           height: 20,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text(
-              "Disponibilidade equipe",
-              style: TextStyle(
-                  color: corCorpoTexto, fontWeight: Fontes.weightTextoNormal),
-            ),
-            Observer(builder: (context) {
-              return Text(
-                "${storeEstimativaCusto.disponibilidadeEquipe.toString()} Homem Hora",
-                style: const TextStyle(
-                    color: corCorpoTexto, fontWeight: Fontes.weightTextoNormal),
-              );
-            }),
-          ],
-        ),
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //   children: [
+        //     const Text(
+        //       "Disponibilidade equipe",
+        //       style: TextStyle(
+        //           color: corCorpoTexto, fontWeight: Fontes.weightTextoNormal),
+        //     ),
+        //     Observer(builder: (context) {
+        //       return Text(
+        //         "${storeEstimativaCusto.disponibilidadeEquipe.toString()} Homem Hora",
+        //         style: const TextStyle(
+        //             color: corCorpoTexto, fontWeight: Fontes.weightTextoNormal),
+        //       );
+        //     }),
+        //   ],
+        // ),
         const SizedBox(
           height: 5,
         ),
@@ -46,7 +51,9 @@ class CardCustosGerais extends StatelessWidget {
             const Text(
               "Custo total mensal",
               style: TextStyle(
-                  color: corCorpoTexto, fontWeight: Fontes.weightTextoNormal),
+                  fontSize: tamanhoSubtitulo,
+                  color: corCorpoTexto,
+                  fontWeight: Fontes.weightTextoNormal),
             ),
             Observer(builder: (context) {
               return SizedBox(
@@ -54,6 +61,7 @@ class CardCustosGerais extends StatelessWidget {
                   Formatadores.formatadorMonetario(
                       storeEstimativaCusto.custoTotalMensal.toStringAsFixed(2)),
                   style: const TextStyle(
+                      fontSize: tamanhoSubtitulo,
                       color: corCorpoTexto,
                       fontWeight: Fontes.weightTextoNormal),
                 ),
@@ -64,45 +72,79 @@ class CardCustosGerais extends StatelessWidget {
         const SizedBox(
           height: 5,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text(
-              "Custo da hora",
-              style: TextStyle(
-                  color: corCorpoTexto, fontWeight: Fontes.weightTextoNormal),
-            ),
-            Observer(builder: (context) {
-              return Text(
-                Formatadores.formatadorMonetario(
-                    storeEstimativaCusto.custoHora.toStringAsFixed(2)),
-                style: const TextStyle(
-                    color: corCorpoTexto, fontWeight: Fontes.weightTextoNormal),
-              );
-            }),
-          ],
-        ),
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //   children: [
+        //     const Text(
+        //       "Custo da hora",
+        //       style: TextStyle(
+        //           color: corCorpoTexto, fontWeight: Fontes.weightTextoNormal),
+        //     ),
+        //     Observer(builder: (context) {
+        //       return Text(
+        //         Formatadores.formatadorMonetario(
+        //             storeEstimativaCusto.custoHora.toStringAsFixed(2)),
+        //         style: const TextStyle(
+        //             color: corCorpoTexto, fontWeight: Fontes.weightTextoNormal),
+        //       );
+        //     }),
+        //   ],
+        // ),
         const SizedBox(
           height: 5,
         ),
+
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const Text(
-              "Custo do PF",
+              "Custo PF",
               style: TextStyle(
-                  color: corCorpoTexto, fontWeight: Fontes.weightTextoNormal),
+                  fontSize: tamanhoSubtitulo,
+                  color: corCorpoTexto,
+                  fontWeight: Fontes.weightTextoNormal),
             ),
-            Observer(builder: (context) {
-              return Text(
-                Formatadores.formatadorMonetario(
-                    storeEstimativaCusto.custoPF.toStringAsFixed(2)),
-                style: const TextStyle(
-                    color: corCorpoTexto, fontWeight: Fontes.weightTextoNormal),
-              );
-            }),
+            SizedBox(
+              width: 100,
+              child: TextField(
+                controller: controllerCustoPF,
+                keyboardType: TextInputType.number,
+                onChanged: (value) {
+                  storeEstimativaCusto.custoPF = double.parse(
+                      value.toString() == ""
+                          ? "0"
+                          : value
+                              .toString()
+                              .replaceAll("R\$", "")
+                              .replaceAll(".", "")
+                              .replaceAll(",", "."));
+
+                  storeEstimativaCusto.validarValorTotalProjeto();
+                  storeEstimativaCusto.calcularCustoHora();
+                },
+              ),
+            )
           ],
         ),
+
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //   children: [
+        //     const Text(
+        //       "Custo do PF",
+        //       style: TextStyle(
+        //           color: corCorpoTexto, fontWeight: Fontes.weightTextoNormal),
+        //     ),
+        //     Observer(builder: (context) {
+        //       return Text(
+        //         Formatadores.formatadorMonetario(
+        //             storeEstimativaCusto.custoPF.toStringAsFixed(2)),
+        //         style: const TextStyle(
+        //             color: corCorpoTexto, fontWeight: Fontes.weightTextoNormal),
+        //       );
+        //     }),
+        //   ],
+        // ),
         const SizedBox(
           height: 20,
         ),

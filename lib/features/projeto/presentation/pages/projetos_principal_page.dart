@@ -66,6 +66,92 @@ class ProjetosPrincipalPage extends StatelessWidget {
           SpeedDialChild(
               shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(15.0))),
+              label: "Entrar em um projeto",
+              child: const Icon(Icons.group_add),
+              onTap: () {
+                Alert(
+                  closeFunction: () => {
+                    Navigator.of(context, rootNavigator: true).pop(),
+                    store.erroCodEntrarProjeto = "",
+                  },
+                  context: context,
+                  title: "Digite o código do projeto que deseja entrar",
+                  style: const AlertStyle(
+                    titleStyle: TextStyle(color: corTituloTexto, fontSize: 18),
+                  ),
+                  content: Column(
+                    children: [
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Observer(builder: (context) {
+                        return store.erroCodEntrarProjeto == ""
+                            ? TextField(
+                                onChanged: (value) {
+                                  store.codEntrarProjeto = value.toString();
+                                  store.validarCodProjeto();
+                                },
+                                decoration: const InputDecoration(
+                                  icon: Icon(Icons.account_tree_rounded),
+                                  labelText: 'Código Projeto',
+                                ),
+                              )
+                            : TextField(
+                                onChanged: (value) {
+                                  store.codEntrarProjeto = value.toString();
+                                  store.validarCodProjeto();
+                                },
+                                decoration: InputDecoration(
+                                  errorText: store.erroCodEntrarProjeto,
+                                  icon: const Icon(Icons.account_tree_rounded),
+                                  labelText: 'Código Projeto',
+                                ),
+                              );
+                      }),
+                    ],
+                  ),
+                  buttons: [
+                    DialogButton(
+                      color: corDeAcao.withOpacity(0.7),
+                      child: const Text(
+                        "Entrar",
+                        style: TextStyle(
+                            fontWeight: Fontes.weightTextoNormal,
+                            color: corDeTextoBotaoSecundaria,
+                            fontSize: 14),
+                      ),
+                      onPressed: () async {
+                        if (store.validarCodProjeto()) {
+                          var resultado = await controller
+                              .entrarProjetos(store.codEntrarProjeto);
+                          Navigator.of(context, rootNavigator: true).pop();
+                          AlertaSnack.exbirSnackBar(context, resultado);
+                        }
+                      },
+                      width: 120,
+                    ),
+                    DialogButton(
+                      color: corDeFundoBotaoSecundaria,
+                      child: const Text(
+                        "Cancelar",
+                        style: TextStyle(
+                          fontWeight: Fontes.weightTextoNormal,
+                          color: corTextoSobSecundaria,
+                          fontSize: 14,
+                        ),
+                      ),
+                      onPressed: () => {
+                        Navigator.of(context, rootNavigator: true).pop(),
+                        store.nomeProjetoErro = "",
+                      },
+                      width: 120,
+                    )
+                  ],
+                ).show();
+              }),
+          SpeedDialChild(
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(15.0))),
               label: "Criar novo projeto",
               child: const Icon(Icons.file_open_rounded),
               onTap: () {
@@ -149,480 +235,8 @@ class ProjetosPrincipalPage extends StatelessWidget {
                   ],
                 ).show();
               }),
-          SpeedDialChild(
-              shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(15.0))),
-              label: "Entrar em um projeto",
-              child: const Icon(Icons.group_add),
-              onTap: () {
-                Alert(
-                  closeFunction: () => {
-                    Navigator.of(context, rootNavigator: true).pop(),
-                    store.erroCodEntrarProjeto = "",
-                  },
-                  context: context,
-                  title: "Digite o código do projeto que deseja entrar",
-                  style: const AlertStyle(
-                    titleStyle: TextStyle(color: corTituloTexto, fontSize: 18),
-                  ),
-                  content: Column(
-                    children: [
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Observer(builder: (context) {
-                        return store.erroCodEntrarProjeto == ""
-                            ? TextField(
-                                onChanged: (value) {
-                                  store.codEntrarProjeto = value.toString();
-                                  store.validarCodProjeto();
-                                },
-                                decoration: const InputDecoration(
-                                  icon: Icon(Icons.account_tree_rounded),
-                                  labelText: 'Código Projeto',
-                                ),
-                              )
-                            : TextField(
-                                onChanged: (value) {
-                                  store.codEntrarProjeto = value.toString();
-                                  store.validarCodProjeto();
-                                },
-                                decoration: InputDecoration(
-                                  errorText: store.erroCodEntrarProjeto,
-                                  icon: const Icon(Icons.account_tree_rounded),
-                                  labelText: 'Código Projeto',
-                                ),
-                              );
-                      }),
-                    ],
-                  ),
-                  buttons: [
-                    DialogButton(
-                      color: corDeAcao.withOpacity(0.7),
-                      child: const Text(
-                        "Entrar",
-                        style: TextStyle(
-                            fontWeight: Fontes.weightTextoNormal,
-                            color: corDeTextoBotaoSecundaria,
-                            fontSize: 14),
-                      ),
-                      onPressed: () async {
-                        if (store.validarCodProjeto()) {
-                          var resultado = await controller
-                              .entrarProjetos(store.codEntrarProjeto);
-                          Navigator.of(context, rootNavigator: true).pop();
-                          AlertaSnack.exbirSnackBar(context, resultado);
-                        }
-                      },
-                      width: 120,
-                    ),
-                    DialogButton(
-                      color: corDeFundoBotaoSecundaria,
-                      child: const Text(
-                        "Cancelar",
-                        style: TextStyle(
-                          fontWeight: Fontes.weightTextoNormal,
-                          color: corTextoSobSecundaria,
-                          fontSize: 14,
-                        ),
-                      ),
-                      onPressed: () => {
-                        Navigator.of(context, rootNavigator: true).pop(),
-                        store.nomeProjetoErro = "",
-                      },
-                      width: 120,
-                    )
-                  ],
-                ).show();
-              })
         ],
       ),
-
-      // floatingActionButton: FloatingActionButton(
-      //   backgroundColor: corDeFundoBotaoPrimaria,
-      //   onPressed: () {
-      //     Alert(
-      //       closeFunction: () => {
-      //         Navigator.of(context, rootNavigator: true).pop(),
-      //         store.nomeProjetoErro = "",
-      //       },
-      //       context: context,
-      //       title: "Escolha uma das opções",
-      //       style: const AlertStyle(
-      //         titleStyle: TextStyle(color: corTituloTexto, fontSize: 18),
-      //       ),
-      //       content: Column(
-      //         children: [
-      //           const SizedBox(
-      //             height: 20,
-      //           ),
-      //           Text("Criar projeto"),
-      //           Observer(builder: (context) {
-      //             return store.nomeProjetoErro == ""
-      //                 ? TextField(
-      //                     onChanged: (value) {
-      //                       store.nomeProjeto = value.toString();
-      //                       store.validarNomeProjeto();
-      //                     },
-      //                     decoration: const InputDecoration(
-      //                       icon: Icon(Icons.account_tree_rounded),
-      //                       labelText: 'Nome',
-      //                     ),
-      //                   )
-      //                 : TextField(
-      //                     onChanged: (value) {
-      //                       store.nomeProjeto = value.toString();
-      //                       store.validarNomeProjeto();
-      //                     },
-      //                     decoration: InputDecoration(
-      //                       errorText: store.nomeProjetoErro,
-      //                       icon: const Icon(Icons.account_tree_rounded),
-      //                       labelText: 'Nome',
-      //                     ),
-      //                   );
-      //           }),
-      //           SizedBox(
-      //             height: 20,
-      //           ),
-      //           Text(
-      //             "ou",
-      //             style: TextStyle(
-      //                 color: Colors.grey,
-      //                 fontWeight: FontWeight.w400,
-      //                 fontSize: 14),
-      //           ),
-      //           SizedBox(
-      //             height: 20,
-      //           ),
-      //           Text(
-      //             "Entrar em um projeto",
-      //             style: TextStyle(fontSize: 12),
-      //           ),
-      //           Observer(builder: (context) {
-      //             return store.erroCodEntrarProjeto == ""
-      //                 ? TextField(
-      //                     onChanged: (value) {
-      //                       store.codEntrarProjeto = value.toString();
-      //                       store.validarCodProjeto();
-      //                     },
-      //                     decoration: const InputDecoration(
-      //                       icon: Icon(Icons.account_tree_rounded),
-      //                       labelText: 'Código Projeto',
-      //                     ),
-      //                   )
-      //                 : TextField(
-      //                     onChanged: (value) {
-      //                       store.codEntrarProjeto = value.toString();
-      //                       store.validarCodProjeto();
-      //                     },
-      //                     decoration: InputDecoration(
-      //                       errorText: store.erroCodEntrarProjeto,
-      //                       icon: const Icon(Icons.account_tree_rounded),
-      //                       labelText: 'Código Projeto',
-      //                     ),
-      //                   );
-      //           }),
-      //           SizedBox(
-      //             width: 178,
-      //             child: BotaoPadrao(
-      //                 acao: () {},
-      //                 tituloBotao: "Entrar em projeto",
-      //                 corBotao: Colors.red,
-      //                 carregando: false),
-      //           ),
-      //         ],
-      //       ),
-      //       // buttons: [
-      //       //   DialogButton(
-      //       //     color: corDeFundoBotaoSecundaria,
-      //       //     child: const Text(
-      //       //       "Entrar",
-      //       //       style: TextStyle(
-      //       //           fontWeight: Fontes.weightTextoNormal,
-      //       //           color: corDeTextoBotaoSecundaria,
-      //       //           fontSize: 14),
-      //       //     ),
-      //       //     onPressed: () async {
-      //       //       if (store.validarCodProjeto()) {
-      //       //         var resultado = await controller
-      //       //             .entrarProjetos(store.codEntrarProjeto);
-      //       //         Navigator.of(context, rootNavigator: true).pop();
-      //       //         AlertaSnack.exbirSnackBar(context, resultado);
-      //       //       }
-      //       //     },
-      //       //     width: 120,
-      //       //   ),
-
-      //       //   ],
-      //       // ),
-      //       buttons: [
-      //         DialogButton(
-      //           color: corDeFundoBotaoSecundaria,
-      //           child: const Text(
-      //             "Criar",
-      //             style: TextStyle(
-      //                 fontWeight: Fontes.weightTextoNormal,
-      //                 color: corDeTextoBotaoSecundaria,
-      //                 fontSize: 14),
-      //           ),
-      //           onPressed: () async {
-      //             if (store.validarNomeProjeto()) {
-      //               var resultado =
-      //                   await controller.criarProjeto(store.nomeProjeto);
-      //               Navigator.of(context, rootNavigator: true).pop();
-      //               AlertaSnack.exbirSnackBar(context, resultado);
-      //             }
-      //           },
-      //           width: 120,
-      //         ),
-
-      //         // DialogButton(
-      //         //   color: Colors.indigo,
-      //         //   child: const Text(
-      //         //     "Cancelar",
-      //         //     style: TextStyle(
-      //         //       fontWeight: Fontes.weightTextoNormal,
-      //         //       color: corTextoSobCorPrimaria,
-      //         //       fontSize: 14,
-      //         //     ),
-      //         //   ),
-      //         //   onPressed: () => {
-      //         //     Navigator.of(context, rootNavigator: true).pop(),
-      //         //     store.nomeProjetoErro = "",
-      //         //   },
-      //         //   width: 120,
-      //         // )
-      //       ],
-      //     ).show();
-      //   },
-      //   child: const Icon(
-      //     Icons.add,
-      //     color: corTextoSobCorPrimaria,
-      //   ),
-      //   shape: const RoundedRectangleBorder(
-      //       borderRadius: BorderRadius.all(Radius.circular(15.0))),
-      // )
-
-      // FloatingSearchBar(
-      //   actions: [
-      //     const Icon(Icons.search),
-      //     const SizedBox(
-      //       width: 10,
-      //     ),
-      //     GestureDetector(
-      //         onTap: () {
-      //           Alert(
-      //             closeFunction: () => {
-      //               Navigator.of(context, rootNavigator: true).pop(),
-      //               store.erroCodEntrarProjeto = "",
-      //             },
-      //             context: context,
-      //             title: "Digite o código do projeto que deseja entrar",
-      //             style: const AlertStyle(
-      //               titleStyle: TextStyle(color: corTituloTexto, fontSize: 18),
-      //             ),
-      //             content: Column(
-      //               children: [
-      //                 const SizedBox(
-      //                   height: 20,
-      //                 ),
-      //                 Observer(builder: (context) {
-      //                   return store.erroCodEntrarProjeto == ""
-      //                       ? TextField(
-      //                           onChanged: (value) {
-      //                             store.codEntrarProjeto = value.toString();
-      //                             store.validarCodProjeto();
-      //                           },
-      //                           decoration: const InputDecoration(
-      //                             icon: Icon(Icons.account_tree_rounded),
-      //                             labelText: 'Código Projeto',
-      //                           ),
-      //                         )
-      //                       : TextField(
-      //                           onChanged: (value) {
-      //                             store.codEntrarProjeto = value.toString();
-      //                             store.validarCodProjeto();
-      //                           },
-      //                           decoration: InputDecoration(
-      //                             errorText: store.erroCodEntrarProjeto,
-      //                             icon: const Icon(Icons.account_tree_rounded),
-      //                             labelText: 'Código Projeto',
-      //                           ),
-      //                         );
-      //                 }),
-      //               ],
-      //             ),
-      //             buttons: [
-      //               DialogButton(
-      //                 color: corDeFundoBotaoSecundaria,
-      //                 child: const Text(
-      //                   "Entrar",
-      //                   style: TextStyle(
-      //                       fontWeight: Fontes.weightTextoNormal,
-      //                       color: corDeTextoBotaoSecundaria,
-      //                       fontSize: 14),
-      //                 ),
-      //                 onPressed: () async {
-      //                   if (store.validarCodProjeto()) {
-      //                     var resultado = await controller
-      //                         .entrarProjetos(store.codEntrarProjeto);
-      //                     Navigator.of(context, rootNavigator: true).pop();
-      //                     AlertaSnack.exbirSnackBar(context, resultado);
-      //                   }
-      //                 },
-      //                 width: 120,
-      //               ),
-      //               DialogButton(
-      //                 color: Colors.indigo,
-      //                 child: const Text(
-      //                   "Cancelar",
-      //                   style: TextStyle(
-      //                     fontWeight: Fontes.weightTextoNormal,
-      //                     color: corTextoSobCorPrimaria,
-      //                     fontSize: 14,
-      //                   ),
-      //                 ),
-      //                 onPressed: () => {
-      //                   Navigator.of(context, rootNavigator: true).pop(),
-      //                   store.nomeProjetoErro = "",
-      //                 },
-      //                 width: 120,
-      //               )
-      //             ],
-      //           ).show();
-      //         },
-      //         child: const Icon(Icons.group_add_rounded))
-      //   ],
-      //   transitionCurve: Curves.linear,
-      //   scrollPadding: const EdgeInsets.only(top: 16, bottom: 56),
-      //   isScrollControlled: false,
-      //   backgroundColor: corDeFundoBotaoSecundaria,
-      //   hint: "Pesquise....",
-      //   title: const Text(
-      //     "Pesquise em Projetos",
-      //     style: TextStyle(color: corCorpoTexto),
-      //   ),
-      //   // onFocusChanged: (value) {},
-      //   // onQueryChanged: (value) {
-      //   //   store.pesquisa = value.toString();
-      //   // },
-      //   borderRadius: arredondamentoBordas,
-      //   body: FloatingSearchBarScrollNotifier(
-      //     child: SingleChildScrollView(
-      //       controller: scroll,
-      //       physics: const BouncingScrollPhysics(),
-      //       child: Container(
-      //         height: TamanhoTela.height(context, 1),
-      //         padding: paddingPagePrincipal,
-      //         child: Column(
-      //           children: [
-      //             const SizedBox(
-      //               height: 30,
-      //             ),
-      //             Expanded(
-      //               child: ProjetosConteudo(store: store, scroll: scroll),
-      //             ),
-      //           ],
-      //         ),
-      //       ),
-      //     ),
-      //   ),
-      //   builder: (BuildContext context, Animation<double> transition) {
-      //     return const SingleChildScrollView(
-      //         child:
-      //             SizedBox()); //ProjetosConteudoPesquisa(scroll: scroll, store: store));
-      //   },
-      // ),
-      // floatingActionButton: FloatingActionButton(
-      //   backgroundColor: corDeFundoBotaoPrimaria,
-      //   onPressed: () {
-      //     Alert(
-      //       closeFunction: () => {
-      //         Navigator.of(context, rootNavigator: true).pop(),
-      //         store.nomeProjetoErro = "",
-      //       },
-      //       context: context,
-      //       title: "Dê um nome para o projeto",
-      //       style: const AlertStyle(
-      //         titleStyle: TextStyle(color: corTituloTexto, fontSize: 18),
-      //       ),
-      //       content: Column(
-      //         children: [
-      //           const SizedBox(
-      //             height: 20,
-      //           ),
-      //           Observer(builder: (context) {
-      //             return store.nomeProjetoErro == ""
-      //                 ? TextField(
-      //                     onChanged: (value) {
-      //                       store.nomeProjeto = value.toString();
-      //                       store.validarNomeProjeto();
-      //                     },
-      //                     decoration: const InputDecoration(
-      //                       icon: Icon(Icons.account_tree_rounded),
-      //                       labelText: 'Nome',
-      //                     ),
-      //                   )
-      //                 : TextField(
-      //                     onChanged: (value) {
-      //                       store.nomeProjeto = value.toString();
-      //                       store.validarNomeProjeto();
-      //                     },
-      //                     decoration: InputDecoration(
-      //                       errorText: store.nomeProjetoErro,
-      //                       icon: const Icon(Icons.account_tree_rounded),
-      //                       labelText: 'Nome',
-      //                     ),
-      //                   );
-      //           }),
-      //         ],
-      //       ),
-      //       buttons: [
-      //         DialogButton(
-      //           color: corDeFundoBotaoSecundaria,
-      //           child: const Text(
-      //             "Salvar",
-      //             style: TextStyle(
-      //                 fontWeight: Fontes.weightTextoNormal,
-      //                 color: corDeTextoBotaoSecundaria,
-      //                 fontSize: 14),
-      //           ),
-      //           onPressed: () async {
-      //             if (store.validarNomeProjeto()) {
-      //               var resultado =
-      //                   await controller.criarProjeto(store.nomeProjeto);
-      //               Navigator.of(context, rootNavigator: true).pop();
-      //               AlertaSnack.exbirSnackBar(context, resultado);
-      //             }
-      //           },
-      //           width: 120,
-      //         ),
-      //         DialogButton(
-      //           color: Colors.indigo,
-      //           child: const Text(
-      //             "Cancelar",
-      //             style: TextStyle(
-      //               fontWeight: Fontes.weightTextoNormal,
-      //               color: corTextoSobCorPrimaria,
-      //               fontSize: 14,
-      //             ),
-      //           ),
-      //           onPressed: () => {
-      //             Navigator.of(context, rootNavigator: true).pop(),
-      //             store.nomeProjetoErro = "",
-      //           },
-      //           width: 120,
-      //         )
-      //       ],
-      //     ).show();
-      //   },
-      //   child: const Icon(
-      //     Icons.add,
-      //     color: corTextoSobCorPrimaria,
-      //   ),
-      //   shape: const RoundedRectangleBorder(
-      //       borderRadius: BorderRadius.all(Radius.circular(15.0))),
-      // ),
     );
   }
 }

@@ -54,99 +54,6 @@ class FormarTextoCompartilhar {
         'Responsável pela contagem: ${Modular.get<UsuarioAutenticado>().store.nome}\n\n';
 
     String contagemDetalhada = "\t1. Contagem Detalhada\n\n";
-    String funcoesDeDados = "1.1 Funções de dados\n\n";
-
-    // List<List<String>> dadosFuncoes = [];
-    // dadosFuncoes.add([
-    //   'Tipo',
-    //   'Nome',
-    //   'Descrição',
-    //   '#TRs',
-    //   '#TDs',
-    //   'Complexidade',
-    //   'Contribuição',
-    // ]);
-
-    // for (var element in storeDetalhada.contagemDetalhadaValida.funcaoDados) {
-    //   dadosFuncoes.add([
-    //     element.tipo,
-    //     element.nome,
-    //     element.descricao,
-    //     element.quantidadeTrsEArs.toString(),
-    //     element.quantidadeTDs.toString(),
-    //     element.complexidade,
-    //     element.pontoDeFuncao.toString(),
-    //   ]);
-    // }
-
-    final _dadosFuncaoDeDados =
-        storeDetalhada.contagemDetalhadaValida.funcaoDados.map((item) {
-      storeDetalhada.contagemDetalhadaValida.totalFuncaoDados.toString() +
-          " PF";
-
-      return [
-        item.tipo,
-        item.nome,
-        item.descricao,
-        item.quantidadeTrsEArs,
-        item.quantidadeTDs,
-        item.complexidade,
-        item.pontoDeFuncao.toString() + " PF"
-      ];
-    }).toList();
-
-    // dadosFuncoes.add([
-    //   "Contribuição Total: " +
-    //       storeDetalhada.contagemDetalhadaValida.totalFuncaoDados.toString() +
-    //       " PF"
-    // ]);
-
-    String funcaoTransacional = "\n\n1.2 Funções Transacionais\n\n";
-
-    List<List<String>> funcoesTransacionais = [];
-    funcoesTransacionais.add([
-      'Tipo',
-      'Nome',
-      'Descrição',
-      '#ARs',
-      '#TDs',
-      'Complexidade',
-      'Contribuição',
-    ]);
-
-    for (var element
-        in storeDetalhada.contagemDetalhadaValida.funcaoTransacional) {
-      funcoesTransacionais.add([
-        element.tipo,
-        element.nome,
-        element.descricao,
-        element.quantidadeTrsEArs.toString(),
-        element.quantidadeTDs.toString(),
-        element.complexidade,
-        element.pontoDeFuncao.toString(),
-      ]);
-    }
-
-    funcoesTransacionais.add([
-      "Contribuição Total: " +
-          storeDetalhada.contagemDetalhadaValida.totalFuncaoTransacional
-              .toString() +
-          " PF"
-    ]);
-
-    // final columns = dolumnify(
-    //   dadosFuncoes,
-    //   columnSplitter: ' | ',
-    //   headerIncluded: true,
-    //   headerSeparator: '=',
-    // );
-
-    final columns2 = dolumnify(
-      funcoesTransacionais,
-      columnSplitter: ' | ',
-      headerIncluded: true,
-      headerSeparator: '=',
-    );
 
     final columns3 = dolumnify(
       [
@@ -201,7 +108,7 @@ class FormarTextoCompartilhar {
       ['Prazo (em dias)', prazoDetalhado.prazoTotal],
       [
         'Região do impossível (75%) (em semanas)',
-        double.parse(prazoDetalhado.prazoMinimo) / 4
+        double.parse(prazoDetalhado.prazoMinimo) / 30 * 4
       ],
       ['Tamanho da Equipe', equipeDetalhada.equipeEstimada],
       [
@@ -216,7 +123,11 @@ class FormarTextoCompartilhar {
         'Tamanho funcional (PF)',
         storeDetalhada.contagemDetalhadaValida.totalPf
       ],
-      ['Custo básico (CP)', custoDetalhado.custoBasico],
+      [
+        'Custo básico (CP)',
+        Formatadores.formatadorMonetario(
+            custoDetalhado.custoBasico.toStringAsFixed(2))
+      ],
       [
         'Percentual de reserva técnica do projeto',
         custoDetalhado.porcentagemLucro + "%"
@@ -251,7 +162,7 @@ class FormarTextoCompartilhar {
           'Percentual',
           'R\$/Etapa',
           'Esforço(horas)/Etapa',
-          'Semanas/Etapa',
+          'Dias/Etapa',
         ],
         [
           "Requisitos",
@@ -260,7 +171,7 @@ class FormarTextoCompartilhar {
               (custoDetalhado.valorTotalProjeto * 0.25).toStringAsFixed(2)),
           (double.parse(esforcoDetalhada.esforcoTotal) * 0.25)
               .toStringAsFixed(2),
-          (prazoDetalhado.prazoTotal / 30 * 0.25 * 4).toStringAsFixed(2)
+          (prazoDetalhado.prazoTotal * 0.25).toStringAsFixed(2)
         ],
         [
           "Design",
@@ -269,7 +180,7 @@ class FormarTextoCompartilhar {
               (custoDetalhado.valorTotalProjeto * 0.10).toStringAsFixed(2)),
           (double.parse(esforcoDetalhada.esforcoTotal) * 0.10)
               .toStringAsFixed(2),
-          (prazoDetalhado.prazoTotal / 30 * 0.10 * 4).toStringAsFixed(2)
+          (prazoDetalhado.prazoTotal * 0.10).toStringAsFixed(2)
         ],
         [
           "Codificação",
@@ -278,7 +189,7 @@ class FormarTextoCompartilhar {
               (custoDetalhado.valorTotalProjeto * 0.40).toStringAsFixed(2)),
           (double.parse(esforcoDetalhada.esforcoTotal) * 0.40)
               .toStringAsFixed(2),
-          (prazoDetalhado.prazoTotal / 30 * 0.40 * 4).toStringAsFixed(2)
+          (prazoDetalhado.prazoTotal * 0.40).toStringAsFixed(2)
         ],
         [
           "Testes",
@@ -287,7 +198,7 @@ class FormarTextoCompartilhar {
               (custoDetalhado.valorTotalProjeto * 0.15).toStringAsFixed(2)),
           (double.parse(esforcoDetalhada.esforcoTotal) * 0.15)
               .toStringAsFixed(2),
-          (prazoDetalhado.prazoTotal / 30 * 0.15 * 4).toStringAsFixed(2)
+          (prazoDetalhado.prazoTotal * 0.15).toStringAsFixed(2)
         ],
         [
           "Homologação",
@@ -296,7 +207,7 @@ class FormarTextoCompartilhar {
               (custoDetalhado.valorTotalProjeto * 0.05).toStringAsFixed(2)),
           (double.parse(esforcoDetalhada.esforcoTotal) * 0.05)
               .toStringAsFixed(2),
-          (prazoDetalhado.prazoTotal / 30 * 0.050 * 4).toStringAsFixed(2)
+          (prazoDetalhado.prazoTotal * 0.050).toStringAsFixed(2)
         ],
         [
           "Implantação",
@@ -305,7 +216,7 @@ class FormarTextoCompartilhar {
               (custoDetalhado.valorTotalProjeto * 0.05).toStringAsFixed(2)),
           (double.parse(esforcoDetalhada.esforcoTotal) * 0.05)
               .toStringAsFixed(2),
-          (prazoDetalhado.prazoTotal / 30 * 0.050 * 4).toStringAsFixed(2)
+          (prazoDetalhado.prazoTotal * 0.050).toStringAsFixed(2)
         ]
       ],
       columnSplitter: ' | ',
@@ -345,7 +256,6 @@ class FormarTextoCompartilhar {
         "\nContribuição total das funções transacionais: " +
         storeDetalhada.contagemDetalhadaValida.totalFuncaoTransacional
             .toString() +
-        // columns2.toString() +
         "\n\n1.3 Pontos de função não ajustados (brutos)\n\n" +
         "Tamanho funcional estimado = ${storeDetalhada.contagemDetalhadaValida.totalPf} PF" +
         "\n\n\t2. Parâmetros de entrada\n\n" +

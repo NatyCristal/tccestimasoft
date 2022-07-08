@@ -183,7 +183,7 @@ class GeradorPdf {
             ['Prazo (em dias)', _prazoDetalhado.prazoTotal],
             [
               'Região do impossível (75%) (em semanas)',
-              double.parse(_prazoDetalhado.prazoMinimo) / 4
+              double.parse(_prazoDetalhado.prazoMinimo) / 30 * 4
             ],
             ['Tamanho da Equipe', _equipeDetalhada.equipeEstimada],
             [
@@ -203,7 +203,11 @@ class GeradorPdf {
               'Tamanho funcional (PF)',
               _storeDetalhada.contagemDetalhadaValida.totalPf
             ],
-            ['Custo básico (CP)', _custoDetalhado.custoBasico],
+            [
+              'Custo básico (CP)',
+              Formatadores.formatadorMonetario(
+                  _custoDetalhado.custoBasico.toStringAsFixed(2))
+            ],
             [
               'Percentual de reserva técnica do projeto',
               _custoDetalhado.porcentagemLucro + "%"
@@ -239,7 +243,7 @@ class GeradorPdf {
           'Percentual',
           'R\$/Etapa',
           'Esforço(horas)/Etapa',
-          'Semanas/Etapa',
+          'Dias/Etapa',
         ], [
           [
             "Requisitos",
@@ -248,7 +252,7 @@ class GeradorPdf {
                 (_custoDetalhado.valorTotalProjeto * 0.25).toStringAsFixed(2)),
             (double.parse(_esforcoDetalhado.esforcoTotal) * 0.25)
                 .toStringAsFixed(2),
-            (_prazoDetalhado.prazoTotal / 30 * 0.25 * 4).toStringAsFixed(2)
+            (_prazoDetalhado.prazoTotal * 0.25).toStringAsFixed(2)
           ],
           [
             "Design",
@@ -257,7 +261,7 @@ class GeradorPdf {
                 (_custoDetalhado.valorTotalProjeto * 0.10).toStringAsFixed(2)),
             (double.parse(_esforcoDetalhado.esforcoTotal) * 0.10)
                 .toStringAsFixed(2),
-            (_prazoDetalhado.prazoTotal / 30 * 0.10 * 4).toStringAsFixed(2)
+            (_prazoDetalhado.prazoTotal * 0.10).toStringAsFixed(2)
           ],
           [
             "Codificação",
@@ -266,7 +270,7 @@ class GeradorPdf {
                 (_custoDetalhado.valorTotalProjeto * 0.40).toStringAsFixed(2)),
             (double.parse(_esforcoDetalhado.esforcoTotal) * 0.40)
                 .toStringAsFixed(2),
-            (_prazoDetalhado.prazoTotal / 30 * 0.40 * 4).toStringAsFixed(2)
+            (_prazoDetalhado.prazoTotal * 0.40).toStringAsFixed(2)
           ],
           [
             "Testes",
@@ -275,7 +279,7 @@ class GeradorPdf {
                 (_custoDetalhado.valorTotalProjeto * 0.15).toStringAsFixed(2)),
             (double.parse(_esforcoDetalhado.esforcoTotal) * 0.15)
                 .toStringAsFixed(2),
-            (_prazoDetalhado.prazoTotal / 30 * 0.15 * 4).toStringAsFixed(2)
+            (_prazoDetalhado.prazoTotal * 0.15).toStringAsFixed(2)
           ],
           [
             "Homologação",
@@ -284,7 +288,7 @@ class GeradorPdf {
                 (_custoDetalhado.valorTotalProjeto * 0.05).toStringAsFixed(2)),
             (double.parse(_esforcoDetalhado.esforcoTotal) * 0.05)
                 .toStringAsFixed(2),
-            (_prazoDetalhado.prazoTotal / 30 * 0.050 * 4).toStringAsFixed(2)
+            (_prazoDetalhado.prazoTotal * 0.050).toStringAsFixed(2)
           ],
           [
             "Implantação",
@@ -293,7 +297,7 @@ class GeradorPdf {
                 (_custoDetalhado.valorTotalProjeto * 0.05).toStringAsFixed(2)),
             (double.parse(_esforcoDetalhado.esforcoTotal) * 0.05)
                 .toStringAsFixed(2),
-            (_prazoDetalhado.prazoTotal / 30 * 0.050 * 4).toStringAsFixed(2)
+            (_prazoDetalhado.prazoTotal * 0.050).toStringAsFixed(2)
           ],
         ], mapTabela4),
         ConstrutorPdf.tituloSessao('7. Orçamento do projeto para o cliente'),

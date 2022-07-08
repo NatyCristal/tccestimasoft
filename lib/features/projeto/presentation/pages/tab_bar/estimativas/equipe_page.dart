@@ -63,6 +63,12 @@ class EstimativaEquipePage extends StatelessWidget {
                     }
                   }
 
+                  if (!s.contains(storeEstimativaEquipe.prazoSelecionado
+                      .split(" - ")
+                      .last)) {
+                    temIgual = true;
+                  }
+
                   return temIgual;
                 },
                 onChanged: (value) {
@@ -88,8 +94,6 @@ class EstimativaEquipePage extends StatelessWidget {
                 bool temIgual = false;
 
                 temIgual = s.contains(' 0 ');
-                print(storeEstimativaEquipe.esforcoSelecionado);
-
                 for (var element in storeEstimativaEquipe.equipes) {
                   if (s.contains(element.prazo) &&
                       !s.contains(storeEstimativaEquipe.esforcoSelecionado
@@ -97,6 +101,12 @@ class EstimativaEquipePage extends StatelessWidget {
                           .last)) {
                     temIgual = true;
                   }
+                }
+
+                if (!s.contains(storeEstimativaEquipe.esforcoSelecionado
+                    .split(" - ")
+                    .last)) {
+                  temIgual = true;
                 }
 
                 return temIgual;

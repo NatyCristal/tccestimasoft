@@ -234,16 +234,31 @@ class ContagemIndicativa extends StatelessWidget {
                       const SizedBox(
                         height: 20,
                       ),
+                      SizedBox(
+                        width: TamanhoTela.width(context, 1),
+                        child: const Text(
+                          "Função De Dados",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: tamanhoSubtitulo,
+                              color: corTituloTexto),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
                       const Text(
-                        "Funções ALI",
-                        style: TextStyle(color: corCorpoTexto),
+                        "Funções - Arquivo Lógico Interno (ALI)",
+                        style: TextStyle(
+                          color: corCorpoTexto,
+                        ),
                       ),
                       Observer(builder: (context) {
                         return store.tamanhoListaALI == 0
                             ? SizedBox(
                                 height: 30,
                                 child: Text(
-                                  "Não nenhum ALI cadastrado",
+                                  "Não existe nenhuma função cadastrada",
                                   style: TextStyle(
                                       color: corCorpoTexto.withOpacity(0.5)),
                                 ),
@@ -278,7 +293,7 @@ class ContagemIndicativa extends StatelessWidget {
                         height: 20,
                       ),
                       const Text(
-                        "Funções AIE",
+                        "Funções - Arquivo Interface Externa (AIE)",
                         style: TextStyle(color: corCorpoTexto),
                       ),
                       Observer(builder: (context) {
@@ -286,7 +301,7 @@ class ContagemIndicativa extends StatelessWidget {
                             ? SizedBox(
                                 height: 30,
                                 child: Text(
-                                  "Não nenhum AIE cadastrado",
+                                  "Não existe nenhuma função cadastrada",
                                   style: TextStyle(
                                       color: corCorpoTexto.withOpacity(0.5)),
                                 ),

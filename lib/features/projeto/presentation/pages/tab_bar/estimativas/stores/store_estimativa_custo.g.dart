@@ -237,23 +237,6 @@ mixin _$StoreEstimativaCusto on StoreEstimativaCustoBase, Store {
     });
   }
 
-  late final _$disponibilidadeEquipeAtom = Atom(
-      name: 'StoreEstimativaCustoBase.disponibilidadeEquipe', context: context);
-
-  @override
-  double get disponibilidadeEquipe {
-    _$disponibilidadeEquipeAtom.reportRead();
-    return super.disponibilidadeEquipe;
-  }
-
-  @override
-  set disponibilidadeEquipe(double value) {
-    _$disponibilidadeEquipeAtom.reportWrite(value, super.disponibilidadeEquipe,
-        () {
-      super.disponibilidadeEquipe = value;
-    });
-  }
-
   late final _$custoTotalEquipeAtom =
       Atom(name: 'StoreEstimativaCustoBase.custoTotalEquipe', context: context);
 
@@ -679,17 +662,6 @@ mixin _$StoreEstimativaCusto on StoreEstimativaCustoBase, Store {
   }
 
   @override
-  dynamic calcularCustoPF() {
-    final _$actionInfo = _$StoreEstimativaCustoBaseActionController.startAction(
-        name: 'StoreEstimativaCustoBase.calcularCustoPF');
-    try {
-      return super.calcularCustoPF();
-    } finally {
-      _$StoreEstimativaCustoBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   dynamic buscarListaCusto(List<CustoEntity> custoEntity) {
     final _$actionInfo = _$StoreEstimativaCustoBaseActionController.startAction(
         name: 'StoreEstimativaCustoBase.buscarListaCusto');
@@ -796,7 +768,6 @@ equipe: ${equipe},
 custosVariaveis: ${custosVariaveis},
 custoPF: ${custoPF},
 custoTotalMensal: ${custoTotalMensal},
-disponibilidadeEquipe: ${disponibilidadeEquipe},
 custoTotalEquipe: ${custoTotalEquipe},
 custoHora: ${custoHora},
 porcentagemLucro: ${porcentagemLucro},

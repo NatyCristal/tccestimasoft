@@ -63,283 +63,348 @@ class IndexResultado extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              "Contagens",
-              style: TextStyle(
-                  color: corCorpoTexto, fontWeight: Fontes.weightTextoNormal),
+              "Para compartilhar as estimativas realize as contagens: Indicativa, Estimada e Detalhada. \n\n\nApós a contagem estime: Esforço, Prazo, Equipe e Custo com a contagem DETALHADA para gerar o PDF e o texto para compartilhar",
+              style: TextStyle(fontSize: tamanhoSubtitulo),
             ),
-            Observer(builder: (context) {
-              if (storeContagemIndicativa.contagemIndicativaValida.totalPf ==
-                      0 &&
-                  storeContagemEstimada.contagemEstimadaValida.totalPF == 0) {
-                return const SizedBox(
-                  child: Text(
-                    "Não Realizado",
-                    style: TextStyle(color: corCorpoTexto),
+
+            storeContagemDetalhada.contagemDetalhadaValida.totalPf > 0 &&
+                    validarContagens(
+                        context,
+                        storeEstimativaEsforco,
+                        storeEstimativaEquipe,
+                        storeEstimativaPrazo,
+                        storeEstimativaCusto)
+                ? SizedBox(
+                    height: 200,
+                    child: Center(
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            CircleAvatar(
+                              backgroundColor: Colors.teal.withOpacity(0.4),
+                              radius: 40,
+                              child: const Icon(Icons.check_circle_sharp,
+                                  color: Colors.teal, size: 80),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            const Text(
+                              "Estimativas prontas para compartilhar",
+                              style: TextStyle(color: corCorpoTexto),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
+                : SizedBox(
+                    height: 200,
+                    child: Center(
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            CircleAvatar(
+                              backgroundColor: Colors.red.withOpacity(0.4),
+                              radius: 40,
+                              child: const Icon(Icons.cancel,
+                                  color: Colors.red, size: 80),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            const Text(
+                              "Finalize as estimativas para compartilhar",
+                              style: TextStyle(color: corCorpoTexto),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
-                );
-              }
 
-              return const SizedBox();
-            }),
-            Container(
-              padding: const EdgeInsets.all(10),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    Observer(builder: (context) {
-                      return storeContagemIndicativa
-                                  .contagemIndicativaValida.totalPf >
-                              0
-                          ? CardIndicativaResultado(
-                              storeIndex: store,
-                              contagemIndicativaEntitie: storeContagemIndicativa
-                                  .contagemIndicativaValida,
-                              projetoEntitie: projeto,
-                            )
-                          : const SizedBox();
-                    }),
-                    Observer(builder: (context) {
-                      return storeContagemEstimada
-                                  .contagemEstimadaValida.totalPF >
-                              0
-                          ? CardEstimadaResultado(
-                              storeIndex: store,
-                              contagemEstimadaEntitie:
-                                  storeContagemEstimada.contagemEstimadaValida,
-                              projetoEntitie: projeto,
-                            )
-                          : const SizedBox();
-                    }),
-                    Observer(builder: (context) {
-                      return storeContagemDetalhada
-                                  .contagemDetalhadaValida.totalPf >
-                              0
-                          ? CardDetalhadaResultado(
-                              storeIndex: store,
-                              contagemDetalhadaEntitie: storeContagemDetalhada
-                                  .contagemDetalhadaValida,
-                              projetoEntitie: projeto,
-                            )
-                          : const SizedBox();
-                    }),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            const Text(
-              "Esforços",
-              style: TextStyle(
-                  color: corCorpoTexto, fontWeight: Fontes.weightTextoNormal),
-            ),
-            Row(
-              children: [
-                Observer(builder: (context) {
-                  return storeEstimativaEsforco.esforcosValidos.isNotEmpty
-                      ? Container(
-                          padding: const EdgeInsets.all(10),
-                          height: 120,
-                          width: TamanhoTela.width(context, 0.9),
-                          child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              shrinkWrap: true,
-                              itemCount:
-                                  storeEstimativaEsforco.esforcosValidos.length,
-                              itemBuilder: (context, index) {
-                                EsforcoEntity equipeEntity =
-                                    storeEstimativaEsforco
-                                        .esforcosValidos[index];
-                                return CardEsforcoResultado(
-                                    storeIndex: store,
-                                    projetoEntitie: projeto,
-                                    esforcoEntity: equipeEntity);
-                              }),
-                        )
-                      : const SizedBox(
-                          child: Center(
-                              child: Text(
-                            "Não Realizado",
-                            style: TextStyle(color: corCorpoTexto),
-                          )),
-                        );
-                }),
-              ],
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            const Text("Prazos",
-                style: TextStyle(
-                    color: corCorpoTexto,
-                    fontWeight: Fontes.weightTextoNormal)),
-            Row(
-              children: [
-                Observer(builder: (context) {
-                  return storeEstimativaPrazo.prazosValidos.isNotEmpty
-                      ? Container(
-                          padding: const EdgeInsets.all(10),
-                          height: 120,
-                          width: TamanhoTela.width(context, 0.9),
-                          child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              shrinkWrap: true,
-                              itemCount:
-                                  storeEstimativaPrazo.prazosValidos.length,
-                              itemBuilder: (context, index) {
-                                PrazoEntity prazoEntity =
-                                    storeEstimativaPrazo.prazosValidos[index];
-                                return CardResultadoPrazoCompartilhar(
-                                    storeIndex: store,
-                                    projetoEntitie: projeto,
-                                    prazoEntity: prazoEntity);
-                              }),
-                        )
-                      : const SizedBox(
-                          child: Text(
-                            "Não Realizado",
-                            style: TextStyle(color: corCorpoTexto),
-                          ),
-                        );
-                }),
-              ],
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            const Text(
-              "Equipes",
-              style: TextStyle(
-                  color: corCorpoTexto, fontWeight: Fontes.weightTextoNormal),
-            ),
-            Row(
-              children: [
-                Observer(builder: (context) {
-                  return storeEstimativaEquipe.equipesValidas.isNotEmpty
-                      ? Container(
-                          padding: const EdgeInsets.all(10),
-                          height: 120,
-                          width: TamanhoTela.width(context, 0.9),
-                          child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              shrinkWrap: true,
-                              itemCount:
-                                  storeEstimativaEquipe.equipesValidas.length,
-                              itemBuilder: (context, index) {
-                                EquipeEntity equipeEntity =
-                                    storeEstimativaEquipe.equipesValidas[index];
-                                return CardEquipeResultadoCompartilhar(
-                                    storeIndex: store,
-                                    projetoEntitie: projeto,
-                                    equipeEntity: equipeEntity);
-                              }),
-                        )
-                      : const SizedBox(
-                          child: Center(
-                              child: Text(
-                            "Não Realizado",
-                            style: TextStyle(color: corCorpoTexto),
-                          )),
-                        );
-                }),
-              ],
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            const Text(
-              "Custos",
-              style: TextStyle(
-                  color: corCorpoTexto, fontWeight: Fontes.weightTextoNormal),
-            ),
-            Row(
-              children: [
-                Observer(builder: (context) {
-                  return storeEstimativaCusto.custosValidos.isNotEmpty
-                      ? Container(
-                          padding: const EdgeInsets.all(10),
-                          height: 120,
-                          width: TamanhoTela.width(context, 0.9),
-                          child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              shrinkWrap: true,
-                              itemCount:
-                                  storeEstimativaCusto.custosValidos.length,
-                              itemBuilder: (context, index) {
-                                CustoEntity custoEntity =
-                                    storeEstimativaCusto.custosValidos[index];
-                                return CardResultadoCustoCompartilhar(
-                                    storeIndex: store,
-                                    projetoEntitie: projeto,
-                                    custoEntity: custoEntity);
-                              }),
-                        )
-                      : const SizedBox(
-                          child: Center(
-                              child: Text(
-                            "Não Realizado",
-                            style: TextStyle(color: corCorpoTexto),
-                          )),
-                        );
-                }),
-              ],
-            ),
-            BotaoPadrao(
-                corDeTextoBotao: corTextoSobCorPrimaria,
-                acao: () {
-                  if (validarContagens(
-                    context,
-                    storeEstimativaEsforco,
-                    storeEstimativaEquipe,
-                    storeEstimativaPrazo,
-                    storeEstimativaCusto,
-                  )) {
-                    Share.share(FormarTextoCompartilhar.compartilharTexto(
-                        projeto,
-                        storeEstimativaEsforco,
-                        storeEstimativaEquipe,
-                        storeEstimativaPrazo,
-                        storeEstimativaCusto,
-                        storeContagemIndicativa,
-                        storeContagemEstimada,
-                        storeContagemDetalhada));
-                  }
-                },
-                tituloBotao: "     Enviar Estimativas",
-                corBotao: corDeFundoBotaoPrimaria,
-                carregando: false),
-            BotaoPadrao(
-                tituloBotao: "Gerar PDF",
-                corBotao: corDeFundoBotaoSecundaria,
-                carregando: false,
-                icone: const Icon(Icons.file_download_outlined),
-                acao: () async {
-                  if (validarContagens(
-                      context,
-                      storeEstimativaEsforco,
-                      storeEstimativaEquipe,
-                      storeEstimativaPrazo,
-                      storeEstimativaCusto)) {
-                    if (storeContagemDetalhada.totalPf > 0) {
-                      GeradorPdf pdf = GeradorPdf(
-                        storeContagemDetalhada,
-                        storeContagemEstimada,
-                        storeContagemIndicativa,
-                        storeEstimativaEsforco,
-                        storeEstimativaPrazo,
-                        storeEstimativaEquipe,
-                        storeEstimativaCusto,
-                      );
+            // const Text(
+            //   "Contagens",
+            //   style: TextStyle(
+            //       color: corCorpoTexto, fontWeight: Fontes.weightTextoNormal),
+            // ),
+            // Observer(builder: (context) {
+            //   if (storeContagemIndicativa.contagemIndicativaValida.totalPf ==
+            //           0 &&
+            //       storeContagemEstimada.contagemEstimadaValida.totalPF == 0) {
+            //     return const SizedBox(
+            //       child: Text(
+            //         "Não Realizado",
+            //         style: TextStyle(color: corCorpoTexto),
+            //       ),
+            //     );
+            //   }
 
-                      pdf.gerarDocument(projeto);
-                    } else {
-                      AlertaSnack.exbirSnackBar(context,
-                          "Finalize sua contagem detalhada para compartilhar PDF");
-                    }
-                  }
-                }),
+            //   return const SizedBox();
+            // }),
+            // Container(
+            //   padding: const EdgeInsets.all(10),
+            //   child: SingleChildScrollView(
+            //     scrollDirection: Axis.horizontal,
+            //     child: Row(
+            //       children: [
+            //         Observer(builder: (context) {
+            //           return storeContagemIndicativa
+            //                       .contagemIndicativaValida.totalPf >
+            //                   0
+            //               ? CardIndicativaResultado(
+            //                   storeIndex: store,
+            //                   contagemIndicativaEntitie: storeContagemIndicativa
+            //                       .contagemIndicativaValida,
+            //                   projetoEntitie: projeto,
+            //                 )
+            //               : const SizedBox();
+            //         }),
+            //         Observer(builder: (context) {
+            //           return storeContagemEstimada
+            //                       .contagemEstimadaValida.totalPF >
+            //                   0
+            //               ? CardEstimadaResultado(
+            //                   storeIndex: store,
+            //                   contagemEstimadaEntitie:
+            //                       storeContagemEstimada.contagemEstimadaValida,
+            //                   projetoEntitie: projeto,
+            //                 )
+            //               : const SizedBox();
+            //         }),
+            //         Observer(builder: (context) {
+            //           return storeContagemDetalhada
+            //                       .contagemDetalhadaValida.totalPf >
+            //                   0
+            //               ? CardDetalhadaResultado(
+            //                   storeIndex: store,
+            //                   contagemDetalhadaEntitie: storeContagemDetalhada
+            //                       .contagemDetalhadaValida,
+            //                   projetoEntitie: projeto,
+            //                 )
+            //               : const SizedBox();
+            //         }),
+            //       ],
+            //     ),
+            //   ),
+            // ),
+            // const SizedBox(
+            //   height: 10,
+            // ),
+            // const Text(
+            //   "Esforços",
+            //   style: TextStyle(
+            //       color: corCorpoTexto, fontWeight: Fontes.weightTextoNormal),
+            // ),
+            // Row(
+            //   children: [
+            //     Observer(builder: (context) {
+            //       return storeEstimativaEsforco.esforcosValidos.isNotEmpty
+            //           ? Container(
+            //               padding: const EdgeInsets.all(10),
+            //               height: 120,
+            //               width: TamanhoTela.width(context, 0.9),
+            //               child: ListView.builder(
+            //                   scrollDirection: Axis.horizontal,
+            //                   shrinkWrap: true,
+            //                   itemCount:
+            //                       storeEstimativaEsforco.esforcosValidos.length,
+            //                   itemBuilder: (context, index) {
+            //                     EsforcoEntity equipeEntity =
+            //                         storeEstimativaEsforco
+            //                             .esforcosValidos[index];
+            //                     return CardEsforcoResultado(
+            //                         storeIndex: store,
+            //                         projetoEntitie: projeto,
+            //                         esforcoEntity: equipeEntity);
+            //                   }),
+            //             )
+            //           : const SizedBox(
+            //               child: Center(
+            //                   child: Text(
+            //                 "Não Realizado",
+            //                 style: TextStyle(color: corCorpoTexto),
+            //               )),
+            //             );
+            //     }),
+            //   ],
+            // ),
+            // const SizedBox(
+            //   height: 20,
+            // ),
+            // const Text("Prazos",
+            //     style: TextStyle(
+            //         color: corCorpoTexto,
+            //         fontWeight: Fontes.weightTextoNormal)),
+            // Row(
+            //   children: [
+            //     Observer(builder: (context) {
+            //       return storeEstimativaPrazo.prazosValidos.isNotEmpty
+            //           ? Container(
+            //               padding: const EdgeInsets.all(10),
+            //               height: 120,
+            //               width: TamanhoTela.width(context, 0.9),
+            //               child: ListView.builder(
+            //                   scrollDirection: Axis.horizontal,
+            //                   shrinkWrap: true,
+            //                   itemCount:
+            //                       storeEstimativaPrazo.prazosValidos.length,
+            //                   itemBuilder: (context, index) {
+            //                     PrazoEntity prazoEntity =
+            //                         storeEstimativaPrazo.prazosValidos[index];
+            //                     return CardResultadoPrazoCompartilhar(
+            //                         storeIndex: store,
+            //                         projetoEntitie: projeto,
+            //                         prazoEntity: prazoEntity);
+            //                   }),
+            //             )
+            //           : const SizedBox(
+            //               child: Text(
+            //                 "Não Realizado",
+            //                 style: TextStyle(color: corCorpoTexto),
+            //               ),
+            //             );
+            //     }),
+            //   ],
+            // ),
+            // const SizedBox(
+            //   height: 20,
+            // ),
+            // const Text(
+            //   "Equipes",
+            //   style: TextStyle(
+            //       color: corCorpoTexto, fontWeight: Fontes.weightTextoNormal),
+            // ),
+            // Row(
+            //   children: [
+            //     Observer(builder: (context) {
+            //       return storeEstimativaEquipe.equipesValidas.isNotEmpty
+            //           ? Container(
+            //               padding: const EdgeInsets.all(10),
+            //               height: 120,
+            //               width: TamanhoTela.width(context, 0.9),
+            //               child: ListView.builder(
+            //                   scrollDirection: Axis.horizontal,
+            //                   shrinkWrap: true,
+            //                   itemCount:
+            //                       storeEstimativaEquipe.equipesValidas.length,
+            //                   itemBuilder: (context, index) {
+            //                     EquipeEntity equipeEntity =
+            //                         storeEstimativaEquipe.equipesValidas[index];
+            //                     return CardEquipeResultadoCompartilhar(
+            //                         storeIndex: store,
+            //                         projetoEntitie: projeto,
+            //                         equipeEntity: equipeEntity);
+            //                   }),
+            //             )
+            //           : const SizedBox(
+            //               child: Center(
+            //                   child: Text(
+            //                 "Não Realizado",
+            //                 style: TextStyle(color: corCorpoTexto),
+            //               )),
+            //             );
+            //     }),
+            //   ],
+            // ),
+            // const SizedBox(
+            //   height: 20,
+            // ),
+            // const Text(
+            //   "Custos",
+            //   style: TextStyle(
+            //       color: corCorpoTexto, fontWeight: Fontes.weightTextoNormal),
+            // ),
+            // Row(
+            //   children: [
+            //     Observer(builder: (context) {
+            //       return storeEstimativaCusto.custosValidos.isNotEmpty
+            //           ? Container(
+            //               padding: const EdgeInsets.all(10),
+            //               height: 120,
+            //               width: TamanhoTela.width(context, 0.9),
+            //               child: ListView.builder(
+            //                   scrollDirection: Axis.horizontal,
+            //                   shrinkWrap: true,
+            //                   itemCount:
+            //                       storeEstimativaCusto.custosValidos.length,
+            //                   itemBuilder: (context, index) {
+            //                     CustoEntity custoEntity =
+            //                         storeEstimativaCusto.custosValidos[index];
+            //                     return CardResultadoCustoCompartilhar(
+            //                         storeIndex: store,
+            //                         projetoEntitie: projeto,
+            //                         custoEntity: custoEntity);
+            //                   }),
+            //             )
+            //           : const SizedBox(
+            //               child: Center(
+            //                   child: Text(
+            //                 "Não Realizado",
+            //                 style: TextStyle(color: corCorpoTexto),
+            //               )),
+            //             );
+            //     }),
+            //   ],
+            // ),
+            // BotaoPadrao(
+            //     corDeTextoBotao: corTextoSobCorPrimaria,
+            //     acao: () {
+            //       if (validarContagens(
+            //         context,
+            //         storeEstimativaEsforco,
+            //         storeEstimativaEquipe,
+            //         storeEstimativaPrazo,
+            //         storeEstimativaCusto,
+            //       )) {
+            //         Share.share(FormarTextoCompartilhar.compartilharTexto(
+            //             projeto,
+            //             storeEstimativaEsforco,
+            //             storeEstimativaEquipe,
+            //             storeEstimativaPrazo,
+            //             storeEstimativaCusto,
+            //             storeContagemIndicativa,
+            //             storeContagemEstimada,
+            //             storeContagemDetalhada));
+            //       }
+            //     },
+            //     tituloBotao: "     Enviar Estimativas",
+            //     corBotao: corDeFundoBotaoPrimaria,
+            //     carregando: false),
+            // BotaoPadrao(
+            //     tituloBotao: "Gerar PDF",
+            //     corBotao: corDeFundoBotaoSecundaria,
+            //     carregando: false,
+            //     icone: const Icon(Icons.file_download_outlined),
+            //     acao: () async {
+            //       if (validarContagens(
+            //           context,
+            //           storeEstimativaEsforco,
+            //           storeEstimativaEquipe,
+            //           storeEstimativaPrazo,
+            //           storeEstimativaCusto)) {
+            //         if (storeContagemDetalhada.totalPf > 0) {
+            //           GeradorPdf pdf = GeradorPdf(
+            //             storeContagemDetalhada,
+            //             storeContagemEstimada,
+            //             storeContagemIndicativa,
+            //             storeEstimativaEsforco,
+            //             storeEstimativaPrazo,
+            //             storeEstimativaEquipe,
+            //             storeEstimativaCusto,
+            //           );
+
+            //           pdf.gerarDocument(projeto);
+            //         } else {
+            //           AlertaSnack.exbirSnackBar(context,
+            //               "Finalize sua contagem detalhada para compartilhar PDF");
+            //         }
+            //       }
+            //     }),
           ],
         ),
       ),
@@ -379,19 +444,19 @@ validarContagens(context, storeEstimativaEsforco, storeEstimativaEquipe,
 
   if (esforcoDetalhada == null) {
     AlertaSnack.exbirSnackBar(context,
-        "Finalize a estimativa de esforço com a contagem detalhada para compartihar o PDF");
+        "Realize a estimativa de esforço com a contagem detalhada para compartihar o PDF");
     return false;
   } else if (prazoDetalhado == null) {
     AlertaSnack.exbirSnackBar(context,
-        "Finalize a estimativa de prazo com a contagem detalhada para compartihar o PDF");
+        "Realize a estimativa de prazo com a contagem detalhada para compartihar o PDF");
     return false;
   } else if (equipeDetalhada == null) {
     AlertaSnack.exbirSnackBar(context,
-        "Finalize a estimativa de equipe com a contagem detalhada para compartihar o PDF");
+        "Realize a estimativa de equipe com a contagem detalhada para compartihar o PDF");
     return false;
   } else if (custoDetalhado == null) {
     AlertaSnack.exbirSnackBar(context,
-        "Finalize a estimativa de custo com a contagem detalhada para compartihar o PDF");
+        "Realize a estimativa de custo com a contagem detalhada para compartihar o PDF");
     return false;
   } else if (esforcoDetalhada != null &&
       equipeDetalhada != null &&

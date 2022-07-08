@@ -39,16 +39,20 @@ class CardCustoEstimativa extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  Text(
-                    "Disp. Equipe:  ${custoEntity.disponibilidadeEquipe} HH",
-                    style: const TextStyle(color: corCorpoTexto),
-                  ),
+                  // Text(
+                  //   "Disp. Equipe:  ${custoEntity.disponibilidadeEquipe} HH",
+                  //   style: const TextStyle(color: corCorpoTexto),
+                  // ),
                   Text(
                     "Custo Total Mensal: ${Formatadores.formatadorMonetario(custoEntity.custoTotalMensal)}",
                     style: const TextStyle(color: corCorpoTexto),
                   ),
                   Text(
-                    "Custo Hora: ${Formatadores.formatadorMonetario(custoEntity.custoHora.toStringAsFixed(2))}",
+                    "Porcentagem: ${custoEntity.porcentagemLucro} %",
+                    style: const TextStyle(color: corCorpoTexto),
+                  ),
+                  Text(
+                    "Valor Porcentagem: ${Formatadores.formatadorMonetario(custoEntity.valorPorcentagem.toStringAsFixed(2))} ",
                     style: const TextStyle(color: corCorpoTexto),
                   ),
                   Text(

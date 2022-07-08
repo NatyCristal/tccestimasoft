@@ -55,8 +55,8 @@ abstract class StoreEstimativaCustoBase with Store {
   @observable
   double custoTotalMensal = 0;
 
-  @observable
-  double disponibilidadeEquipe = 0;
+  //@observable
+  //double disponibilidadeEquipe = 0;
 
   @observable
   double custoTotalEquipe = 0;
@@ -118,11 +118,11 @@ abstract class StoreEstimativaCustoBase with Store {
 
   @action
   calcularDisponibiliadeEquipe() {
-    disponibilidadeEquipe = (21 *
-            double.parse(
-                equipeEntitySelecionado.producaoDiaria.split(" horas").first)) *
-        int.parse(
-            esforcoEntitySelecionado.produtividadeEquipe.split(" - ").last);
+    // disponibilidadeEquipe = (21 *
+    //         double.parse(
+    //             equipeEntitySelecionado.producaoDiaria.split(" horas").first)) *
+    //     int.parse(
+    //         esforcoEntitySelecionado.produtividadeEquipe.split(" - ").last);
 
     calcularCustoHora();
   }
@@ -130,26 +130,31 @@ abstract class StoreEstimativaCustoBase with Store {
   @action
   validarCamposPreenchidos(context) {
     if (tipoContagem == "") {
-      AlertaSnack.exbirSnackBar(context, "Escolha o tipo da contagem");
+      AlertaSnack.exbirSnackBar(
+          context, "Campo: Contagem de ponto de função vazio");
       return false;
     } else if (esforcoEntitySelecionado.contagemPontoDeFuncao == "") {
-      AlertaSnack.exbirSnackBar(context, "Escolha a estimativa de esforço");
+      AlertaSnack.exbirSnackBar(context, "Campo: Esforço vazio");
       return false;
     } else if (equipeEntitySelecionado.equipeEstimada == "") {
-      AlertaSnack.exbirSnackBar(context, "Escolha a estimativa de equipe");
+      AlertaSnack.exbirSnackBar(context, "Campo: Equipe vazio");
       return false;
     } else if (equipe.isEmpty) {
-      AlertaSnack.exbirSnackBar(context, "Adicione a equipe");
+      AlertaSnack.exbirSnackBar(context, "Adicione os membros da equipe");
+      return false;
+    } else if (custoPF == 0) {
+      AlertaSnack.exbirSnackBar(context, "Informe o valor de custo do PF");
       return false;
     } else if (porcentagemLucro == 0) {
       AlertaSnack.exbirSnackBar(context, "Adicione a porcentagem de lucro");
       return false;
-    } else if (tipoContagem.split(" - ").first !=
-            esforcoEntitySelecionado.contagemPontoDeFuncao.split(" - ").first &&
+    } else if (tipoContagem.split(" - ").first == "" &&
+        esforcoEntitySelecionado.contagemPontoDeFuncao.split(" - ").first ==
+            "" &&
         tipoContagem.split(" - ").first !=
             equipeEntitySelecionado.esforco.split(" - ").last) {
       AlertaSnack.exbirSnackBar(
-          context, "Escolha estimativas com o mesmo tipo de contagem!");
+          context, "Campo: Contagem de ponto de função vazio");
       return false;
     }
 
@@ -171,6 +176,7 @@ abstract class StoreEstimativaCustoBase with Store {
       tamanhoListaCustos = custos.length;
       calcularCustoHora();
       alteracao = true;
+      validarValorTotalProjeto();
     }
   }
 
@@ -179,28 +185,19 @@ abstract class StoreEstimativaCustoBase with Store {
     custos.remove(custoEntity);
     tamanhoListaCustos = custos.length;
     calcularCustoHora();
+    validarValorTotalProjeto();
     alteracao = true;
   }
 
   @action
   calcularCustoHora() {
-    if (equipeEntitySelecionado.equipeEstimada.isNotEmpty) {
-      custoHora = custoTotalMensal / disponibilidadeEquipe;
+    custoBasico = (custoPF * quantidadePFSelecionada);
 
-      custoPF = double.parse(
-              esforcoEntitySelecionado.produtividadeEquipe.split(" - ").last) *
-          custoHora;
+    despesasTotaisDurantePrazoProjeto = custoTotalMensal * prazo;
 
-      custoBasico = (custoPF * quantidadePFSelecionada);
-
-      despesasTotaisDurantePrazoProjeto = custoTotalMensal * prazo;
-
-      custoProjeto = custoBasico + despesasTotaisDurantePrazoProjeto;
-    }
+    custoProjeto = custoBasico + despesasTotaisDurantePrazoProjeto;
+    validarValorTotalProjeto();
   }
-
-  @action
-  calcularCustoPF() {}
 
   @action
   buscarListaCusto(List<CustoEntity> custoEntity) {
@@ -241,7 +238,7 @@ abstract class StoreEstimativaCustoBase with Store {
       tamanhoCustos = custosVariaveis.length;
       validarValorTotalProjeto();
       AlertaSnack.exbirSnackBar(context, "Custo adicionado");
-      calcularCustoHora();
+      //   calcularCustoHora();
     }
   }
 

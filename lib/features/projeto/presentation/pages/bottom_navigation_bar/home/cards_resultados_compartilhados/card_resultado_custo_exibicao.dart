@@ -44,14 +44,14 @@ class ExibicaoCardCusto extends StatelessWidget {
                   quantidadeLinhas: false,
                   nome: "Custos",
                   resultado: custo.custosVariaisFixos.join("\n")),
-              LinhaEstimativas(
-                  nome: "Disp. Equipe",
-                  resultado: custo.disponibilidadeEquipe + " HH"),
-              LinhaEstimativas(
-                nome: "Custo da hora",
-                resultado: Formatadores.formatadorMonetario(
-                    custo.custoHora.toString()),
-              ),
+              // LinhaEstimativas(
+              //     nome: "Disp. Equipe",
+              //     resultado: custo.disponibilidadeEquipe + " HH"),
+              // LinhaEstimativas(
+              //   nome: "Custo da hora",
+              //   resultado: Formatadores.formatadorMonetario(
+              //       custo.custoHora.toString()),
+              // ),
               LinhaEstimativas(
                   nome: "Custo TotalMensal",
                   resultado:
