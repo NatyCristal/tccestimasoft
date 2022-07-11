@@ -1,4 +1,3 @@
-import 'package:estimasoft/core/shared/utils/snackbar.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/equipe_entity.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/esforco_entitie.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/prazo_entitie.dart';
@@ -12,11 +11,18 @@ class StoreEstimativaEquipe = StoreEstimativaEquipeBase
     with _$StoreEstimativaEquipe;
 
 abstract class StoreEstimativaEquipeBase with Store {
+  bool isVisualizacao = false;
+
+  List<String> contagens = [];
+
   List<EquipeEntity> equipesValidas = [];
+
   List<EsforcoEntity> esforcosValidos =
       Modular.get<ProjetoController>().estimativasController.esforcos;
+
   List<PrazoEntity> prazosValidos =
       Modular.get<ProjetoController>().estimativasController.prazos;
+
   List<String> menuItem = [
     '1 hora',
     '2 horas',
@@ -70,59 +76,45 @@ abstract class StoreEstimativaEquipeBase with Store {
     if (esforcoSelecionado.isNotEmpty &&
         producaoDiaria.isNotEmpty &&
         prazoSelecionado.isNotEmpty) {
-      equipeEstimadaValor =
-          (double.parse(esforcoSelecionado.split(" HH ").first)) /
-              (21 *
-                  double.parse(producaoDiaria.split(" horas").first) *
-                  (double.parse(prazoSelecionado.split(" Dias").first)) /
-                  30);
+      equipeEstimadaValor = (double.parse(esforcoSelecionado)) /
+          (21 *
+              double.parse(producaoDiaria.split(" horas").first) *
+              (double.parse(prazoSelecionado)) /
+              30);
     }
   }
 
   @action
   adicionarEquipe(context) {
-    bool existe = false;
-    for (var element in equipes) {
-      if (element.esforco == esforcoSelecionado ||
-          element.esforco.contains(esforcoSelecionado.split(" - ").last)) {
-        existe = true;
-        return AlertaSnack.exbirSnackBar(
-            context, "Existe uma estimativa com essa contagem");
+    if (equipesValidas.isEmpty) {
+      for (var cont in contagens) {
+        if (esforcosValidos.isNotEmpty) {
+          prazoSelecionado = prazosValidos
+              .singleWhere((element) => element.contagemPontoDeFuncao
+                  .contains(cont.split(" - ").first))
+              .prazoTotal
+              .toString();
+
+          esforcoSelecionado = esforcosValidos
+              .singleWhere((element) => element.contagemPontoDeFuncao
+                  .contains(cont.split(" - ").first))
+              .esforcoTotal;
+          estimarEquipe();
+
+          EquipeEntity equipeEntity = EquipeEntity(
+            contagemPontoDeFuncao: cont.split(" - ").first,
+            compartilhada: false,
+            esforco: esforcoSelecionado,
+            prazo: prazoSelecionado,
+            producaoDiaria: producaoDiaria,
+            equipeEstimada: equipeEstimadaValor.toStringAsFixed(2),
+          );
+
+          equipes.add(equipeEntity);
+          tamanhoEquipe = equipes.length;
+          alteracao = true;
+        }
       }
-    }
-
-    for (var element in equipes) {
-      if (element.prazo == prazoSelecionado ||
-          element.prazo.contains(prazoSelecionado.split(" - ").last)) {
-        existe = true;
-        return AlertaSnack.exbirSnackBar(
-            context, "Existe uma estimativa com essa contagem");
-      }
-    }
-
-    if (esforcoSelecionado.isEmpty && prazoSelecionado.isEmpty) {
-      return AlertaSnack.exbirSnackBar(
-          context, "Esforço e prazo estão vazios!");
-    }
-
-    if (esforcoSelecionado.split(" - ").last !=
-        prazoSelecionado.split(" - ").last) {
-      return AlertaSnack.exbirSnackBar(
-          context, "Selecione um esforço e prazo com a mesma contagem");
-    }
-
-    if (esforcosValidos.isNotEmpty && !existe) {
-      EquipeEntity equipeEntity = EquipeEntity(
-        compartilhada: false,
-        esforco: esforcoSelecionado,
-        prazo: prazoSelecionado,
-        producaoDiaria: producaoDiaria,
-        equipeEstimada: equipeEstimadaValor.toStringAsFixed(2),
-      );
-
-      equipes.add(equipeEntity);
-      tamanhoEquipe = equipes.length;
-      alteracao = true;
     }
   }
 

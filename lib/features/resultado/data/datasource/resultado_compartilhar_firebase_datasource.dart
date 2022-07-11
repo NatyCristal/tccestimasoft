@@ -91,6 +91,7 @@ class ResultadoFirebaseDatasource extends CompartilharResultadoDatasource {
   Future enviarEstimativasEquipe(bool anonimamente, EquipeEntity equipes,
       String uidProjeto, String uidUsuario) async {
     EstimativaEquipeModel equipeModels = (EstimativaEquipeModel(
+      contagemPontoDefuncao: equipes.contagemPontoDeFuncao,
       compartilhada: true,
       equipeEstimada: equipes.equipeEstimada,
       esforco: equipes.esforco,

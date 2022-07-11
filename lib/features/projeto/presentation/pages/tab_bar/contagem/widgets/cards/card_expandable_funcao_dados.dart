@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 class CardAdicaoContagemExpanded extends StatelessWidget {
+  final bool ehfuncaoTransacional;
   final IndiceDetalhada indiceDetalhadaModel;
   final StoreContagemDetalhada storeContagemDetalhada;
 
@@ -13,6 +14,7 @@ class CardAdicaoContagemExpanded extends StatelessWidget {
     Key? key,
     required this.indiceDetalhadaModel,
     required this.storeContagemDetalhada,
+    this.ehfuncaoTransacional = false,
   }) : super(key: key);
 
   @override
@@ -55,8 +57,8 @@ class CardAdicaoContagemExpanded extends StatelessWidget {
               }),
               Row(
                 children: [
-                  const Text(
-                    "Qtd. de TRs",
+                  Text(
+                    ehfuncaoTransacional ? "Qtd. de ARs" : "Qtd. de TRs",
                   ),
                   SpinBox(
                       nomeTipoFuncao: indiceDetalhadaModel.tipo,

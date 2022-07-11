@@ -12,6 +12,10 @@ class StoreEstimativaCusto = StoreEstimativaCustoBase
     with _$StoreEstimativaCusto;
 
 abstract class StoreEstimativaCustoBase with Store {
+  bool isVisualizacao = false;
+
+  List<String> contagens = [];
+
   @observable
   double valorPorcentagem = 0;
 
@@ -88,6 +92,7 @@ abstract class StoreEstimativaCustoBase with Store {
 
   @observable
   EquipeEntity equipeEntitySelecionado = EquipeEntity(
+      contagemPontoDeFuncao: "",
       compartilhada: false,
       esforco: "",
       prazo: '',
@@ -114,17 +119,6 @@ abstract class StoreEstimativaCustoBase with Store {
     }
 
     return esforcosEstimadosExibicao;
-  }
-
-  @action
-  calcularDisponibiliadeEquipe() {
-    // disponibilidadeEquipe = (21 *
-    //         double.parse(
-    //             equipeEntitySelecionado.producaoDiaria.split(" horas").first)) *
-    //     int.parse(
-    //         esforcoEntitySelecionado.produtividadeEquipe.split(" - ").last);
-
-    calcularCustoHora();
   }
 
   @action
@@ -163,21 +157,11 @@ abstract class StoreEstimativaCustoBase with Store {
 
   @action
   adicionarNovoCusto(CustoEntity custoEntity, context) {
-    bool existe = false;
-    for (var element in custos) {
-      if (element.tipoContagem == tipoContagem.split(" - ").first) {
-        existe = true;
-        return AlertaSnack.exbirSnackBar(
-            context, "Existe uma estimativa com essa contagem");
-      }
-    }
-    if (!existe) {
-      custos.add(custoEntity);
-      tamanhoListaCustos = custos.length;
-      calcularCustoHora();
-      alteracao = true;
-      validarValorTotalProjeto();
-    }
+    custos.add(custoEntity);
+    tamanhoListaCustos = custos.length;
+    calcularCustoHora();
+    alteracao = true;
+    validarValorTotalProjeto();
   }
 
   @action

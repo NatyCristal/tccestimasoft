@@ -22,52 +22,52 @@ class ConteudoEquipe extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return ListView.builder(
-    //   controller: scrollController,
-    //   shrinkWrap: true,
-    //   itemCount: equipe.equipes.length,
-    //   itemBuilder: (context, index) {
-    //     EquipeEntity equipeEntity = equipe.equipes[index];
+    return ListView.builder(
+      controller: scrollController,
+      shrinkWrap: true,
+      itemCount: equipe.equipes.length,
+      itemBuilder: (context, index) {
+        EquipeEntity equipeEntity = equipe.equipes[index];
 
-    //     return CardEquipeEstimativa(equipeEntity: equipeEntity, store: equipe);
-    //   },
-    // );
-
-    return FutureBuilder(
-      future: controller.recuperarEstimativa(projetoEntitie.uidProjeto,
-          Modular.get<UsuarioAutenticado>().store.uid, "Equipe"),
-      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-        switch (snapshot.connectionState) {
-          case ConnectionState.done:
-            if (snapshot.hasError) {
-              return const Text(
-                  "Não foi possível recuperar os esforços cadastrados");
-            } else if (snapshot.hasData) {
-              equipe.equipesValidas = controller.estimativasController.equipe;
-
-              return ListView.builder(
-                controller: scrollController,
-                shrinkWrap: true,
-                itemCount: equipe.equipes.length,
-                itemBuilder: (context, index) {
-                  EquipeEntity equipeEntity = equipe.equipes[index];
-
-                  return CardEquipeEstimativa(
-                      equipeEntity: equipeEntity, store: equipe);
-                },
-              );
-            }
-
-            break;
-          case ConnectionState.active:
-            return const Carregando();
-          case ConnectionState.none:
-            return const Text("Erro");
-          case ConnectionState.waiting:
-            return const Carregando();
-        }
-        return const SizedBox();
+        return CardEquipeEstimativa(equipeEntity: equipeEntity, store: equipe);
       },
     );
+
+    // return FutureBuilder(
+    //   future: controller.recuperarEstimativa(projetoEntitie.uidProjeto,
+    //       Modular.get<UsuarioAutenticado>().store.uid, "Equipe"),
+    //   builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+    //     switch (snapshot.connectionState) {
+    //       case ConnectionState.done:
+    //         if (snapshot.hasError) {
+    //           return const Text(
+    //               "Não foi possível recuperar os esforços cadastrados");
+    //         } else if (snapshot.hasData) {
+    //           equipe.equipesValidas = controller.estimativasController.equipe;
+
+    //           return ListView.builder(
+    //             controller: scrollController,
+    //             shrinkWrap: true,
+    //             itemCount: equipe.equipes.length,
+    //             itemBuilder: (context, index) {
+    //               EquipeEntity equipeEntity = equipe.equipes[index];
+
+    //               return CardEquipeEstimativa(
+    //                   equipeEntity: equipeEntity, store: equipe);
+    //             },
+    //           );
+    //         }
+
+    //         break;
+    //       case ConnectionState.active:
+    //         return const Carregando();
+    //       case ConnectionState.none:
+    //         return const Text("Erro");
+    //       case ConnectionState.waiting:
+    //         return const Carregando();
+    //     }
+    //     return const SizedBox();
+    //   },
+    // );
   }
 }

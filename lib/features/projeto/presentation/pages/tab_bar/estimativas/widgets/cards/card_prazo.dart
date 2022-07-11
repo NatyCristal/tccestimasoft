@@ -67,26 +67,23 @@ class CardPrazo extends StatelessWidget {
                   ),
                 ],
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      store.remover(prazoEntity);
-                    },
-                    child: SizedBox(
-                      width: 50,
-                      child: Icon(
-                        Icons.delete,
-                        color: corDeAcao.withOpacity(0.8),
-                      ),
-                    ),
-                  )
-                ],
-              ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.end,
+              //   children: [
+              //     GestureDetector(
+              //       onTap: () {
+              //         store.remover(prazoEntity);
+              //       },
+              //       child: SizedBox(
+              //         width: 50,
+              //         child: Icon(
+              //           Icons.delete,
+              //           color: corDeAcao.withOpacity(0.8),
+              //         ),
+              //       ),
+              //     )
+              //   ],
+              // ),
             ],
           ),
         ],

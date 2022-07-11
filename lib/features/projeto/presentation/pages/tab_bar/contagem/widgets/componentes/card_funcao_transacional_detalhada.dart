@@ -25,6 +25,7 @@ class CardFuncaoTransacionalDetalhada extends StatelessWidget {
             .contagemDetalhadaEntitie.funcaoTransacional[index];
 
         return CardAdicaoContagemExpanded(
+          ehfuncaoTransacional: true,
           storeContagemDetalhada: contagemDetalhada,
           indiceDetalhadaModel: indiceDetalhada,
         );

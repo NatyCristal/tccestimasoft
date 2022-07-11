@@ -237,6 +237,22 @@ mixin _$StoreEstimativaEsforco on StoreEstimativaEsforcoBase, Store {
     });
   }
 
+  late final _$contagensAtom =
+      Atom(name: 'StoreEstimativaEsforcoBase.contagens', context: context);
+
+  @override
+  List<String> get contagens {
+    _$contagensAtom.reportRead();
+    return super.contagens;
+  }
+
+  @override
+  set contagens(List<String> value) {
+    _$contagensAtom.reportWrite(value, super.contagens, () {
+      super.contagens = value;
+    });
+  }
+
   late final _$valorTotalEsforcoAtom = Atom(
       name: 'StoreEstimativaEsforcoBase.valorTotalEsforco', context: context);
 
@@ -345,6 +361,7 @@ valorImplantacao: ${valorImplantacao},
 linguagemSelecionada: ${linguagemSelecionada},
 produtividadeEquipe: ${produtividadeEquipe},
 contagemPF: ${contagemPF},
+contagens: ${contagens},
 valorTotalEsforco: ${valorTotalEsforco},
 pontoFuncaoHora: ${pontoFuncaoHora}
     ''';

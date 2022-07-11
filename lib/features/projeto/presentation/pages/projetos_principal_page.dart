@@ -4,7 +4,6 @@ import 'package:estimasoft/core/shared/utils.dart';
 import 'package:estimasoft/core/shared/utils/snackbar.dart';
 import 'package:estimasoft/core/shared/utils/tamanho_tela.dart';
 import 'package:estimasoft/core/shared/widgets/seach_bar_padrao.dart';
-import 'package:estimasoft/features/projeto/presentation/pages/widgets/builders/projetos_conteudo.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/widgets/builders/projetos_conteudo_pesquisa.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/widgets/cards/projeto_card.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/widgets/components/projeto_drawer.dart';

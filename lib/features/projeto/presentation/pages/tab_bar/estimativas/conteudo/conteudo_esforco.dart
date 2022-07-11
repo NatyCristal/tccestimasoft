@@ -22,54 +22,53 @@ class ConteudoEsforco extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return ListView.builder(
-    //   controller: scrollController,
-    //   shrinkWrap: true,
+    return ListView.builder(
+      controller: scrollController,
+      shrinkWrap: true,
+      itemCount: storeEstimativaEsforco.esforcos.length,
+      itemBuilder: (context, index) {
+        EsforcoEntity esforco = storeEstimativaEsforco.esforcos[index];
 
-    //   itemCount: storeEstimativaEsforco.esforcos.length,
-    //   itemBuilder: (context, index) {
-    //     EsforcoEntity esforco = storeEstimativaEsforco.esforcos[index];
-
-    //     return CardEsforco(
-    //         esforcoEntity: esforco, store: storeEstimativaEsforco);
-    //   },
-    // );
-    return FutureBuilder(
-      future: controller.recuperarEstimativa(projetoEntitie.uidProjeto,
-          Modular.get<UsuarioAutenticado>().store.uid, "Esforco"),
-      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-        switch (snapshot.connectionState) {
-          case ConnectionState.done:
-            if (snapshot.hasError) {
-              return const Text(
-                  "Não foi possível recuperar os esforços cadastrados");
-            } else if (snapshot.hasData) {
-              storeEstimativaEsforco.esforcosValidos =
-                  controller.estimativasController.esforcos;
-              return ListView.builder(
-                controller: scrollController,
-                shrinkWrap: true,
-                itemCount: storeEstimativaEsforco.esforcos.length,
-                itemBuilder: (context, index) {
-                  EsforcoEntity esforco =
-                      storeEstimativaEsforco.esforcos[index];
-
-                  return CardEsforco(
-                      esforcoEntity: esforco, store: storeEstimativaEsforco);
-                },
-              );
-            }
-
-            break;
-          case ConnectionState.active:
-            return const Carregando();
-          case ConnectionState.none:
-            return const Text("Erro");
-          case ConnectionState.waiting:
-            return const Carregando();
-        }
-        return const SizedBox();
+        return CardEsforco(
+            esforcoEntity: esforco, store: storeEstimativaEsforco);
       },
     );
+    // return FutureBuilder(
+    //   future: controller.recuperarEstimativa(projetoEntitie.uidProjeto,
+    //       Modular.get<UsuarioAutenticado>().store.uid, "Esforco"),
+    //   builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+    //     switch (snapshot.connectionState) {
+    //       case ConnectionState.done:
+    //         if (snapshot.hasError) {
+    //           return const Text(
+    //               "Não foi possível recuperar os esforços cadastrados");
+    //         } else if (snapshot.hasData) {
+    //           storeEstimativaEsforco.esforcosValidos =
+    //               controller.estimativasController.esforcos;
+    //           return ListView.builder(
+    //             controller: scrollController,
+    //             shrinkWrap: true,
+    //             itemCount: storeEstimativaEsforco.esforcos.length,
+    //             itemBuilder: (context, index) {
+    //               EsforcoEntity esforco =
+    //                   storeEstimativaEsforco.esforcos[index];
+
+    //               return CardEsforco(
+    //                   esforcoEntity: esforco, store: storeEstimativaEsforco);
+    //             },
+    //           );
+    //         }
+
+    //         break;
+    //       case ConnectionState.active:
+    //         return const Carregando();
+    //       case ConnectionState.none:
+    //         return const Text("Erro");
+    //       case ConnectionState.waiting:
+    //         return const Carregando();
+    //     }
+    //     return const SizedBox();
+    //   },
+    // );
   }
 }

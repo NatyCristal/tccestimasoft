@@ -53,44 +53,26 @@ class CardEsforco extends StatelessWidget {
                   ),
                 ],
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  // GestureDetector(
-                  //   onTap: () {
-                  //     store.editar(esforcoEntity);
-
-                  //     // store.linguagemSelecionada = esforcoEntity.linguagem;
-                  //     // store.produtividadeEquipe =
-                  //     //     esforcoEntity.produtividadeEquipe;
-                  //     // store.valorTotalEsforco =
-                  //     //     int.parse(esforcoEntity.esforcoTotal);
-                  //   },
-                  //   child: SizedBox(
-                  //     width: 50,
-                  //     child: Icon(
-                  //       Icons.edit,
-                  //       color: corDeAcao.withOpacity(0.8),
-                  //     ),
-                  //   ),
-                  // ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      store.remover(esforcoEntity);
-                    },
-                    child: SizedBox(
-                      width: 50,
-                      child: Icon(
-                        Icons.delete,
-                        color: corDeAcao.withOpacity(0.8),
-                      ),
-                    ),
-                  )
-                ],
-              ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.end,
+              //   children: [
+              //     const SizedBox(
+              //       width: 20,
+              //     ),
+              //     GestureDetector(
+              //       onTap: () {
+              //         //    store.remover(esforcoEntity);
+              //       },
+              //       child: const SizedBox(
+              //         width: 50,
+              //         // child:
+              //         //  Icon(
+              //         //   Icons.delete,
+              //         //   color: corDeAcao.withOpacity(0.8),
+              //       ),
+              //     )
+              //   ],
+              // ),
             ],
           ),
         ],

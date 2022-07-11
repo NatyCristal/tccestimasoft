@@ -33,13 +33,11 @@ class _InformacoesInstrucoesPageState extends State<InformacoesInstrucoesPage> {
           controller: controller,
           children: [
             Container(
-              height: TamanhoTela.height(context, 0.85),
               padding: const EdgeInsets.only(top: 60),
               color: Colors.blue,
               child: SingleChildScrollView(
                 controller: scrolcontroller,
                 child: Container(
-                  height: TamanhoTela.height(context, 0.85),
                   padding: const EdgeInsets.all(10),
                   color: Colors.white,
                   child: Column(
@@ -85,13 +83,12 @@ class _InformacoesInstrucoesPageState extends State<InformacoesInstrucoesPage> {
               ),
             ),
             Container(
-              height: TamanhoTela.height(context, 0.85),
+              height: TamanhoTela.height(context, 1),
               padding: const EdgeInsets.only(top: 60),
               color: Colors.greenAccent,
               child: SingleChildScrollView(
                 controller: scrolcontroller,
                 child: Container(
-                  height: TamanhoTela.height(context, 0.85),
                   padding: const EdgeInsets.all(10),
                   color: Colors.white,
                   child: Column(
@@ -134,11 +131,10 @@ class _InformacoesInstrucoesPageState extends State<InformacoesInstrucoesPage> {
               ),
             ),
             Container(
-              height: TamanhoTela.height(context, 0.85),
+              height: TamanhoTela.height(context, 1),
               padding: const EdgeInsets.only(top: 60),
               color: Colors.cyan,
               child: Container(
-                height: TamanhoTela.height(context, 0.85),
                 padding: const EdgeInsets.all(10),
                 color: Colors.white,
                 child: SingleChildScrollView(
@@ -207,11 +203,10 @@ class _InformacoesInstrucoesPageState extends State<InformacoesInstrucoesPage> {
               ),
             ),
             Container(
-              height: TamanhoTela.height(context, 0.85),
+              height: TamanhoTela.height(context, 1),
               padding: const EdgeInsets.only(top: 60),
               color: Colors.orange,
               child: Container(
-                height: TamanhoTela.height(context, 0.85),
                 padding: const EdgeInsets.all(10),
                 color: Colors.white,
                 child: SingleChildScrollView(
@@ -296,11 +291,10 @@ class _InformacoesInstrucoesPageState extends State<InformacoesInstrucoesPage> {
               ),
             ),
             Container(
-              height: TamanhoTela.height(context, 0.85),
+              height: TamanhoTela.height(context, 1),
               padding: const EdgeInsets.only(top: 60),
               color: Colors.red,
               child: Container(
-                height: TamanhoTela.height(context, 0.85),
                 padding: const EdgeInsets.all(10),
                 color: Colors.white,
                 child: SingleChildScrollView(

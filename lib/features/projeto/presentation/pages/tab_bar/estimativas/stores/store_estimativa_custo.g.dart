@@ -607,17 +607,6 @@ mixin _$StoreEstimativaCusto on StoreEstimativaCustoBase, Store {
   }
 
   @override
-  dynamic calcularDisponibiliadeEquipe() {
-    final _$actionInfo = _$StoreEstimativaCustoBaseActionController.startAction(
-        name: 'StoreEstimativaCustoBase.calcularDisponibiliadeEquipe');
-    try {
-      return super.calcularDisponibiliadeEquipe();
-    } finally {
-      _$StoreEstimativaCustoBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   dynamic validarCamposPreenchidos(dynamic context) {
     final _$actionInfo = _$StoreEstimativaCustoBaseActionController.startAction(
         name: 'StoreEstimativaCustoBase.validarCamposPreenchidos');

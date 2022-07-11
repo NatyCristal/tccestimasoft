@@ -1,4 +1,3 @@
-import 'package:estimasoft/core/shared/utils/snackbar.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/esforco_entitie.dart';
 import 'package:mobx/mobx.dart';
 
@@ -8,6 +7,9 @@ class StoreEstimativaEsforco = StoreEstimativaEsforcoBase
     with _$StoreEstimativaEsforco;
 
 abstract class StoreEstimativaEsforcoBase with Store {
+  @observable
+  bool isVisualizacao = false;
+
   @observable
   List<EsforcoEntity> esforcosValidos = [];
 
@@ -53,6 +55,9 @@ abstract class StoreEstimativaEsforcoBase with Store {
   String contagemPF = "";
 
   @observable
+  List<String> contagens = [];
+
+  @observable
   int valorTotalEsforco = 0;
 
   @observable
@@ -80,37 +85,46 @@ abstract class StoreEstimativaEsforcoBase with Store {
 
   @action
   adicionarEsforco(context) {
-    bool existe = false;
-    for (var element in esforcos) {
-      if (element.contagemPontoDeFuncao == contagemPF ||
-          element.contagemPontoDeFuncao
-              .contains(contagemPF.split(" - ").first)) {
-        existe = true;
-        return AlertaSnack.exbirSnackBar(
-            context, "Existe uma estimativa com essa contagem");
+    if (esforcos.isEmpty) {
+      for (var element in contagens) {
+        contagemPF = element.split(" - ").last;
+        String tipoContagem = element.split(" - ").first;
+        validarContagem();
+        validarFasesDesenvolvimento(valorTotalEsforco);
+
+        EsforcoEntity esforcoEntity = EsforcoEntity(
+            compartilhada: false,
+            contagemPontoDeFuncao: tipoContagem,
+            linguagem: linguagemSelecionada,
+            produtividadeEquipe: produtividadeEquipe,
+            esforcoTotal: valorTotalEsforco.toString());
+
+        esforcos.add(esforcoEntity);
       }
     }
 
-    if (contagemPF.isNotEmpty && !existe) {
-      EsforcoEntity esforcoEntity = EsforcoEntity(
-          compartilhada: false,
-          contagemPontoDeFuncao: contagemPF,
-          linguagem: linguagemSelecionada,
-          produtividadeEquipe: produtividadeEquipe,
-          esforcoTotal: valorTotalEsforco.toString());
+    tamanhoListaEsforco = esforcos.length;
+    alteracores = true;
 
-      esforcos.add(esforcoEntity);
-      tamanhoListaEsforco = esforcos.length;
-      alteracores = true;
-    }
+    // if (contagemPF.isNotEmpty && !existe) {
+    //   EsforcoEntity esforcoEntity = EsforcoEntity(
+    //       compartilhada: false,
+    //       contagemPontoDeFuncao: contagemPF,
+    //       linguagem: linguagemSelecionada,
+    //       produtividadeEquipe: produtividadeEquipe,
+    //       esforcoTotal: valorTotalEsforco.toString());
+
+    //   esforcos.add(esforcoEntity);
+    //   tamanhoListaEsforco = esforcos.length;
+    //   alteracores = true;
+    // }
   }
 
   @action
   validarContagem() {
-    // String contagemPF = "Indicativa - 47 PF";
     if (!contagemPF.contains(" 0 PF")) {
       int produtividade = int.parse(produtividadeEquipe.split(" - ").last);
-      String text = contagemPF.split(" - ").last.split(" PF").first;
+      String text = contagemPF.split(" - ").last;
       int pf = int.parse(text);
       valorTotalEsforco = pf * produtividade;
       validarFasesDesenvolvimento(valorTotalEsforco);

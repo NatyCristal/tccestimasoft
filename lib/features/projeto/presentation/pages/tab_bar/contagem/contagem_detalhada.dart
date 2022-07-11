@@ -35,244 +35,239 @@ class ContagemDetalhada extends StatelessWidget {
   Widget build(BuildContext context) {
     storeEstimada.totalIndicativa = storeIndicativa.totalPf;
 
-    return Container(
-      padding: paddingPagePrincipal,
-      height: TamanhoTela.height(context, 1),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ConteudoContagemDetalhada(
-                storeContagemDetalhada: storeContagemDetalhada,
-                uidProjeto: projetoUid,
-                store: storeEstimada,
-                storeContagemIndicativa: storeIndicativa),
-            const SizedBox(
-              height: 10,
-            ),
-            const Text(
-              "Altere os valores de TDs, TRr e ARs",
-              style: TextStyle(
-                  color: corCorpoTexto, fontWeight: Fontes.weightTextoNormal),
-            ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: IconButton(
-                onPressed: () {
-                  Alert(
-                    context: context,
-                    title: "Significado das siglas",
-                    style: const AlertStyle(
-                      titleStyle:
-                          TextStyle(color: corTituloTexto, fontSize: 18),
-                    ),
-                    content: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Text(
-                          "AR: Arquivos Referenciados.",
-                          style: TextStyle(
-                              fontWeight: Fontes.weightTextoLeve,
-                              color: corCorpoTexto,
-                              fontSize: tamanhoSubtitulo),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          "TR: Tipo de registro",
-                          style: TextStyle(
-                              fontWeight: Fontes.weightTextoLeve,
-                              color: corCorpoTexto,
-                              fontSize: tamanhoSubtitulo),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          "TD: Tipo de dado.",
-                          style: TextStyle(
-                              fontWeight: Fontes.weightTextoLeve,
-                              color: corCorpoTexto,
-                              fontSize: tamanhoSubtitulo),
-                        ),
-                      ],
-                    ),
-                    buttons: [
-                      DialogButton(
-                        color: corDeFundoBotaoSecundaria,
-                        child: const Text(
-                          "OK",
-                          style: TextStyle(
-                              fontWeight: Fontes.weightTextoNormal,
-                              color: corDeTextoBotaoSecundaria,
-                              fontSize: 14),
-                        ),
-                        onPressed: () {
-                          Navigator.of(context, rootNavigator: true).pop();
-                        },
-                        width: 120,
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ConteudoContagemDetalhada(
+              storeContagemDetalhada: storeContagemDetalhada,
+              uidProjeto: projetoUid,
+              store: storeEstimada,
+              storeContagemIndicativa: storeIndicativa),
+          const SizedBox(
+            height: 10,
+          ),
+          const Text(
+            "Altere os valores de TDs, TRr e ARs",
+            style: TextStyle(
+                color: corCorpoTexto, fontWeight: Fontes.weightTextoNormal),
+          ),
+          Align(
+            alignment: Alignment.centerRight,
+            child: IconButton(
+              onPressed: () {
+                Alert(
+                  context: context,
+                  title: "Significado das siglas",
+                  style: const AlertStyle(
+                    titleStyle: TextStyle(color: corTituloTexto, fontSize: 18),
+                  ),
+                  content: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        "AR: Arquivos Referenciados.",
+                        style: TextStyle(
+                            fontWeight: Fontes.weightTextoLeve,
+                            color: corCorpoTexto,
+                            fontSize: tamanhoSubtitulo),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        "TR: Tipo de registro",
+                        style: TextStyle(
+                            fontWeight: Fontes.weightTextoLeve,
+                            color: corCorpoTexto,
+                            fontSize: tamanhoSubtitulo),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        "TD: Tipo de dado.",
+                        style: TextStyle(
+                            fontWeight: Fontes.weightTextoLeve,
+                            color: corCorpoTexto,
+                            fontSize: tamanhoSubtitulo),
                       ),
                     ],
-                  ).show();
-                },
-                icon: Icon(
-                  Icons.info,
-                  size: 24,
-                  color: corDeAcao.withOpacity(0.7),
-                ),
+                  ),
+                  buttons: [
+                    DialogButton(
+                      color: corDeFundoBotaoSecundaria,
+                      child: const Text(
+                        "OK",
+                        style: TextStyle(
+                            fontWeight: Fontes.weightTextoNormal,
+                            color: corDeTextoBotaoSecundaria,
+                            fontSize: 14),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context, rootNavigator: true).pop();
+                      },
+                      width: 120,
+                    ),
+                  ],
+                ).show();
+              },
+              icon: Icon(
+                Icons.info,
+                size: 24,
+                color: corDeAcao.withOpacity(0.7),
               ),
             ),
-            Column(
-              children: const [
-                SizedBox(
-                  width: double.infinity,
-                  child: Text(
-                    "Função de Dados",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 16),
-                  ),
+          ),
+          Column(
+            children: const [
+              SizedBox(
+                width: double.infinity,
+                child: Text(
+                  "Função de Dados",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 16),
                 ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Observer(builder: (context) {
+            return storeContagemDetalhada.tamanhoFuncaoDeDados > 0
+                ? FuncaoDeDadosDetalhada(
+                    storeContagemDetalhada: storeContagemDetalhada,
+                    scrollController: scrollControllerLateral)
+                : SizedBox(
+                    child: Text(
+                      "Não possui nenhuma função de dados cadastrada",
+                      style: TextStyle(color: corCorpoTexto.withOpacity(0.5)),
+                    ),
+                  );
+          }),
+          const SizedBox(
+            height: 20,
+          ),
+          const SizedBox(
+            width: double.infinity,
+            child: Text(
+              "Função Transacional",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 16),
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Observer(builder: (context) {
+            return storeContagemDetalhada.tamanhoFuncaoTransacional > 0
+                ? CardFuncaoTransacionalDetalhada(
+                    contagemDetalhada: storeContagemDetalhada,
+                    scrollController: scrollControllerLateral)
+                : SizedBox(
+                    height: 30,
+                    child: Text(
+                      "Não possui nenhuma função Transacional cadastrada",
+                      style: TextStyle(color: corCorpoTexto.withOpacity(0.5)),
+                    ),
+                  );
+          }),
+          const SizedBox(
+            height: 20,
+          ),
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+                color: Colors.blue.withOpacity(0.2),
+                borderRadius: arredondamentoBordas),
+            width: double.infinity,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Observer(builder: (context) {
+                  return Text(
+                      "${storeContagemDetalhada.totalPfFuncaoDeDados} PF em Função de dados");
+                }),
+                const SizedBox(
+                  height: 10,
+                ),
+                Observer(builder: (context) {
+                  return Text(
+                      "${storeContagemDetalhada.totalPfFuncaTransacional}  PF em Função Transacional");
+                }),
               ],
             ),
-            const SizedBox(
-              height: 20,
-            ),
-            Observer(builder: (context) {
-              return storeContagemDetalhada.tamanhoFuncaoDeDados > 0
-                  ? FuncaoDeDadosDetalhada(
-                      storeContagemDetalhada: storeContagemDetalhada,
-                      scrollController: scrollControllerLateral)
-                  : SizedBox(
-                      child: Text(
-                        "Não possui nenhuma função de dados cadastrada",
-                        style: TextStyle(color: corCorpoTexto.withOpacity(0.5)),
-                      ),
-                    );
-            }),
-            const SizedBox(
-              height: 20,
-            ),
-            const SizedBox(
-              width: double.infinity,
-              child: Text(
-                "Função Transacional",
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 16),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Observer(builder: (context) {
-              return storeContagemDetalhada.tamanhoFuncaoTransacional > 0
-                  ? CardFuncaoTransacionalDetalhada(
-                      contagemDetalhada: storeContagemDetalhada,
-                      scrollController: scrollControllerLateral)
-                  : SizedBox(
-                      height: 30,
-                      child: Text(
-                        "Não possui nenhuma função Transacional cadastrada",
-                        style: TextStyle(color: corCorpoTexto.withOpacity(0.5)),
-                      ),
-                    );
-            }),
-            const SizedBox(
-              height: 20,
-            ),
-            Container(
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                  color: Colors.blue.withOpacity(0.2),
-                  borderRadius: arredondamentoBordas),
-              width: double.infinity,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Observer(builder: (context) {
-                    return Text(
-                        "${storeContagemDetalhada.totalPfFuncaoDeDados} PF em Função de dados");
-                  }),
-                  const SizedBox(
-                    height: 10,
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                const Text(
+                  "Total  ",
+                  style: TextStyle(
+                    color: corTituloTexto,
                   ),
-                  Observer(builder: (context) {
-                    return Text(
-                        "${storeContagemDetalhada.totalPfFuncaTransacional}  PF em Função Transacional");
-                  }),
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  const Text(
-                    "Total  ",
-                    style: TextStyle(
+                ),
+                Observer(builder: (context) {
+                  return Text(
+                    "${storeContagemDetalhada.totalPf} PF",
+                    style: const TextStyle(
                       color: corTituloTexto,
                     ),
-                  ),
-                  Observer(builder: (context) {
-                    return Text(
-                      "${storeContagemDetalhada.totalPf} PF",
-                      style: const TextStyle(
-                        color: corTituloTexto,
-                      ),
-                    );
-                  }),
-                ],
-              ),
-              Observer(builder: (context) {
-                return Text(
-                    "Quantidade de funções  ${(storeEstimada.contagemEstimadaValida.ce.length + storeEstimada.contagemEstimadaValida.ee.length + storeEstimada.contagemEstimadaValida.se.length + storeIndicativa.contagemIndicativaValida.aie.length + storeIndicativa.contagemIndicativaValida.ali.length).toString()}");
-              }),
-            ]),
-            const SizedBox(
-              height: 20,
+                  );
+                }),
+              ],
             ),
             Observer(builder: (context) {
-              return storeContagemDetalhada.alteracoes
-                  ? const Text(
-                      "Salve as alterações!",
-                      style: TextStyle(
-                        color: Colors.red,
-                        fontWeight: Fontes.weightTextoNormal,
-                      ),
-                    )
-                  : const SizedBox(
-                      height: 20,
-                    );
+              return Text(
+                  "Quantidade de funções  ${(storeEstimada.contagemEstimadaValida.ce.length + storeEstimada.contagemEstimadaValida.ee.length + storeEstimada.contagemEstimadaValida.se.length + storeIndicativa.contagemIndicativaValida.aie.length + storeIndicativa.contagemIndicativaValida.ali.length).toString()}");
             }),
-            Observer(builder: (context) {
-              return BotaoPadrao(
-                  corDeTextoBotao: corTextoSobCorPrimaria,
-                  acao: () async {
-                    if (storeContagemDetalhada.validar(context)) {
-                      storeContagemDetalhada.carregando = true;
-                      var retorno = await controller.salvarContagemDetalhada(
-                          storeContagemDetalhada.contagemDetalhadaEntitie,
-                          projetoUid);
+          ]),
+          const SizedBox(
+            height: 20,
+          ),
+          Observer(builder: (context) {
+            return storeContagemDetalhada.alteracoes
+                ? const Text(
+                    "Salve as alterações!",
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontWeight: Fontes.weightTextoNormal,
+                    ),
+                  )
+                : const SizedBox(
+                    height: 20,
+                  );
+          }),
+          // Observer(builder: (context) {
+          //   return BotaoPadrao(
+          //       corDeTextoBotao: corTextoSobCorPrimaria,
+          //       acao: () async {
+          //         if (storeContagemDetalhada.validar(context)) {
+          //           storeContagemDetalhada.carregando = true;
+          //           var retorno = await controller.salvarContagemDetalhada(
+          //               storeContagemDetalhada.contagemDetalhadaEntitie,
+          //               projetoUid);
 
-                      storeContagemDetalhada.salvar(
-                          controller.contagemController.contagemDetalhada);
-                      storeContagemDetalhada.carregando = false;
-                      storeContagemDetalhada.alteracoes = false;
-                      AlertaSnack.exbirSnackBar(context, retorno);
-                    }
-                  },
-                  tituloBotao: "Salvar",
-                  corBotao: corDeFundoBotaoPrimaria,
-                  carregando: storeContagemDetalhada.carregando);
-            }),
-          ],
-        ),
+          //           storeContagemDetalhada.salvar(
+          //               controller.contagemController.contagemDetalhada);
+          //           storeContagemDetalhada.carregando = false;
+          //           storeContagemDetalhada.alteracoes = false;
+          //           AlertaSnack.exbirSnackBar(context, retorno);
+          //         }
+          //       },
+          //       tituloBotao: "Salvar",
+          //       corBotao: corDeFundoBotaoPrimaria,
+          //       carregando: storeContagemDetalhada.carregando);
+          // }),
+        ],
       ),
     );
   }

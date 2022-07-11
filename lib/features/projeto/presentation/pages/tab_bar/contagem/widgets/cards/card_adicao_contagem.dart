@@ -34,7 +34,7 @@ class CardAdicaoContagem extends StatelessWidget {
             : Colors.blue.withOpacity(0.3),
         borderRadius: arredondamentoBordas,
       ),
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.all(4),
       margin: const EdgeInsets.symmetric(vertical: 5),
       width: TamanhoTela.width(context, 1),
       child: Row(

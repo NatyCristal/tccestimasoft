@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'package:estimasoft/core/shared/utils/snackbar.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/prazo_entitie.dart';
 import 'package:mobx/mobx.dart';
 
@@ -9,6 +8,11 @@ class StoreEstimativaPrazo = StoreEstimativaPrazoBase
     with _$StoreEstimativaPrazo;
 
 abstract class StoreEstimativaPrazoBase with Store {
+  bool isVisualizacao = false;
+
+  @observable
+  List<String> contagens = [];
+
   @observable
   String valorTotalEmDias = "0";
 
@@ -72,27 +76,20 @@ abstract class StoreEstimativaPrazoBase with Store {
 
   @action
   adicionarPrazo(context) {
-    bool existe = false;
-    for (var element in prazos) {
-      if (element.contagemPontoDeFuncao == contagemPF ||
-          element.contagemPontoDeFuncao
-              .contains(contagemPF.split(" - ").first)) {
-        existe = true;
-        return AlertaSnack.exbirSnackBar(
-            context, "Existe uma estimativa com essa contagem");
+    if (prazos.isEmpty) {
+      for (var element in contagens) {
+        contagemPF = element.split(" - ").last;
+        validarContagem();
+        PrazoEntity prazoEntity = PrazoEntity(
+            compartilhada: false,
+            contagemPontoDeFuncao: element.split(" - ").first,
+            tipoSistema: tipoSistemaSelecionado,
+            prazoMinimo: valorEmDiasReagiaoDoImpossivel,
+            prazoTotal: double.parse(valorTotalEmDias));
+
+        prazos.add(prazoEntity);
+        tamanhoListaPrazo = prazos.length;
       }
-    }
-
-    if (contagemPF.isNotEmpty && !existe) {
-      PrazoEntity prazoEntity = PrazoEntity(
-          compartilhada: false,
-          contagemPontoDeFuncao: contagemPF,
-          tipoSistema: tipoSistemaSelecionado,
-          prazoMinimo: valorEmDiasReagiaoDoImpossivel,
-          prazoTotal: double.parse(valorTotalEmDias));
-
-      prazos.add(prazoEntity);
-      tamanhoListaPrazo = prazos.length;
       alteracao = true;
     }
   }
@@ -124,8 +121,7 @@ abstract class StoreEstimativaPrazoBase with Store {
   @action
   validarContagem() {
     if (!contagemPF.contains(" 0 PF")) {
-      // int produtividade = int.parse(produtividadeEquipe.split(" - ").last);
-      String text = contagemPF.split(" - ").last.split(" PF").first;
+      String text = contagemPF;
       tamanhoPf = int.parse(text);
       if (tamanhoPf <= 110) {
         prazoTotal = calcularTamanhoMinimo();

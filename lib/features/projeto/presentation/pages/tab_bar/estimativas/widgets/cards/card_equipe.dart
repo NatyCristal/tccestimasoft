@@ -25,7 +25,7 @@ class CardEquipeEstimativa extends StatelessWidget {
           Align(
             alignment: Alignment.center,
             child: Text(
-              "Equipe ${equipeEntity.esforco.split(" - ").last}",
+              "Equipe ${equipeEntity.contagemPontoDeFuncao}",
               style: const TextStyle(color: corTituloTexto),
             ),
           ),
@@ -39,11 +39,11 @@ class CardEquipeEstimativa extends StatelessWidget {
                     height: 10,
                   ),
                   Text(
-                    "Esforço: " + equipeEntity.esforco,
+                    "Esforço: " + equipeEntity.esforco + " HH",
                     style: const TextStyle(color: corCorpoTexto),
                   ),
                   Text(
-                    "Prazo: " + equipeEntity.prazo,
+                    "Prazo: " + equipeEntity.prazo + " Dias",
                     style: const TextStyle(color: corCorpoTexto),
                   ),
                   Text(
@@ -51,31 +51,31 @@ class CardEquipeEstimativa extends StatelessWidget {
                     style: const TextStyle(color: corCorpoTexto),
                   ),
                   Text(
-                    "Equipe Estimada: ${equipeEntity.equipeEstimada}",
+                    "Equipe Estimada: ${equipeEntity.equipeEstimada} recursos",
                     style: const TextStyle(color: corCorpoTexto),
                   ),
                 ],
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      store.remover(equipeEntity);
-                    },
-                    child: SizedBox(
-                      width: 50,
-                      child: Icon(
-                        Icons.delete,
-                        color: corDeAcao.withOpacity(0.8),
-                      ),
-                    ),
-                  )
-                ],
-              ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.end,
+              //   children: [
+              //     const SizedBox(
+              //       width: 20,
+              //     ),
+              //     // GestureDetector(
+              //     //   onTap: () {
+              //     //     store.remover(equipeEntity);
+              //     //   },
+              //     //   child: SizedBox(
+              //     //     width: 50,
+              //     //     child: Icon(
+              //     //       Icons.delete,
+              //     //       color: corDeAcao.withOpacity(0.8),
+              //     //     ),
+              //     //   ),
+              //     // )
+              //   ],
+              // ),
             ],
           ),
         ],

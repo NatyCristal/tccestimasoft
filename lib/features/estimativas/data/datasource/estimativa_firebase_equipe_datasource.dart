@@ -33,12 +33,14 @@ class EstimativaEquipeFirebaseDatasource extends EstimativaEquipeDatasource {
   Future<EquipeEntity> salvarEstimativaEquipe(EquipeEntity equipeEntity,
       String uidProjeto, String uidUsuario, String tipoContagem) async {
     EstimativaEquipeModel prazo = EstimativaEquipeModel(
+      contagemPontoDefuncao: equipeEntity.contagemPontoDeFuncao,
       compartilhada: false,
       equipeEstimada: equipeEntity.equipeEstimada,
       esforco: equipeEntity.esforco,
       prazo: equipeEntity.prazo,
       producaoDiaria: equipeEntity.producaoDiaria,
     );
+    tipoContagem = equipeEntity.contagemPontoDeFuncao;
 
     await firestore
         .collection("Estimativa")

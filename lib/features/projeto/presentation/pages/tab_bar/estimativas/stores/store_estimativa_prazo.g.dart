@@ -9,6 +9,22 @@ part of 'store_estimativa_prazo.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$StoreEstimativaPrazo on StoreEstimativaPrazoBase, Store {
+  late final _$contagensAtom =
+      Atom(name: 'StoreEstimativaPrazoBase.contagens', context: context);
+
+  @override
+  List<String> get contagens {
+    _$contagensAtom.reportRead();
+    return super.contagens;
+  }
+
+  @override
+  set contagens(List<String> value) {
+    _$contagensAtom.reportWrite(value, super.contagens, () {
+      super.contagens = value;
+    });
+  }
+
   late final _$valorTotalEmDiasAtom =
       Atom(name: 'StoreEstimativaPrazoBase.valorTotalEmDias', context: context);
 
@@ -266,6 +282,7 @@ mixin _$StoreEstimativaPrazo on StoreEstimativaPrazoBase, Store {
   @override
   String toString() {
     return '''
+contagens: ${contagens},
 valorTotalEmDias: ${valorTotalEmDias},
 valorEmDiasReagiaoDoImpossivel: ${valorEmDiasReagiaoDoImpossivel},
 tamanhoListaPrazo: ${tamanhoListaPrazo},

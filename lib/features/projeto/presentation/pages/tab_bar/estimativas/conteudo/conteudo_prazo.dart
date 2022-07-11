@@ -22,51 +22,51 @@ class ConteudoPrazo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return ListView.builder(
-    //   controller: scrollController,
-    //   shrinkWrap: true,
-    //   itemCount: storeEstimativaPrazo.prazos.length,
-    //   itemBuilder: (context, index) {
-    //     PrazoEntity prazo = storeEstimativaPrazo.prazos[index];
+    return ListView.builder(
+      controller: scrollController,
+      shrinkWrap: true,
+      itemCount: storeEstimativaPrazo.prazos.length,
+      itemBuilder: (context, index) {
+        PrazoEntity prazo = storeEstimativaPrazo.prazos[index];
 
-    //     return CardPrazo(prazoEntity: prazo, store: storeEstimativaPrazo);
-    //   },
-    // );
-
-    return FutureBuilder(
-      future: controller.recuperarEstimativa(projetoEntitie.uidProjeto,
-          Modular.get<UsuarioAutenticado>().store.uid, "Prazo"),
-      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-        switch (snapshot.connectionState) {
-          case ConnectionState.done:
-            if (snapshot.hasError) {
-              return const Text("Não foi possível recuperar os prazos");
-            } else if (snapshot.hasData) {
-              storeEstimativaPrazo.prazosValidos =
-                  controller.estimativasController.prazos;
-              return ListView.builder(
-                controller: scrollController,
-                shrinkWrap: true,
-                itemCount: storeEstimativaPrazo.prazos.length,
-                itemBuilder: (context, index) {
-                  PrazoEntity prazo = storeEstimativaPrazo.prazos[index];
-
-                  return CardPrazo(
-                      prazoEntity: prazo, store: storeEstimativaPrazo);
-                },
-              );
-            }
-
-            break;
-          case ConnectionState.active:
-            return const Carregando();
-          case ConnectionState.none:
-            return const Text("Erro");
-          case ConnectionState.waiting:
-            return const Carregando();
-        }
-        return const Text("Erro");
+        return CardPrazo(prazoEntity: prazo, store: storeEstimativaPrazo);
       },
     );
+
+    // return FutureBuilder(
+    //   future: controller.recuperarEstimativa(projetoEntitie.uidProjeto,
+    //       Modular.get<UsuarioAutenticado>().store.uid, "Prazo"),
+    //   builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+    //     switch (snapshot.connectionState) {
+    //       case ConnectionState.done:
+    //         if (snapshot.hasError) {
+    //           return const Text("Não foi possível recuperar os prazos");
+    //         } else if (snapshot.hasData) {
+    //           storeEstimativaPrazo.prazosValidos =
+    //               controller.estimativasController.prazos;
+    //           return ListView.builder(
+    //             controller: scrollController,
+    //             shrinkWrap: true,
+    //             itemCount: storeEstimativaPrazo.prazos.length,
+    //             itemBuilder: (context, index) {
+    //               PrazoEntity prazo = storeEstimativaPrazo.prazos[index];
+
+    //               return CardPrazo(
+    //                   prazoEntity: prazo, store: storeEstimativaPrazo);
+    //             },
+    //           );
+    //         }
+
+    //         break;
+    //       case ConnectionState.active:
+    //         return const Carregando();
+    //       case ConnectionState.none:
+    //         return const Text("Erro");
+    //       case ConnectionState.waiting:
+    //         return const Carregando();
+    //     }
+    //     return const Text("Erro");
+    //   },
+    // );
   }
 }

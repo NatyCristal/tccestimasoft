@@ -16,7 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-class EstimativaPrazo extends StatelessWidget {
+class EstimativaPrazoPage extends StatelessWidget {
   final ProjetoController controller = Modular.get<ProjetoController>();
   final ProjetoEntitie projetoEntitie;
   final ScrollController scrollController = ScrollController();
@@ -25,7 +25,7 @@ class EstimativaPrazo extends StatelessWidget {
   final StoreContagemEstimada storeEstimada;
   final StoreContagemDetalhada storeContagemDetalhada;
 
-  EstimativaPrazo(
+  EstimativaPrazoPage(
       {Key? key,
       required this.storeIndicativa,
       required this.storeEstimada,
@@ -36,123 +36,107 @@ class EstimativaPrazo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: paddingPagePrincipal,
-      height: TamanhoTela.height(context, 1),
+    store.contagens = [
+      "Detalhada - " +
+          storeContagemDetalhada.contagemDetalhadaValida.totalPf.toString(),
+      "Indicativa - " +
+          storeIndicativa.contagemIndicativaValida.totalPf.toString(),
+      "Estimada - " + storeEstimada.contagemEstimadaValida.totalPF.toString()
+    ];
+
+    return SizedBox(
       width: TamanhoTela.width(context, 1),
       child: SingleChildScrollView(
         controller: scrollController,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Observer(builder: (context) {
-              return DropdownSearch<String>(
+            if (!store.isVisualizacao) const Text("Informe o tipo de sistema"),
+            if (!store.isVisualizacao)
+              const SizedBox(
+                height: 20,
+              ),
+            if (!store.isVisualizacao)
+              DropdownSearch<String>(
                 mode: Mode.MENU,
                 showSelectedItems: true,
-                items: [
-                  "Indicativa - ${storeIndicativa.contagemIndicativaValida.totalPf.toString()} PF",
-                  "Estimada - ${storeEstimada.contagemEstimadaValida.totalPF.toString()} PF",
-                  "Detalhada - ${storeContagemDetalhada.contagemDetalhadaValida.totalPf.toString()} PF",
-                ],
+                items: store.tipoSistema,
                 dropdownSearchDecoration: const InputDecoration(
-                  labelText: "Contagem de ponto de função",
+                  labelText: "Tipo de sistema",
                 ),
-                popupItemDisabled: (String s) {
-                  bool temIgual = false;
-
-                  temIgual = s.contains(' 0 ');
-
-                  for (var element in store.prazos) {
-                    if (s.contains(element.contagemPontoDeFuncao)) {
-                      temIgual = true;
-                    }
-                  }
-
-                  return temIgual;
-                },
+                selectedItem: store.tipoSistema[0],
                 onChanged: (value) {
-                  store.contagemPF = value.toString();
-                  store.validarContagem();
+                  store.tipoSistemaSelecionado = value.toString();
                 },
-              );
-            }),
-            const SizedBox(
-              height: 20,
-            ),
-            DropdownSearch<String>(
-              mode: Mode.MENU,
-              showSelectedItems: true,
-              items: store.tipoSistema,
-              dropdownSearchDecoration: const InputDecoration(
-                labelText: "Tipo de sistema",
               ),
-              selectedItem: store.tipoSistema[0],
-              onChanged: (value) {
-                store.tipoSistemaSelecionado = value.toString();
-              },
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            Observer(builder: (context) {
-              return Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  borderRadius: arredondamentoBordas,
-                  color: Colors.blue.withOpacity(0.2),
-                ),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          "Prazo Total",
-                          style: TextStyle(
-                              color: corCorpoTexto,
-                              fontWeight: Fontes.weightTextoNormal),
-                        ),
-                        Text("${store.valorTotalEmDias} dias",
-                            style: const TextStyle(
-                                color: corCorpoTexto,
-                                fontWeight: Fontes.weightTextoNormal)),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          "Prazo mínimo (região do impossível)",
-                          style: TextStyle(
-                              color: corCorpoTexto,
-                              fontWeight: Fontes.weightTextoNormal),
-                        ),
-                        Text("${store.valorEmDiasReagiaoDoImpossivel} dias",
-                            style: const TextStyle(
-                                color: corCorpoTexto,
-                                fontWeight: Fontes.weightTextoNormal)),
-                      ],
-                    ),
-                  ],
-                ),
-              );
-            }),
-            const SizedBox(
-              height: 30,
-            ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: ElevatedButton(
-                  style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(corDeFundoBotaoSecundaria)),
-                  onPressed: () {
-                    store.adicionarPrazo(context);
-                  },
-                  child: const Text("Adicionar")),
-            ),
+            if (!store.isVisualizacao)
+              const SizedBox(
+                height: 20,
+              ),
+            // Observer(builder: (context) {
+            //   return Container(
+            //     padding: const EdgeInsets.all(10),
+            //     decoration: BoxDecoration(
+            //       borderRadius: arredondamentoBordas,
+            //       color: Colors.blue.withOpacity(0.2),
+            //     ),
+            //     child: Column(
+            //       children: [
+            //         Row(
+            //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //           children: [
+            //             const Text(
+            //               "Prazo Total",
+            //               style: TextStyle(
+            //                   color: corCorpoTexto,
+            //                   fontWeight: Fontes.weightTextoNormal),
+            //             ),
+            //             Text("${store.valorTotalEmDias} dias",
+            //                 style: const TextStyle(
+            //                     color: corCorpoTexto,
+            //                     fontWeight: Fontes.weightTextoNormal)),
+            //           ],
+            //         ),
+            //         const SizedBox(
+            //           height: 20,
+            //         ),
+            //         Row(
+            //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //           children: [
+            //             const Text(
+            //               "Prazo mínimo (região do impossível)",
+            //               style: TextStyle(
+            //                   color: corCorpoTexto,
+            //                   fontWeight: Fontes.weightTextoNormal),
+            //             ),
+            //             Text("${store.valorEmDiasReagiaoDoImpossivel} dias",
+            //                 style: const TextStyle(
+            //                     color: corCorpoTexto,
+            //                     fontWeight: Fontes.weightTextoNormal)),
+            //           ],
+            //         ),
+            //       ],
+            //     ),
+            //   );
+            // }),
+            if (!store.isVisualizacao)
+              const SizedBox(
+                height: 30,
+              ),
+            if (!store.isVisualizacao)
+              Observer(builder: (_) {
+                return Align(
+                  alignment: Alignment.centerRight,
+                  child: ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(
+                              corDeFundoBotaoSecundaria)),
+                      onPressed: () {
+                        store.adicionarPrazo(context);
+                      },
+                      child: const Text("Adicionar")),
+                );
+              }),
             const SizedBox(
               height: 30,
             ),
@@ -180,38 +164,38 @@ class EstimativaPrazo extends StatelessWidget {
                     )
                   : const SizedBox();
             }),
-            Observer(builder: (context) {
-              return BotaoPadrao(
-                  corDeTextoBotao: corDeTextoBotaoPrimaria,
-                  acao: () async {
-                    if (store.prazos.isNotEmpty) {
-                      store.carregando = true;
+            // Observer(builder: (context) {
+            //   return BotaoPadrao(
+            //       corDeTextoBotao: corDeTextoBotaoPrimaria,
+            //       acao: () async {
+            //         if (store.prazos.isNotEmpty) {
+            //           store.carregando = true;
 
-                      for (var element in store.prazos) {
-                        await controller.salvarPrazp(
-                            element,
-                            projetoEntitie.uidProjeto,
-                            Modular.get<UsuarioAutenticado>().store.uid,
-                            element.contagemPontoDeFuncao.split(" - ").first);
-                      }
-                      store.prazosValidos = await controller
-                          .estimativasController
-                          .recuperarPrazos(projetoEntitie.uidProjeto,
-                              Modular.get<UsuarioAutenticado>().store.uid);
-                      controller.estimativasController.prazos;
+            //           for (var element in store.prazos) {
+            //             await controller.salvarPrazp(
+            //                 element,
+            //                 projetoEntitie.uidProjeto,
+            //                 Modular.get<UsuarioAutenticado>().store.uid,
+            //                 element.contagemPontoDeFuncao.split(" - ").first);
+            //           }
+            //           store.prazosValidos = await controller
+            //               .estimativasController
+            //               .recuperarPrazos(projetoEntitie.uidProjeto,
+            //                   Modular.get<UsuarioAutenticado>().store.uid);
+            //           controller.estimativasController.prazos;
 
-                      store.alteracao = false;
-                      store.carregando = false;
-                      AlertaSnack.exbirSnackBar(context, "Prazo salvo!");
-                    } else {
-                      AlertaSnack.exbirSnackBar(context,
-                          "Adicione uma estimativa de prazo para salvar.");
-                    }
-                  },
-                  tituloBotao: "Salvar",
-                  corBotao: corDeFundoBotaoPrimaria,
-                  carregando: store.carregando);
-            }),
+            //           store.alteracao = false;
+            //           store.carregando = false;
+            //           AlertaSnack.exbirSnackBar(context, "Prazo salvo!");
+            //         } else {
+            //           AlertaSnack.exbirSnackBar(context,
+            //               "Adicione uma estimativa de prazo para salvar.");
+            //         }
+            //       },
+            //       tituloBotao: "Salvar",
+            //       corBotao: corDeFundoBotaoPrimaria,
+            //       carregando: store.carregando);
+            // }),
           ],
         ),
       ),

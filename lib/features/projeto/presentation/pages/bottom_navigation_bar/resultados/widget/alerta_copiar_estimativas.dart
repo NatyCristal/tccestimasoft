@@ -134,4 +134,86 @@ class Alerta {
       ],
     ).show();
   }
+
+  static alertaDeTipoGeracaoPDF(
+      context, StoreResultados store, Function gerarArquivo) {
+    return Alert(
+      context: context,
+      type: AlertType.warning,
+      title: "Escolha o tipo de contagem para gerar o PDF?",
+      style: const AlertStyle(
+        titleStyle: TextStyle(color: corTituloTexto, fontSize: 18),
+      ),
+      content: Column(
+        children: [
+          Observer(builder: (context) {
+            return CheckboxListTile(
+                activeColor: corDeFundoBotaoPrimaria,
+                title: const Text("Indicativa"),
+                value: store.indicativa,
+                onChanged: (value) {
+                  store.indicativa = true;
+                  store.estimada = false;
+                  store.detalhada = false;
+                });
+          }),
+          Observer(builder: (context) {
+            return CheckboxListTile(
+                activeColor: corDeFundoBotaoPrimaria,
+                title: const Text("Estimada"),
+                value: store.estimada,
+                onChanged: (value) {
+                  store.indicativa = false;
+                  store.estimada = true;
+                  store.detalhada = false;
+                });
+          }),
+          Observer(builder: (context) {
+            return CheckboxListTile(
+                activeColor: corDeFundoBotaoPrimaria,
+                title: const Text("Detalhada"),
+                value: store.detalhada,
+                onChanged: (value) {
+                  store.detalhada = true;
+                  store.indicativa = false;
+                  store.estimada = false;
+                  //    store.alterarTipoDeFuncao();
+                });
+          }),
+        ],
+      ),
+      buttons: [
+        DialogButton(
+          color: corDeAcao.withOpacity(0.7),
+          child: const Text(
+            "Gerar",
+            style: TextStyle(
+              fontWeight: Fontes.weightTextoNormal,
+              color: corTextoSobSecundaria,
+              fontSize: 14,
+            ),
+          ),
+          onPressed: () {
+            gerarArquivo();
+            Navigator.of(context, rootNavigator: true).pop();
+          },
+          width: 120,
+        ),
+        DialogButton(
+          color: corDeFundoBotaoSecundaria,
+          child: const Text(
+            "Cancelar",
+            style: TextStyle(
+                fontWeight: Fontes.weightTextoNormal,
+                color: corDeTextoBotaoSecundaria,
+                fontSize: 14),
+          ),
+          onPressed: () async {
+            Navigator.of(context, rootNavigator: true).pop();
+          },
+          width: 120,
+        ),
+      ],
+    ).show();
+  }
 }

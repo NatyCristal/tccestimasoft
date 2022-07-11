@@ -69,9 +69,6 @@ class CardEquipe extends StatelessWidget {
                           fontWeight: Fontes.weightTextoNormal),
                     ),
                   ),
-                  const SizedBox(
-                    width: 20,
-                  ),
                   GestureDetector(
                       onTap: (() => custo
                           ? store.removerCusto(insumoCustoEntity, context)
