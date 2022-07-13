@@ -11,7 +11,7 @@ class UsuarioLogadoUsecase {
 
   UsuarioLogadoUsecase(this.repository);
 
-  Future<Either<Falha, UsuarioEntitie>> verificarUsuario() async {
+  Future<Either<Falha, UsuarioEntity>> verificarUsuario() async {
     var result = await repository.usuarioLogado();
 
     var retorno;

@@ -9,9 +9,7 @@ import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_indicativa.dart';
 import 'package:estimasoft/features/projeto/presentation/projeto_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:get/get_state_manager/src/simple/get_widget_cache.dart';
 
 import '../../../../../../domain/entitie/projeto_entitie.dart';
 
@@ -138,6 +136,10 @@ class _ContagensStepperState extends State<ContagensStepper> {
 
     switch (_stepAtual) {
       case 0:
+        if (widget.storeIndicativa.contagemIndicativaValida.totalPf > 0) {
+          isValid = true;
+          break;
+        }
         if (widget.storeIndicativa.alteracoes) {
           widget.storeIndicativa.carregouBotao = true;
           var retorno = await widget.controller.salvarContagem(
@@ -165,6 +167,10 @@ class _ContagensStepperState extends State<ContagensStepper> {
 
         break;
       case 1:
+        if (widget.storeEstimada.contagemEstimadaValida.totalPF > 0) {
+          isValid = true;
+          break;
+        }
         if (widget.storeEstimada.alteracoes) {
           widget.storeEstimada.carregouBotao = true;
           var retorno = await widget.controller.salvarContagem(

@@ -25,5 +25,26 @@ abstract class StoreProjetosIndexMenuBase with Store {
   bool houveMudancaEmResultado = false;
 
   @observable
+  String nomeArquivo = "";
+
+  @observable
   bool houveMudancaEmArquivosEdocumentos = false;
+
+  @observable
+  String erroNomeArquivos = "";
+
+  @action
+  validarNomeArquivo() {
+    if (nomeArquivo.length < 3) {
+      erroNomeArquivos = "Nome pequeno";
+      return false;
+    }
+    if (nomeArquivo.isEmpty) {
+      erroNomeArquivos = "Código não pode ficar vazio";
+      return false;
+    }
+
+    erroNomeArquivos = "";
+    return true;
+  }
 }

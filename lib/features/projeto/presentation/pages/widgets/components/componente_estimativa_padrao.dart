@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 
 class ComponenteEstimativasPadrao extends StatelessWidget {
   final ResultadoEntity resultadoEntity;
-  final UsuarioEntitie membro;
+  final UsuarioEntity membro;
   final List<Widget> corpoEstimativas;
   const ComponenteEstimativasPadrao(
       {Key? key,

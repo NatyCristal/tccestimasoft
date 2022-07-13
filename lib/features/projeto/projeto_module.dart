@@ -6,16 +6,17 @@ import 'package:estimasoft/features/projeto/domain/usecase/entrar_projeto_usecas
 import 'package:estimasoft/features/projeto/domain/usecase/recuperar_membros_usecase.dart';
 import 'package:estimasoft/features/projeto/domain/usecase/arquivo_usecase.dart';
 import 'package:estimasoft/features/projeto/domain/usecase/sair_projeto_usecase.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/home/insercao_arquivos_projetos_page.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/projeto_bottom_navigator_bar.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/exibicao_estimativa_page.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/exibicao_projetos_compartilhados_page.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/exibicao_meus_projetos_page.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/guia_contagem.dart';
-import 'package:estimasoft/features/projeto/presentation/pages/insercao_arquivos_projetos_page.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/instrucoes_page.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/notificacao_page.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/projetos_principal_page.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/sobre_page.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/home/visualizar_membros_page.dart';
 import 'package:estimasoft/features/projeto/presentation/projeto_controller.dart';
 import 'package:estimasoft/features/projeto/presentation/store/store_projeto_principal.dart';
 import 'package:estimasoft/features/resultado/resultado_module.dart';
@@ -55,6 +56,10 @@ class ProjetoModule extends Module {
         ChildRoute('/',
             child: (context, args) => const InformacoesInstrucoesPage(),
             guards: [AutorizadoGuard()]),
+        ChildRoute('/visualizar-membros',
+            child: (context, args) => VisualizarMembros(
+                  projetoEntitie: args.data[0],
+                )),
         ChildRoute('/notificacoes',
             child: (context, args) => const NotificacaoPage(),
             guards: [AutorizadoGuard()]),

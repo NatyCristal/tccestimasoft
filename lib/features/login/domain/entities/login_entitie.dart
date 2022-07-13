@@ -1,10 +1,10 @@
-abstract class UsuarioEntitie {
+abstract class UsuarioEntity {
   String nome;
   String email;
   String uid;
   String urlFoto;
 
-  UsuarioEntitie({
+  UsuarioEntity({
     required this.nome,
     required this.email,
     required this.uid,

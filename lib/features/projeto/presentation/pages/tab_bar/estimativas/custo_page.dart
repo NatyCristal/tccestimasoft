@@ -1,9 +1,5 @@
-import 'package:dropdown_search/dropdown_search.dart';
-import 'package:estimasoft/core/auth/usuario_autenticado.dart';
 import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
-import 'package:estimasoft/core/shared/utils/snackbar.dart';
 import 'package:estimasoft/core/shared/utils/tamanho_tela.dart';
-import 'package:estimasoft/core/shared/widgets/botao.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/custo_entity.dart';
 import 'package:estimasoft/features/projeto/domain/entitie/projeto_entitie.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_detalhada.dart';
@@ -18,10 +14,8 @@ import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativ
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/widgets/custo/card_custos_totais.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/widgets/custo/card_custos_variaveis.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/widgets/custo/card_membros.dart';
-import 'package:estimasoft/features/projeto/presentation/projeto_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 
 class EstimativaCustoPage extends StatelessWidget {
   final ProjetoEntitie projetoEntitie;
@@ -300,13 +294,35 @@ class EstimativaCustoPage extends StatelessWidget {
                   projetoEntitie: projetoEntitie,
                 );
               }),
+
+              Observer(builder: (context) {
+                return storeEstimativaCusto.tamanhoListaCustos > 0 &&
+                        !storeEstimativaCusto.isVisualizacao
+                    ? Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton.icon(
+                          style: ButtonStyle(
+                              foregroundColor:
+                                  MaterialStateProperty.all(Colors.black)),
+                          onPressed: () {
+                            storeEstimativaCusto.custos = <CustoEntity>[];
+
+                            storeEstimativaCusto.tamanhoListaCustos =
+                                storeEstimativaCusto.custos.length;
+                          },
+                          icon: const Icon(Icons.delete),
+                          label: const Text("Excluir"),
+                        ),
+                      )
+                    : const SizedBox();
+              }),
               const SizedBox(
                 height: 20,
               ),
               Observer(builder: (context) {
                 return storeEstimativaCusto.alteracao
                     ? const Text(
-                        "Salve as alterações!",
+                        "Continue para salvar!",
                         style: TextStyle(
                             color: Colors.red,
                             fontWeight: Fontes.weightTextoNormal),

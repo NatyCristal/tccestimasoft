@@ -86,7 +86,7 @@ abstract class StoreEstimativaEquipeBase with Store {
 
   @action
   adicionarEquipe(context) {
-    if (equipesValidas.isEmpty) {
+    if (equipes.isEmpty) {
       for (var cont in contagens) {
         if (esforcosValidos.isNotEmpty) {
           prazoSelecionado = prazosValidos

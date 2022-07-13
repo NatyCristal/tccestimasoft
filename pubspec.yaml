@@ -58,6 +58,7 @@ dependencies:
   syncfusion_flutter_pdfviewer: ^19.4.41-beta
   expandable: ^5.0.1
   dolumns: ^2.0.0
+  
 
 
 

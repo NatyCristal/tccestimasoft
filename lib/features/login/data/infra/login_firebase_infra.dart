@@ -13,10 +13,10 @@ class LoginInfraFirebase extends UsuarioRepository {
   LoginInfraFirebase(this.datasource);
 
   @override
-  Future<Either<Falha, UsuarioEntitie>> realizarLoginEmailSenha(
+  Future<Either<Falha, UsuarioEntity>> realizarLoginEmailSenha(
       String email, String senha) async {
     try {
-      UsuarioEntitie usuario =
+      UsuarioEntity usuario =
           await datasource.realizarLoginEmailSenha(email, senha);
       return Right(usuario);
     } on PlatformException catch (e) {
@@ -27,7 +27,7 @@ class LoginInfraFirebase extends UsuarioRepository {
   }
 
   @override
-  Future<Either<Falha, UsuarioEntitie>> realizarLoginGoogle() async {
+  Future<Either<Falha, UsuarioEntity>> realizarLoginGoogle() async {
     try {
       var resultado = await datasource.realizarLoginGoogle();
       return Right(resultado);
@@ -51,10 +51,10 @@ class LoginInfraFirebase extends UsuarioRepository {
   }
 
   @override
-  Future<Either<Falha, UsuarioEntitie>> registrarUsuario(
+  Future<Either<Falha, UsuarioEntity>> registrarUsuario(
       String nome, String email, String senha) async {
     try {
-      UsuarioEntitie usuario =
+      UsuarioEntity usuario =
           await datasource.cadastrarUsuario(nome, email, senha);
       return Right(usuario);
     } on PlatformException catch (e) {

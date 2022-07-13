@@ -1,8 +1,5 @@
-import 'package:estimasoft/core/shared/utils.dart';
 import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
-import 'package:estimasoft/core/shared/utils/snackbar.dart';
 import 'package:estimasoft/core/shared/utils/tamanho_tela.dart';
-import 'package:estimasoft/core/shared/widgets/botao.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/widgets/cards/card_adicao_contagem.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/widgets/conteudo/conteudo_contagem_indicativa.dart';
 import 'package:estimasoft/features/projeto/presentation/projeto_controller.dart';
@@ -253,29 +250,52 @@ class ContagemIndicativa extends StatelessWidget {
                                     color: corCorpoTexto.withOpacity(0.5)),
                               ),
                             )
-                          : ListView.builder(
-                              controller: scrollController,
-                              shrinkWrap: true,
-                              itemCount: store.tamanhoListaALI,
-                              itemBuilder: (context, index) {
-                                String nomeFuncao =
-                                    store.alis[index].nomeFuncao;
+                          : Observer(builder: (context) {
+                              return ListView.builder(
+                                controller: scrollController,
+                                shrinkWrap: true,
+                                itemCount: store.tamanhoListaALI,
+                                itemBuilder: (context, index) {
+                                  String nomeFuncao =
+                                      store.alis[index].nomeFuncao;
 
-                                String descricao = store.alis[index].descricao;
-                                return CardAdicaoContagem(
-                                  descricao: descricao,
-                                  editar: () {
-                                    store.editar(nomeFuncao, "ALI", descricao);
-                                  },
-                                  remover: () {
-                                    store.removerFuncao(nomeFuncao, "ALI");
-                                  },
-                                  tipoFuncao: "ALI",
-                                  nomeFuncao: nomeFuncao,
-                                  pontosDeFuncao: 35,
-                                );
-                              },
-                            );
+                                  String descricao =
+                                      store.alis[index].descricao;
+                                  return store.contagemIndicativaValida
+                                              .totalPf >
+                                          0
+                                      ? CardAdicaoContagem(
+                                          ehExibicao: true,
+                                          descricao: descricao,
+                                          editar: () {
+                                            store.editar(
+                                                nomeFuncao, "ALI", descricao);
+                                          },
+                                          remover: () {
+                                            store.removerFuncao(
+                                                nomeFuncao, "ALI");
+                                          },
+                                          tipoFuncao: "ALI",
+                                          nomeFuncao: nomeFuncao,
+                                          pontosDeFuncao: 35,
+                                        )
+                                      : CardAdicaoContagem(
+                                          descricao: descricao,
+                                          editar: () {
+                                            store.editar(
+                                                nomeFuncao, "ALI", descricao);
+                                          },
+                                          remover: () {
+                                            store.removerFuncao(
+                                                nomeFuncao, "ALI");
+                                          },
+                                          tipoFuncao: "ALI",
+                                          nomeFuncao: nomeFuncao,
+                                          pontosDeFuncao: 35,
+                                        );
+                                },
+                              );
+                            });
                     }),
                     const SizedBox(
                       height: 20,

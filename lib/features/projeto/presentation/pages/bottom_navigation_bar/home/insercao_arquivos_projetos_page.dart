@@ -1,18 +1,18 @@
 import 'dart:io';
+import 'package:estimasoft/core/shared/anim/lotties.dart';
 import 'package:estimasoft/core/shared/utils.dart';
 import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
 import 'package:estimasoft/core/shared/utils/snackbar.dart';
 import 'package:estimasoft/core/shared/utils/tamanho_tela.dart';
 import 'package:estimasoft/features/projeto/domain/entitie/projeto_entitie.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/home/store/store_projeto_index_menu.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/resultados/widget/alerta_copiar_estimativas.dart';
 import 'package:estimasoft/features/projeto/presentation/projeto_controller.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:path/path.dart';
-import 'package:url_launcher/link.dart';
 
 class InsercaoArquivosUpload extends StatefulWidget {
   final StoreProjetosIndexMenu storeProjetosIndexMenu;
@@ -53,7 +53,6 @@ class _InsercaoArquivosUploadState extends State<InsercaoArquivosUpload> {
           width: TamanhoTela.width(context, 1),
           height: TamanhoTela.height(context, 1),
           padding: paddingPagePrincipal,
-          // padding: const EdgeInsets.all(32),
           child: Column(
             children: [
               Container(
@@ -78,47 +77,145 @@ class _InsercaoArquivosUploadState extends State<InsercaoArquivosUpload> {
                                 final arquivo =
                                     widget.controller.arquivos!.items[index];
                                 return SizedBox(
-                                  height: 70,
+                                  height: 80,
                                   child: Column(
                                     children: [
                                       Container(
-                                        alignment: Alignment.centerLeft,
+                                        // alignment: Alignment.centerLeft,
                                         margin: const EdgeInsets.symmetric(
                                             horizontal: 4),
                                         child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Column(
+                                            Row(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
-                                                const SizedBox(
-                                                  width: 80,
-                                                  child: Icon(
-                                                    Icons.drive_file_move,
-                                                    size: 40,
-                                                    color: Colors.grey,
+                                                // SizedBox(
+                                                //   width: 60,
+                                                //   child: Icon(
+                                                //       Icons
+                                                //           .file_present_rounded,
+                                                //       size: 35,
+                                                //       color: Colors.blue
+                                                //           .withOpacity(0.6)),
+                                                // ),
+                                                SizedBox(
+                                                  height: 40,
+                                                  width: 60,
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      // GestureDetector(
+                                                      //   onTap: () async {
+                                                      //     var retorno = await widget
+                                                      //         .controller
+                                                      //         .removerArquivoProjeto(
+                                                      //             widget
+                                                      //                 .projetoEntitie,
+                                                      //             arquivo
+                                                      //                 .fullPath)
+                                                      //         .whenComplete(() =>
+                                                      //             setState(
+                                                      //                 () {}));
+                                                      //     widget
+                                                      //         .storeProjetosIndexMenu
+                                                      //         .houveMudancaEmArquivosEdocumentos = true;
+
+                                                      //     AlertaSnack
+                                                      //         .exbirSnackBar(
+                                                      //             context,
+                                                      //             retorno);
+                                                      //   },
+                                                      //   child: Icon(
+                                                      //       Icons
+                                                      //           .delete_outline_rounded,
+                                                      //       size: 30,
+                                                      //       color: corTituloTexto
+                                                      //           .withOpacity(
+                                                      //               0.6)),
+                                                      // ),
+                                                      // const SizedBox(
+                                                      //   width: 20,
+                                                      // ),
+                                                      // Observer(
+                                                      //     builder: (context) {
+                                                      //   return widget
+                                                      //               .storeProjetosIndexMenu
+                                                      //               .linkDownload !=
+                                                      //           ""
+                                                      //       ? Link(
+                                                      //           uri: Uri.parse(widget
+                                                      //               .storeProjetosIndexMenu
+                                                      //               .linkDownload),
+                                                      //           builder: (context,
+                                                      //                   openLink) =>
+                                                      //               GestureDetector(
+                                                      //             onTap:
+                                                      //                 openLink,
+                                                      //           ),
+                                                      //         )
+                                                      //       : const SizedBox();
+                                                      // }),
+                                                      GestureDetector(
+                                                        onTap: () async {
+                                                          var retorno = await widget
+                                                              .controller
+                                                              .fazerDownloadArquivos(
+                                                                  widget
+                                                                      .projetoEntitie
+                                                                      .uidProjeto,
+                                                                  arquivo
+                                                                      .fullPath);
+
+                                                          AlertaSnack
+                                                              .exbirSnackBar(
+                                                                  context,
+                                                                  retorno);
+
+                                                          // await OpenFile.open(
+                                                          //     retorno);
+                                                        },
+                                                        child: Icon(
+                                                          Icons
+                                                              .download_for_offline_sharp,
+                                                          size: 30,
+                                                          color: corDeAcao
+                                                              .withOpacity(0.8),
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
                                                 ),
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
+                                              ],
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Column(
                                                   children: [
                                                     SizedBox(
-                                                      width: 60,
+                                                      width: 200,
                                                       child: Text(
+                                                        //    "asdasjkdhk asdjashdjk kjasdjkas asdasdas asdasdas asdasdas asdas esse é fim do nome do arquivo",
                                                         arquivo.fullPath
-                                                            .split("/")
-                                                            .last
-                                                            .split(".")[0],
+                                                                .split("/")
+                                                                .last
+                                                                .split(".")[0] +
+                                                            "." +
+                                                            arquivo.fullPath
+                                                                .split(".")
+                                                                .last,
                                                         textAlign:
-                                                            TextAlign.right,
-                                                        maxLines: 1,
+                                                            TextAlign.left,
+                                                        maxLines: 3,
                                                         overflow: TextOverflow
                                                             .ellipsis,
                                                         style: (const TextStyle(
@@ -128,31 +225,9 @@ class _InsercaoArquivosUploadState extends State<InsercaoArquivosUpload> {
                                                                 corCorpoTexto)),
                                                       ),
                                                     ),
-                                                    SizedBox(
-                                                      width: 40,
-                                                      child: Text(
-                                                        "." +
-                                                            arquivo.fullPath
-                                                                .split(".")[1],
-                                                        maxLines: 1,
-                                                        style: (const TextStyle(
-                                                            fontSize:
-                                                                tamanhoTextoCorpoTexto,
-                                                            color:
-                                                                corCorpoTexto)),
-                                                      ),
-                                                    ),
                                                   ],
                                                 ),
-                                              ],
-                                            ),
-                                            SizedBox(
-                                                height: 40,
-                                                width: 100,
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
+                                                Column(
                                                   children: [
                                                     GestureDetector(
                                                       onTap: () async {
@@ -181,50 +256,26 @@ class _InsercaoArquivosUploadState extends State<InsercaoArquivosUpload> {
                                                               .withOpacity(
                                                                   0.6)),
                                                     ),
-                                                    const SizedBox(
-                                                      width: 20,
-                                                    ),
-                                                    Observer(
-                                                        builder: (context) {
-                                                      return widget
-                                                                  .storeProjetosIndexMenu
-                                                                  .linkDownload !=
-                                                              ""
-                                                          ? Link(
-                                                              uri: Uri.parse(widget
-                                                                  .storeProjetosIndexMenu
-                                                                  .linkDownload),
-                                                              builder: (context,
-                                                                      openLink) =>
-                                                                  GestureDetector(
-                                                                onTap: openLink,
-                                                              ),
-                                                            )
-                                                          : const SizedBox();
-                                                    }),
-                                                    GestureDetector(
-                                                      onTap: () async {
-                                                        widget.storeProjetosIndexMenu
-                                                                .linkDownload =
-                                                            await widget
-                                                                .controller
-                                                                .fazerDownloadArquivos(
-                                                                    widget
-                                                                        .projetoEntitie
-                                                                        .uidProjeto,
-                                                                    arquivo
-                                                                        .fullPath);
-                                                      },
-                                                      child: Icon(
-                                                        Icons
-                                                            .download_for_offline_sharp,
-                                                        size: 30,
-                                                        color: corDeAcao
-                                                            .withOpacity(0.8),
-                                                      ),
-                                                    ),
                                                   ],
-                                                ))
+                                                ),
+
+                                                // SizedBox(
+                                                //   child: Text(
+                                                //     "." +
+                                                //         arquivo.fullPath
+                                                //             .split(".")[1],
+                                                //     maxLines: 1,
+                                                //     textAlign:
+                                                //         TextAlign.left,
+                                                //     style: (const TextStyle(
+                                                //         fontSize:
+                                                //             tamanhoTextoCorpoTexto,
+                                                //         color:
+                                                //             corCorpoTexto)),
+                                                //   ),
+                                                // ),
+                                              ],
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -235,15 +286,12 @@ class _InsercaoArquivosUploadState extends State<InsercaoArquivosUpload> {
                             );
                           }
                           break;
-                        case ConnectionState.none:
-                          // TODO: Handle this case.
-                          break;
-                        case ConnectionState.waiting:
-                          // TODO: Handle this case.
-                          break;
                         case ConnectionState.active:
-                          // TODO: Handle this case.
-                          break;
+                          return const Carregando();
+                        case ConnectionState.none:
+                          return const Text("Erro");
+                        case ConnectionState.waiting:
+                          return const Carregando();
                       }
                       return SizedBox(
                         width: TamanhoTela.width(context, 1),
@@ -283,12 +331,16 @@ class _InsercaoArquivosUploadState extends State<InsercaoArquivosUpload> {
                     text: 'Enviar Arquivo',
                     icone: Icons.cloud_upload_outlined,
                     clicado: () {
-                      uploadFile().whenComplete(() async {
-                        await widget.controller.recuperarArquivos(
-                            widget.projetoEntitie.uidProjeto);
-                        setState(() {});
-                        widget.storeProjetosIndexMenu
-                            .houveMudancaEmArquivosEdocumentos = true;
+                      Alerta.inserirNomeArquivo(
+                          context, widget.storeProjetosIndexMenu, () {
+                        uploadFile(widget.storeProjetosIndexMenu)
+                            .whenComplete(() async {
+                          await widget.controller.recuperarArquivos(
+                              widget.projetoEntitie.uidProjeto);
+                          setState(() {});
+                          widget.storeProjetosIndexMenu
+                              .houveMudancaEmArquivosEdocumentos = true;
+                        });
                       });
                     }),
               ),
@@ -310,11 +362,12 @@ class _InsercaoArquivosUploadState extends State<InsercaoArquivosUpload> {
     setState(() => file = File(path));
   }
 
-  Future uploadFile() async {
+  Future uploadFile(StoreProjetosIndexMenu store) async {
     if (file == null) return;
 
     final fileName = basename(file!.path);
-    final destino = 'arquivos/${widget.projetoEntitie.uidProjeto}/$fileName';
+    final destino =
+        'arquivos/${widget.projetoEntitie.uidProjeto}/${store.nomeArquivo}.${fileName.split(".").last}';
 
     task = await widget.controller.uparArquivos(destino, file!);
     setState(() => task = task);

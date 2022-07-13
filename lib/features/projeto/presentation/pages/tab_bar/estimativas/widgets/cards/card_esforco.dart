@@ -1,5 +1,6 @@
 import 'package:estimasoft/core/shared/utils.dart';
 import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
+import 'package:estimasoft/core/shared/utils/tamanho_tela.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/esforco_entitie.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_esforco.dart';
 import 'package:flutter/material.dart';
@@ -38,9 +39,16 @@ class CardEsforco extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  Text(
-                    "Linguagem: " + esforcoEntity.linguagem,
-                    style: const TextStyle(color: corCorpoTexto),
+                  SizedBox(
+                    width: TamanhoTela.width(context, 0.7),
+                    child: Text(
+                      "Linguagem: " + esforcoEntity.linguagem,
+                      maxLines: 3,
+                      style: const TextStyle(color: corCorpoTexto),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 5,
                   ),
                   Text(
                     "Produtividade Equipe: " +

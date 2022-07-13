@@ -25,7 +25,7 @@ class ListaMembros extends StatelessWidget {
         itemCount: controller.membrosProjetoAtual.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
-          UsuarioEntitie membro = controller.membrosProjetoAtual[index];
+          UsuarioEntity membro = controller.membrosProjetoAtual[index];
           return AvatarMembro(
             membro: membro,
           );

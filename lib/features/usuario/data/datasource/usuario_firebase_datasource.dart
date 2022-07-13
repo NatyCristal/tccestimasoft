@@ -99,8 +99,7 @@ class UsuarioFirebaseDataSource extends PerfilDatasource {
   }
 
   @override
-  Future<List<UsuarioEntitie>> recuperarMembros(
-      List<String> uidUsuarios) async {
+  Future<List<UsuarioEntity>> recuperarMembros(List<String> uidUsuarios) async {
     List<LoginUsuarioFirebaseModel> usuarios = [];
 
     for (var element in uidUsuarios) {
@@ -118,9 +117,9 @@ class UsuarioFirebaseDataSource extends PerfilDatasource {
   }
 
   @override
-  UsuarioEntitie usuarioLogado() {
+  UsuarioEntity usuarioLogado() {
     User? currentUser = _auth.currentUser;
-    UsuarioEntitie usuario =
+    UsuarioEntity usuario =
         LoginUsuarioFirebaseModel(nome: "", email: "", uid: "", urlFoto: "");
 
     if (currentUser != null) {

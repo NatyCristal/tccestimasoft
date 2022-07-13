@@ -1,6 +1,4 @@
 import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
-import 'package:estimasoft/core/shared/utils/snackbar.dart';
-import 'package:estimasoft/core/shared/widgets/botao.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_detalhada.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_estimada.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_indicativa.dart';
@@ -13,7 +11,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import '../../../../../../core/shared/utils.dart';
-import '../../../../../../core/shared/utils/tamanho_tela.dart';
 
 class ContagemDetalhada extends StatelessWidget {
   final StoreContagemIndicativa storeIndicativa;

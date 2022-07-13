@@ -1,5 +1,4 @@
 import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
-import 'package:estimasoft/core/shared/widgets/botao.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_estimada.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_indicativa.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/widgets/cards/card_adicao_contagem.dart';
@@ -8,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-import '../../../../../../core/shared/utils/snackbar.dart';
 import '../../../../../../core/shared/utils/tamanho_tela.dart';
 import 'widgets/cards/exibicao_card_contagem_estimada.dart';
 import 'widgets/conteudo/conteudo_contagem_estimada.dart';
@@ -204,7 +202,7 @@ class ContagemEstimada extends StatelessWidget {
                       height: 20,
                     ),
                     Text(
-                      "Salve as alterações!",
+                      "Continue para salvar!",
                       style: TextStyle(
                         color: Colors.red,
                         fontWeight: Fontes.weightTextoNormal,
@@ -297,28 +295,46 @@ class ContagemEstimada extends StatelessWidget {
                       style: TextStyle(color: corCorpoTexto.withOpacity(0.5)),
                     ),
                   )
-                : ListView.builder(
-                    controller: scrollController,
-                    shrinkWrap: true,
-                    itemCount: store.tamanhoListaEE,
-                    itemBuilder: (context, index) {
-                      String nomeFuncao = store.ee[index].nomeFuncao;
-                      String descricao = store.ee[index].descricao;
+                : Observer(builder: (context) {
+                    return ListView.builder(
+                      controller: scrollController,
+                      shrinkWrap: true,
+                      itemCount: store.tamanhoListaEE,
+                      itemBuilder: (context, index) {
+                        String nomeFuncao = store.ee[index].nomeFuncao;
+                        String descricao = store.ee[index].descricao;
 
-                      return CardAdicaoContagem(
-                        descricao: descricao,
-                        complexidade: "Média",
-                        editar: () => store.editar(nomeFuncao, "EE", descricao),
-                        remover: () => store.removerFuncao(
-                          nomeFuncao,
-                          "EE",
-                        ),
-                        tipoFuncao: "EE",
-                        nomeFuncao: nomeFuncao,
-                        pontosDeFuncao: 4,
-                      );
-                    },
-                  );
+                        return store.contagemEstimadaValida.totalPF > 0
+                            ? CardAdicaoContagem(
+                                ehExibicao: true,
+                                descricao: descricao,
+                                complexidade: "Média",
+                                editar: () =>
+                                    store.editar(nomeFuncao, "EE", descricao),
+                                remover: () => store.removerFuncao(
+                                  nomeFuncao,
+                                  "EE",
+                                ),
+                                tipoFuncao: "EE",
+                                nomeFuncao: nomeFuncao,
+                                pontosDeFuncao: 4,
+                              )
+                            : CardAdicaoContagem(
+                                descricao: descricao,
+                                complexidade: "Média",
+                                editar: () =>
+                                    store.editar(nomeFuncao, "EE", descricao),
+                                remover: () => store.removerFuncao(
+                                  nomeFuncao,
+                                  "EE",
+                                ),
+                                tipoFuncao: "EE",
+                                nomeFuncao: nomeFuncao,
+                                pontosDeFuncao: 4,
+                              );
+                      },
+                    );
+                  });
           }),
           const SizedBox(
             height: 20,
@@ -343,15 +359,31 @@ class ContagemEstimada extends StatelessWidget {
                     itemBuilder: (context, index) {
                       String nomeFuncao = store.ce[index].nomeFuncao;
                       String descricao = store.ce[index].descricao;
-                      return CardAdicaoContagem(
-                        descricao: descricao,
-                        complexidade: "Média",
-                        editar: () => store.editar(nomeFuncao, "CE", descricao),
-                        remover: () => store.removerFuncao(nomeFuncao, "CE"),
-                        tipoFuncao: "CE",
-                        nomeFuncao: nomeFuncao,
-                        pontosDeFuncao: 4,
-                      );
+
+                      return store.contagemEstimadaValida.totalPF > 0
+                          ? CardAdicaoContagem(
+                              ehExibicao: true,
+                              descricao: descricao,
+                              complexidade: "Média",
+                              editar: () =>
+                                  store.editar(nomeFuncao, "CE", descricao),
+                              remover: () =>
+                                  store.removerFuncao(nomeFuncao, "CE"),
+                              tipoFuncao: "CE",
+                              nomeFuncao: nomeFuncao,
+                              pontosDeFuncao: 4,
+                            )
+                          : CardAdicaoContagem(
+                              descricao: descricao,
+                              complexidade: "Média",
+                              editar: () =>
+                                  store.editar(nomeFuncao, "CE", descricao),
+                              remover: () =>
+                                  store.removerFuncao(nomeFuncao, "CE"),
+                              tipoFuncao: "CE",
+                              nomeFuncao: nomeFuncao,
+                              pontosDeFuncao: 4,
+                            );
                     },
                   );
           }),
@@ -379,15 +411,30 @@ class ContagemEstimada extends StatelessWidget {
                       String nomeFuncao = store.se[index].nomeFuncao;
                       String descricao = store.se[index].descricao;
 
-                      return CardAdicaoContagem(
-                        descricao: descricao,
-                        complexidade: "Média",
-                        editar: () => store.editar(nomeFuncao, "SE", descricao),
-                        remover: () => store.removerFuncao(nomeFuncao, "SE"),
-                        tipoFuncao: "SE",
-                        nomeFuncao: nomeFuncao,
-                        pontosDeFuncao: 5,
-                      );
+                      return store.contagemEstimadaValida.totalPF > 0
+                          ? CardAdicaoContagem(
+                              ehExibicao: true,
+                              descricao: descricao,
+                              complexidade: "Média",
+                              editar: () =>
+                                  store.editar(nomeFuncao, "SE", descricao),
+                              remover: () =>
+                                  store.removerFuncao(nomeFuncao, "SE"),
+                              tipoFuncao: "SE",
+                              nomeFuncao: nomeFuncao,
+                              pontosDeFuncao: 5,
+                            )
+                          : CardAdicaoContagem(
+                              descricao: descricao,
+                              complexidade: "Média",
+                              editar: () =>
+                                  store.editar(nomeFuncao, "SE", descricao),
+                              remover: () =>
+                                  store.removerFuncao(nomeFuncao, "SE"),
+                              tipoFuncao: "SE",
+                              nomeFuncao: nomeFuncao,
+                              pontosDeFuncao: 5,
+                            );
                     },
                   );
           }),

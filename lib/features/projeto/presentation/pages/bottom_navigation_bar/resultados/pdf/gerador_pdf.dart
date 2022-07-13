@@ -180,8 +180,14 @@ class GeradorPdf {
           [
             [],
             ['Esforço (horas)', _esforcoDetalhado.esforcoTotal],
-            ['Prazo (em meses)', _prazoDetalhado.prazoTotal / 30],
-            ['Prazo (em semanas)', _prazoDetalhado.prazoTotal / 30 * 4],
+            [
+              'Prazo (em meses)',
+              (_prazoDetalhado.prazoTotal / 30).toStringAsFixed(2)
+            ],
+            [
+              'Prazo (em semanas)',
+              (_prazoDetalhado.prazoTotal / 30 * 4).toStringAsFixed(2)
+            ],
             ['Prazo (em dias)', _prazoDetalhado.prazoTotal],
             [
               'Região do impossível (75%) (em semanas)',
@@ -550,8 +556,14 @@ class GeradorPdf {
           [
             [],
             ['Esforço (horas)', _esforcoDetalhado.esforcoTotal],
-            ['Prazo (em meses)', _prazoDetalhado.prazoTotal / 30],
-            ['Prazo (em semanas)', _prazoDetalhado.prazoTotal / 30 * 4],
+            [
+              'Prazo (em meses)',
+              (_prazoDetalhado.prazoTotal / 30).toStringAsFixed(2)
+            ],
+            [
+              'Prazo (em semanas)',
+              (_prazoDetalhado.prazoTotal / 30 * 4).toStringAsFixed(2)
+            ],
             ['Prazo (em dias)', _prazoDetalhado.prazoTotal],
             [
               'Região do impossível (75%) (em semanas)',
@@ -904,8 +916,14 @@ class GeradorPdf {
           [
             [],
             ['Esforço (horas)', _esforcoDetalhado.esforcoTotal],
-            ['Prazo (em meses)', _prazoDetalhado.prazoTotal / 30],
-            ['Prazo (em semanas)', _prazoDetalhado.prazoTotal / 30 * 4],
+            [
+              'Prazo (em meses)',
+              (_prazoDetalhado.prazoTotal / 30).toStringAsFixed(2)
+            ],
+            [
+              'Prazo (em semanas)',
+              (_prazoDetalhado.prazoTotal / 30 * 4).toStringAsFixed(2)
+            ],
             ['Prazo (em dias)', _prazoDetalhado.prazoTotal],
             [
               'Região do impossível (75%) (em semanas)',

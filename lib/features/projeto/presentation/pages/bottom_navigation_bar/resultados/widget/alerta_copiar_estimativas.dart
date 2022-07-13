@@ -1,5 +1,6 @@
 import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
 import 'package:estimasoft/core/shared/utils/snackbar.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/home/store/store_projeto_index_menu.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/resultados/store/store_resultados.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -195,6 +196,81 @@ class Alerta {
           ),
           onPressed: () {
             gerarArquivo();
+            Navigator.of(context, rootNavigator: true).pop();
+          },
+          width: 120,
+        ),
+        DialogButton(
+          color: corDeFundoBotaoSecundaria,
+          child: const Text(
+            "Cancelar",
+            style: TextStyle(
+                fontWeight: Fontes.weightTextoNormal,
+                color: corDeTextoBotaoSecundaria,
+                fontSize: 14),
+          ),
+          onPressed: () async {
+            Navigator.of(context, rootNavigator: true).pop();
+          },
+          width: 120,
+        ),
+      ],
+    ).show();
+  }
+
+  static inserirNomeArquivo(
+      context, StoreProjetosIndexMenu store, Function enviarArquivo) {
+    return Alert(
+      context: context,
+      type: AlertType.warning,
+      title: "Insira o nome do arquivo",
+      style: const AlertStyle(
+        titleStyle: TextStyle(color: corTituloTexto, fontSize: 18),
+      ),
+      content: Column(
+        children: [
+          const SizedBox(
+            height: 20,
+          ),
+          Observer(builder: (context) {
+            return store.nomeArquivo == ""
+                ? TextField(
+                    onChanged: (value) {
+                      store.nomeArquivo = value.toString();
+                      store.validarNomeArquivo();
+                    },
+                    decoration: const InputDecoration(
+                      icon: Icon(Icons.account_tree_rounded),
+                      labelText: 'Nome',
+                    ),
+                  )
+                : TextField(
+                    onChanged: (value) {
+                      store.nomeArquivo = value.toString();
+                      store.validarNomeArquivo();
+                    },
+                    decoration: InputDecoration(
+                      errorText: store.erroNomeArquivos,
+                      icon: const Icon(Icons.account_tree_rounded),
+                      labelText: 'Nome',
+                    ),
+                  );
+          }),
+        ],
+      ),
+      buttons: [
+        DialogButton(
+          color: corDeAcao.withOpacity(0.7),
+          child: const Text(
+            "Enviar",
+            style: TextStyle(
+              fontWeight: Fontes.weightTextoNormal,
+              color: corTextoSobSecundaria,
+              fontSize: 14,
+            ),
+          ),
+          onPressed: () {
+            enviarArquivo();
             Navigator.of(context, rootNavigator: true).pop();
           },
           width: 120,

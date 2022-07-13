@@ -103,8 +103,11 @@ class FormarTextoCompartilhar {
 
     final colums5 = dolumnify([
       ['Esforço (horas)', esforcoDetalhada.esforcoTotal],
-      ['Prazo (em meses)', prazoDetalhado.prazoTotal / 30],
-      ['Prazo (em semanas)', prazoDetalhado.prazoTotal / 30 * 4],
+      ['Prazo (em meses)', (prazoDetalhado.prazoTotal / 30).toStringAsFixed(2)],
+      [
+        'Prazo (em semanas)',
+        (prazoDetalhado.prazoTotal / 30 * 4).toStringAsFixed(2)
+      ],
       ['Prazo (em dias)', prazoDetalhado.prazoTotal],
       [
         'Região do impossível (75%) (em semanas)',
@@ -376,8 +379,11 @@ class FormarTextoCompartilhar {
 
     final colums5 = dolumnify([
       ['Esforço (horas)', esforcoDetalhada.esforcoTotal],
-      ['Prazo (em meses)', prazoDetalhado.prazoTotal / 30],
-      ['Prazo (em semanas)', prazoDetalhado.prazoTotal / 30 * 4],
+      ['Prazo (em meses)', (prazoDetalhado.prazoTotal / 30).toStringAsFixed(2)],
+      [
+        'Prazo (em semanas)',
+        (prazoDetalhado.prazoTotal / 30 * 4).toStringAsFixed(2)
+      ],
       ['Prazo (em dias)', prazoDetalhado.prazoTotal],
       [
         'Região do impossível (75%) (em semanas)',
@@ -669,8 +675,11 @@ class FormarTextoCompartilhar {
 
     final colums5 = dolumnify([
       ['Esforço (horas)', esforcoDetalhada.esforcoTotal],
-      ['Prazo (em meses)', prazoDetalhado.prazoTotal / 30],
-      ['Prazo (em semanas)', prazoDetalhado.prazoTotal / 30 * 4],
+      ['Prazo (em meses)', (prazoDetalhado.prazoTotal / 30).toStringAsFixed(2)],
+      [
+        'Prazo (em semanas)',
+        (prazoDetalhado.prazoTotal / 30 * 4).toStringAsFixed(2)
+      ],
       ['Prazo (em dias)', prazoDetalhado.prazoTotal],
       [
         'Região do impossível (75%) (em semanas)',

@@ -11,14 +11,9 @@ import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation
 import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/resultados/store/store_resultados.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/resultados/utils/formar_texto_compartilhar.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/resultados/widget/alerta_copiar_estimativas.dart';
-import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/contagem_detalhada.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_detalhada.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_estimada.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_indicativa.dart';
-import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/custo_page.dart';
-import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/esforco_page.dart';
-import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/equipe_page.dart';
-import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/prazo_page.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_custo.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_equipe.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_esforco.dart';
@@ -29,8 +24,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:share_plus/share_plus.dart';
-import '../tab_bar/contagem/contagem_estimada.dart';
-import '../tab_bar/contagem/contagem_indicativa.dart';
 import 'home/index_home.dart';
 
 class ProjetoMenuPage extends StatefulWidget {

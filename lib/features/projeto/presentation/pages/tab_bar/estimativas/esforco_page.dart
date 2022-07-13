@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
 import 'package:estimasoft/core/shared/utils/tamanho_tela.dart';
+import 'package:estimasoft/features/estimativas/domain/entitie/esforco_entitie.dart';
 import 'package:estimasoft/features/projeto/domain/entitie/projeto_entitie.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_detalhada.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_estimada.dart';
@@ -156,35 +157,31 @@ class _EstimativaEsforcoPageState extends State<EstimativaEsforcoPage> {
                 // )
               ],
             ),
-            Observer(
-              builder: (_) {
-                if (!widget.storeEstimativaEsforco.isVisualizacao) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: ElevatedButton(
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all(
-                                  corDeFundoBotaoSecundaria),
-                            ),
-                            onPressed: () {
-                              widget.storeEstimativaEsforco
-                                  .adicionarEsforco(context);
-                            },
-                            child: const Text("Adicionar")),
-                      ),
-                    ],
-                  );
-                } else {
-                  return const SizedBox();
-                }
-              },
+            SizedBox(
+              child: !widget.storeEstimativaEsforco.isVisualizacao
+                  ? Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: ElevatedButton(
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(
+                                    corDeFundoBotaoSecundaria),
+                              ),
+                              onPressed: () {
+                                widget.storeEstimativaEsforco
+                                    .adicionarEsforco(context);
+                              },
+                              child: const Text("Adicionar")),
+                        ),
+                      ],
+                    )
+                  : const SizedBox(),
             ),
             const SizedBox(
               height: 20,
@@ -198,19 +195,44 @@ class _EstimativaEsforcoPageState extends State<EstimativaEsforcoPage> {
                 storeEstimativaEsforco: widget.storeEstimativaEsforco,
               );
             }),
-            const SizedBox(
-              height: 20,
-            ),
             Observer(builder: (context) {
-              return widget.storeEstimativaEsforco.alteracores
-                  ? const Text(
-                      "Salve as alterações!",
-                      style: TextStyle(
-                          color: Colors.red,
-                          fontWeight: Fontes.weightTextoNormal),
+              return widget.storeEstimativaEsforco.tamanhoListaEsforco > 0 &&
+                      !widget.storeEstimativaEsforco.isVisualizacao
+                  ? Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton.icon(
+                        style: ButtonStyle(
+                            foregroundColor:
+                                MaterialStateProperty.all(Colors.black)),
+                        onPressed: () {
+                          widget.storeEstimativaEsforco.esforcos =
+                              <EsforcoEntity>[];
+
+                          widget.storeEstimativaEsforco.tamanhoListaEsforco =
+                              widget.storeEstimativaEsforco.esforcos.length;
+                        },
+                        icon: const Icon(Icons.delete),
+                        label: const Text("Excluir"),
+                      ),
                     )
                   : const SizedBox();
             }),
+            const SizedBox(
+              height: 40,
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Observer(builder: (context) {
+                return widget.storeEstimativaEsforco.alteracores
+                    ? const Text(
+                        "Continue para salvar!",
+                        style: TextStyle(
+                            color: Colors.red,
+                            fontWeight: Fontes.weightTextoNormal),
+                      )
+                    : const SizedBox();
+              }),
+            ),
           ],
         ),
       ),

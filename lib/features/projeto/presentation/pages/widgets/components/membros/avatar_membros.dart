@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class AvatarMembro extends StatelessWidget {
   final double altura;
   final double largura;
-  final UsuarioEntitie membro;
+  final UsuarioEntity membro;
   const AvatarMembro(
       {Key? key, required this.membro, this.altura = 50, this.largura = 50})
       : super(key: key);

@@ -33,7 +33,7 @@ class ProjetoFirebaseModel extends ProjetoEntitie {
 
   factory ProjetoFirebaseModel.fromMap(
       Map<String, dynamic> map, String projetoUid) {
-    List<UsuarioEntitie> membros = [];
+    List<UsuarioEntity> membros = [];
     return ProjetoFirebaseModel(
         descricao: map["descricao"] ?? "",
         nomeAdminstrador: map["nomeAdministrador"] ?? "",

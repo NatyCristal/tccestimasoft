@@ -9,7 +9,7 @@ class RecuperarMembrosUsecase {
 
   RecuperarMembrosUsecase(this.repository);
 
-  Future<Either<Falha, List<UsuarioEntitie>>> recuperarMembros(
+  Future<Either<Falha, List<UsuarioEntity>>> recuperarMembros(
       String uidProjeto) async {
     var result = await repository.recuperarMembros(uidProjeto);
     var erro = "";

@@ -1,10 +1,7 @@
 import 'package:dropdown_search/dropdown_search.dart';
-import 'package:estimasoft/core/auth/usuario_autenticado.dart';
-import 'package:estimasoft/core/shared/utils.dart';
 import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
-import 'package:estimasoft/core/shared/utils/snackbar.dart';
 import 'package:estimasoft/core/shared/utils/tamanho_tela.dart';
-import 'package:estimasoft/core/shared/widgets/botao.dart';
+import 'package:estimasoft/features/estimativas/domain/entitie/equipe_entity.dart';
 import 'package:estimasoft/features/projeto/domain/entitie/projeto_entitie.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_detalhada.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_estimada.dart';
@@ -210,6 +207,28 @@ class EstimativaEquipePage extends StatelessWidget {
                     )
                   : const SizedBox();
             }),
+
+            Observer(builder: (context) {
+              return storeEstimativaEquipe.tamanhoEquipe > 0 &&
+                      !storeEstimativaEquipe.isVisualizacao
+                  ? Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton.icon(
+                        style: ButtonStyle(
+                            foregroundColor:
+                                MaterialStateProperty.all(Colors.black)),
+                        onPressed: () {
+                          storeEstimativaEquipe.equipes = <EquipeEntity>[];
+
+                          storeEstimativaEquipe.tamanhoEquipe =
+                              storeEstimativaEquipe.equipes.length;
+                        },
+                        icon: const Icon(Icons.delete),
+                        label: const Text("Excluir"),
+                      ),
+                    )
+                  : const SizedBox();
+            }),
             const SizedBox(
               height: 20,
             ),
@@ -218,7 +237,7 @@ class EstimativaEquipePage extends StatelessWidget {
                   ? const Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        "Salve as alterações!",
+                        "Continue para salvar",
                         style: TextStyle(
                             color: Colors.red,
                             fontWeight: Fontes.weightTextoNormal),

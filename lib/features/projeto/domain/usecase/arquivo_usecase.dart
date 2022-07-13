@@ -10,7 +10,7 @@ class ArquivoUsecase {
 
   ArquivoUsecase(this.repository);
 
-  Future<Either<Falha, TaskSnapshot>> uparArquivos(
+  Future<Either<Falha, TaskSnapshot?>> uparArquivos(
       String uidProjeto, File file) async {
     var result = await repository.uparArquivos(uidProjeto, file);
     var erro = "";

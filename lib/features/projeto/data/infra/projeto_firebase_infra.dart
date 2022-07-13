@@ -70,7 +70,7 @@ class ProjetoFirebaseInfra extends ProjetoRepository {
   }
 
   @override
-  Future<Either<Falha, List<UsuarioEntitie>>> recuperarMembros(
+  Future<Either<Falha, List<UsuarioEntity>>> recuperarMembros(
       String uidProjeto) async {
     try {
       var resultado = await datasource.recuperarMembrosProjeto(uidProjeto);
@@ -82,7 +82,7 @@ class ProjetoFirebaseInfra extends ProjetoRepository {
   }
 
   @override
-  Future<Either<Falha, TaskSnapshot>> uparArquivos(
+  Future<Either<Falha, TaskSnapshot?>> uparArquivos(
       String uidProjeto, File file) async {
     try {
       var resultado = await datasource.uparArquivo(uidProjeto, file);

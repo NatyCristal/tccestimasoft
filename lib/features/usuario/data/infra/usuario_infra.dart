@@ -40,7 +40,7 @@ class UsuarioRepositoryData extends PerfilRepository {
   }
 
   @override
-  Future<Either<String, UsuarioEntitie>> usuarioLogado() async {
+  Future<Either<String, UsuarioEntity>> usuarioLogado() async {
     try {
       var result = dataSource.usuarioLogado();
       return Right(result);

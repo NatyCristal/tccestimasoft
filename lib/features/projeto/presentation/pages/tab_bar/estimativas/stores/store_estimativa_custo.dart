@@ -157,11 +157,13 @@ abstract class StoreEstimativaCustoBase with Store {
 
   @action
   adicionarNovoCusto(CustoEntity custoEntity, context) {
-    custos.add(custoEntity);
-    tamanhoListaCustos = custos.length;
-    calcularCustoHora();
-    alteracao = true;
-    validarValorTotalProjeto();
+    if (custos.length < 3) {
+      custos.add(custoEntity);
+      tamanhoListaCustos = custos.length;
+      calcularCustoHora();
+      alteracao = true;
+      validarValorTotalProjeto();
+    }
   }
 
   @action

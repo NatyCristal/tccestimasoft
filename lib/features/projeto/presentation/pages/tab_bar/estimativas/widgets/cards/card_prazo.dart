@@ -1,5 +1,6 @@
 import 'package:estimasoft/core/shared/utils.dart';
 import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
+import 'package:estimasoft/core/shared/utils/tamanho_tela.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/prazo_entitie.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_prazo.dart';
 import 'package:flutter/material.dart';
@@ -37,24 +38,16 @@ class CardPrazo extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  Row(
+                  Column(
                     children: [
-                      const SizedBox(
-                        width: 90,
+                      SizedBox(
+                        width: TamanhoTela.width(context, 0.7),
                         child: Text(
-                          "Tipo Sistema:",
-                          style: TextStyle(color: corCorpoTexto),
+                          "Tipo Sistema: ${prazoEntity.tipoSistema}",
+                          maxLines: 3,
+                          style: const TextStyle(color: corCorpoTexto),
                         ),
                       ),
-                      SizedBox(
-                        width: 150,
-                        child: Text(
-                          prazoEntity.tipoSistema,
-                          style: const TextStyle(color: corCorpoTexto),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                        ),
-                      )
                     ],
                   ),
                   Text(

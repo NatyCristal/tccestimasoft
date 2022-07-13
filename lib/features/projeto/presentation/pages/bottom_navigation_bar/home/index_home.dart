@@ -237,6 +237,29 @@ class IndexHome extends StatelessWidget {
                     ],
                   ),
 
+            const SizedBox(
+              height: 20,
+            ),
+
+            const Text(
+              "Veja quem está participando do projeto",
+              style: TextStyle(),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Modular.to
+                    .pushNamed("visualizar-membros", arguments: [projeto]);
+              },
+              child: const Text(
+                "Membros do projeto",
+                style: TextStyle(color: Colors.white),
+              ),
+              style: ButtonStyle(
+                  overlayColor:
+                      MaterialStateProperty.all(Colors.white.withOpacity(0.4)),
+                  backgroundColor:
+                      MaterialStateProperty.all(corDeAcao.withOpacity(0.7))),
+            ),
             //TODO Tela arquivo
 
             // ElevatedButton(

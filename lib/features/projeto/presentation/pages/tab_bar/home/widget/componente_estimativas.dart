@@ -89,7 +89,7 @@ class ComponenteEstimativas extends StatelessWidget {
   }
 }
 
-verificaNomeUsuario(String uidUsuario, List<UsuarioEntitie> usuarios) {
+verificaNomeUsuario(String uidUsuario, List<UsuarioEntity> usuarios) {
   String nomeMembro = "";
   for (var element in usuarios) {
     if (element.uid == uidUsuario) {

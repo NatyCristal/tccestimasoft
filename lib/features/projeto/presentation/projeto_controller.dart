@@ -34,7 +34,7 @@ class ProjetoController {
   //referente a projetos
 
   List<ProjetoEntitie> projetos = [];
-  List<UsuarioEntitie> membrosProjetoAtual = [];
+  List<UsuarioEntity> membrosProjetoAtual = [];
   ListResult? arquivos;
   final RecuperarMembrosUsecase _recuperarMembrosUsecase;
   final RecuperarProjetosUsecase _recuperarProjetosUsecase;
@@ -115,7 +115,7 @@ class ProjetoController {
     // ignore: unused_local_variable
     var erro = "";
     // ignore: unused_local_variable
-    List<UsuarioEntitie> membros = [];
+    List<UsuarioEntity> membros = [];
     resultado.fold((l) {
       erro = l.mensagem;
     }, (r) {

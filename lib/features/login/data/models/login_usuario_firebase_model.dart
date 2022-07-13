@@ -1,6 +1,6 @@
 import 'package:estimasoft/features/login/domain/entities/login_entitie.dart';
 
-class LoginUsuarioFirebaseModel extends UsuarioEntitie {
+class LoginUsuarioFirebaseModel extends UsuarioEntity {
   LoginUsuarioFirebaseModel(
       {required String nome,
       required String email,

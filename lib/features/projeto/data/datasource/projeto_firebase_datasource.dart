@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dio/dio.dart';
 import 'package:estimasoft/features/login/data/models/login_usuario_firebase_model.dart';
 import 'package:estimasoft/features/login/domain/entities/login_entitie.dart';
 import 'package:estimasoft/features/projeto/data/datasource/projeto_datasource.dart';
@@ -8,8 +7,8 @@ import 'package:estimasoft/features/projeto/data/model/projeto_firebase_model.da
 import 'package:estimasoft/features/projeto/domain/entitie/projeto_entitie.dart';
 import 'package:estimasoft/features/usuario/data/datasource/usuario_datasource.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:gallery_saver/gallery_saver.dart';
 import 'package:intl/intl.dart';
+import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 
 class ProjetoFirebaseDatasource extends ProjetoDatasource {
@@ -59,7 +58,7 @@ class ProjetoFirebaseDatasource extends ProjetoDatasource {
   @override
   Future<ProjetoEntitie> entrarEmProjeto(
       String uidUsuario, String uidProjeto) async {
-    List<UsuarioEntitie> membros = [];
+    List<UsuarioEntity> membros = [];
     List<String> listaMembros = [];
 
     ProjetoFirebaseModel novoProjeto = ProjetoFirebaseModel(
@@ -205,10 +204,9 @@ class ProjetoFirebaseDatasource extends ProjetoDatasource {
   }
 
   @override
-  Future<List<UsuarioEntitie>> recuperarMembrosProjeto(
-      String uidProjeto) async {
+  Future<List<UsuarioEntity>> recuperarMembrosProjeto(String uidProjeto) async {
     List<String> uidMembrosProjeto = [];
-    List<UsuarioEntitie> membros = [];
+    List<UsuarioEntity> membros = [];
 
     await firestore
         .collection("Projetos")
@@ -231,7 +229,7 @@ class ProjetoFirebaseDatasource extends ProjetoDatasource {
   }
 
   @override
-  uparArquivo(String uidProjeto, File file) async {
+  Future uparArquivo(String uidProjeto, File file) async {
     try {
       final ref = FirebaseStorage.instance.ref(uidProjeto);
 
@@ -268,29 +266,11 @@ class ProjetoFirebaseDatasource extends ProjetoDatasource {
     //print("Diretorio: " + dir.path);
     File file = File("${dir.path}/${caminhoDocumento.split("/").last}");
 
-//TODO: FINALIZAR DOWNLOAD ARQUIVOS
-    //  print(file);
-
     await ref.writeToFile(file);
-    // print(ref.name);
 
-    final url = await ref.getDownloadURL();
-    final tempDir = await getTemporaryDirectory();
-    final path = '${tempDir.path}/${ref.name}';
+    await OpenFile.open(file.path);
 
-    // ignore: unused_local_variable
-    Response response = await Dio().download(url, path);
-
-    //
-    //
-    //await file.writeAsBytes(response.);
-    //await ref.writeToFile(file);
-
-    if (url.contains(".jpg")) {
-      await GallerySaver.saveImage(path, toDcim: true);
-    }
-
-    return url;
+    return file.path;
   }
 
   @override

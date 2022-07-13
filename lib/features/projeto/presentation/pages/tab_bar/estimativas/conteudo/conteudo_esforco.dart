@@ -1,5 +1,3 @@
-import 'package:estimasoft/core/auth/usuario_autenticado.dart';
-import 'package:estimasoft/core/shared/anim/lotties.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/esforco_entitie.dart';
 import 'package:estimasoft/features/projeto/domain/entitie/projeto_entitie.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_esforco.dart';

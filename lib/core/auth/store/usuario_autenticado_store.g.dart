@@ -77,7 +77,7 @@ mixin _$UsuarioAutenticadoStore on UsuarioAutenticadoStoreBase, Store {
       ActionController(name: 'UsuarioAutenticadoStoreBase', context: context);
 
   @override
-  dynamic usuario(UsuarioEntitie usuario) {
+  dynamic usuario(UsuarioEntity usuario) {
     final _$actionInfo = _$UsuarioAutenticadoStoreBaseActionController
         .startAction(name: 'UsuarioAutenticadoStoreBase.usuario');
     try {

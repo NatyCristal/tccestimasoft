@@ -1,10 +1,7 @@
 import 'package:dropdown_search/dropdown_search.dart';
-import 'package:estimasoft/core/auth/usuario_autenticado.dart';
-import 'package:estimasoft/core/shared/utils.dart';
 import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
-import 'package:estimasoft/core/shared/utils/snackbar.dart';
 import 'package:estimasoft/core/shared/utils/tamanho_tela.dart';
-import 'package:estimasoft/core/shared/widgets/botao.dart';
+import 'package:estimasoft/features/estimativas/domain/entitie/prazo_entitie.dart';
 import 'package:estimasoft/features/projeto/domain/entitie/projeto_entitie.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_detalhada.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_estimada.dart';
@@ -121,7 +118,7 @@ class EstimativaPrazoPage extends StatelessWidget {
             // }),
             if (!store.isVisualizacao)
               const SizedBox(
-                height: 30,
+                height: 20,
               ),
             if (!store.isVisualizacao)
               Observer(builder: (_) {
@@ -138,7 +135,7 @@ class EstimativaPrazoPage extends StatelessWidget {
                 );
               }),
             const SizedBox(
-              height: 30,
+              height: 20,
             ),
             Observer(builder: (context) {
               store.tamanhoListaPrazo > 0;
@@ -148,8 +145,28 @@ class EstimativaPrazoPage extends StatelessWidget {
                 storeEstimativaPrazo: store,
               );
             }),
+
+            Observer(builder: (context) {
+              return store.tamanhoListaPrazo > 0 && !store.isVisualizacao
+                  ? Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton.icon(
+                        style: ButtonStyle(
+                            foregroundColor:
+                                MaterialStateProperty.all(Colors.black)),
+                        onPressed: () {
+                          store.prazos = <PrazoEntity>[];
+
+                          store.tamanhoListaPrazo = store.prazos.length;
+                        },
+                        icon: const Icon(Icons.delete),
+                        label: const Text("Excluir"),
+                      ),
+                    )
+                  : const SizedBox();
+            }),
             const SizedBox(
-              height: 30,
+              height: 20,
             ),
             Observer(builder: (context) {
               return store.alteracao

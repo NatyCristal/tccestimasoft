@@ -43,18 +43,39 @@ class CardAdicaoContagem extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
+              Column(
                 children: [
                   SizedBox(
-                    width: 220,
+                    width: TamanhoTela.width(context, 0.6),
                     child: Text(
                       "Nome:   $nomeFuncao",
-                      maxLines: 1,
+                      maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         color: ehExibicao ? Colors.grey : corTituloTexto,
                       ),
                     ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ],
+              ),
+              Column(
+                children: [
+                  SizedBox(
+                    width: TamanhoTela.width(context, 0.6),
+                    child: Text(
+                      "Descrição:   $descricao",
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: ehExibicao ? Colors.grey : corTituloTexto,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
                   )
                 ],
               ),
@@ -100,21 +121,6 @@ class CardAdicaoContagem extends StatelessWidget {
                         ),
                       ),
                     ),
-              Row(
-                children: [
-                  SizedBox(
-                    width: 220,
-                    child: Text(
-                      "Descrição:   $descricao",
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: ehExibicao ? Colors.grey : corTituloTexto,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
             ],
           ),
           Row(

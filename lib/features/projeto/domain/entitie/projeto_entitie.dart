@@ -7,7 +7,7 @@ abstract class ProjetoEntitie {
   final String admin;
   final String dataCriacao;
   final String nomeProjeto;
-  List<UsuarioEntitie> membros;
+  List<UsuarioEntity> membros;
 
   ProjetoEntitie({
     required this.descricao,

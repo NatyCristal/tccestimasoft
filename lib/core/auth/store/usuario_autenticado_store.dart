@@ -18,7 +18,7 @@ abstract class UsuarioAutenticadoStoreBase with Store {
   String uid = "";
 
   @action
-  usuario(UsuarioEntitie usuario) {
+  usuario(UsuarioEntity usuario) {
     email = usuario.email;
     nome = usuario.nome;
     urlFoto = usuario.urlFoto;

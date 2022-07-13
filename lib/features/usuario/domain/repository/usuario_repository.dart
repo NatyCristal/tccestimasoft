@@ -8,5 +8,5 @@ abstract class PerfilRepository {
 
   Future<Either<String, String>> signOut();
 
-  Future<Either<String, UsuarioEntitie>> usuarioLogado();
+  Future<Either<String, UsuarioEntity>> usuarioLogado();
 }
