@@ -11,8 +11,6 @@ abstract class ProjetoRepository {
   Future<Either<Falha, ProjetoEntitie>> criarProjeto(
       String uidUsuario, String nomeProjeto, String nomeAdministrador);
 
-  Future removerProjeto(String uidUsuario, String uidProjeto);
-
   Future sairProjeto(String uidUsuario, String uidProjeto);
 
   Future<Either<Falha, ProjetoEntitie>> entrarEmProjeto(

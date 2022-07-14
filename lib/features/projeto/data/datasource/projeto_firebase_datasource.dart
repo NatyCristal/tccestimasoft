@@ -128,12 +128,6 @@ class ProjetoFirebaseDatasource extends ProjetoDatasource {
   }
 
   @override
-  Future removerProjeto(String uidUsuario, String uidProjeto) {
-//TODO removerProjeto
-    throw UnimplementedError();
-  }
-
-  @override
   Future sairProjeto(String uidUsuario, String uidProjeto) async {
     await firestore
         .collection('Projetos')

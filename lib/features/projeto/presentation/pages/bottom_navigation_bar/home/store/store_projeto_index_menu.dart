@@ -7,6 +7,9 @@ class StoreProjetosIndexMenu = StoreProjetosIndexMenuBase
 
 abstract class StoreProjetosIndexMenuBase with Store {
   @observable
+  bool carregandoSalvarDescri = false;
+
+  @observable
   TextEditingController descricaoProjetoController = TextEditingController();
 
   @observable

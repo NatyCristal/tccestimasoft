@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_init_to_null
 
+import 'package:estimasoft/core/auth/usuario_autenticado.dart';
 import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
 import 'package:estimasoft/core/shared/utils/snackbar.dart';
 import 'package:estimasoft/features/projeto/domain/entitie/projeto_entitie.dart';
@@ -18,9 +19,11 @@ import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativ
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_equipe.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_esforco.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_prazo.dart';
+import 'package:estimasoft/features/projeto/presentation/projeto_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:share_plus/share_plus.dart';
@@ -56,22 +59,8 @@ class _ProjetoMenuPageState extends State<ProjetoMenuPage>
 
   final StoreEstimativaCusto storeEstimativaCusto = StoreEstimativaCusto();
 
-  late TabController tabContagem;
-  late TabController tabEstimativas;
-  int valorTabEstimativas = 0;
-  int _stepAtualEstimativas = 0;
-
-  @override
-  void initState() {
-    tabContagem = TabController(length: 3, vsync: this, initialIndex: 0);
-    tabEstimativas = TabController(length: 4, vsync: this, initialIndex: 0);
-    super.initState();
-  }
-
   itemSelecionado(int index) {
     store.index = index;
-    valorTabEstimativas = 0;
-    tabEstimativas.index = 0;
   }
 
   @override
@@ -85,69 +74,6 @@ class _ProjetoMenuPageState extends State<ProjetoMenuPage>
                   storeDetalhada: storeDetalhada,
                   bottonNavigationBar: bottomBar(),
                   storeIndicativa: storeIndicativa),
-              // child: DefaultTabController(
-              //   length: 3,
-              //   child: Scaffold(
-              //     appBar: AppBar(
-              //       actions: [
-              //         GestureDetector(
-              //           onTap: () {
-              //             alertaCompartilhamentoProjeto(
-              //                 widget.projeto, context);
-              //           },
-              //           child: const Icon(
-              //             Icons.share,
-              //             color: corTituloTexto,
-              //             size: 20,
-              //           ),
-              //         ),
-              //         const SizedBox(
-              //           width: 10,
-              //         ),
-              //       ],
-              //       backgroundColor: Colors.transparent,
-              //       elevation: 0,
-              //       title: Text(
-              //         widget.projeto.nomeProjeto,
-              //         style: const TextStyle(
-              //             fontSize: tamanhoSubtitulo, color: corTituloTexto),
-              //       ),
-              //       bottom: TabBar(
-              //         controller: tabContagem,
-              //         indicatorWeight: 2,
-              //         overlayColor: MaterialStateProperty.all(background),
-              //         indicatorColor: corDeAcao,
-              //         tabs: const [
-              //           Tab(
-              //             text: "Indicativa",
-              //           ),
-              //           Tab(
-              //             text: "Estimada",
-              //           ),
-              //           Tab(
-              //             text: "Detalhada",
-              //           ),
-              //         ],
-              //       ),
-              //     ),
-              //     body: TabBarView(controller: tabContagem, children: [
-              //       ContagemIndicativa(
-              //           store: storeIndicativa,
-              //           projetoUid: widget.projeto.uidProjeto),
-              //       ContagemEstimada(
-              //         storeIndicativa: storeIndicativa,
-              //         store: storeEstimada,
-              //         projetoUid: widget.projeto.uidProjeto,
-              //       ),
-              //       ContagemDetalhada(
-              //           storeContagemDetalhada: storeDetalhada,
-              //           projetoUid: widget.projeto.uidProjeto,
-              //           storeEstimada: storeEstimada,
-              //           storeIndicativa: storeIndicativa),
-              //     ]),
-              //     bottomNavigationBar: bottomBar(),
-              //   ),
-              // ),
             )
           : store.index == 2
               ? Material(
@@ -248,7 +174,47 @@ class _ProjetoMenuPageState extends State<ProjetoMenuPage>
                                       BorderRadius.all(Radius.circular(15.0))),
                               label: "Compartilhar com o projeto",
                               child: const Icon(Icons.move_down_rounded),
-                              onTap: () {}),
+                              onTap: () {
+                                if (storeDetalhada
+                                        .contagemDetalhadaValida.totalPf >
+                                    0) {
+                                  if (validarContagens(
+                                    context,
+                                    storeEstimativaEsforco,
+                                    storeEstimativaEquipe,
+                                    storeEstimativaPrazo,
+                                    storeEstimativaCusto,
+                                  )) {
+                                    final StoreResultados storeResultados =
+                                        StoreResultados();
+
+                                    Alerta
+                                        .alertaCompartilhamentoDeEstimativasAnomimo(
+                                            context, storeResultados, () async {
+                                      String texto = FormarTextoCompartilhar
+                                          .textoCompartilharComOprojeto(
+                                              storeResultados.anonimo,
+                                              widget.projeto,
+                                              storeEstimativaEsforco,
+                                              storeEstimativaEquipe,
+                                              storeEstimativaPrazo,
+                                              storeEstimativaCusto,
+                                              storeIndicativa,
+                                              storeEstimada,
+                                              storeDetalhada);
+                                      await Modular.get<ProjetoController>()
+                                          .resultadoController
+                                          .enviarContagemDetalhada(
+                                              storeResultados.anonimo,
+                                              texto,
+                                              widget.projeto.uidProjeto,
+                                              Modular.get<UsuarioAutenticado>()
+                                                  .store
+                                                  .uid);
+                                    });
+                                  }
+                                }
+                              }),
                           SpeedDialChild(
                               shape: const RoundedRectangleBorder(
                                   borderRadius:

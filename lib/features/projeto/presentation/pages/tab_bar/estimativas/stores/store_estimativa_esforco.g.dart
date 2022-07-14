@@ -9,6 +9,22 @@ part of 'store_estimativa_esforco.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$StoreEstimativaEsforco on StoreEstimativaEsforcoBase, Store {
+  late final _$isVisualizacaoAtom =
+      Atom(name: 'StoreEstimativaEsforcoBase.isVisualizacao', context: context);
+
+  @override
+  bool get isVisualizacao {
+    _$isVisualizacaoAtom.reportRead();
+    return super.isVisualizacao;
+  }
+
+  @override
+  set isVisualizacao(bool value) {
+    _$isVisualizacaoAtom.reportWrite(value, super.isVisualizacao, () {
+      super.isVisualizacao = value;
+    });
+  }
+
   late final _$esforcosValidosAtom = Atom(
       name: 'StoreEstimativaEsforcoBase.esforcosValidos', context: context);
 
@@ -347,6 +363,7 @@ mixin _$StoreEstimativaEsforco on StoreEstimativaEsforcoBase, Store {
   @override
   String toString() {
     return '''
+isVisualizacao: ${isVisualizacao},
 esforcosValidos: ${esforcosValidos},
 alteracores: ${alteracores},
 tamanhoListaEsforco: ${tamanhoListaEsforco},

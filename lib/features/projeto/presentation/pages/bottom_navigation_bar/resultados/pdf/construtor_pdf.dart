@@ -53,17 +53,31 @@ class ConstrutorPdf {
   }
 
   static linha(String texto, String valor) {
-    return Row(
-      children: [
-        Text(
-          texto,
-          maxLines: 4,
-          overflow: TextOverflow.clip,
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        Text(valor),
-      ],
-    );
+    return texto != "Descrição: "
+        ? Row(
+            children: [
+              Text(
+                texto,
+                maxLines: 4,
+                overflow: TextOverflow.clip,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              Text(valor, maxLines: 4),
+            ],
+          )
+        : Column(children: [
+            Row(
+              children: [
+                Text(
+                  texto,
+                  maxLines: 4,
+                  overflow: TextOverflow.clip,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+            Text(valor, maxLines: 4),
+          ]);
   }
 
   static tabela(

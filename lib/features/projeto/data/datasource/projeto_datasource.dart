@@ -10,8 +10,6 @@ abstract class ProjetoDatasource {
   Future<ProjetoEntitie> criarProjeto(
       String uidUsuario, String nomeProjeto, String nomeAdministrador);
 
-  Future removerProjeto(String uidUsuario, String uidProjeto);
-
   Future sairProjeto(String uidUsuario, String uidProjeto);
 
   Future<ProjetoEntitie> entrarEmProjeto(

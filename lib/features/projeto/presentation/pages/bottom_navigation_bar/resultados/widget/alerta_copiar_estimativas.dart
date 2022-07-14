@@ -51,11 +51,12 @@ class Alerta {
     ).show();
   }
 
-  static alertaSimOuNao(context, StoreResultados store, Function acaoSim) {
+  static alertaCompartilhamentoDeEstimativasAnomimo(
+      context, StoreResultados store, Function acaoSim) {
     return Alert(
       context: context,
       type: AlertType.warning,
-      title: "Deseja Compartilhar essa estimativa?",
+      title: "Compartilhar resultados",
       style: const AlertStyle(
         titleStyle: TextStyle(color: corTituloTexto, fontSize: 18),
       ),

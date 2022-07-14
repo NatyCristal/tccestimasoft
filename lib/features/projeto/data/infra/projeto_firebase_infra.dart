@@ -40,12 +40,6 @@ class ProjetoFirebaseInfra extends ProjetoRepository {
   }
 
   @override
-  Future removerProjeto(String uidUsuario, String uidProjeto) async {
-    // TODO: implement removerProjeto
-    throw UnimplementedError();
-  }
-
-  @override
   Future<Either<Falha, List<ProjetoEntitie>>> rrecuperarProjetos(
       String uid) async {
     try {

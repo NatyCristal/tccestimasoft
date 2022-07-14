@@ -20,7 +20,7 @@ class ResultadoModel extends ResultadoEntity {
       Map<String, dynamic> map, String id, String tipoContagem) {
     return ResultadoModel(
         uidMembro: id,
-        anonimo: map["Anonimamente"],
+        anonimo: map["Anonimo"] ?? false,
         nome: tipoContagem,
         valor: map["Valor"].toString());
   }

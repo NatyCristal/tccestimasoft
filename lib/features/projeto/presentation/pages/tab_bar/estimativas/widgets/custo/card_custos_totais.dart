@@ -1,6 +1,3 @@
-import 'package:estimasoft/core/shared/utils.dart';
-import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
-import 'package:estimasoft/core/shared/utils/formatadores.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_custo.dart';
 import 'package:flutter/material.dart';
 

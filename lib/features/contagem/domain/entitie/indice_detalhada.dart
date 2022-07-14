@@ -25,6 +25,6 @@ class IndiceDetalhada {
       nomeTeste = "Ars";
     }
 
-    return 'Nome: $nome - $tipo\nPonto de Função: $pontoDeFuncao PF  \nComplexidade: $complexidade \nTDs $quantidadeTDs -  $nomeTeste $quantidadeTrsEArs\n';
+    return 'Nome: $nome\nDescrição: $descricao\nTipo: $tipo\nPonto de Função: $pontoDeFuncao PF  \nComplexidade: $complexidade \nTDs $quantidadeTDs -  $nomeTeste $quantidadeTrsEArs\n';
   }
 }
