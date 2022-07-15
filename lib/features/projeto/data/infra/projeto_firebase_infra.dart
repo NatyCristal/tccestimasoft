@@ -35,7 +35,7 @@ class ProjetoFirebaseInfra extends ProjetoRepository {
     } on FirebaseException catch (e) {
       return Left(throw Exception(e.code));
     } on Exception catch (e) {
-      return Left(throw Exception(e));
+      return Left(ErroProjeto(mensagem: e.toString()));
     }
   }
 

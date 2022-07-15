@@ -1,6 +1,7 @@
 import 'package:estimasoft/core/guards/autorizado_guard.dart';
 import 'package:estimasoft/features/contagem/contagem_module.dart';
 import 'package:estimasoft/features/estimativas/estimativas_module.dart';
+import 'package:estimasoft/features/notificacoes/notificacoes_module.dart';
 import 'package:estimasoft/features/projeto/data/datasource/projeto_firebase_datasource.dart';
 import 'package:estimasoft/features/projeto/domain/usecase/entrar_projeto_usecase.dart';
 import 'package:estimasoft/features/projeto/domain/usecase/recuperar_membros_usecase.dart';
@@ -49,6 +50,7 @@ class ProjetoModule extends Module {
         ContagemModule(),
         EstimativasModule(),
         ResultadoModule(),
+        NotificacoesModule(),
       ];
 
   @override
@@ -61,7 +63,7 @@ class ProjetoModule extends Module {
                   projetoEntitie: args.data[0],
                 )),
         ChildRoute('/notificacoes',
-            child: (context, args) => const NotificacaoPage(),
+            child: (context, args) => NotificacaoPage(),
             guards: [AutorizadoGuard()]),
         ChildRoute('/exibir-pdf',
             child: (context, args) => const GuiaContagemSobre(),

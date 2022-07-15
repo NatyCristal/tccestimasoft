@@ -9,6 +9,7 @@ import 'package:estimasoft/features/estimativas/domain/entitie/esforco_entitie.d
 import 'package:estimasoft/features/estimativas/domain/entitie/prazo_entitie.dart';
 import 'package:estimasoft/features/estimativas/presentation/estimativas_controller.dart';
 import 'package:estimasoft/features/login/domain/entities/login_entitie.dart';
+import 'package:estimasoft/features/notificacoes/presentation/notificacoes_controller.dart';
 import 'package:estimasoft/features/projeto/domain/entitie/projeto_entitie.dart';
 import 'package:estimasoft/features/projeto/domain/usecase/entrar_projeto_usecase.dart';
 import 'package:estimasoft/features/projeto/domain/usecase/recuperar_membros_usecase.dart';
@@ -30,6 +31,8 @@ class ProjetoController {
       Modular.get<EstimativasController>();
   final ResultadoController resultadoController =
       Modular.get<ResultadoController>();
+  final NotificacoesController notificacoesController =
+      Modular.get<NotificacoesController>();
 
   //referente a projetos
 
@@ -55,6 +58,15 @@ class ProjetoController {
     await _sairProjetoUsecase.sairProjeto(
         Modular.get<UsuarioAutenticado>().store.uid, uidProjeto);
     await recuperarProjetos();
+    List<String> uidMembros = [];
+    for (var element in membrosProjetoAtual) {
+      uidMembros.add(element.uid);
+    }
+
+    notificacoesController.notificacoesUsecase.enviarNotificacaoMembros(
+        "${Modular.get<UsuarioAutenticado>().store.nome} saiu do projeto!",
+        uidProjeto,
+        uidMembros);
 
     return "Você saiu do projeto";
   }
@@ -67,9 +79,13 @@ class ProjetoController {
 
     resultado.fold((l) {
       retorno = l.mensagem;
-    }, (r) {
+    }, (r) async {
       projetos.add(r);
       retorno = "Projeto cadastrado com sucesso!";
+
+      await notificacoesController.gerarNotificacao(
+          "Parabéns!! Você cricou o projeto $nomeProjeto.",
+          Modular.get<UsuarioAutenticado>().store.uid);
     });
 
     return retorno;
@@ -104,6 +120,15 @@ class ProjetoController {
         }
       }
 
+      List<String> uidMembros = [];
+      for (var element in membrosProjetoAtual) {
+        uidMembros.add(element.uid);
+      }
+
+      notificacoesController.notificacoesUsecase.enviarNotificacaoMembros(
+          "${usuarioLogado.store.nome} Entrou no projeto!",
+          uidProjeto,
+          uidMembros);
       !igual ? projetos.add(r) : projetos;
       retorno = "Entrou no projeto!";
     });
@@ -135,6 +160,7 @@ class ProjetoController {
     var resultado = await _recuperarProjetosUsecase
         .recuperarProjetos(usuarioLogado.store.uid);
     // ignore: unused_local_variable
+
     var erro = "";
     resultado.fold((l) {
       erro = l.mensagem;
@@ -145,7 +171,7 @@ class ProjetoController {
     // if (resultado.isLeft) {
     //   return Left(erro);
     // }
-
+    await notificacoesController.bucaraNotificacoesUsuario();
     return projetos;
   }
 
@@ -334,6 +360,7 @@ class ProjetoController {
     await contagemController.carregarContagens(uidProjeto, uidUsuario);
     await recuperarMembrosProjeto(uidProjeto);
     await resultadoController.recuperarResultados(uidProjeto);
+
     return true;
   }
 }

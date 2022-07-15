@@ -47,26 +47,38 @@ class VisualizarEstimativas extends StatelessWidget {
                       }
                       if (snapshot.hasData) {
                         List<ResultadoEntity> resultados = snapshot.data;
-                        return ListView.builder(
-                          itemCount: resultados.length,
-                          itemBuilder: (context, index) {
-                            ResultadoEntity resultadoEntity = controller
-                                .resultadoController
-                                .resultadosCompartilhados[index];
 
-                            return Column(
-                              children: [
-                                Text(resultadoEntity.valor),
-                                Divider(
-                                  color: corDeAcao.withOpacity(0.7),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                )
-                              ],
-                            );
-                          },
-                        );
+                        if (resultados.isEmpty) {
+                          return const Center(
+                              child: Text(
+                            "Não tem nenhuma estimativa compartilhada",
+                            style: TextStyle(
+                                fontSize: tamanhoSubtitulo,
+                                color: corCorpoTexto,
+                                fontWeight: Fontes.weightTextoNormal),
+                          ));
+                        } else {
+                          return ListView.builder(
+                            itemCount: resultados.length,
+                            itemBuilder: (context, index) {
+                              ResultadoEntity resultadoEntity = controller
+                                  .resultadoController
+                                  .resultadosCompartilhados[index];
+
+                              return Column(
+                                children: [
+                                  Text(resultadoEntity.valor),
+                                  Divider(
+                                    color: corDeAcao.withOpacity(0.7),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  )
+                                ],
+                              );
+                            },
+                          );
+                        }
                       }
 
                       break;

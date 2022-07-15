@@ -75,15 +75,27 @@ class Alerta {
       buttons: [
         DialogButton(
           color: corDeFundoBotaoSecundaria,
-          child: const Text(
-            "SIM",
-            style: TextStyle(
-                fontWeight: Fontes.weightTextoNormal,
-                color: corDeTextoBotaoSecundaria,
-                fontSize: 14),
-          ),
+          child: Observer(builder: (context) {
+            return store.carregando
+                ? const SizedBox(
+                    height: 20,
+                    width: 20,
+                    child: CircularProgressIndicator(
+                      color: Colors.black,
+                    ),
+                  )
+                : const Text(
+                    "SIM",
+                    style: TextStyle(
+                        fontWeight: Fontes.weightTextoNormal,
+                        color: corDeTextoBotaoSecundaria,
+                        fontSize: 14),
+                  );
+          }),
           onPressed: () async {
-            acaoSim();
+            store.carregando = true;
+            await acaoSim();
+            store.carregando = false;
             Navigator.of(context, rootNavigator: true).pop();
           },
           width: 120,

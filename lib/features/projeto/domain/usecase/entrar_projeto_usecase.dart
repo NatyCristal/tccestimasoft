@@ -24,7 +24,7 @@ class EntraProjetoUsecase {
           return Left(
             ErroProjeto(
                 mensagem:
-                    "Algo aconteceu!. Verifique o código de compartilhamento"),
+                    "Projeto não encontrado! Verifique o código de compartilhamento"),
           );
       }
     }

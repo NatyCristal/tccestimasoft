@@ -9,6 +9,56 @@ part of 'store_projeto_principal.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$StoreProjetos on StoreProjetosBase, Store {
+  late final _$exibirNotificacaoAtom =
+      Atom(name: 'StoreProjetosBase.exibirNotificacao', context: context);
+
+  @override
+  bool get exibirNotificacao {
+    _$exibirNotificacaoAtom.reportRead();
+    return super.exibirNotificacao;
+  }
+
+  @override
+  set exibirNotificacao(bool value) {
+    _$exibirNotificacaoAtom.reportWrite(value, super.exibirNotificacao, () {
+      super.exibirNotificacao = value;
+    });
+  }
+
+  late final _$carregandoEntrarProjetosAtom = Atom(
+      name: 'StoreProjetosBase.carregandoEntrarProjetos', context: context);
+
+  @override
+  bool get carregandoEntrarProjetos {
+    _$carregandoEntrarProjetosAtom.reportRead();
+    return super.carregandoEntrarProjetos;
+  }
+
+  @override
+  set carregandoEntrarProjetos(bool value) {
+    _$carregandoEntrarProjetosAtom
+        .reportWrite(value, super.carregandoEntrarProjetos, () {
+      super.carregandoEntrarProjetos = value;
+    });
+  }
+
+  late final _$carregandoCriarPRojetosAtom =
+      Atom(name: 'StoreProjetosBase.carregandoCriarPRojetos', context: context);
+
+  @override
+  bool get carregandoCriarPRojetos {
+    _$carregandoCriarPRojetosAtom.reportRead();
+    return super.carregandoCriarPRojetos;
+  }
+
+  @override
+  set carregandoCriarPRojetos(bool value) {
+    _$carregandoCriarPRojetosAtom
+        .reportWrite(value, super.carregandoCriarPRojetos, () {
+      super.carregandoCriarPRojetos = value;
+    });
+  }
+
   late final _$temPesquisaAtom =
       Atom(name: 'StoreProjetosBase.temPesquisa', context: context);
 
@@ -214,6 +264,9 @@ mixin _$StoreProjetos on StoreProjetosBase, Store {
   @override
   String toString() {
     return '''
+exibirNotificacao: ${exibirNotificacao},
+carregandoEntrarProjetos: ${carregandoEntrarProjetos},
+carregandoCriarPRojetos: ${carregandoCriarPRojetos},
 temPesquisa: ${temPesquisa},
 valorPesquisa: ${valorPesquisa},
 projetos: ${projetos},

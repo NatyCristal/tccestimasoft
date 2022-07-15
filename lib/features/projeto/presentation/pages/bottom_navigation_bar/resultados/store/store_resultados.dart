@@ -5,6 +5,9 @@ class StoreResultados = StoreResultadosBase with _$StoreResultados;
 
 abstract class StoreResultadosBase with Store {
   @observable
+  bool carregando = false;
+
+  @observable
   bool estimada = false;
 
   @observable

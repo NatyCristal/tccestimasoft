@@ -110,7 +110,7 @@ class IndexHome extends StatelessWidget {
 
   Container newMethod(BuildContext context) {
     return Container(
-      padding: paddingPagePrincipal,
+      padding: const EdgeInsets.all(5),
       height: TamanhoTela.height(context, 1),
       width: double.infinity,
       child: SingleChildScrollView(
@@ -118,187 +118,285 @@ class IndexHome extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  "Projeto criado por:",
-                  style: TextStyle(
-                    color: corCorpoTexto,
-                  ),
-                ),
-                SizedBox(
-                  width: 200,
-                  child: Text(
-                    controller.membrosProjetoAtual.singleWhere((element) {
-                      return element.uid == projeto.admin;
-                    }).nome,
-                    textAlign: TextAlign.end,
-                    style: const TextStyle(
-                        color: corCorpoTexto,
-                        fontWeight: Fontes.weightTextoNormal),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  "Data criação",
-                  style: TextStyle(
-                    color: corCorpoTexto,
-                  ),
-                ),
-                SizedBox(
-                  width: 200,
-                  child: Text(
-                    projeto.dataCriacao,
-                    textAlign: TextAlign.end,
-                    style: const TextStyle(
-                      color: corCorpoTexto,
+            Card(
+              child: Container(
+                padding: paddingPagePrincipal,
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          "Projeto criado por:",
+                          style: TextStyle(
+                            color: corCorpoTexto,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 190,
+                          child: Text(
+                            controller.membrosProjetoAtual
+                                .singleWhere((element) {
+                              return element.uid == projeto.admin;
+                            }).nome,
+                            textAlign: TextAlign.end,
+                            style: const TextStyle(
+                                color: corCorpoTexto,
+                                fontWeight: Fontes.weightTextoNormal),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            const Text("Descrição do projeto",
-                style: TextStyle(
-                    color: corTituloTexto,
-                    fontWeight: Fontes.weightTextoNormal)),
-            Modular.get<UsuarioAutenticado>().store.uid == projeto.admin
-                ? Column(
-                    children: [
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      TextField(
-                        onChanged: (value) {
-                          store.descricaoProjeto = value.toString();
-                        },
-                        controller: store.descricaoProjetoController,
-                        maxLines: 8,
-                        decoration: const InputDecoration.collapsed(
-                            filled: true,
-                            fillColor: corDeFundoBotaoSecundaria,
-                            hintText: "Adicione uma descrição ao projeto."),
-                      ),
-                      Observer(builder: (context) {
-                        return !store.carregandoSalvarDescri
-                            ? TextButton.icon(
-                                icon: Icon(
-                                  Icons.save_outlined,
-                                  color: corDeAcao.withOpacity(0.8),
-                                ),
-                                style: ButtonStyle(
-                                    foregroundColor: MaterialStateProperty.all(
-                                        corDeFundoBotaoPrimaria)),
-                                onPressed: () async {
-                                  store.carregandoSalvarDescri = true;
-                                  var resultado = await controller
-                                      .adicionarDescricaoProjeto(
-                                          projeto.uidProjeto,
-                                          store.descricaoProjeto);
-
-                                  projeto.descricao = store.descricaoProjeto;
-
-                                  AlertaSnack.exbirSnackBar(context, resultado);
-                                  store.carregandoSalvarDescri = false;
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          "Data criação",
+                          style: TextStyle(
+                            color: corCorpoTexto,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 200,
+                          child: Text(
+                            projeto.dataCriacao,
+                            textAlign: TextAlign.end,
+                            style: const TextStyle(
+                              color: corCorpoTexto,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text("Descrição do projeto",
+                          style: TextStyle(
+                              color: corTituloTexto,
+                              fontWeight: Fontes.weightTextoNormal)),
+                    ),
+                    Modular.get<UsuarioAutenticado>().store.uid == projeto.admin
+                        ? Column(
+                            children: [
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              TextField(
+                                onChanged: (value) {
+                                  store.descricaoProjeto = value.toString();
                                 },
-                                label: Text(
-                                  "Salvar Descrição",
-                                  style: TextStyle(
-                                      color: corDeAcao.withOpacity(0.8),
-                                      fontWeight: Fontes.weightTextoNormal),
+                                controller: store.descricaoProjetoController,
+                                maxLines: 2,
+                                decoration: const InputDecoration.collapsed(
+                                    filled: true,
+                                    fillColor: corDeFundoBotaoSecundaria,
+                                    hintText:
+                                        " Adicione uma descrição ao projeto."),
+                              ),
+                              Observer(builder: (context) {
+                                return !store.carregandoSalvarDescri
+                                    ? TextButton.icon(
+                                        icon: Icon(
+                                          Icons.save_outlined,
+                                          color: corDeAcao.withOpacity(0.8),
+                                        ),
+                                        style: ButtonStyle(
+                                            shape: MaterialStateProperty.all(
+                                                RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            30.0))),
+                                            foregroundColor:
+                                                MaterialStateProperty.all(
+                                                    corDeFundoBotaoPrimaria)),
+                                        onPressed: () async {
+                                          store.carregandoSalvarDescri = true;
+                                          var resultado = await controller
+                                              .adicionarDescricaoProjeto(
+                                                  projeto.uidProjeto,
+                                                  store.descricaoProjeto);
+
+                                          projeto.descricao =
+                                              store.descricaoProjeto;
+
+                                          AlertaSnack.exbirSnackBar(
+                                              context, resultado);
+                                          store.carregandoSalvarDescri = false;
+                                        },
+                                        label: Text(
+                                          "Salvar Descrição",
+                                          style: TextStyle(
+                                              color: corDeAcao.withOpacity(0.8),
+                                              fontWeight:
+                                                  Fontes.weightTextoNormal),
+                                        ),
+                                      )
+                                    : TextButton.icon(
+                                        icon: Icon(
+                                          Icons.save_outlined,
+                                          color: corDeAcao.withOpacity(0.8),
+                                        ),
+                                        style: ButtonStyle(
+                                            foregroundColor:
+                                                MaterialStateProperty.all(
+                                                    corDeFundoBotaoPrimaria)),
+                                        onPressed: () {},
+                                        label: SizedBox(
+                                          height: 20,
+                                          width: 20,
+                                          child: CircularProgressIndicator(
+                                            color: corDeAcao.withOpacity(0.8),
+                                          ),
+                                        ),
+                                      );
+                              })
+                            ],
+                          )
+                        : Column(
+                            children: [
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                padding: const EdgeInsets.all(5),
+                                height: 20,
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  color: corDeFundoBotaoSecundaria,
                                 ),
-                              )
-                            : TextButton.icon(
-                                icon: Icon(
-                                  Icons.save_outlined,
-                                  color: corDeAcao.withOpacity(0.8),
-                                ),
-                                style: ButtonStyle(
-                                    foregroundColor: MaterialStateProperty.all(
-                                        corDeFundoBotaoPrimaria)),
-                                onPressed: () {},
-                                label: SizedBox(
-                                  height: 20,
-                                  width: 20,
-                                  child: CircularProgressIndicator(
-                                    color: corDeAcao.withOpacity(0.8),
+                                child: SingleChildScrollView(
+                                  child: Text(
+                                    projeto.descricao,
+                                    style: const TextStyle(
+                                      color: corTituloTexto,
+                                    ),
                                   ),
                                 ),
-                              );
-                      })
-                    ],
-                  )
-                : Column(
+                              ),
+                            ],
+                          ),
+                  ],
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: (() =>
+                  Modular.to.pushNamed("visualizar-estimativas", arguments: [
+                    projeto,
+                  ])),
+              child: Card(
+                child: Container(
+                  padding: paddingPagePrincipal,
+                  decoration: BoxDecoration(
+                    borderRadius: arredondamentoBordas,
+                    color: Colors.white,
+                  ),
+                  child: Column(
                     children: [
+                      const Text(
+                        "Visualizar Estimativas",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                       const SizedBox(
                         height: 10,
                       ),
                       Container(
-                        padding: const EdgeInsets.all(5),
-                        height: 80,
+                        height: 130,
                         width: double.infinity,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: corDeFundoBotaoSecundaria,
-                        ),
-                        child: SingleChildScrollView(
-                          child: Text(
-                            projeto.descricao,
-                            style: const TextStyle(
-                              color: corTituloTexto,
-                            ),
-                          ),
-                        ),
+                        decoration: const BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage(
+                                    "assets/imagens/estimativas_v2.jpg"),
+                                fit: BoxFit.cover)),
                       ),
                     ],
                   ),
-            const SizedBox(
-              height: 20,
-            ),
-            TextButton(
-              onPressed: () {
-                Modular.to.pushNamed("visualizar-estimativas", arguments: [
-                  projeto,
-                ]);
-              },
-              child: const Text(
-                "Visualizar Estimativas do projeto",
+                ),
               ),
-              style: ButtonStyle(
-                  foregroundColor: MaterialStateProperty.all(corTituloTexto)),
             ),
-            const SizedBox(
-              height: 20,
-            ),
-            TextButton(
-              onPressed: () {
-                Modular.to
-                    .pushNamed("inserir-arquivos", arguments: [projeto, store]);
-              },
-              child: const Text(
-                "Visualizar Arquivos do projeto",
+            SingleChildScrollView(
+              controller: scrollControllerLateral,
+              scrollDirection: Axis.horizontal,
+              child: SizedBox(
+                child: Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () => Modular.to.pushNamed("inserir-arquivos",
+                          arguments: [projeto, store]),
+                      child: Card(
+                        child: Container(
+                          padding: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            borderRadius: arredondamentoBordas,
+                            color: Colors.white,
+                          ),
+                          child: Column(
+                            children: [
+                              const Text(
+                                "Arquivos do projeto",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Container(
+                                height: 100,
+                                width: TamanhoTela.width(context, 0.45),
+                                decoration: const BoxDecoration(
+                                    image: DecorationImage(
+                                        image: AssetImage(
+                                            "assets/imagens/download.jpg"),
+                                        fit: BoxFit.cover)),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () => Modular.to.pushNamed("visualizar-membros",
+                          arguments: [projeto]),
+                      child: Card(
+                        child: Container(
+                          padding: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            borderRadius: arredondamentoBordas,
+                            color: Colors.white,
+                          ),
+                          child: Column(
+                            children: [
+                              const Text(
+                                "Membros",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Container(
+                                height: 100,
+                                width: TamanhoTela.width(context, 0.45),
+                                decoration: const BoxDecoration(
+                                    image: DecorationImage(
+                                        image: AssetImage(
+                                            "assets/imagens/equipe.jpg"),
+                                        fit: BoxFit.contain)),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              style: ButtonStyle(
-                  foregroundColor: MaterialStateProperty.all(corTituloTexto)),
             ),
-            TextButton(
-                onPressed: () {
-                  Modular.to
-                      .pushNamed("visualizar-membros", arguments: [projeto]);
-                },
-                style: ButtonStyle(
-                    foregroundColor: MaterialStateProperty.all(corDeAcao)),
-                child: const Text("Veja os membros do projeto")),
           ],
         ),
       ),

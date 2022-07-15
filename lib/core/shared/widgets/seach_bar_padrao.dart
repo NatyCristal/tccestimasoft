@@ -1,6 +1,8 @@
 import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
+import 'package:estimasoft/features/projeto/presentation/projeto_controller.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import '../../../../../core/shared/widgets/barra_de_pesquisa.dart';
 import '../../../../../core/shared/widgets/fundo_cor_barra_pesquisa.dart';
@@ -123,15 +125,35 @@ class _DefaultAppBarState extends State<DefaultAppBar>
             ),
           ),
           widget.notificacao
-              ? IconButton(
-                  icon: const Icon(
-                    Icons.notifications_none_outlined,
-                    color: corTituloTexto,
-                  ),
-                  onPressed: () {
-                    Modular.to.pushNamed('notificacoes');
-                  },
-                )
+              ? Observer(builder: (context) {
+                  return widget.store.exibirNotificacao
+                      ? IconButton(
+                          icon: const Icon(
+                            Icons.notifications_active_rounded,
+                            color: corDeAcao,
+                          ),
+                          onPressed: () async {
+                            await Modular.get<ProjetoController>()
+                                .notificacoesController
+                                .lerNoficicacoes();
+                            Modular.to.pushNamed('notificacoes');
+                            widget.store.exibirNotificacao = false;
+                          },
+                        )
+                      : IconButton(
+                          icon: const Icon(
+                            Icons.notifications_none_outlined,
+                            color: corTituloTexto,
+                          ),
+                          onPressed: () async {
+                            await Modular.get<ProjetoController>()
+                                .notificacoesController
+                                .lerNoficicacoes();
+                            Modular.to.pushNamed('notificacoes');
+                            widget.store.exibirNotificacao = false;
+                          },
+                        );
+                })
               : const SizedBox()
         ],
         shape: Border(

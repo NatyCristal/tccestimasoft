@@ -211,6 +211,25 @@ class _ProjetoMenuPageState extends State<ProjetoMenuPage>
                                               Modular.get<UsuarioAutenticado>()
                                                   .store
                                                   .uid);
+
+                                      final controller =
+                                          Modular.get<ProjetoController>();
+
+                                      List<String> uidMembros = [];
+                                      for (var element
+                                          in controller.membrosProjetoAtual) {
+                                        uidMembros.add(element.uid);
+                                      }
+
+                                      controller.notificacoesController
+                                          .notificacoesUsecase
+                                          .enviarNotificacaoMembros(
+                                              "Uma nova estimativa do projeto ${widget.projeto.nomeProjeto} foi compartilhada com a equipe! Venha conferir!",
+                                              widget.projeto.uidProjeto,
+                                              uidMembros);
+
+                                      AlertaSnack.exbirSnackBar(context,
+                                          "Sua estimativa foi compartilhada com o projeto!");
                                     });
                                   }
                                 }

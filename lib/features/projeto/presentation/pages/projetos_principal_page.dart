@@ -25,6 +25,8 @@ class ProjetosPrincipalPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    store.carregandoEntrarProjetos = false;
+    store.carregandoCriarPRojetos = false;
     return Scaffold(
       appBar: DefaultAppBar(
         notificacao: true,
@@ -53,6 +55,10 @@ class ProjetosPrincipalPage extends StatelessWidget {
                                     AsyncSnapshot<dynamic> snapshot) {
                                   switch (snapshot.connectionState) {
                                     case ConnectionState.done:
+                                      store.exibirNotificacao = controller
+                                          .notificacoesController
+                                          .notificacao
+                                          .notificacaoLida;
                                       if (snapshot.hasError) {
                                         return const Text("Erro");
                                       } else if (snapshot.hasData) {
@@ -186,19 +192,32 @@ class ProjetosPrincipalPage extends StatelessWidget {
                   buttons: [
                     DialogButton(
                       color: corDeAcao.withOpacity(0.7),
-                      child: const Text(
-                        "Entrar",
-                        style: TextStyle(
-                            fontWeight: Fontes.weightTextoNormal,
-                            color: corDeTextoBotaoSecundaria,
-                            fontSize: 14),
-                      ),
+                      child: Observer(builder: (context) {
+                        return store.carregandoEntrarProjetos
+                            ? const SizedBox(
+                                height: 20,
+                                width: 20,
+                                child: CircularProgressIndicator(
+                                  color: Colors.black,
+                                ),
+                              )
+                            : const Text(
+                                "Entrar",
+                                style: TextStyle(
+                                    fontWeight: Fontes.weightTextoNormal,
+                                    color: corDeTextoBotaoSecundaria,
+                                    fontSize: 14),
+                              );
+                      }),
                       onPressed: () async {
-                        if (store.validarCodProjeto()) {
+                        if (store.validarCodProjeto() &&
+                            !store.carregandoEntrarProjetos) {
+                          store.carregandoEntrarProjetos = true;
                           var resultado = await controller
                               .entrarProjetos(store.codEntrarProjeto);
                           Navigator.of(context, rootNavigator: true).pop();
                           AlertaSnack.exbirSnackBar(context, resultado);
+                          store.carregandoEntrarProjetos = false;
                         }
                       },
                       width: 120,
@@ -272,19 +291,33 @@ class ProjetosPrincipalPage extends StatelessWidget {
                   buttons: [
                     DialogButton(
                       color: corDeAcao.withOpacity(0.7),
-                      child: const Text(
-                        "Salvar",
-                        style: TextStyle(
-                            fontWeight: Fontes.weightTextoNormal,
-                            color: corDeTextoBotaoSecundaria,
-                            fontSize: 14),
-                      ),
+                      child: Observer(builder: (context) {
+                        return store.carregandoCriarPRojetos
+                            ? const SizedBox(
+                                height: 20,
+                                width: 20,
+                                child: CircularProgressIndicator(
+                                  color: Colors.black,
+                                ),
+                              )
+                            : const Text(
+                                "Salvar",
+                                style: TextStyle(
+                                    fontWeight: Fontes.weightTextoNormal,
+                                    color: corDeTextoBotaoSecundaria,
+                                    fontSize: 14),
+                              );
+                      }),
                       onPressed: () async {
-                        if (store.validarNomeProjeto()) {
+                        if (store.validarNomeProjeto() &&
+                            !store.carregandoCriarPRojetos) {
+                          store.carregandoCriarPRojetos = true;
                           var resultado =
                               await controller.criarProjeto(store.nomeProjeto);
                           Navigator.of(context, rootNavigator: true).pop();
                           AlertaSnack.exbirSnackBar(context, resultado);
+                          store.exibirNotificacao = true;
+                          store.carregandoCriarPRojetos = false;
                         }
                       },
                       width: 120,
