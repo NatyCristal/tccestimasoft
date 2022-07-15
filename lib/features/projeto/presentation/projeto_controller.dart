@@ -184,9 +184,6 @@ class ProjetoController {
       projetos = r;
     });
 
-    // if (resultado.isLeft) {
-    //   return Left(erro);
-    // }
     await notificacoesController.bucaraNotificacoesUsuario();
     return projetos;
   }
