@@ -25,6 +25,23 @@ mixin _$StoreProjetos on StoreProjetosBase, Store {
     });
   }
 
+  late final _$carregandoSairProjetosAtom =
+      Atom(name: 'StoreProjetosBase.carregandoSairProjetos', context: context);
+
+  @override
+  bool get carregandoSairProjetos {
+    _$carregandoSairProjetosAtom.reportRead();
+    return super.carregandoSairProjetos;
+  }
+
+  @override
+  set carregandoSairProjetos(bool value) {
+    _$carregandoSairProjetosAtom
+        .reportWrite(value, super.carregandoSairProjetos, () {
+      super.carregandoSairProjetos = value;
+    });
+  }
+
   late final _$carregandoEntrarProjetosAtom = Atom(
       name: 'StoreProjetosBase.carregandoEntrarProjetos', context: context);
 
@@ -265,6 +282,7 @@ mixin _$StoreProjetos on StoreProjetosBase, Store {
   String toString() {
     return '''
 exibirNotificacao: ${exibirNotificacao},
+carregandoSairProjetos: ${carregandoSairProjetos},
 carregandoEntrarProjetos: ${carregandoEntrarProjetos},
 carregandoCriarPRojetos: ${carregandoCriarPRojetos},
 temPesquisa: ${temPesquisa},

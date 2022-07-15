@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:estimasoft/features/notificacoes/data/model/notificacao_model.dart';
 import 'package:estimasoft/features/notificacoes/domain/entity/notificacao_entity.dart';
 import 'package:estimasoft/features/notificacoes/domain/repository/notificacoes_repository.dart';
 import 'package:estimasoft/features/notificacoes/error/erro_notificacoes.dart';

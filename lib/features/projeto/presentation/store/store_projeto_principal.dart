@@ -1,5 +1,3 @@
-import 'package:estimasoft/features/notificacoes/data/model/notificacao_model.dart';
-import 'package:estimasoft/features/notificacoes/domain/entity/notificacao_entity.dart';
 import 'package:mobx/mobx.dart';
 import '../../domain/entitie/projeto_entitie.dart';
 
@@ -10,6 +8,9 @@ class StoreProjetos = StoreProjetosBase with _$StoreProjetos;
 abstract class StoreProjetosBase with Store {
   @observable
   bool exibirNotificacao = false;
+
+  @observable
+  bool carregandoSairProjetos = false;
 
   @observable
   bool carregandoEntrarProjetos = false;

@@ -79,21 +79,27 @@ class ProjetoCard extends StatelessWidget {
                                   fontSize: 14),
                             ),
                             onPressed: () async {
-                              var retorno =
-                                  await Modular.get<ProjetoController>()
-                                      .sairProjeto(projeto.uidProjeto);
+                              if (!storeProjetos.carregandoSairProjetos) {
+                                storeProjetos.carregandoSairProjetos = true;
+                                var retorno =
+                                    await Modular.get<ProjetoController>()
+                                        .sairProjeto(projeto.uidProjeto,
+                                            projeto.nomeProjeto);
 
-                              storeProjetos.projetos.removeWhere(
-                                  (element) => element.uidProjeto != "");
-                              storeProjetos.tamanhoProjetos =
-                                  Modular.get<ProjetoController>()
-                                      .projetos
-                                      .length;
-                              storeProjetos.projetos.addAll(
-                                  Modular.get<ProjetoController>().projetos);
+                                storeProjetos.projetos.removeWhere(
+                                    (element) => element.uidProjeto != "");
+                                storeProjetos.tamanhoProjetos =
+                                    Modular.get<ProjetoController>()
+                                        .projetos
+                                        .length;
+                                storeProjetos.projetos.addAll(
+                                    Modular.get<ProjetoController>().projetos);
 
-                              AlertaSnack.exbirSnackBar(context, retorno);
-                              Navigator.of(context, rootNavigator: true).pop();
+                                AlertaSnack.exbirSnackBar(context, retorno);
+                                Navigator.of(context, rootNavigator: true)
+                                    .pop();
+                                storeProjetos.carregandoSairProjetos = false;
+                              }
                             },
                             width: 120,
                           ),

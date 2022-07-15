@@ -1,7 +1,5 @@
-import 'package:estimasoft/core/shared/utils.dart';
 import 'package:estimasoft/core/shared/utils/tamanho_tela.dart';
 import 'package:estimasoft/features/notificacoes/data/model/notificacao_composicao_model.dart';
-import 'package:estimasoft/features/notificacoes/data/model/notificacao_model.dart';
 import 'package:estimasoft/features/projeto/presentation/projeto_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -27,8 +25,7 @@ class NotificacaoPage extends StatelessWidget {
           ),
         ),
         body: Container(
-          color: const Color.fromARGB(255, 220, 220, 220).withOpacity(0.1),
-          padding: paddingPagePrincipal,
+          color: const Color.fromARGB(255, 224, 211, 211).withOpacity(0.1),
           height: TamanhoTela.height(context, 1),
           width: TamanhoTela.width(context, 1),
           child: ListView.builder(
@@ -41,25 +38,29 @@ class NotificacaoPage extends StatelessWidget {
                   1 -
                   index];
 
-              return Container(
-                padding: paddingPagePrincipal,
-                child: Column(
-                  children: [
-                    Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(noticacao.textoNotificacao)),
-                    const SizedBox(
-                      height: 10,
+              return Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    child: Column(
+                      children: [
+                        Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(noticacao.textoNotificacao)),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Align(
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              noticacao.dataNotificacao,
+                              style: const TextStyle(color: corCorpoTexto),
+                            )),
+                      ],
                     ),
-                    Align(
-                        alignment: Alignment.centerRight,
-                        child: Text(
-                          noticacao.dataNotificacao,
-                          style: const TextStyle(color: corCorpoTexto),
-                        )),
-                    Divider(color: corDeAcao.withOpacity(0.9)),
-                  ],
-                ),
+                  ),
+                  Divider(color: corDeAcao.withOpacity(0.9)),
+                ],
               );
             },
           ),

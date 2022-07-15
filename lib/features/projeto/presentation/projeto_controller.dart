@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'dart:io';
 import 'package:estimasoft/core/auth/usuario_autenticado.dart';
 import 'package:estimasoft/features/contagem/contagem_controller.dart';
@@ -54,19 +56,29 @@ class ProjetoController {
       this._arquivosUsecase,
       this._sairProjetoUsecase);
 
-  sairProjeto(String uidProjeto) async {
-    await _sairProjetoUsecase.sairProjeto(
-        Modular.get<UsuarioAutenticado>().store.uid, uidProjeto);
+  sairProjeto(String uidProjeto, String nomeProjeto) async {
+    final usuarioLogado = Modular.get<UsuarioAutenticado>();
+
+    await _sairProjetoUsecase.sairProjeto(usuarioLogado.store.uid, uidProjeto);
     await recuperarProjetos();
     List<String> uidMembros = [];
+
     for (var element in membrosProjetoAtual) {
-      uidMembros.add(element.uid);
+      if (element.uid != usuarioLogado.store.uid) {
+        uidMembros.add(element.uid);
+      }
     }
 
+    notificacoesController.gerarNotificacao(
+        "Você saiu do Projeto: $nomeProjeto.", usuarioLogado.store.uid);
+
     notificacoesController.notificacoesUsecase.enviarNotificacaoMembros(
-        "${Modular.get<UsuarioAutenticado>().store.nome} saiu do projeto!",
+        "${usuarioLogado.store.nome} saiu do projeto $nomeProjeto!",
         uidProjeto,
         uidMembros);
+
+    notificacoesController.notificacoesUsecase.enviarNotificacaoMembros(
+        "${usuarioLogado.store.nome} saiu do projeto!", uidProjeto, uidMembros);
 
     return "Você saiu do projeto";
   }
@@ -122,11 +134,16 @@ class ProjetoController {
 
       List<String> uidMembros = [];
       for (var element in membrosProjetoAtual) {
-        uidMembros.add(element.uid);
+        if (element.uid != usuarioLogado.store.uid) {
+          uidMembros.add(element.uid);
+        }
       }
 
+      notificacoesController.gerarNotificacao(
+          "Você entrou no Projeto: ${r.nomeProjeto}.", usuarioLogado.store.uid);
+
       notificacoesController.notificacoesUsecase.enviarNotificacaoMembros(
-          "${usuarioLogado.store.nome} Entrou no projeto!",
+          "${usuarioLogado.store.nome} entrou no projeto ${r.nomeProjeto}!",
           uidProjeto,
           uidMembros);
       !igual ? projetos.add(r) : projetos;
@@ -137,9 +154,9 @@ class ProjetoController {
 
   Future recuperarMembrosProjeto(String uidProjeto) async {
     var resultado = await _recuperarMembrosUsecase.recuperarMembros(uidProjeto);
-    // ignore: unused_local_variable
+
     var erro = "";
-    // ignore: unused_local_variable
+
     List<UsuarioEntity> membros = [];
     resultado.fold((l) {
       erro = l.mensagem;
@@ -159,7 +176,6 @@ class ProjetoController {
     final usuarioLogado = Modular.get<UsuarioAutenticado>();
     var resultado = await _recuperarProjetosUsecase
         .recuperarProjetos(usuarioLogado.store.uid);
-    // ignore: unused_local_variable
 
     var erro = "";
     resultado.fold((l) {
@@ -233,8 +249,6 @@ class ProjetoController {
   }
 
   Future recuperarContagem(String nomeContagem, String uidProjeto) async {
-    //  final usuarioLogado = Modular.get<UsuarioAutenticado>();
-
     switch (nomeContagem) {
       case "Indicativa":
         return contagemController.contagemIndicativa;

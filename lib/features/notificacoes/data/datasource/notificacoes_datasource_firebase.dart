@@ -75,7 +75,7 @@ class NotificacoesDatasourceFirebase extends NotificacoesDatasource {
         .get()
         .then((value) async {
       if (value.exists) {
-        final Map<String, dynamic> teste = {"exibirNotificacoes": true};
+        final Map<String, dynamic> teste = {"exibirNotificacao": false};
 
         await firestore
             .collection("Notificacoes")

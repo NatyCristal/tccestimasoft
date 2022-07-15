@@ -31,6 +31,7 @@ class ListaDrawer extends StatelessWidget {
             nomeCard: "Notificações",
             acao: () async {
               await controller.notificacoesController.lerNoficicacoes();
+              storeProjetos.exibirNotificacao = false;
               Modular.to.pushNamed("notificacoes");
             }),
         CardDrawer(
