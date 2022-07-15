@@ -9,6 +9,22 @@ part of 'store_projeto_index_menu.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$StoreProjetosIndexMenu on StoreProjetosIndexMenuBase, Store {
+  late final _$carregandoAtom =
+      Atom(name: 'StoreProjetosIndexMenuBase.carregando', context: context);
+
+  @override
+  bool get carregando {
+    _$carregandoAtom.reportRead();
+    return super.carregando;
+  }
+
+  @override
+  set carregando(bool value) {
+    _$carregandoAtom.reportWrite(value, super.carregando, () {
+      super.carregando = value;
+    });
+  }
+
   late final _$carregandoSalvarDescriAtom = Atom(
       name: 'StoreProjetosIndexMenuBase.carregandoSalvarDescri',
       context: context);
@@ -61,19 +77,19 @@ mixin _$StoreProjetosIndexMenu on StoreProjetosIndexMenuBase, Store {
     });
   }
 
-  late final _$linkDownloadAtom =
-      Atom(name: 'StoreProjetosIndexMenuBase.linkDownload', context: context);
+  late final _$carregouUploadAtom =
+      Atom(name: 'StoreProjetosIndexMenuBase.carregouUpload', context: context);
 
   @override
-  String get linkDownload {
-    _$linkDownloadAtom.reportRead();
-    return super.linkDownload;
+  bool get carregouUpload {
+    _$carregouUploadAtom.reportRead();
+    return super.carregouUpload;
   }
 
   @override
-  set linkDownload(String value) {
-    _$linkDownloadAtom.reportWrite(value, super.linkDownload, () {
-      super.linkDownload = value;
+  set carregouUpload(bool value) {
+    _$carregouUploadAtom.reportWrite(value, super.carregouUpload, () {
+      super.carregouUpload = value;
     });
   }
 
@@ -194,10 +210,11 @@ mixin _$StoreProjetosIndexMenu on StoreProjetosIndexMenuBase, Store {
   @override
   String toString() {
     return '''
+carregando: ${carregando},
 carregandoSalvarDescri: ${carregandoSalvarDescri},
 descricaoProjetoController: ${descricaoProjetoController},
 descricaoProjeto: ${descricaoProjeto},
-linkDownload: ${linkDownload},
+carregouUpload: ${carregouUpload},
 carregou: ${carregou},
 index: ${index},
 houveMudancaEmResultado: ${houveMudancaEmResultado},

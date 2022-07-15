@@ -25,7 +25,5 @@ abstract class ProjetoDatasource {
 
   Future excluirArquivo(String uidProjeto, String nomeArquivo);
 
-  Future realizarDownloadArquivo(String uidProjeto, String caminhoDocumento);
-
   Future<String> adicionarDescricaoProjeto(String uidProjeto, String descricao);
 }

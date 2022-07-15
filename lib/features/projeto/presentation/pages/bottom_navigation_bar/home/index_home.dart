@@ -251,6 +251,7 @@ class IndexHome extends StatelessWidget {
                                           height: 20,
                                           width: 20,
                                           child: CircularProgressIndicator(
+                                            strokeWidth: 3,
                                             color: corDeAcao.withOpacity(0.8),
                                           ),
                                         ),
@@ -264,18 +265,15 @@ class IndexHome extends StatelessWidget {
                                 height: 10,
                               ),
                               Container(
-                                padding: const EdgeInsets.all(5),
-                                height: 20,
                                 width: double.infinity,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5),
-                                  color: corDeFundoBotaoSecundaria,
                                 ),
                                 child: SingleChildScrollView(
                                   child: Text(
                                     projeto.descricao,
                                     style: const TextStyle(
-                                      color: corTituloTexto,
+                                      color: corCorpoTexto,
                                     ),
                                   ),
                                 ),

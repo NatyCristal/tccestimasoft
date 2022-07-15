@@ -81,8 +81,7 @@ class Alerta {
                     height: 20,
                     width: 20,
                     child: CircularProgressIndicator(
-                      color: Colors.black,
-                    ),
+                        strokeWidth: 3, color: corTituloTexto),
                   )
                 : const Text(
                     "SIM",
@@ -117,7 +116,8 @@ class Alerta {
     ).show();
   }
 
-  static alertaSimplesTextoOk(String texto, String titulo, context) {
+  static alertaSimNao(String texto, String titulo, context, Function acaoSim,
+      StoreProjetosIndexMenu store) {
     return Alert(
       context: context,
       type: AlertType.warning,
@@ -132,9 +132,36 @@ class Alerta {
       ),
       buttons: [
         DialogButton(
+          color: corDeAcao.withOpacity(0.7),
+          child: Observer(builder: (context) {
+            return store.carregando
+                ? const SizedBox(
+                    height: 20,
+                    width: 20,
+                    child: CircularProgressIndicator(
+                        strokeWidth: 3, color: corTituloTexto),
+                  )
+                : const Text(
+                    "SIM",
+                    style: TextStyle(
+                      fontWeight: Fontes.weightTextoNormal,
+                      color: corTextoSobSecundaria,
+                      fontSize: 14,
+                    ),
+                  );
+          }),
+          onPressed: () async {
+            store.carregando = true;
+            await acaoSim();
+            store.carregando = false;
+            Navigator.of(context, rootNavigator: true).pop();
+          },
+          width: 120,
+        ),
+        DialogButton(
           color: corDeFundoBotaoSecundaria,
           child: const Text(
-            "Ok",
+            "Não",
             style: TextStyle(
                 fontWeight: Fontes.weightTextoNormal,
                 color: corDeTextoBotaoSecundaria,
@@ -232,7 +259,10 @@ class Alerta {
   }
 
   static inserirNomeArquivo(
-      context, StoreProjetosIndexMenu store, Function enviarArquivo) {
+    context,
+    StoreProjetosIndexMenu store,
+    Function enviarArquivo,
+  ) {
     return Alert(
       context: context,
       type: AlertType.warning,
@@ -252,10 +282,10 @@ class Alerta {
                       store.nomeArquivo = value.toString();
                       store.validarNomeArquivo();
                     },
-                    decoration: const InputDecoration(
-                      icon: Icon(Icons.account_tree_rounded),
-                      labelText: 'Nome',
-                    ),
+                    decoration: InputDecoration(
+                        icon: const Icon(Icons.account_tree_rounded),
+                        labelText: 'Nome',
+                        errorText: store.erroNomeArquivos),
                   )
                 : TextField(
                     onChanged: (value) {
@@ -274,17 +304,30 @@ class Alerta {
       buttons: [
         DialogButton(
           color: corDeAcao.withOpacity(0.7),
-          child: const Text(
-            "Enviar",
-            style: TextStyle(
-              fontWeight: Fontes.weightTextoNormal,
-              color: corTextoSobSecundaria,
-              fontSize: 14,
-            ),
-          ),
-          onPressed: () {
-            enviarArquivo();
-            Navigator.of(context, rootNavigator: true).pop();
+          child: Observer(builder: (context) {
+            return store.carregando
+                ? const SizedBox(
+                    height: 20,
+                    width: 20,
+                    child: CircularProgressIndicator(
+                        strokeWidth: 3, color: corTituloTexto),
+                  )
+                : const Text(
+                    "Enviar",
+                    style: TextStyle(
+                      fontWeight: Fontes.weightTextoNormal,
+                      color: corTextoSobSecundaria,
+                      fontSize: 14,
+                    ),
+                  );
+          }),
+          onPressed: () async {
+            if (!store.carregando) {
+              store.carregando = true;
+              await enviarArquivo();
+              store.carregando = false;
+              Navigator.of(context, rootNavigator: true).pop();
+            }
           },
           width: 120,
         ),

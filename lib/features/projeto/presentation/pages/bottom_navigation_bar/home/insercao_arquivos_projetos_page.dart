@@ -15,6 +15,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:path/path.dart';
 
 class InsercaoArquivosUpload extends StatefulWidget {
+  final ScrollController scrollController = ScrollController();
   final StoreProjetosIndexMenu storeProjetosIndexMenu;
   final ProjetoEntitie projetoEntitie;
   final ProjetoController controller = Modular.get<ProjetoController>();
@@ -31,6 +32,7 @@ class InsercaoArquivosUpload extends StatefulWidget {
 class _InsercaoArquivosUploadState extends State<InsercaoArquivosUpload> {
   UploadTask? task;
   File? file;
+
   @override
   Widget build(BuildContext context) {
     final fileName =
@@ -49,9 +51,10 @@ class _InsercaoArquivosUploadState extends State<InsercaoArquivosUpload> {
         ),
       ),
       body: SingleChildScrollView(
+        controller: widget.scrollController,
         child: Container(
           width: TamanhoTela.width(context, 1),
-          height: TamanhoTela.height(context, 1),
+          height: TamanhoTela.height(context, 0.9),
           padding: paddingPagePrincipal,
           child: Column(
             children: [
@@ -70,221 +73,198 @@ class _InsercaoArquivosUploadState extends State<InsercaoArquivosUpload> {
                             return const Text("Erro");
                           }
                           if (snapshot.hasData) {
-                            return ListView.builder(
-                              itemCount:
-                                  widget.controller.arquivos!.items.length,
-                              itemBuilder: (context, index) {
-                                final arquivo =
-                                    widget.controller.arquivos!.items[index];
-                                return SizedBox(
-                                  height: 80,
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        // alignment: Alignment.centerLeft,
-                                        margin: const EdgeInsets.symmetric(
-                                            horizontal: 4),
-                                        child: Row(
+                            return widget.controller.arquivos!.items.isEmpty
+                                ? SizedBox(
+                                    width: TamanhoTela.width(context, 1),
+                                    child: const Center(
+                                        child: Text("Não tem nenhum arquivo")),
+                                  )
+                                : ListView.builder(
+                                    controller: widget.scrollController,
+                                    itemCount: widget
+                                        .controller.arquivos!.items.length,
+                                    itemBuilder: (context, index) {
+                                      final arquivo = widget
+                                          .controller.arquivos!.items[index];
+                                      return SizedBox(
+                                        height: 80,
+                                        child: Column(
                                           children: [
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                // SizedBox(
-                                                //   width: 60,
-                                                //   child: Icon(
-                                                //       Icons
-                                                //           .file_present_rounded,
-                                                //       size: 35,
-                                                //       color: Colors.blue
-                                                //           .withOpacity(0.6)),
-                                                // ),
-                                                SizedBox(
-                                                  height: 40,
-                                                  width: 60,
-                                                  child: Row(
+                                            Container(
+                                              margin:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 4),
+                                              child: Row(
+                                                children: [
+                                                  Row(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment
-                                                            .center,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
+                                                            .spaceBetween,
                                                     children: [
-                                                      // GestureDetector(
-                                                      //   onTap: () async {
-                                                      //     var retorno = await widget
-                                                      //         .controller
-                                                      //         .removerArquivoProjeto(
-                                                      //             widget
-                                                      //                 .projetoEntitie,
-                                                      //             arquivo
-                                                      //                 .fullPath)
-                                                      //         .whenComplete(() =>
-                                                      //             setState(
-                                                      //                 () {}));
-                                                      //     widget
-                                                      //         .storeProjetosIndexMenu
-                                                      //         .houveMudancaEmArquivosEdocumentos = true;
-
-                                                      //     AlertaSnack
-                                                      //         .exbirSnackBar(
-                                                      //             context,
-                                                      //             retorno);
-                                                      //   },
-                                                      //   child: Icon(
-                                                      //       Icons
-                                                      //           .delete_outline_rounded,
-                                                      //       size: 30,
-                                                      //       color: corTituloTexto
-                                                      //           .withOpacity(
-                                                      //               0.6)),
-                                                      // ),
-                                                      // const SizedBox(
-                                                      //   width: 20,
-                                                      // ),
-                                                      // Observer(
-                                                      //     builder: (context) {
-                                                      //   return widget
-                                                      //               .storeProjetosIndexMenu
-                                                      //               .linkDownload !=
-                                                      //           ""
-                                                      //       ? Link(
-                                                      //           uri: Uri.parse(widget
-                                                      //               .storeProjetosIndexMenu
-                                                      //               .linkDownload),
-                                                      //           builder: (context,
-                                                      //                   openLink) =>
-                                                      //               GestureDetector(
-                                                      //             onTap:
-                                                      //                 openLink,
-                                                      //           ),
-                                                      //         )
-                                                      //       : const SizedBox();
-                                                      // }),
-                                                      GestureDetector(
-                                                        onTap: () async {
-                                                          var retorno = await widget
-                                                              .controller
-                                                              .fazerDownloadArquivos(
-                                                                  widget
-                                                                      .projetoEntitie
-                                                                      .uidProjeto,
-                                                                  arquivo
-                                                                      .fullPath);
-
-                                                          AlertaSnack
-                                                              .exbirSnackBar(
-                                                                  context,
-                                                                  retorno);
-
-                                                          // await OpenFile.open(
-                                                          //     retorno);
-                                                        },
-                                                        child: Icon(
-                                                          Icons
-                                                              .download_for_offline_sharp,
-                                                          size: 30,
-                                                          color: corDeAcao
-                                                              .withOpacity(0.8),
+                                                      SizedBox(
+                                                        height: 40,
+                                                        width: 60,
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            GestureDetector(
+                                                              onTap: () async {
+                                                                if (!widget
+                                                                    .storeProjetosIndexMenu
+                                                                    .carregando) {
+                                                                  Alerta.alertaSimNao(
+                                                                      "",
+                                                                      "Fazer download arquivo?",
+                                                                      context,
+                                                                      () async {
+                                                                    await widget.controller.fazerDownloadArquivos(
+                                                                        widget
+                                                                            .projetoEntitie
+                                                                            .uidProjeto,
+                                                                        arquivo
+                                                                            .fullPath);
+                                                                  },
+                                                                      widget
+                                                                          .storeProjetosIndexMenu);
+                                                                }
+                                                              },
+                                                              child: Icon(
+                                                                Icons
+                                                                    .download_for_offline_sharp,
+                                                                size: 30,
+                                                                color: corDeAcao
+                                                                    .withOpacity(
+                                                                        0.8),
+                                                              ),
+                                                            ),
+                                                          ],
                                                         ),
                                                       ),
                                                     ],
                                                   ),
-                                                ),
-                                              ],
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Column(
-                                                  children: [
-                                                    SizedBox(
-                                                      width: 200,
-                                                      child: Text(
-                                                        //    "asdasjkdhk asdjashdjk kjasdjkas asdasdas asdasdas asdasdas asdas esse é fim do nome do arquivo",
-                                                        arquivo.fullPath
-                                                                .split("/")
-                                                                .last
-                                                                .split(".")[0] +
-                                                            "." +
-                                                            arquivo.fullPath
-                                                                .split(".")
-                                                                .last,
-                                                        textAlign:
-                                                            TextAlign.left,
-                                                        maxLines: 3,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        style: (const TextStyle(
-                                                            fontSize:
-                                                                tamanhoTextoCorpoTexto,
-                                                            color:
-                                                                corCorpoTexto)),
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Column(
+                                                        children: [
+                                                          GestureDetector(
+                                                            onTap: () {
+                                                              if (!widget
+                                                                  .storeProjetosIndexMenu
+                                                                  .carregando) {
+                                                                Alerta.alertaSimNao(
+                                                                    "",
+                                                                    "Fazer download arquivo?",
+                                                                    context,
+                                                                    () async {
+                                                                  await widget
+                                                                      .controller
+                                                                      .fazerDownloadArquivos(
+                                                                          widget
+                                                                              .projetoEntitie
+                                                                              .uidProjeto,
+                                                                          arquivo
+                                                                              .fullPath);
+                                                                },
+                                                                    widget
+                                                                        .storeProjetosIndexMenu);
+                                                              }
+                                                            },
+                                                            child: SizedBox(
+                                                              width: 200,
+                                                              child: Text(
+                                                                arquivo.fullPath
+                                                                            .split(
+                                                                                "/")
+                                                                            .last
+                                                                            .split(".")[
+                                                                        0] +
+                                                                    "." +
+                                                                    arquivo
+                                                                        .fullPath
+                                                                        .split(
+                                                                            ".")
+                                                                        .last,
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .left,
+                                                                maxLines: 3,
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                style: (const TextStyle(
+                                                                    fontSize:
+                                                                        tamanhoTextoCorpoTexto,
+                                                                    color:
+                                                                        corCorpoTexto)),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
                                                       ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                Column(
-                                                  children: [
-                                                    GestureDetector(
-                                                      onTap: () async {
-                                                        var retorno = await widget
-                                                            .controller
-                                                            .removerArquivoProjeto(
-                                                                widget
-                                                                    .projetoEntitie,
-                                                                arquivo
-                                                                    .fullPath)
-                                                            .whenComplete(() =>
-                                                                setState(
-                                                                    () {}));
-                                                        widget
-                                                            .storeProjetosIndexMenu
-                                                            .houveMudancaEmArquivosEdocumentos = true;
+                                                      Column(
+                                                        children: [
+                                                          GestureDetector(
+                                                            onTap: () async {
+                                                              if (!widget
+                                                                  .storeProjetosIndexMenu
+                                                                  .carregando) {
+                                                                Alerta.alertaSimNao(
+                                                                    "",
+                                                                    "Remover o arquivo?",
+                                                                    context,
+                                                                    () async {
+                                                                  var retorno = await widget
+                                                                      .controller
+                                                                      .removerArquivoProjeto(
+                                                                          widget
+                                                                              .projetoEntitie,
+                                                                          arquivo
+                                                                              .fullPath)
+                                                                      .whenComplete(() =>
+                                                                          setState(
+                                                                              () {}));
+                                                                  widget
+                                                                      .storeProjetosIndexMenu
+                                                                      .houveMudancaEmArquivosEdocumentos = true;
 
-                                                        AlertaSnack
-                                                            .exbirSnackBar(
-                                                                context,
-                                                                retorno);
-                                                      },
-                                                      child: Icon(Icons.delete,
-                                                          size: 30,
-                                                          color: corTituloTexto
-                                                              .withOpacity(
-                                                                  0.6)),
-                                                    ),
-                                                  ],
-                                                ),
-
-                                                // SizedBox(
-                                                //   child: Text(
-                                                //     "." +
-                                                //         arquivo.fullPath
-                                                //             .split(".")[1],
-                                                //     maxLines: 1,
-                                                //     textAlign:
-                                                //         TextAlign.left,
-                                                //     style: (const TextStyle(
-                                                //         fontSize:
-                                                //             tamanhoTextoCorpoTexto,
-                                                //         color:
-                                                //             corCorpoTexto)),
-                                                //   ),
-                                                // ),
-                                              ],
+                                                                  AlertaSnack
+                                                                      .exbirSnackBar(
+                                                                          context,
+                                                                          retorno);
+                                                                },
+                                                                    widget
+                                                                        .storeProjetosIndexMenu);
+                                                              }
+                                                            },
+                                                            child: Icon(
+                                                                Icons.delete,
+                                                                size: 30,
+                                                                color: corTituloTexto
+                                                                    .withOpacity(
+                                                                        0.6)),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           ],
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              },
-                            );
+                                      );
+                                    },
+                                  );
                           }
+
                           break;
                         case ConnectionState.active:
                           return const Carregando();
@@ -322,7 +302,7 @@ class _InsercaoArquivosUploadState extends State<InsercaoArquivosUpload> {
                 style:
                     const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
               ),
-              const SizedBox(height: 48),
+              const SizedBox(height: 20),
               SizedBox(
                 width: 200,
                 child: ButtonWidget(
@@ -331,21 +311,22 @@ class _InsercaoArquivosUploadState extends State<InsercaoArquivosUpload> {
                     text: 'Enviar Arquivo',
                     icone: Icons.cloud_upload_outlined,
                     clicado: () {
-                      Alerta.inserirNomeArquivo(
-                          context, widget.storeProjetosIndexMenu, () {
-                        uploadFile(widget.storeProjetosIndexMenu)
-                            .whenComplete(() async {
-                          await widget.controller.recuperarArquivos(
-                              widget.projetoEntitie.uidProjeto);
-                          setState(() {});
-                          widget.storeProjetosIndexMenu
-                              .houveMudancaEmArquivosEdocumentos = true;
+                      if (!widget.storeProjetosIndexMenu.carregando) {
+                        Alerta.inserirNomeArquivo(
+                            context, widget.storeProjetosIndexMenu, () async {
+                          await uploadFile(widget.storeProjetosIndexMenu)
+                              .whenComplete(() async {
+                            await widget.controller.recuperarArquivos(
+                                widget.projetoEntitie.uidProjeto);
+                            setState(() {});
+                            widget.storeProjetosIndexMenu
+                                .houveMudancaEmArquivosEdocumentos = true;
+                          });
                         });
-                      });
+                      }
                     }),
               ),
               const SizedBox(height: 20),
-              task != null ? buildUploadStatus(task!) : Container(),
             ],
           ),
         ),
@@ -354,7 +335,10 @@ class _InsercaoArquivosUploadState extends State<InsercaoArquivosUpload> {
   }
 
   Future selectFile() async {
-    final result = await FilePicker.platform.pickFiles(allowMultiple: false);
+    final result = await FilePicker.platform.pickFiles(
+      allowMultiple: false,
+      allowCompression: true,
+    );
 
     if (result == null) return;
     final path = result.files.single.path!;
@@ -369,37 +353,10 @@ class _InsercaoArquivosUploadState extends State<InsercaoArquivosUpload> {
     final destino =
         'arquivos/${widget.projetoEntitie.uidProjeto}/${store.nomeArquivo}.${fileName.split(".").last}';
 
-    task = await widget.controller.uparArquivos(destino, file!);
-    setState(() => task = task);
+    await widget.controller.uparArquivos(destino, file!);
 
-    if (task == null) return;
-
-    final snapshot = await task!.whenComplete(() {});
-    //  final urlDownload = await snapshot.ref.getDownloadURL();
     setState(() {});
   }
-
-  Widget buildUploadStatus(UploadTask task) => StreamBuilder<TaskSnapshot>(
-        stream: task.snapshotEvents,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            final snap = snapshot.data!;
-            final progresso = snap.bytesTransferred / snap.totalBytes;
-            final porcentagem = (progresso * 100).toStringAsFixed(2);
-            if (porcentagem == "100 %") {}
-
-            return Text(
-              '$porcentagem %',
-              style: const TextStyle(
-                  color: corTituloTexto,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold),
-            );
-          } else {
-            return Container();
-          }
-        },
-      );
 }
 
 class ButtonWidget extends StatelessWidget {
@@ -409,14 +366,15 @@ class ButtonWidget extends StatelessWidget {
   final Color corIcone;
   final Color corBotao;
 
-  const ButtonWidget({
-    Key? key,
-    required this.icone,
-    required this.text,
-    required this.clicado,
-    required this.corIcone,
-    required this.corBotao,
-  }) : super(key: key);
+  const ButtonWidget(
+      {Key? key,
+      required this.icone,
+      required this.text,
+      required this.clicado,
+      required this.corIcone,
+      required this.corBotao,
+      carregando = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) => ElevatedButton(

@@ -48,8 +48,6 @@ dependencies:
   dropdown_search: ^3.0.1
   flutter_masked_text2: ^0.9.1
   share_plus: ^4.0.4
-  dio: ^4.0.4
-  gallery_saver: ^2.3.2
   pdf: ^3.8.1
   open_file: ^3.2.1
   flutter_launcher_icons: ^0.9.3
@@ -58,6 +56,7 @@ dependencies:
   syncfusion_flutter_pdfviewer: ^19.4.41-beta
   expandable: ^5.0.1
   dolumns: ^2.0.0
+
   
 
 

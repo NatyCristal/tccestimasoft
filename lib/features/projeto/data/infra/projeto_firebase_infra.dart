@@ -76,11 +76,9 @@ class ProjetoFirebaseInfra extends ProjetoRepository {
   }
 
   @override
-  Future<Either<Falha, TaskSnapshot?>> uparArquivos(
-      String uidProjeto, File file) async {
+  Future uparArquivos(String uidProjeto, File file) async {
     try {
-      var resultado = await datasource.uparArquivo(uidProjeto, file);
-      return Right(resultado);
+      await datasource.uparArquivo(uidProjeto, file);
     } on FirebaseException catch (e) {
       return Left(ErroProjeto(
           mensagem: "Aconteceu um erro aqui em recuperar membros" + e.code));
@@ -109,19 +107,19 @@ class ProjetoFirebaseInfra extends ProjetoRepository {
     }
   }
 
-  @override
-  Future<Either<Falha, String>> realizarLoginArquivo(
-      String uidProjeto, String nomeArquivo) async {
-    try {
-      var resultado =
-          await datasource.realizarDownloadArquivo(uidProjeto, nomeArquivo);
-      return Right(resultado);
-    } on FirebaseException catch (e) {
-      return Left(throw Exception(e.code));
-    } on Exception catch (e) {
-      return Left(throw Exception(e));
-    }
-  }
+  // @override
+  // Future<Either<Falha, String>> realizarLoginArquivo(
+  //     String uidProjeto, String nomeArquivo) async {
+  //   try {
+  //   //  var resultado =
+  //      //   await datasource.realizarDownloadArquivo(uidProjeto, nomeArquivo);
+  // //    return Right(resultado);
+  //   } on FirebaseException catch (e) {
+  //     return Left(throw Exception(e.code));
+  //   } on Exception catch (e) {
+  //     return Left(throw Exception(e));
+  //   }
+  // }
 
   @override
   Future<Either<Falha, String>> adicionarDescricaoProjeto(

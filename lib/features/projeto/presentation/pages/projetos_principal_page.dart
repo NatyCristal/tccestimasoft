@@ -198,8 +198,7 @@ class ProjetosPrincipalPage extends StatelessWidget {
                                 height: 20,
                                 width: 20,
                                 child: CircularProgressIndicator(
-                                  color: Colors.black,
-                                ),
+                                    strokeWidth: 3, color: corTituloTexto),
                               )
                             : const Text(
                                 "Entrar",
@@ -297,8 +296,7 @@ class ProjetosPrincipalPage extends StatelessWidget {
                                 height: 20,
                                 width: 20,
                                 child: CircularProgressIndicator(
-                                  color: Colors.black,
-                                ),
+                                    strokeWidth: 3, color: corTituloTexto),
                               )
                             : const Text(
                                 "Salvar",

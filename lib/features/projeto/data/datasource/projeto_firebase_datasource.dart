@@ -8,8 +8,6 @@ import 'package:estimasoft/features/projeto/domain/entitie/projeto_entitie.dart'
 import 'package:estimasoft/features/usuario/data/datasource/usuario_datasource.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:intl/intl.dart';
-import 'package:open_file/open_file.dart';
-import 'package:path_provider/path_provider.dart';
 
 class ProjetoFirebaseDatasource extends ProjetoDatasource {
   final firestore = FirebaseFirestore.instance;
@@ -248,26 +246,6 @@ class ProjetoFirebaseDatasource extends ProjetoDatasource {
   }
 
   @override
-  Future realizarDownloadArquivo(
-      String uidProjeto, String caminhoDocumento) async {
-    final ref = FirebaseStorage.instance.ref(caminhoDocumento);
-
-    // ignore: unused_local_variable
-    var resultado =
-        FirebaseStorage.instance.ref(caminhoDocumento); //.getDownloadURL();
-
-    final dir = await getApplicationDocumentsDirectory();
-    //print("Diretorio: " + dir.path);
-    File file = File("${dir.path}/${caminhoDocumento.split("/").last}");
-
-    await ref.writeToFile(file);
-
-    await OpenFile.open(file.path);
-
-    return file.path;
-  }
-
-  @override
   Future<String> adicionarDescricaoProjeto(
       String uidProjeto, String descricao) async {
     Map<String, String> map = {"descricao": descricao};
@@ -276,14 +254,3 @@ class ProjetoFirebaseDatasource extends ProjetoDatasource {
     return "Descrição salva com sucesso!";
   }
 }
-
-
-
-// Future<Directory> getApplicationDocumentsDirectory() async {
-//   final String? path = await _platform.getApplicationDocumentsPath();
-//   if (path == null) {
-//     throw MissingPlatformDirectoryException(
-//         'Unable to get application documents directory');
-//   }
-//   return Directory(path);
-// }

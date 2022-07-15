@@ -20,6 +20,8 @@ import 'package:estimasoft/features/projeto/domain/usecase/sair_projeto_usecase.
 import 'package:estimasoft/features/resultado/presentation/resultado_controller.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:open_file/open_file.dart';
+import 'package:path_provider/path_provider.dart';
 import '../../usuario/presentation/usuario_controller.dart';
 import '../domain/usecase/criar_projeto_usecase.dart';
 import '../domain/usecase/recuperar_projetos_usecase.dart';
@@ -190,17 +192,18 @@ class ProjetoController {
 
   Future fazerDownloadArquivos(
       String uidProjeto, String caminhoDocumento) async {
-    var resultado = await _arquivosUsecase.realizarDownloadArquivo(
-        uidProjeto, caminhoDocumento);
-
-    var retorno = "";
-    resultado.fold((l) {
-      retorno = l.mensagem;
-    }, (r) {
-      retorno = r;
-    });
-
-    return retorno;
+    final ref = FirebaseStorage.instance.ref(caminhoDocumento);
+    final Directory appDocDir = await getApplicationDocumentsDirectory();
+    final String appDocPath = appDocDir.path;
+    final File tempFile =
+        File(appDocPath + '/' + caminhoDocumento.split("/").last);
+    try {
+      await ref.writeToFile(tempFile);
+      await tempFile.create();
+      await OpenFile.open(tempFile.path);
+    } on FirebaseException {
+      return "Algo aconteceu";
+    }
   }
 
   Future removerArquivoProjeto(
@@ -232,17 +235,7 @@ class ProjetoController {
 
   Future uparArquivos(String uidProjeto, File file) async {
     // final usuarioLogado = Modular.get<UsuarioAutenticado>();
-    var resultado = await _arquivosUsecase.uparArquivos(uidProjeto, file);
-
-    // ignore: prefer_typing_uninitialized_variables
-    var retorno;
-    resultado.fold((l) {
-      l.mensagem;
-    }, (r) {
-      retorno = r;
-    });
-
-    return retorno;
+    await _arquivosUsecase.uparArquivos(uidProjeto, file);
   }
 
   Future recuperarContagem(String nomeContagem, String uidProjeto) async {

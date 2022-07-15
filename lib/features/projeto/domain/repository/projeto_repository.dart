@@ -21,14 +21,13 @@ abstract class ProjetoRepository {
   Future<Either<Falha, List<UsuarioEntity>>> recuperarMembros(
     String uidProjeto,
   );
-  Future<Either<Falha, TaskSnapshot?>> uparArquivos(
-      String uidProjeto, File file);
+  Future uparArquivos(String uidProjeto, File file);
 
   Future<Either<Falha, ListResult>> recuperarArquivos(String uidProjeto);
 
   Future removerArquivo(String uidProjeto, String nomeArquivo);
 
-  Future realizarLoginArquivo(String uidProjeto, String nomeArquivo);
+  //Future realizarLoginArquivo(String uidProjeto, String nomeArquivo);
 
   Future<Either<Falha, String>> adicionarDescricaoProjeto(
       String uidProjeto, String descricao);

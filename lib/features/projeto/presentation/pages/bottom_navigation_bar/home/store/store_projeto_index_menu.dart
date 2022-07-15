@@ -7,6 +7,9 @@ class StoreProjetosIndexMenu = StoreProjetosIndexMenuBase
 
 abstract class StoreProjetosIndexMenuBase with Store {
   @observable
+  bool carregando = false;
+
+  @observable
   bool carregandoSalvarDescri = false;
 
   @observable
@@ -16,7 +19,7 @@ abstract class StoreProjetosIndexMenuBase with Store {
   String descricaoProjeto = "";
 
   @observable
-  String linkDownload = "";
+  bool carregouUpload = false;
 
   @observable
   bool carregou = false;
