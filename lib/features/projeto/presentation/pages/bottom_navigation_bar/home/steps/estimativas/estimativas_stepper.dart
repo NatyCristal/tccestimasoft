@@ -1,6 +1,7 @@
 import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
 import 'package:estimasoft/core/shared/utils/snackbar.dart';
 import 'package:estimasoft/features/projeto/domain/entitie/projeto_entitie.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/home/store/store_projeto_index_menu.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_detalhada.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_estimada.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_indicativa.dart';
@@ -14,6 +15,7 @@ import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativ
 import 'package:estimasoft/features/projeto/presentation/projeto_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
@@ -21,6 +23,7 @@ import '../../../../../../../../core/auth/usuario_autenticado.dart';
 import '../../../../tab_bar/estimativas/stores/store_estimativa_prazo.dart';
 
 class EstimativasStepperPage extends StatefulWidget {
+  final StoreProjetosIndexMenu storeProjetosIndexMenu;
   final ProjetoController controller = Modular.get<ProjetoController>();
   final ProjetoEntitie projeto;
   final StoreEstimativaEsforco storeEstimativaEsforco;
@@ -43,6 +46,7 @@ class EstimativasStepperPage extends StatefulWidget {
     required this.storeEstimada,
     required this.storeDetalhada,
     required this.bottonNavigationBar,
+    required this.storeProjetosIndexMenu,
   }) : super(key: key);
 
   @override
@@ -115,16 +119,6 @@ class _EstimativasStepperPageState extends State<EstimativasStepperPage> {
               ? const SizedBox()
               : Row(
                   children: <Widget>[
-                    // Flexible(
-                    //   child: BotaoPadrao(
-                    //     carregando: false,
-                    //     acao: onStepEstimativasCancel,
-                    //     tituloBotao: "Anterior",
-                    //     corBotao: corDeFundoBotaoSecundaria,
-                    //     corDeTextoBotao: corDeTextoBotaoSecundaria,
-                    //   ),
-                    // ),
-
                     widget.storeDetalhada.contagemDetalhadaValida.totalPf == 0
                         ? const SizedBox()
                         : Flexible(
@@ -133,18 +127,23 @@ class _EstimativasStepperPageState extends State<EstimativasStepperPage> {
                                   backgroundColor: MaterialStateProperty.all(
                                       corDeFundoBotaoPrimaria)),
                               onPressed: onStepEstimativasContinue,
-                              child: const Text(
-                                "Continuar",
-                                style: TextStyle(color: corTextoSobCorPrimaria),
-                              ),
+                              child: Observer(builder: (context) {
+                                return widget.storeProjetosIndexMenu.carregando
+                                    ? const SizedBox(
+                                        height: 20,
+                                        width: 20,
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 3,
+                                          color: corTextoSobCorPrimaria,
+                                        ),
+                                      )
+                                    : const Text(
+                                        "Continuar",
+                                        style: TextStyle(
+                                            color: corTextoSobCorPrimaria),
+                                      );
+                              }),
                             ),
-                            // child: BotaoPadrao(
-                            //   carregando: false,
-                            //   acao: onStepEstimativasContinue,
-                            //   tituloBotao: "Próximo",
-                            //   corBotao: corDeFundoBotaoPrimaria,
-                            //   corDeTextoBotao: corDeTextoBotaoPrimaria,
-                            // ),
                           ),
                   ],
                 );
@@ -164,8 +163,9 @@ class _EstimativasStepperPageState extends State<EstimativasStepperPage> {
           isValid = true;
           break;
         }
-        if (widget.storeEstimativaEsforco.esforcos.isNotEmpty) {
-          widget.storeEstimativaEsforco.carregando = true;
+        if (widget.storeEstimativaEsforco.esforcos.isNotEmpty &&
+            !widget.storeProjetosIndexMenu.carregando) {
+          widget.storeProjetosIndexMenu.carregando = true;
 
           for (var element in widget.storeEstimativaEsforco.esforcos) {
             await widget.controller.salvarEsforco(
@@ -179,9 +179,9 @@ class _EstimativasStepperPageState extends State<EstimativasStepperPage> {
                   widget.projeto.uidProjeto,
                   Modular.get<UsuarioAutenticado>().store.uid);
           widget.storeEstimativaEsforco.alteracores = false;
-          widget.storeEstimativaEsforco.carregando = false;
           AlertaSnack.exbirSnackBar(context, "Esforço salvo!");
           isValid = true;
+          widget.storeProjetosIndexMenu.carregando = false;
           widget.storeEstimativaEsforco.isVisualizacao = true;
         } else {
           AlertaSnack.exbirSnackBar(
@@ -189,14 +189,8 @@ class _EstimativasStepperPageState extends State<EstimativasStepperPage> {
         }
         break;
       case 1:
-        // if (widget.storeEstimativaPrazo.prazosValidos.isNotEmpty) {
-        //   isValid = true;
-        //   break;
-        // }
-
         if (widget.storeEstimativaPrazo.prazos.isNotEmpty) {
-          widget.storeEstimativaPrazo.carregando = true;
-
+          widget.storeProjetosIndexMenu.carregando = true;
           for (var element in widget.storeEstimativaPrazo.prazos) {
             await widget.controller.salvarPrazp(
                 element,
@@ -204,6 +198,7 @@ class _EstimativasStepperPageState extends State<EstimativasStepperPage> {
                 Modular.get<UsuarioAutenticado>().store.uid,
                 element.contagemPontoDeFuncao.split(" - ").first);
           }
+
           widget.storeEstimativaPrazo.prazosValidos =
               await widget.controller.estimativasController.recuperarPrazos(
                   widget.projeto.uidProjeto,
@@ -211,10 +206,11 @@ class _EstimativasStepperPageState extends State<EstimativasStepperPage> {
           widget.controller.estimativasController.prazos;
 
           widget.storeEstimativaPrazo.alteracao = false;
-          widget.storeEstimativaPrazo.carregando = false;
+
           AlertaSnack.exbirSnackBar(context, "Prazo salvo!");
           widget.storeEstimativaPrazo.isVisualizacao = true;
           isValid = true;
+          widget.storeProjetosIndexMenu.carregando = false;
         } else {
           AlertaSnack.exbirSnackBar(
               context, "Adicione um prazo para continuar.");
@@ -222,9 +218,9 @@ class _EstimativasStepperPageState extends State<EstimativasStepperPage> {
         break;
       case 2:
         if (widget.storeEstimativaEquipe.equipes.isNotEmpty &&
-            widget.storeEstimativaEquipe.alteracao) {
-          widget.storeEstimativaEquipe.carregando = true;
-
+            widget.storeEstimativaEquipe.alteracao &&
+            !widget.storeProjetosIndexMenu.carregando) {
+          widget.storeProjetosIndexMenu.carregando = true;
           for (var element in widget.storeEstimativaEquipe.equipes) {
             await widget.controller.salvarEquipe(
                 element,
@@ -239,10 +235,11 @@ class _EstimativasStepperPageState extends State<EstimativasStepperPage> {
           );
 
           widget.storeEstimativaEquipe.alteracao = false;
-          widget.storeEstimativaEquipe.carregando = false;
+
           AlertaSnack.exbirSnackBar(context, "Equipe salva!");
           widget.storeEstimativaEquipe.isVisualizacao = true;
           isValid = true;
+          widget.storeProjetosIndexMenu.carregando = false;
         } else {
           AlertaSnack.exbirSnackBar(
               context, "Adicione uma equipe para continuar.");
@@ -251,7 +248,6 @@ class _EstimativasStepperPageState extends State<EstimativasStepperPage> {
       case 3:
         if (widget.storeEstimativaCusto.custos.isNotEmpty &&
             widget.storeEstimativaCusto.alteracao) {
-          widget.storeEstimativaCusto.carregando = true;
           for (var element in widget.storeEstimativaCusto.custos) {
             await Modular.get<ProjetoController>().salvarCusto(
                 element,
@@ -265,7 +261,7 @@ class _EstimativasStepperPageState extends State<EstimativasStepperPage> {
                   .recuperarCusto(widget.projeto.uidProjeto,
                       Modular.get<UsuarioAutenticado>().store.uid);
           widget.storeEstimativaCusto.alteracao = false;
-          widget.storeEstimativaCusto.carregando = false;
+
           AlertaSnack.exbirSnackBar(context, "Custo salvo com sucesso!");
           widget.storeEstimativaCusto.isVisualizacao = true;
           isValid = true;

@@ -52,9 +52,6 @@ abstract class StoreContagemDetalhadaBase with Store {
   @observable
   bool alteracoes = false;
 
-  @observable
-  bool carregando = false;
-
   @action
   adicionarQuantidade(IndiceDetalhada indice, String tipoFuncao) {
     switch (tipoFuncao) {

@@ -20,6 +20,7 @@ import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativ
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_esforco.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/estimativas/stores/store_estimativa_prazo.dart';
 import 'package:estimasoft/features/projeto/presentation/projeto_controller.dart';
+import 'package:estimasoft/features/projeto/presentation/store/store_projeto_principal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -30,9 +31,14 @@ import 'package:share_plus/share_plus.dart';
 import 'home/index_home.dart';
 
 class ProjetoMenuPage extends StatefulWidget {
+  final StoreProjetos storeProjetos;
   final ProjetoEntitie projeto;
 
-  const ProjetoMenuPage({Key? key, required this.projeto}) : super(key: key);
+  const ProjetoMenuPage({
+    Key? key,
+    required this.projeto,
+    required this.storeProjetos,
+  }) : super(key: key);
 
   @override
   State<ProjetoMenuPage> createState() => _ProjetoMenuPageState();
@@ -69,6 +75,7 @@ class _ProjetoMenuPageState extends State<ProjetoMenuPage>
       return store.index == 1
           ? Material(
               child: ContagensStepper(
+                  storeProjetosIndexMenu: store,
                   projeto: widget.projeto,
                   storeEstimada: storeEstimada,
                   storeDetalhada: storeDetalhada,
@@ -78,6 +85,7 @@ class _ProjetoMenuPageState extends State<ProjetoMenuPage>
           : store.index == 2
               ? Material(
                   child: EstimativasStepperPage(
+                    storeProjetosIndexMenu: store,
                     projeto: widget.projeto,
                     storeEstimativaEsforco: storeEstimativaEsforco,
                     storeEstimativaEquipe: storeEstimativaEquipe,
@@ -221,17 +229,21 @@ class _ProjetoMenuPageState extends State<ProjetoMenuPage>
                                         uidMembros.add(element.uid);
                                       }
 
-                                      controller.notificacoesController
+                                      await controller.notificacoesController
                                           .notificacoesUsecase
                                           .enviarNotificacaoMembros(
                                               "Uma nova estimativa do projeto ${widget.projeto.nomeProjeto} foi compartilhada com a equipe! Venha conferir!",
                                               widget.projeto.uidProjeto,
                                               uidMembros);
-
+                                      widget.storeProjetos.exibirNotificacao =
+                                          true;
                                       AlertaSnack.exbirSnackBar(context,
                                           "Sua estimativa foi compartilhada com o projeto!");
                                     });
                                   }
+                                } else {
+                                  AlertaSnack.exbirSnackBar(context,
+                                      "Finalize as contagens para continuar.");
                                 }
                               }),
                           SpeedDialChild(
@@ -293,7 +305,7 @@ class _ProjetoMenuPageState extends State<ProjetoMenuPage>
                                   }
                                 } else {
                                   AlertaSnack.exbirSnackBar(context,
-                                      "Realize a contagem detalhada para compartilhar PDF");
+                                      "Finalize as contagens para continuar.");
                                 }
                               }),
                           SpeedDialChild(
@@ -341,7 +353,7 @@ class _ProjetoMenuPageState extends State<ProjetoMenuPage>
                                   }
                                 } else {
                                   AlertaSnack.exbirSnackBar(context,
-                                      "Realize a contagem detalhada para compartilhar PDF");
+                                      "Finalize as contagens para continuar.");
                                 }
                               }),
                         ],
@@ -448,20 +460,16 @@ class _ProjetoMenuPageState extends State<ProjetoMenuPage>
     }
 
     if (esforcoDetalhada == null) {
-      AlertaSnack.exbirSnackBar(context,
-          "Finalize a estimativa de esforço com a contagem detalhada para compartihar o PDF");
+      AlertaSnack.exbirSnackBar(context, "Estime o esforço para continuar.");
       return false;
     } else if (prazoDetalhado == null) {
-      AlertaSnack.exbirSnackBar(context,
-          "Finalize a estimativa de prazo com a contagem detalhada para compartihar o PDF");
+      AlertaSnack.exbirSnackBar(context, "Estime o prazo para continuar.");
       return false;
     } else if (equipeDetalhada == null) {
-      AlertaSnack.exbirSnackBar(context,
-          "Finalize a estimativa de equipe com a contagem detalhada para compartihar o PDF");
+      AlertaSnack.exbirSnackBar(context, "Estime a equipe para continuar.");
       return false;
     } else if (custoDetalhado == null) {
-      AlertaSnack.exbirSnackBar(context,
-          "Finalize a estimativa de custo com a contagem detalhada para compartihar o PDF");
+      AlertaSnack.exbirSnackBar(context, "Estime o custo para continuar.");
       return false;
     } else if (esforcoDetalhada != null &&
         equipeDetalhada != null &&
@@ -469,8 +477,7 @@ class _ProjetoMenuPageState extends State<ProjetoMenuPage>
         custoDetalhado != null) {
       return true;
     } else {
-      AlertaSnack.exbirSnackBar(
-          context, "Finalize suas estimativas  para compartihar o PDF");
+      AlertaSnack.exbirSnackBar(context, "Finalize suas estimativas");
       return false;
     }
   }

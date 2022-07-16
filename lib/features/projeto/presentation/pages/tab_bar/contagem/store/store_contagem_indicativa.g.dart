@@ -62,22 +62,6 @@ mixin _$StoreContagemIndicativa on StoreContagemIndicativaBase, Store {
     });
   }
 
-  late final _$carregouBotaoAtom =
-      Atom(name: 'StoreContagemIndicativaBase.carregouBotao', context: context);
-
-  @override
-  bool get carregouBotao {
-    _$carregouBotaoAtom.reportRead();
-    return super.carregouBotao;
-  }
-
-  @override
-  set carregouBotao(bool value) {
-    _$carregouBotaoAtom.reportWrite(value, super.carregouBotao, () {
-      super.carregouBotao = value;
-    });
-  }
-
   late final _$alteracoesAtom =
       Atom(name: 'StoreContagemIndicativaBase.alteracoes', context: context);
 
@@ -271,7 +255,6 @@ mixin _$StoreContagemIndicativa on StoreContagemIndicativaBase, Store {
 contagemIndicativaValida: ${contagemIndicativaValida},
 nomeDaFuncaoController: ${nomeDaFuncaoController},
 descricaoController: ${descricaoController},
-carregouBotao: ${carregouBotao},
 alteracoes: ${alteracoes},
 carregou: ${carregou},
 nomeDafuncao: ${nomeDafuncao},

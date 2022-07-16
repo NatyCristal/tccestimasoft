@@ -154,6 +154,7 @@ class ProjetoFirebaseDatasource extends ProjetoDatasource {
               .then((value) async {
             await usuarioDatasource.removerProjetoUsuario(
                 uidUsuario, uidProjeto);
+            await excluirDadosUsuario(uidProjeto, uidUsuario);
           });
         } else if (membros.isNotEmpty && value["admin"] == uidUsuario) {
           String nomeNovoAdmin = "";
@@ -184,11 +185,21 @@ class ProjetoFirebaseDatasource extends ProjetoDatasource {
               .update(mapFinal2);
 
           await usuarioDatasource.removerProjetoUsuario(uidUsuario, uidProjeto);
+          await excluirDadosUsuario(uidProjeto, uidUsuario);
         } else {
           await usuarioDatasource
               .removerProjetoUsuario(uidUsuario, uidProjeto)
               .then((value) async {
-            await firestore.collection("Projetos").doc(uidProjeto).delete();
+            // await firestore.collection("Projetos").doc(uidProjeto).delete();
+            await usuarioDatasource.removerProjetoUsuario(
+                uidUsuario, uidProjeto);
+            await excluirDadosUsuario(uidProjeto, uidUsuario);
+            final arquivos =
+                await FirebaseStorage.instance.ref(uidProjeto).listAll();
+
+            if (arquivos.items.isNotEmpty) {
+              await FirebaseStorage.instance.ref(uidProjeto).delete();
+            }
           });
         }
       }
@@ -252,5 +263,63 @@ class ProjetoFirebaseDatasource extends ProjetoDatasource {
 
     await firestore.collection("Projetos").doc(uidProjeto).update(map);
     return "Descrição salva com sucesso!";
+  }
+
+  Future excluirDadosUsuario(String uidProjeto, String uidUsuario) async {
+    await firestore
+        .collection("Contagem")
+        .doc(uidProjeto)
+        .collection("Indicativa")
+        .doc(uidUsuario)
+        .delete();
+
+    await firestore
+        .collection("Contagem")
+        .doc(uidProjeto)
+        .collection("Estimada")
+        .doc(uidUsuario)
+        .delete();
+
+    await firestore
+        .collection("Contagem")
+        .doc(uidProjeto)
+        .collection("Detalhada")
+        .doc(uidUsuario)
+        .delete();
+
+    await firestore
+        .collection("Estimativa")
+        .doc(uidProjeto)
+        .collection("Custo")
+        .doc(uidUsuario)
+        .delete();
+
+    await firestore
+        .collection("Estimativa")
+        .doc(uidProjeto)
+        .collection("Equipe")
+        .doc(uidUsuario)
+        .delete();
+
+    await firestore
+        .collection("Estimativa")
+        .doc(uidProjeto)
+        .collection("Prazo")
+        .doc(uidUsuario)
+        .delete();
+
+    await firestore
+        .collection("Estimativa")
+        .doc(uidProjeto)
+        .collection("Esforco")
+        .doc(uidUsuario)
+        .delete();
+
+    await firestore
+        .collection("Resultados")
+        .doc(uidProjeto)
+        .collection("Detalhada")
+        .doc(uidUsuario)
+        .delete();
   }
 }

@@ -77,7 +77,8 @@ class ProjetoModule extends Module {
             guards: [AutorizadoGuard()]),
         ChildRoute('/projeto-informacao',
             child: (context, args) => ProjetoMenuPage(
-                  projeto: args.data,
+                  projeto: args.data[0],
+                  storeProjetos: args.data[1],
                 ),
             guards: [AutorizadoGuard()]),
         ChildRoute('/meus-projetos',

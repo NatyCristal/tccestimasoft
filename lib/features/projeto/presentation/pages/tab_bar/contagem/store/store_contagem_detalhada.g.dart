@@ -149,22 +149,6 @@ mixin _$StoreContagemDetalhada on StoreContagemDetalhadaBase, Store {
     });
   }
 
-  late final _$carregandoAtom =
-      Atom(name: 'StoreContagemDetalhadaBase.carregando', context: context);
-
-  @override
-  bool get carregando {
-    _$carregandoAtom.reportRead();
-    return super.carregando;
-  }
-
-  @override
-  set carregando(bool value) {
-    _$carregandoAtom.reportWrite(value, super.carregando, () {
-      super.carregando = value;
-    });
-  }
-
   late final _$StoreContagemDetalhadaBaseActionController =
       ActionController(name: 'StoreContagemDetalhadaBase', context: context);
 
@@ -270,8 +254,7 @@ contagemDetalhadaEntitie: ${contagemDetalhadaEntitie},
 totalPfFuncaoDeDados: ${totalPfFuncaoDeDados},
 totalPfFuncaTransacional: ${totalPfFuncaTransacional},
 totalPf: ${totalPf},
-alteracoes: ${alteracoes},
-carregando: ${carregando}
+alteracoes: ${alteracoes}
     ''';
   }
 }

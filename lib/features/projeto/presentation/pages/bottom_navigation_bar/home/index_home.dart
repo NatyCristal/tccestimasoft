@@ -127,7 +127,7 @@ class IndexHome extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text(
-                          "Projeto criado por:",
+                          "Administrador:",
                           style: TextStyle(
                             color: corCorpoTexto,
                           ),

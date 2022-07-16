@@ -107,22 +107,6 @@ mixin _$StoreEstimativaPrazo on StoreEstimativaPrazoBase, Store {
     });
   }
 
-  late final _$carregandoAtom =
-      Atom(name: 'StoreEstimativaPrazoBase.carregando', context: context);
-
-  @override
-  bool get carregando {
-    _$carregandoAtom.reportRead();
-    return super.carregando;
-  }
-
-  @override
-  set carregando(bool value) {
-    _$carregandoAtom.reportWrite(value, super.carregando, () {
-      super.carregando = value;
-    });
-  }
-
   late final _$contagemPFAtom =
       Atom(name: 'StoreEstimativaPrazoBase.contagemPF', context: context);
 
@@ -288,7 +272,6 @@ valorEmDiasReagiaoDoImpossivel: ${valorEmDiasReagiaoDoImpossivel},
 tamanhoListaPrazo: ${tamanhoListaPrazo},
 prazos: ${prazos},
 alteracao: ${alteracao},
-carregando: ${carregando},
 contagemPF: ${contagemPF},
 tamanhoPf: ${tamanhoPf},
 prazoTotal: ${prazoTotal},

@@ -98,7 +98,7 @@ class ProjetoController {
       retorno = "Projeto cadastrado com sucesso!";
 
       await notificacoesController.gerarNotificacao(
-          "Parabéns!! Você cricou o projeto $nomeProjeto.",
+          "Parabéns!! Você criou o projeto $nomeProjeto.",
           Modular.get<UsuarioAutenticado>().store.uid);
     });
 
@@ -234,7 +234,6 @@ class ProjetoController {
   }
 
   Future uparArquivos(String uidProjeto, File file) async {
-    // final usuarioLogado = Modular.get<UsuarioAutenticado>();
     await _arquivosUsecase.uparArquivos(uidProjeto, file);
   }
 
@@ -276,13 +275,7 @@ class ProjetoController {
     switch (nomeContagem) {
       case "Indicativa":
         resultado = await contagemController.salvarContagemIndicativa(
-
-            //fix me tipo
-            alis,
-            aies,
-            totalPF,
-            uidProjeto,
-            usuarioLogado.store.uid);
+            alis, aies, totalPF, uidProjeto, usuarioLogado.store.uid);
         break;
       case "Estimada":
         resultado = await contagemController.salvarContagemEstimada(aies, alis,
@@ -352,12 +345,6 @@ class ProjetoController {
       default:
     }
   }
-
-  // enviarResultadoEstimativaEsforco(List<EsforcoEntity> esforcos,
-  //     String uidProjeto, String uidUsuario) async {
-  //   await resultadoController.enviarEstimativasEsforco(
-  //       esforcos, uidProjeto, uidUsuario);
-  // }
 
   carregarTodosDados(String uidProjeto, String uidUsuario) async {
     await estimativasController.carregarEstimativas(uidProjeto, uidUsuario);

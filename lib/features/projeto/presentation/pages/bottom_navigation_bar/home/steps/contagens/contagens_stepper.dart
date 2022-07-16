@@ -1,6 +1,7 @@
 import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
 import 'package:estimasoft/core/shared/utils/snackbar.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/home/steps/estimativas/estimativas_stepper.dart';
+import 'package:estimasoft/features/projeto/presentation/pages/bottom_navigation_bar/home/store/store_projeto_index_menu.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/contagem_detalhada.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/contagem_estimada.dart';
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/contagem_indicativa.dart';
@@ -9,11 +10,13 @@ import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/
 import 'package:estimasoft/features/projeto/presentation/pages/tab_bar/contagem/store/store_contagem_indicativa.dart';
 import 'package:estimasoft/features/projeto/presentation/projeto_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../../../../domain/entitie/projeto_entitie.dart';
 
 class ContagensStepper extends StatefulWidget {
+  final StoreProjetosIndexMenu storeProjetosIndexMenu;
   final ProjetoController controller = Modular.get<ProjetoController>();
   final ProjetoEntitie projeto;
   final StoreContagemIndicativa storeIndicativa;
@@ -26,7 +29,8 @@ class ContagensStepper extends StatefulWidget {
       required this.storeEstimada,
       required this.storeDetalhada,
       required this.bottonNavigationBar,
-      required this.storeIndicativa})
+      required this.storeIndicativa,
+      required this.storeProjetosIndexMenu})
       : super(key: key);
 
   @override
@@ -93,34 +97,29 @@ class _ContagensStepperState extends State<ContagensStepper> {
               ? const SizedBox()
               : Row(
                   children: <Widget>[
-                    // Flexible(
-                    //   child: BotaoPadrao(
-                    //     carregando: false,
-                    //     acao: onStepEstimativasCancel,
-                    //     tituloBotao: "Anterior",
-                    //     corBotao: corDeFundoBotaoSecundaria,
-                    //     corDeTextoBotao: corDeTextoBotaoSecundaria,
-                    //   ),
-                    // ),
-
                     Flexible(
                       child: ElevatedButton(
                         style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all(
                                 corDeFundoBotaoPrimaria)),
                         onPressed: onStepEstimativasContinue,
-                        child: const Text(
-                          "Continuar",
-                          style: TextStyle(color: corTextoSobCorPrimaria),
-                        ),
+                        child: Observer(builder: (context) {
+                          return widget.storeProjetosIndexMenu.carregando
+                              ? const SizedBox(
+                                  height: 20,
+                                  width: 20,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 3,
+                                    color: corTextoSobCorPrimaria,
+                                  ),
+                                )
+                              : const Text(
+                                  "Continuar",
+                                  style:
+                                      TextStyle(color: corTextoSobCorPrimaria),
+                                );
+                        }),
                       ),
-                      // child: BotaoPadrao(
-                      //   carregando: false,
-                      //   acao: onStepEstimativasContinue,
-                      //   tituloBotao: "Próximo",
-                      //   corBotao: corDeFundoBotaoPrimaria,
-                      //   corDeTextoBotao: corDeTextoBotaoPrimaria,
-                      // ),
                     ),
                   ],
                 );
@@ -140,8 +139,10 @@ class _ContagensStepperState extends State<ContagensStepper> {
           isValid = true;
           break;
         }
-        if (widget.storeIndicativa.alteracoes) {
-          widget.storeIndicativa.carregouBotao = true;
+        if (widget.storeIndicativa.alteracoes &&
+            !widget.storeProjetosIndexMenu.carregando) {
+          widget.storeProjetosIndexMenu.carregando = true;
+
           var retorno = await widget.controller.salvarContagem(
             "Indicativa",
             widget.storeIndicativa.alis,
@@ -156,9 +157,8 @@ class _ContagensStepperState extends State<ContagensStepper> {
           widget.storeIndicativa
               .salvar(widget.controller.contagemController.contagemIndicativa);
 
-          widget.storeIndicativa.carregouBotao = false;
           widget.storeIndicativa.alteracoes = false;
-
+          widget.storeProjetosIndexMenu.carregando = false;
           AlertaSnack.exbirSnackBar(context, retorno);
           isValid = true;
         } else {
@@ -171,8 +171,9 @@ class _ContagensStepperState extends State<ContagensStepper> {
           isValid = true;
           break;
         }
-        if (widget.storeEstimada.alteracoes) {
-          widget.storeEstimada.carregouBotao = true;
+        if (widget.storeEstimada.alteracoes &&
+            !widget.storeProjetosIndexMenu.carregando) {
+          widget.storeProjetosIndexMenu.carregando = true;
           var retorno = await widget.controller.salvarContagem(
             "Estimada",
             widget.storeIndicativa.contagemIndicativaValida.aie,
@@ -189,23 +190,25 @@ class _ContagensStepperState extends State<ContagensStepper> {
           widget.storeEstimada
               .salvar(widget.controller.contagemController.contagemEstimada);
           widget.storeEstimada.alteracoes = false;
-          widget.storeEstimada.carregouBotao = false;
           AlertaSnack.exbirSnackBar(context, retorno);
+          widget.storeProjetosIndexMenu.carregando = false;
           isValid = true;
         }
 
         break;
       case 2:
-        if (widget.storeDetalhada.validar(context)) {
-          widget.storeDetalhada.carregando = true;
+        if (widget.storeDetalhada.validar(context) &&
+            !widget.storeProjetosIndexMenu.carregando) {
+          widget.storeProjetosIndexMenu.carregando = true;
+
           var retorno = await widget.controller.salvarContagemDetalhada(
               widget.storeDetalhada.contagemDetalhadaEntitie,
               widget.projeto.uidProjeto);
 
           widget.storeDetalhada
               .salvar(widget.controller.contagemController.contagemDetalhada);
-          widget.storeDetalhada.carregando = false;
           widget.storeDetalhada.alteracoes = false;
+          widget.storeProjetosIndexMenu.carregando = false;
           AlertaSnack.exbirSnackBar(context, retorno);
           isValid = true;
         }

@@ -29,9 +29,6 @@ abstract class StoreEstimativaPrazoBase with Store {
   bool alteracao = false;
 
   @observable
-  bool carregando = false;
-
-  @observable
   String contagemPF = "";
 
   @observable

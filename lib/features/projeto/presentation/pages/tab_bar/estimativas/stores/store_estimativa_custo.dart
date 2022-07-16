@@ -45,9 +45,6 @@ abstract class StoreEstimativaCustoBase with Store {
   int tamanhoCustos = 0;
 
   @observable
-  bool carregando = false;
-
-  @observable
   List<InsumoEstimativaCustoModel> equipe = [];
 
   @observable

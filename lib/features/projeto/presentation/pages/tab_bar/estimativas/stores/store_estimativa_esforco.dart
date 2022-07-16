@@ -1,3 +1,4 @@
+import 'package:estimasoft/core/shared/utils/snackbar.dart';
 import 'package:estimasoft/features/estimativas/domain/entitie/esforco_entitie.dart';
 import 'package:mobx/mobx.dart';
 
@@ -7,6 +8,14 @@ class StoreEstimativaEsforco = StoreEstimativaEsforcoBase
     with _$StoreEstimativaEsforco;
 
 abstract class StoreEstimativaEsforcoBase with Store {
+  @observable
+  String erroProdutividadePropria = "";
+  @observable
+  bool ehValidoProdutovidadePropria = false;
+
+  @observable
+  bool utilizarProdutividadePropria = false;
+
   @observable
   bool isVisualizacao = false;
 
@@ -21,9 +30,6 @@ abstract class StoreEstimativaEsforcoBase with Store {
 
   @observable
   List<EsforcoEntity> esforcos = [];
-
-  @observable
-  bool carregando = false;
 
   final _engenhariaRequisitos = 0.25;
   final _design = 0.1;
@@ -86,43 +92,50 @@ abstract class StoreEstimativaEsforcoBase with Store {
   @action
   adicionarEsforco(context) {
     if (esforcos.isEmpty) {
-      for (var element in contagens) {
-        contagemPF = element.split(" - ").last;
-        String tipoContagem = element.split(" - ").first;
-        validarContagem();
-        validarFasesDesenvolvimento(valorTotalEsforco);
+      if (validarProdutividadeEquipe()) {
+        for (var element in contagens) {
+          contagemPF = element.split(" - ").last;
+          String tipoContagem = element.split(" - ").first;
+          validarContagem();
+          validarFasesDesenvolvimento(valorTotalEsforco);
 
-        EsforcoEntity esforcoEntity = EsforcoEntity(
-            compartilhada: false,
-            contagemPontoDeFuncao: tipoContagem,
-            linguagem: linguagemSelecionada,
-            produtividadeEquipe: produtividadeEquipe,
-            esforcoTotal: valorTotalEsforco.toString());
+          EsforcoEntity esforcoEntity = EsforcoEntity(
+              compartilhada: false,
+              contagemPontoDeFuncao: tipoContagem,
+              linguagem: linguagemSelecionada,
+              produtividadeEquipe: produtividadeEquipe,
+              esforcoTotal: valorTotalEsforco.toString());
 
-        esforcos.add(esforcoEntity);
+          esforcos.add(esforcoEntity);
+        }
+      } else {
+        AlertaSnack.exbirSnackBar(context, "Informe a produtividade da equipe");
       }
     }
 
     tamanhoListaEsforco = esforcos.length;
     alteracores = true;
+  }
 
-    // if (contagemPF.isNotEmpty && !existe) {
-    //   EsforcoEntity esforcoEntity = EsforcoEntity(
-    //       compartilhada: false,
-    //       contagemPontoDeFuncao: contagemPF,
-    //       linguagem: linguagemSelecionada,
-    //       produtividadeEquipe: produtividadeEquipe,
-    //       esforcoTotal: valorTotalEsforco.toString());
+  @action
+  validarProdutividadeEquipe() {
+    if (produtividadeEquipe.split(" - ").last != "0") {
+      erroProdutividadePropria = "";
+      return true;
+    } else if (produtividadeEquipe.split(" - ").last == "0") {
+      erroProdutividadePropria = "Informe um valor maior que zero";
 
-    //   esforcos.add(esforcoEntity);
-    //   tamanhoListaEsforco = esforcos.length;
-    //   alteracores = true;
-    // }
+      return false;
+    }
+
+    return false;
   }
 
   @action
   validarContagem() {
-    if (!contagemPF.contains(" 0 PF")) {
+    if (!contagemPF.contains(" 0 PF") &&
+        produtividadeEquipe.split(" - ").last != "0") {
+      erroProdutividadePropria = "";
       int produtividade = int.parse(produtividadeEquipe.split(" - ").last);
       String text = contagemPF.split(" - ").last;
       int pf = int.parse(text);

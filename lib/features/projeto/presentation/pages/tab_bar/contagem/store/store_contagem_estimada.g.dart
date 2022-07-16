@@ -77,22 +77,6 @@ mixin _$StoreContagemEstimada on StoreContagemEstimadaBase, Store {
     });
   }
 
-  late final _$carregouBotaoAtom =
-      Atom(name: 'StoreContagemEstimadaBase.carregouBotao', context: context);
-
-  @override
-  bool get carregouBotao {
-    _$carregouBotaoAtom.reportRead();
-    return super.carregouBotao;
-  }
-
-  @override
-  set carregouBotao(bool value) {
-    _$carregouBotaoAtom.reportWrite(value, super.carregouBotao, () {
-      super.carregouBotao = value;
-    });
-  }
-
   late final _$alteracoesAtom =
       Atom(name: 'StoreContagemEstimadaBase.alteracoes', context: context);
 
@@ -351,7 +335,6 @@ contagemEstimadaValida: ${contagemEstimadaValida},
 descricao: ${descricao},
 nomeDaFuncaoController: ${nomeDaFuncaoController},
 descricaoController: ${descricaoController},
-carregouBotao: ${carregouBotao},
 alteracoes: ${alteracoes},
 carregou: ${carregou},
 nomeDafuncao: ${nomeDafuncao},

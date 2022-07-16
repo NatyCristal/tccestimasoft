@@ -9,6 +9,60 @@ part of 'store_estimativa_esforco.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$StoreEstimativaEsforco on StoreEstimativaEsforcoBase, Store {
+  late final _$erroProdutividadePropriaAtom = Atom(
+      name: 'StoreEstimativaEsforcoBase.erroProdutividadePropria',
+      context: context);
+
+  @override
+  String get erroProdutividadePropria {
+    _$erroProdutividadePropriaAtom.reportRead();
+    return super.erroProdutividadePropria;
+  }
+
+  @override
+  set erroProdutividadePropria(String value) {
+    _$erroProdutividadePropriaAtom
+        .reportWrite(value, super.erroProdutividadePropria, () {
+      super.erroProdutividadePropria = value;
+    });
+  }
+
+  late final _$ehValidoProdutovidadePropriaAtom = Atom(
+      name: 'StoreEstimativaEsforcoBase.ehValidoProdutovidadePropria',
+      context: context);
+
+  @override
+  bool get ehValidoProdutovidadePropria {
+    _$ehValidoProdutovidadePropriaAtom.reportRead();
+    return super.ehValidoProdutovidadePropria;
+  }
+
+  @override
+  set ehValidoProdutovidadePropria(bool value) {
+    _$ehValidoProdutovidadePropriaAtom
+        .reportWrite(value, super.ehValidoProdutovidadePropria, () {
+      super.ehValidoProdutovidadePropria = value;
+    });
+  }
+
+  late final _$utilizarProdutividadePropriaAtom = Atom(
+      name: 'StoreEstimativaEsforcoBase.utilizarProdutividadePropria',
+      context: context);
+
+  @override
+  bool get utilizarProdutividadePropria {
+    _$utilizarProdutividadePropriaAtom.reportRead();
+    return super.utilizarProdutividadePropria;
+  }
+
+  @override
+  set utilizarProdutividadePropria(bool value) {
+    _$utilizarProdutividadePropriaAtom
+        .reportWrite(value, super.utilizarProdutividadePropria, () {
+      super.utilizarProdutividadePropria = value;
+    });
+  }
+
   late final _$isVisualizacaoAtom =
       Atom(name: 'StoreEstimativaEsforcoBase.isVisualizacao', context: context);
 
@@ -86,22 +140,6 @@ mixin _$StoreEstimativaEsforco on StoreEstimativaEsforcoBase, Store {
   set esforcos(List<EsforcoEntity> value) {
     _$esforcosAtom.reportWrite(value, super.esforcos, () {
       super.esforcos = value;
-    });
-  }
-
-  late final _$carregandoAtom =
-      Atom(name: 'StoreEstimativaEsforcoBase.carregando', context: context);
-
-  @override
-  bool get carregando {
-    _$carregandoAtom.reportRead();
-    return super.carregando;
-  }
-
-  @override
-  set carregando(bool value) {
-    _$carregandoAtom.reportWrite(value, super.carregando, () {
-      super.carregando = value;
     });
   }
 
@@ -338,6 +376,18 @@ mixin _$StoreEstimativaEsforco on StoreEstimativaEsforcoBase, Store {
   }
 
   @override
+  dynamic validarProdutividadeEquipe() {
+    final _$actionInfo =
+        _$StoreEstimativaEsforcoBaseActionController.startAction(
+            name: 'StoreEstimativaEsforcoBase.validarProdutividadeEquipe');
+    try {
+      return super.validarProdutividadeEquipe();
+    } finally {
+      _$StoreEstimativaEsforcoBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic validarContagem() {
     final _$actionInfo = _$StoreEstimativaEsforcoBaseActionController
         .startAction(name: 'StoreEstimativaEsforcoBase.validarContagem');
@@ -363,12 +413,14 @@ mixin _$StoreEstimativaEsforco on StoreEstimativaEsforcoBase, Store {
   @override
   String toString() {
     return '''
+erroProdutividadePropria: ${erroProdutividadePropria},
+ehValidoProdutovidadePropria: ${ehValidoProdutovidadePropria},
+utilizarProdutividadePropria: ${utilizarProdutividadePropria},
 isVisualizacao: ${isVisualizacao},
 esforcosValidos: ${esforcosValidos},
 alteracores: ${alteracores},
 tamanhoListaEsforco: ${tamanhoListaEsforco},
 esforcos: ${esforcos},
-carregando: ${carregando},
 valorEngenhariaRequisitos: ${valorEngenhariaRequisitos},
 valorDesign: ${valorDesign},
 valorImplementacao: ${valorImplementacao},

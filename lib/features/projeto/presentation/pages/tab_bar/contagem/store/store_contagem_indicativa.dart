@@ -29,9 +29,6 @@ abstract class StoreContagemIndicativaBase with Store {
   TextEditingController descricaoController = TextEditingController();
 
   @observable
-  bool carregouBotao = false;
-
-  @observable
   bool alteracoes = false;
 
   @observable

@@ -126,7 +126,7 @@ class ProjetoDrawer extends StatelessWidget {
                 Alert(
                   context: context,
                   type: AlertType.warning,
-                  title: "Deseja deslogar do aplicativo?",
+                  title: "Deseja sair do aplicativo?",
                   style: const AlertStyle(
                     titleStyle: TextStyle(color: corTituloTexto, fontSize: 18),
                   ),

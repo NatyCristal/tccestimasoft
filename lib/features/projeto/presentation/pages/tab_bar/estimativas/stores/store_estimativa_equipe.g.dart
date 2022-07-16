@@ -9,22 +9,6 @@ part of 'store_estimativa_equipe.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$StoreEstimativaEquipe on StoreEstimativaEquipeBase, Store {
-  late final _$carregandoAtom =
-      Atom(name: 'StoreEstimativaEquipeBase.carregando', context: context);
-
-  @override
-  bool get carregando {
-    _$carregandoAtom.reportRead();
-    return super.carregando;
-  }
-
-  @override
-  set carregando(bool value) {
-    _$carregandoAtom.reportWrite(value, super.carregando, () {
-      super.carregando = value;
-    });
-  }
-
   late final _$equipeEstimadaValorAtom = Atom(
       name: 'StoreEstimativaEquipeBase.equipeEstimadaValor', context: context);
 
@@ -241,7 +225,6 @@ mixin _$StoreEstimativaEquipe on StoreEstimativaEquipeBase, Store {
   @override
   String toString() {
     return '''
-carregando: ${carregando},
 equipeEstimadaValor: ${equipeEstimadaValor},
 esforcoSelecionado: ${esforcoSelecionado},
 prazoSelecionado: ${prazoSelecionado},

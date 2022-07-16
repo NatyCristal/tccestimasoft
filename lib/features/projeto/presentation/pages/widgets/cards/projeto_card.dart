@@ -1,3 +1,4 @@
+import 'package:estimasoft/core/auth/usuario_autenticado.dart';
 import 'package:estimasoft/core/shared/utils.dart';
 import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
 import 'package:estimasoft/core/shared/utils/snackbar.dart';
@@ -5,6 +6,7 @@ import 'package:estimasoft/features/projeto/domain/entitie/projeto_entitie.dart'
 import 'package:estimasoft/features/projeto/presentation/projeto_controller.dart';
 import 'package:estimasoft/features/projeto/presentation/store/store_projeto_principal.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
@@ -23,8 +25,8 @@ class ProjetoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onLongPress: () {},
-      onTap: (() =>
-          Modular.to.pushNamed("projeto-informacao", arguments: projeto)),
+      onTap: (() => Modular.to.pushNamed("projeto-informacao",
+          arguments: [projeto, storeProjetos])),
       child: Container(
         padding: paddingPagePrincipal,
         decoration: BoxDecoration(
@@ -71,16 +73,27 @@ class ProjetoCard extends StatelessWidget {
                         buttons: [
                           DialogButton(
                             color: corDeAcao.withOpacity(0.7),
-                            child: const Text(
-                              "SIM",
-                              style: TextStyle(
-                                  fontWeight: Fontes.weightTextoNormal,
-                                  color: corDeTextoBotaoSecundaria,
-                                  fontSize: 14),
-                            ),
+                            child: Observer(builder: (context) {
+                              return storeProjetos.carregandoSairProjetos
+                                  ? const SizedBox(
+                                      height: 20,
+                                      width: 20,
+                                      child: CircularProgressIndicator(
+                                          strokeWidth: 3,
+                                          color: corTituloTexto),
+                                    )
+                                  : const Text(
+                                      "SIM",
+                                      style: TextStyle(
+                                          fontWeight: Fontes.weightTextoNormal,
+                                          color: corDeTextoBotaoSecundaria,
+                                          fontSize: 14),
+                                    );
+                            }),
                             onPressed: () async {
                               if (!storeProjetos.carregandoSairProjetos) {
                                 storeProjetos.carregandoSairProjetos = true;
+
                                 var retorno =
                                     await Modular.get<ProjetoController>()
                                         .sairProjeto(projeto.uidProjeto,
@@ -98,6 +111,7 @@ class ProjetoCard extends StatelessWidget {
                                 AlertaSnack.exbirSnackBar(context, retorno);
                                 Navigator.of(context, rootNavigator: true)
                                     .pop();
+                                storeProjetos.exibirNotificacao = true;
                                 storeProjetos.carregandoSairProjetos = false;
                               }
                             },
@@ -149,7 +163,7 @@ class ProjetoCard extends StatelessWidget {
             Row(
               children: [
                 const Text(
-                  "Criado por: ",
+                  "Administrador: ",
                   style: TextStyle(
                       color: corCorpoTexto,
                       fontSize: tamanhoTextoCorpoTexto,
@@ -158,7 +172,9 @@ class ProjetoCard extends StatelessWidget {
                 SizedBox(
                   width: 200,
                   child: Text(
-                    projeto.nomeAdministrador,
+                    projeto.admin == Modular.get<UsuarioAutenticado>().store.uid
+                        ? "Você"
+                        : projeto.nomeAdministrador,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(

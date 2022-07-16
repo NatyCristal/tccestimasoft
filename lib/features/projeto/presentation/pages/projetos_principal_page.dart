@@ -17,25 +17,34 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 
 import '../../domain/entitie/projeto_entitie.dart';
 
-class ProjetosPrincipalPage extends StatelessWidget {
+class ProjetosPrincipalPage extends StatefulWidget {
   final StoreProjetos store;
+
+  const ProjetosPrincipalPage({Key? key, required this.store})
+      : super(key: key);
+
+  @override
+  State<ProjetosPrincipalPage> createState() => _ProjetosPrincipalPageState();
+}
+
+class _ProjetosPrincipalPageState extends State<ProjetosPrincipalPage> {
   final ProjetoController controller = Modular.get<ProjetoController>();
+
   final ScrollController scroll = ScrollController();
-  ProjetosPrincipalPage({Key? key, required this.store}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    store.carregandoEntrarProjetos = false;
-    store.carregandoCriarPRojetos = false;
+    widget.store.carregandoEntrarProjetos = false;
+    widget.store.carregandoCriarPRojetos = false;
     return Scaffold(
       appBar: DefaultAppBar(
         notificacao: true,
-        store: store,
+        store: widget.store,
         tituloPagina: "EstimaSoft",
       ),
       drawer: Drawer(
         child: ProjetoDrawer(
-          storeProjetos: store,
+          storeProjetos: widget.store,
         ),
       ),
       body: Container(
@@ -45,20 +54,19 @@ class ProjetosPrincipalPage extends StatelessWidget {
         child: Column(
           children: [
             Observer(builder: (context) {
-              return !store.temPesquisa
+              return !widget.store.temPesquisa
                   ? Expanded(
                       child: Observer(builder: (context) {
-                        return store.projetos.isEmpty
+                        return widget.store.projetos.isEmpty
                             ? FutureBuilder(
                                 future: controller.recuperarProjetos(),
                                 builder: (BuildContext context,
                                     AsyncSnapshot<dynamic> snapshot) {
                                   switch (snapshot.connectionState) {
                                     case ConnectionState.done:
-                                      store.exibirNotificacao = controller
-                                          .notificacoesController
-                                          .notificacao
-                                          .notificacaoLida;
+                                      widget.store.exibirNotificacao =
+                                          controller.notificacoesController
+                                              .notificacao.notificacaoLida;
                                       if (snapshot.hasError) {
                                         return const Text("Erro");
                                       } else if (snapshot.hasData) {
@@ -77,15 +85,16 @@ class ProjetosPrincipalPage extends StatelessWidget {
                                             itemCount:
                                                 controller.projetos.length,
                                             itemBuilder: (context, index) {
-                                              store.projetos.isEmpty
-                                                  ? store.projetos.addAll(
-                                                      controller.projetos)
-                                                  : store.projetos;
+                                              widget.store.projetos.isEmpty
+                                                  ? widget.store.projetos
+                                                      .addAll(
+                                                          controller.projetos)
+                                                  : widget.store.projetos;
                                               ProjetoEntitie projeto =
                                                   controller.projetos[index];
 
                                               return ProjetoCard(
-                                                storeProjetos: store,
+                                                storeProjetos: widget.store,
                                                 projeto: projeto,
                                               );
                                             },
@@ -93,13 +102,13 @@ class ProjetosPrincipalPage extends StatelessWidget {
                                         }
                                       }
 
-                                      store.carregou = true;
+                                      widget.store.carregou = true;
                                       break;
                                     case ConnectionState.active:
-                                      store.carregou = true;
+                                      widget.store.carregou = true;
                                       return const Carregando();
                                     case ConnectionState.none:
-                                      store.carregou = true;
+                                      widget.store.carregou = true;
                                       return const Text("Erro");
                                     case ConnectionState.waiting:
                                       return const Carregando();
@@ -116,7 +125,7 @@ class ProjetosPrincipalPage extends StatelessWidget {
                                       controller.projetos[index];
 
                                   return ProjetoCard(
-                                    storeProjetos: store,
+                                    storeProjetos: widget.store,
                                     projeto: projeto,
                                   );
                                 },
@@ -125,8 +134,8 @@ class ProjetosPrincipalPage extends StatelessWidget {
                     )
                   : Expanded(
                       child: ProjetosConteudoPesquisa(
-                          projetosStore: store,
-                          valorPesquisa: store.valorPesquisa,
+                          projetosStore: widget.store,
+                          valorPesquisa: widget.store.valorPesquisa,
                           scroll: scroll),
                     );
             })
@@ -151,7 +160,7 @@ class ProjetosPrincipalPage extends StatelessWidget {
                 Alert(
                   closeFunction: () => {
                     Navigator.of(context, rootNavigator: true).pop(),
-                    store.erroCodEntrarProjeto = "",
+                    widget.store.erroCodEntrarProjeto = "",
                   },
                   context: context,
                   title: "Digite o código do projeto que deseja entrar",
@@ -164,11 +173,12 @@ class ProjetosPrincipalPage extends StatelessWidget {
                         height: 20,
                       ),
                       Observer(builder: (context) {
-                        return store.erroCodEntrarProjeto == ""
+                        return widget.store.erroCodEntrarProjeto == ""
                             ? TextField(
                                 onChanged: (value) {
-                                  store.codEntrarProjeto = value.toString();
-                                  store.validarCodProjeto();
+                                  widget.store.codEntrarProjeto =
+                                      value.toString();
+                                  widget.store.validarCodProjeto();
                                 },
                                 decoration: const InputDecoration(
                                   icon: Icon(Icons.account_tree_rounded),
@@ -177,11 +187,12 @@ class ProjetosPrincipalPage extends StatelessWidget {
                               )
                             : TextField(
                                 onChanged: (value) {
-                                  store.codEntrarProjeto = value.toString();
-                                  store.validarCodProjeto();
+                                  widget.store.codEntrarProjeto =
+                                      value.toString();
+                                  widget.store.validarCodProjeto();
                                 },
                                 decoration: InputDecoration(
-                                  errorText: store.erroCodEntrarProjeto,
+                                  errorText: widget.store.erroCodEntrarProjeto,
                                   icon: const Icon(Icons.account_tree_rounded),
                                   labelText: 'Código Projeto',
                                 ),
@@ -193,7 +204,7 @@ class ProjetosPrincipalPage extends StatelessWidget {
                     DialogButton(
                       color: corDeAcao.withOpacity(0.7),
                       child: Observer(builder: (context) {
-                        return store.carregandoEntrarProjetos
+                        return widget.store.carregandoEntrarProjetos
                             ? const SizedBox(
                                 height: 20,
                                 width: 20,
@@ -209,14 +220,16 @@ class ProjetosPrincipalPage extends StatelessWidget {
                               );
                       }),
                       onPressed: () async {
-                        if (store.validarCodProjeto() &&
-                            !store.carregandoEntrarProjetos) {
-                          store.carregandoEntrarProjetos = true;
+                        if (widget.store.validarCodProjeto() &&
+                            !widget.store.carregandoEntrarProjetos) {
+                          widget.store.carregandoEntrarProjetos = true;
                           var resultado = await controller
-                              .entrarProjetos(store.codEntrarProjeto);
+                              .entrarProjetos(widget.store.codEntrarProjeto);
                           Navigator.of(context, rootNavigator: true).pop();
                           AlertaSnack.exbirSnackBar(context, resultado);
-                          store.carregandoEntrarProjetos = false;
+                          widget.store.exibirNotificacao = true;
+                          widget.store.carregandoEntrarProjetos = false;
+                          setState(() {});
                         }
                       },
                       width: 120,
@@ -233,7 +246,7 @@ class ProjetosPrincipalPage extends StatelessWidget {
                       ),
                       onPressed: () => {
                         Navigator.of(context, rootNavigator: true).pop(),
-                        store.nomeProjetoErro = "",
+                        widget.store.nomeProjetoErro = "",
                       },
                       width: 120,
                     )
@@ -249,7 +262,7 @@ class ProjetosPrincipalPage extends StatelessWidget {
                 Alert(
                   closeFunction: () => {
                     Navigator.of(context, rootNavigator: true).pop(),
-                    store.nomeProjetoErro = "",
+                    widget.store.nomeProjetoErro = "",
                   },
                   context: context,
                   title: "Dê um nome para o projeto",
@@ -262,11 +275,11 @@ class ProjetosPrincipalPage extends StatelessWidget {
                         height: 20,
                       ),
                       Observer(builder: (context) {
-                        return store.nomeProjetoErro == ""
+                        return widget.store.nomeProjetoErro == ""
                             ? TextField(
                                 onChanged: (value) {
-                                  store.nomeProjeto = value.toString();
-                                  store.validarNomeProjeto();
+                                  widget.store.nomeProjeto = value.toString();
+                                  widget.store.validarNomeProjeto();
                                 },
                                 decoration: const InputDecoration(
                                   icon: Icon(Icons.account_tree_rounded),
@@ -275,11 +288,11 @@ class ProjetosPrincipalPage extends StatelessWidget {
                               )
                             : TextField(
                                 onChanged: (value) {
-                                  store.nomeProjeto = value.toString();
-                                  store.validarNomeProjeto();
+                                  widget.store.nomeProjeto = value.toString();
+                                  widget.store.validarNomeProjeto();
                                 },
                                 decoration: InputDecoration(
-                                  errorText: store.nomeProjetoErro,
+                                  errorText: widget.store.nomeProjetoErro,
                                   icon: const Icon(Icons.account_tree_rounded),
                                   labelText: 'Nome',
                                 ),
@@ -291,7 +304,7 @@ class ProjetosPrincipalPage extends StatelessWidget {
                     DialogButton(
                       color: corDeAcao.withOpacity(0.7),
                       child: Observer(builder: (context) {
-                        return store.carregandoCriarPRojetos
+                        return widget.store.carregandoCriarPRojetos
                             ? const SizedBox(
                                 height: 20,
                                 width: 20,
@@ -307,15 +320,16 @@ class ProjetosPrincipalPage extends StatelessWidget {
                               );
                       }),
                       onPressed: () async {
-                        if (store.validarNomeProjeto() &&
-                            !store.carregandoCriarPRojetos) {
-                          store.carregandoCriarPRojetos = true;
-                          var resultado =
-                              await controller.criarProjeto(store.nomeProjeto);
+                        if (widget.store.validarNomeProjeto() &&
+                            !widget.store.carregandoCriarPRojetos) {
+                          widget.store.carregandoCriarPRojetos = true;
+                          var resultado = await controller
+                              .criarProjeto(widget.store.nomeProjeto);
                           Navigator.of(context, rootNavigator: true).pop();
                           AlertaSnack.exbirSnackBar(context, resultado);
-                          store.exibirNotificacao = true;
-                          store.carregandoCriarPRojetos = false;
+                          widget.store.exibirNotificacao = true;
+                          widget.store.carregandoCriarPRojetos = false;
+                          setState(() {});
                         }
                       },
                       width: 120,
@@ -332,7 +346,7 @@ class ProjetosPrincipalPage extends StatelessWidget {
                       ),
                       onPressed: () => {
                         Navigator.of(context, rootNavigator: true).pop(),
-                        store.nomeProjetoErro = "",
+                        widget.store.nomeProjetoErro = "",
                       },
                       width: 120,
                     )

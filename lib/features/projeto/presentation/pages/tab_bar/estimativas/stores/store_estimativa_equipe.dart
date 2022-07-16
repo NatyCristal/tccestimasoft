@@ -37,8 +37,6 @@ abstract class StoreEstimativaEquipeBase with Store {
   ];
 
   @observable
-  bool carregando = false;
-  @observable
   double equipeEstimadaValor = 0.00;
   @observable
   String esforcoSelecionado = "";

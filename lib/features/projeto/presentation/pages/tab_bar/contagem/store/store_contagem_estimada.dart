@@ -33,9 +33,6 @@ abstract class StoreContagemEstimadaBase with Store {
   TextEditingController descricaoController = TextEditingController();
 
   @observable
-  bool carregouBotao = false;
-
-  @observable
   bool alteracoes = false;
 
   @observable
