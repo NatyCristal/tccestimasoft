@@ -54,12 +54,14 @@ class _InformacoesInstrucoesPageState extends State<InformacoesInstrucoesPage> {
                             SharedPreferences prefs =
                                 await SharedPreferences.getInstance();
 
-                            if (prefs.getBool('naoExibirNovamente')!) {
+                            if (prefs.getBool('naoExibirNovamente') == true) {
                               Modular.to.canPop();
+                            } else {
+                              prefs.setBool('naoExibirNovamente', true);
+                              Modular.to.pushNamedAndRemoveUntil(
+                                  "/projeto/exibicao-projetos",
+                                  (Route<dynamic> route) => false);
                             }
-                            Modular.to.pushNamedAndRemoveUntil(
-                                "/projeto/exibicao-projetos",
-                                (Route<dynamic> route) => false);
                           },
                           child: const Text(
                             "Não exibir novamente",
@@ -128,12 +130,14 @@ class _InformacoesInstrucoesPageState extends State<InformacoesInstrucoesPage> {
                             SharedPreferences prefs =
                                 await SharedPreferences.getInstance();
 
-                            if (prefs.getBool('naoExibirNovamente')!) {
+                            if (prefs.getBool('naoExibirNovamente') == true) {
                               Modular.to.canPop();
+                            } else {
+                              prefs.setBool('naoExibirNovamente', true);
+                              Modular.to.pushNamedAndRemoveUntil(
+                                  "/projeto/exibicao-projetos",
+                                  (Route<dynamic> route) => false);
                             }
-                            Modular.to.pushNamedAndRemoveUntil(
-                                "/projeto/exibicao-projetos",
-                                (Route<dynamic> route) => false);
                           },
                           child: const Text(
                             "Não exibir novamente",
@@ -199,12 +203,14 @@ class _InformacoesInstrucoesPageState extends State<InformacoesInstrucoesPage> {
                             SharedPreferences prefs =
                                 await SharedPreferences.getInstance();
 
-                            if (prefs.getBool('naoExibirNovamente')!) {
+                            if (prefs.getBool('naoExibirNovamente') == true) {
                               Modular.to.canPop();
+                            } else {
+                              prefs.setBool('naoExibirNovamente', true);
+                              Modular.to.pushNamedAndRemoveUntil(
+                                  "/projeto/exibicao-projetos",
+                                  (Route<dynamic> route) => false);
                             }
-                            Modular.to.pushNamedAndRemoveUntil(
-                                "/projeto/exibicao-projetos",
-                                (Route<dynamic> route) => false);
                           },
                           child: const Text(
                             "Não exibir novamente",
@@ -294,12 +300,14 @@ class _InformacoesInstrucoesPageState extends State<InformacoesInstrucoesPage> {
                             SharedPreferences prefs =
                                 await SharedPreferences.getInstance();
 
-                            if (prefs.getBool('naoExibirNovamente')!) {
+                            if (prefs.getBool('naoExibirNovamente') == true) {
                               Modular.to.canPop();
+                            } else {
+                              prefs.setBool('naoExibirNovamente', true);
+                              Modular.to.pushNamedAndRemoveUntil(
+                                  "/projeto/exibicao-projetos",
+                                  (Route<dynamic> route) => false);
                             }
-                            Modular.to.pushNamedAndRemoveUntil(
-                                "/projeto/exibicao-projetos",
-                                (Route<dynamic> route) => false);
                           },
                           child: const Text(
                             "Não exibir novamente",
@@ -405,12 +413,14 @@ class _InformacoesInstrucoesPageState extends State<InformacoesInstrucoesPage> {
                             SharedPreferences prefs =
                                 await SharedPreferences.getInstance();
 
-                            if (prefs.getBool('naoExibirNovamente')!) {
+                            if (prefs.getBool('naoExibirNovamente') == true) {
                               Modular.to.canPop();
+                            } else {
+                              prefs.setBool('naoExibirNovamente', true);
+                              Modular.to.pushNamedAndRemoveUntil(
+                                  "/projeto/exibicao-projetos",
+                                  (Route<dynamic> route) => false);
                             }
-                            Modular.to.pushNamedAndRemoveUntil(
-                                "/projeto/exibicao-projetos",
-                                (Route<dynamic> route) => false);
                           },
                           child: const Text(
                             "Não exibir novamente",

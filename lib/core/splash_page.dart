@@ -25,11 +25,12 @@ class _SplashPageState extends State<SplashPage> {
           prefs.setBool('naoExibirNovamente', false);
         }
 
-        if (prefs.getBool('naoExibirNovamente')!) {
+        if (prefs.getBool('naoExibirNovamente') == true) {
           Modular.to.pushNamedAndRemoveUntil(
               "/projeto/exibicao-projetos", (Route<dynamic> route) => false);
         } else {
-          Modular.to.pushReplacementNamed('/projeto/');
+          Modular.to.pushNamedAndRemoveUntil(
+              "/projeto/", (Route<dynamic> route) => false);
         }
       }
     });
