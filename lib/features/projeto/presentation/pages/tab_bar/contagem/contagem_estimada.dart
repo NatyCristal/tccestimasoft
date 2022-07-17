@@ -306,6 +306,7 @@ class ContagemEstimada extends StatelessWidget {
 
                         return store.contagemEstimadaValida.totalPF > 0
                             ? CardAdicaoContagem(
+                                ehIndicativa: false,
                                 ehExibicao: true,
                                 descricao: descricao,
                                 complexidade: "Média",
@@ -320,6 +321,7 @@ class ContagemEstimada extends StatelessWidget {
                                 pontosDeFuncao: 4,
                               )
                             : CardAdicaoContagem(
+                                ehIndicativa: false,
                                 descricao: descricao,
                                 complexidade: "Média",
                                 editar: () =>
@@ -362,6 +364,7 @@ class ContagemEstimada extends StatelessWidget {
 
                       return store.contagemEstimadaValida.totalPF > 0
                           ? CardAdicaoContagem(
+                              ehIndicativa: false,
                               ehExibicao: true,
                               descricao: descricao,
                               complexidade: "Média",
@@ -374,6 +377,7 @@ class ContagemEstimada extends StatelessWidget {
                               pontosDeFuncao: 4,
                             )
                           : CardAdicaoContagem(
+                              ehIndicativa: false,
                               descricao: descricao,
                               complexidade: "Média",
                               editar: () =>
@@ -413,6 +417,7 @@ class ContagemEstimada extends StatelessWidget {
 
                       return store.contagemEstimadaValida.totalPF > 0
                           ? CardAdicaoContagem(
+                              ehIndicativa: false,
                               ehExibicao: true,
                               descricao: descricao,
                               complexidade: "Média",
@@ -425,6 +430,7 @@ class ContagemEstimada extends StatelessWidget {
                               pontosDeFuncao: 5,
                             )
                           : CardAdicaoContagem(
+                              ehIndicativa: false,
                               descricao: descricao,
                               complexidade: "Média",
                               editar: () =>

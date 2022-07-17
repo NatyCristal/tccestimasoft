@@ -265,6 +265,7 @@ class ContagemIndicativa extends StatelessWidget {
                                               .totalPf >
                                           0
                                       ? CardAdicaoContagem(
+                                          ehIndicativa: true,
                                           ehExibicao: true,
                                           descricao: descricao,
                                           editar: () {
@@ -280,6 +281,7 @@ class ContagemIndicativa extends StatelessWidget {
                                           pontosDeFuncao: 35,
                                         )
                                       : CardAdicaoContagem(
+                                          ehIndicativa: true,
                                           descricao: descricao,
                                           editar: () {
                                             store.editar(
@@ -323,6 +325,7 @@ class ContagemIndicativa extends StatelessWidget {
                                     store.aies[index].nomeFuncao;
                                 String descricao = store.aies[index].descricao;
                                 return CardAdicaoContagem(
+                                  ehIndicativa: true,
                                   descricao: descricao,
                                   editar: () {
                                     store.editar(nomeFuncao, "AIE", descricao);
