@@ -118,11 +118,16 @@ class _ProjetoMenuPageState extends State<ProjetoMenuPage>
                         ],
                         backgroundColor: Colors.transparent,
                         elevation: 0,
-                        title: Text(
-                          widget.projeto.nomeProjeto,
-                          style: const TextStyle(
-                              fontSize: tamanhoSubtitulo,
-                              color: corTituloTexto),
+                        title: Column(
+                          children: [
+                            Text(
+                              widget.projeto.nomeProjeto,
+                              maxLines: 3,
+                              style: const TextStyle(
+                                  fontSize: tamanhoSubtitulo,
+                                  color: corTituloTexto),
+                            ),
+                          ],
                         ),
                         shape: const Border(
                           bottom: BorderSide(color: corDeLinhaAppBar, width: 1),
@@ -147,6 +152,7 @@ class _ProjetoMenuPageState extends State<ProjetoMenuPage>
                         elevation: 0,
                         title: Text(
                           widget.projeto.nomeProjeto,
+                          maxLines: 3,
                           style: const TextStyle(
                               fontSize: tamanhoSubtitulo,
                               color: corTituloTexto),

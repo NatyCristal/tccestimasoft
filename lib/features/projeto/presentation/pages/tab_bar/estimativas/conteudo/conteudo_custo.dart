@@ -30,39 +30,5 @@ class ConteudoCusto extends StatelessWidget {
         return CardCustoEstimativa(custoEntity: custoEntity, store: custo);
       },
     );
-
-    // return FutureBuilder(
-    //   future: controller.recuperarEstimativa(projetoEntitie.uidProjeto,
-    //       Modular.get<UsuarioAutenticado>().store.uid, "Custo"),
-    //   builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-    //     switch (snapshot.connectionState) {
-    //       case ConnectionState.done:
-    //         if (snapshot.hasData) {
-    //           custo.custosValidos = controller.estimativasController.custos;
-
-    //           return ListView.builder(
-    //             controller: scrollController,
-    //             shrinkWrap: true,
-    //             itemCount: custo.custos.length,
-    //             itemBuilder: (context, index) {
-    //               CustoEntity custoEntity = custo.custos[index];
-
-    //               return CardCustoEstimativa(
-    //                   custoEntity: custoEntity, store: custo);
-    //             },
-    //           );
-    //         }
-
-    //         break;
-    //       case ConnectionState.active:
-    //         return const Carregando();
-    //       case ConnectionState.none:
-    //         return const Text("Erro");
-    //       case ConnectionState.waiting:
-    //         return const Carregando();
-    //     }
-    //     return const SizedBox();
-    //   },
-    // );
   }
 }

@@ -233,7 +233,7 @@ class ContagemDetalhada extends StatelessWidget {
           Observer(builder: (context) {
             return storeContagemDetalhada.alteracoes
                 ? const Text(
-                    "Salve as alterações!",
+                    "Clique em continuar!",
                     style: TextStyle(
                       color: Colors.red,
                       fontWeight: Fontes.weightTextoNormal,
@@ -243,27 +243,6 @@ class ContagemDetalhada extends StatelessWidget {
                     height: 20,
                   );
           }),
-          // Observer(builder: (context) {
-          //   return BotaoPadrao(
-          //       corDeTextoBotao: corTextoSobCorPrimaria,
-          //       acao: () async {
-          //         if (storeContagemDetalhada.validar(context)) {
-          //           storeContagemDetalhada.carregando = true;
-          //           var retorno = await controller.salvarContagemDetalhada(
-          //               storeContagemDetalhada.contagemDetalhadaEntitie,
-          //               projetoUid);
-
-          //           storeContagemDetalhada.salvar(
-          //               controller.contagemController.contagemDetalhada);
-          //           storeContagemDetalhada.carregando = false;
-          //           storeContagemDetalhada.alteracoes = false;
-          //           AlertaSnack.exbirSnackBar(context, retorno);
-          //         }
-          //       },
-          //       tituloBotao: "Salvar",
-          //       corBotao: corDeFundoBotaoPrimaria,
-          //       carregando: storeContagemDetalhada.carregando);
-          // }),
         ],
       ),
     );

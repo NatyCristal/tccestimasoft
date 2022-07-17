@@ -190,7 +190,6 @@ class ProjetoFirebaseDatasource extends ProjetoDatasource {
           await usuarioDatasource
               .removerProjetoUsuario(uidUsuario, uidProjeto)
               .then((value) async {
-            // await firestore.collection("Projetos").doc(uidProjeto).delete();
             await usuarioDatasource.removerProjetoUsuario(
                 uidUsuario, uidProjeto);
             await excluirDadosUsuario(uidProjeto, uidUsuario);

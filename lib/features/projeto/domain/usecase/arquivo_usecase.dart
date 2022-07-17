@@ -37,26 +37,4 @@ class ArquivoUsecase {
   Future removerArquivos(String uidProjeto, String nomeArquivo) async {
     return await repository.removerArquivo(uidProjeto, nomeArquivo);
   }
-
-  // Future<Either<Falha, String>> realizarDownloadArquivo(
-  //     String uidProjeto, String nomeArquivo) async {
-  //   var result = await repository.realizarLoginArquivo(uidProjeto, nomeArquivo);
-
-  //   var erro = "";
-
-  //   result.fold((l) {
-  //     erro = l.mensagem;
-  //   }, (r) {});
-
-  //   if (result.isLeft()) {
-  //     switch (erro) {
-  //       default:
-  //         return Left(
-  //           ErroProjeto(mensagem: "Algo de errado aconteceu!"),
-  //         );
-  //     }
-  //   }
-
-  //   return result;
-  // }
 }

@@ -59,7 +59,6 @@ class InputPadrao extends StatelessWidget {
                   ? GestureDetector(
                       onTap: () => acaoClicarIcone(),
                       child: Container(
-                          //margin: const EdgeInsets.only(right: 3),
                           decoration: BoxDecoration(
                             borderRadius: arredondamentoBordas,
                             color: corDeFundoIcone,

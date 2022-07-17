@@ -56,26 +56,6 @@ class CardEquipeEstimativa extends StatelessWidget {
                   ),
                 ],
               ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.end,
-              //   children: [
-              //     const SizedBox(
-              //       width: 20,
-              //     ),
-              //     // GestureDetector(
-              //     //   onTap: () {
-              //     //     store.remover(equipeEntity);
-              //     //   },
-              //     //   child: SizedBox(
-              //     //     width: 50,
-              //     //     child: Icon(
-              //     //       Icons.delete,
-              //     //       color: corDeAcao.withOpacity(0.8),
-              //     //     ),
-              //     //   ),
-              //     // )
-              //   ],
-              // ),
             ],
           ),
         ],

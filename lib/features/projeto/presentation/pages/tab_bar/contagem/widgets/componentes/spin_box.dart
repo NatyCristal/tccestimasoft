@@ -107,8 +107,6 @@ class SpinBox extends StatelessWidget {
                     onPressed: () {
                       valueController.text =
                           (int.parse(valueController.text) + 1).toString();
-                      //   valor = (int.parse(valueController.text) + 1).toString();
-                      // valorAlterado = int.parse(valueController.text);
 
                       if (ehQuantidadeTd) {
                         indiceDetalhada.quantidadeTDs =

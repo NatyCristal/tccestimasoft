@@ -203,7 +203,7 @@ class ContagemIndicativa extends StatelessWidget {
                                 height: 20,
                               ),
                               Text(
-                                "Salve as alterações!",
+                                "Clique em continuar!",
                                 style: TextStyle(
                                   color: Colors.red,
                                   fontWeight: Fontes.weightTextoNormal,
@@ -340,39 +340,6 @@ class ContagemIndicativa extends StatelessWidget {
                     const SizedBox(
                       height: 20,
                     ),
-                    // Observer(builder: (context) {
-                    //   return BotaoPadrao(
-                    //       corDeTextoBotao: corTextoSobCorPrimaria,
-                    //       acao: () async {
-                    //         if (store.alteracoes) {
-                    //           store.carregouBotao = true;
-                    //           var retorno = await controller.salvarContagem(
-                    //             "Indicativa",
-                    //             store.alis,
-                    //             store.aies,
-                    //             [],
-                    //             [],
-                    //             [],
-                    //             projetoUid,
-                    //             store.totalPf,
-                    //           );
-
-                    //           store.salvar(controller
-                    //               .contagemController.contagemIndicativa);
-
-                    //           store.carregouBotao = false;
-                    //           store.alteracoes = false;
-
-                    //           AlertaSnack.exbirSnackBar(context, retorno);
-                    //         } else {
-                    //           AlertaSnack.exbirSnackBar(
-                    //               context, "Não existem novas alterações!");
-                    //         }
-                    //       },
-                    //       tituloBotao: "Salvar",
-                    //       corBotao: corDeFundoBotaoPrimaria,
-                    //       carregando: store.carregouBotao);
-                    // }),
                   ],
                 );
         }),

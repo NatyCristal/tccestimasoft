@@ -154,15 +154,6 @@ class _EstimativaEsforcoPageState extends State<EstimativaEsforcoPage> {
               return CheckboxListTile(
                   value: widget
                       .storeEstimativaEsforco.utilizarProdutividadePropria,
-                  // subtitle: Observer(builder: (context) {
-                  //   return widget.storeEstimativaEsforco
-                  //               .utilizarProdutividadePropria &&
-                  //           widget.storeEstimativaEsforco.produtividadeEquipe !=
-                  //               ""
-                  //       ? Text(
-                  //           widget.storeEstimativaEsforco.produtividadeEquipe)
-                  //       : const SizedBox();
-                  // }),
                   title: const Text("Informar a própria produtividade equipe?"),
                   onChanged: (value) {
                     if (value == false) {
@@ -283,7 +274,7 @@ class _EstimativaEsforcoPageState extends State<EstimativaEsforcoPage> {
               child: Observer(builder: (context) {
                 return widget.storeEstimativaEsforco.alteracores
                     ? const Text(
-                        "Continue para salvar!",
+                        "Clique em continuar!",
                         style: TextStyle(
                             color: Colors.red,
                             fontWeight: Fontes.weightTextoNormal),

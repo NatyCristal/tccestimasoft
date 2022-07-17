@@ -202,7 +202,7 @@ class ContagemEstimada extends StatelessWidget {
                       height: 20,
                     ),
                     Text(
-                      "Continue para salvar!",
+                      "Clique em continuar!",
                       style: TextStyle(
                         color: Colors.red,
                         fontWeight: Fontes.weightTextoNormal,
@@ -441,41 +441,8 @@ class ContagemEstimada extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          // Observer(builder: (context) {
-          //   return BotaoPadrao(
-          //       corDeTextoBotao: corTextoSobCorPrimaria,
-          //       acao: () async {
-          //         if (store.alteracoes) {
-          //           store.carregouBotao = true;
-          //           var retorno = await controller.salvarContagem(
-          //             "Estimada",
-          //             storeIndicativa.contagemIndicativaValida.aie,
-          //             storeIndicativa.contagemIndicativaValida.ali,
-          //             store.ce,
-          //             store.ee,
-          //             store.se,
-          //             projetoUid,
-          //             store.totalPf +
-          //                 storeIndicativa.contagemIndicativaValida.aie.length *
-          //                     7 +
-          //                 storeIndicativa.contagemIndicativaValida.ali.length *
-          //                     7,
-          //           );
-
-          //           store
-          //               .salvar(controller.contagemController.contagemEstimada);
-          //           store.alteracoes = false;
-          //           store.carregouBotao = false;
-          //           AlertaSnack.exbirSnackBar(context, retorno);
-          //         }
-          //       },
-          //       tituloBotao: "Salvar",
-          //       corBotao: corDeFundoBotaoPrimaria,
-          //       carregando: store.carregouBotao);
-          // }),
         ],
       ),
-      //  }),
     );
   }
 }

@@ -9,8 +9,6 @@ Future<void> main() async {
 
   await Firebase.initializeApp();
   runApp(ModularApp(module: AppModule(), child: const MyApp()));
-
-  //runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

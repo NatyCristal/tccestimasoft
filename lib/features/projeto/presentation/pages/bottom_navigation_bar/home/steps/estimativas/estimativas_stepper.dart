@@ -94,6 +94,7 @@ class _EstimativasStepperPageState extends State<EstimativasStepperPage> {
         elevation: 0,
         title: Text(
           widget.projeto.nomeProjeto,
+          maxLines: 3,
           style: const TextStyle(
             fontSize: tamanhoSubtitulo,
             color: corTituloTexto,
@@ -248,6 +249,7 @@ class _EstimativasStepperPageState extends State<EstimativasStepperPage> {
       case 3:
         if (widget.storeEstimativaCusto.custos.isNotEmpty &&
             widget.storeEstimativaCusto.alteracao) {
+          widget.storeProjetosIndexMenu.carregando = true;
           for (var element in widget.storeEstimativaCusto.custos) {
             await Modular.get<ProjetoController>().salvarCusto(
                 element,
@@ -265,6 +267,7 @@ class _EstimativasStepperPageState extends State<EstimativasStepperPage> {
           AlertaSnack.exbirSnackBar(context, "Custo salvo com sucesso!");
           widget.storeEstimativaCusto.isVisualizacao = true;
           isValid = true;
+          widget.storeProjetosIndexMenu.carregando = false;
         } else {
           AlertaSnack.exbirSnackBar(
               context, "Adicione um custo para continuar.");

@@ -39,10 +39,6 @@ class CardCustoEstimativa extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  // Text(
-                  //   "Disp. Equipe:  ${custoEntity.disponibilidadeEquipe} HH",
-                  //   style: const TextStyle(color: corCorpoTexto),
-                  // ),
                   Text(
                     "Custo Total Mensal: ${Formatadores.formatadorMonetario(custoEntity.custoTotalMensal)}",
                     style: const TextStyle(color: corCorpoTexto),
@@ -82,26 +78,6 @@ class CardCustoEstimativa extends StatelessWidget {
                   )
                 ],
               ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.end,
-              //   children: [
-              //     const SizedBox(
-              //       width: 20,
-              //     ),
-              //     GestureDetector(
-              //       onTap: () {
-              //         store.remover(custoEntity);
-              //       },
-              //       child: SizedBox(
-              //         width: 50,
-              //         child: Icon(
-              //           Icons.delete,
-              //           color: corDeAcao.withOpacity(0.8),
-              //         ),
-              //       ),
-              //     )
-              //   ],
-              // ),
             ],
           ),
         ],

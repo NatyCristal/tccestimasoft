@@ -34,11 +34,10 @@ class ProjetoCard extends StatelessWidget {
               opacity: 0.3,
               image: AssetImage("assets/projeto3.png"),
             ),
-            color: corBackground
-                .withOpacity(0.4), // const Color(0XFFD8DCDF).withOpacity(0.3),
+            color: corBackground.withOpacity(0.4),
             borderRadius: arredondamentoBordas),
         margin: const EdgeInsets.all(5),
-        height: 100,
+
         // width: 150,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,7 +49,7 @@ class ProjetoCard extends StatelessWidget {
                   width: 160,
                   child: Text(
                     projeto.nomeProjeto,
-                    maxLines: 1,
+                    maxLines: 3,
                     style: const TextStyle(
                       color: corTituloTexto,
                       fontWeight: Fontes.weightTextoNormal,

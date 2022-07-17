@@ -221,7 +221,6 @@ abstract class StoreEstimativaCustoBase with Store {
       tamanhoCustos = custosVariaveis.length;
       validarValorTotalProjeto();
       AlertaSnack.exbirSnackBar(context, "Custo adicionado");
-      //   calcularCustoHora();
     }
   }
 

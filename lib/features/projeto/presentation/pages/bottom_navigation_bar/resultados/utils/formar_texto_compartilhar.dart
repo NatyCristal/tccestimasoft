@@ -192,7 +192,6 @@ class FormarTextoCompartilhar {
         colums6.join("\n") +
         "\n\n\t6. Distribuição do custo, esforço e prazo por etapa\n\n" +
         linhaColuna.join() +
-        // columns7.toString() +
         "\n\t7. Orçamento do projeto para o cliente\n\n" +
         colum8.join();
 
@@ -354,76 +353,6 @@ class FormarTextoCompartilhar {
           "Etapa: Homologação\nPercentual: 5%\nR\$/Etapa: ${Formatadores.formatadorMonetario((custoDetalhado.valorTotalProjeto * 0.05).toStringAsFixed(2))}\nEsforço(horas)/Etapa: ${(double.parse(esforcoDetalhada.esforcoTotal) * 0.05).toStringAsFixed(2)}\nDias/Etapa: ${((prazoDetalhado.prazoTotal * 0.05)).roundToDouble().toStringAsFixed(2)}\n"
           "Etapa: Implantação\nPercentual: 5%\nR\$/Etapa: ${Formatadores.formatadorMonetario((custoDetalhado.valorTotalProjeto * 0.05).toStringAsFixed(2))}\nEsforço(horas)/Etapa: ${(double.parse(esforcoDetalhada.esforcoTotal) * 0.05).toStringAsFixed(2)}\nDias/Etapa: ${((prazoDetalhado.prazoTotal * 0.05)).roundToDouble().toStringAsFixed(2)}\n"
     ];
-
-    // final columns7 = dolumnify(
-    //   [
-    //     [
-    //       'Etapa',
-    //       'Percentual',
-    //       'R\$/Etapa',
-    //       'Esforço(horas)/Etapa',
-    //       'Dias/Etapa',
-    //     ],
-    //     [
-    //       "Requisitos",
-    //       "25%",
-    //       Formatadores.formatadorMonetario(
-    //           (custoDetalhado.valorTotalProjeto * 0.25).toStringAsFixed(2)),
-    //       (double.parse(esforcoDetalhada.esforcoTotal) * 0.25)
-    //           .toStringAsFixed(2),
-    //       (prazoDetalhado.prazoTotal * 0.25).toStringAsFixed(2)
-    //     ],
-    //     [
-    //       "Design",
-    //       "10%",
-    //       Formatadores.formatadorMonetario(
-    //           (custoDetalhado.valorTotalProjeto * 0.10).toStringAsFixed(2)),
-    //       (double.parse(esforcoDetalhada.esforcoTotal) * 0.10)
-    //           .toStringAsFixed(2),
-    //       (prazoDetalhado.prazoTotal * 0.10).toStringAsFixed(2)
-    //     ],
-    //     [
-    //       "Codificação",
-    //       "40%",
-    //       Formatadores.formatadorMonetario(
-    //           (custoDetalhado.valorTotalProjeto * 0.40).toStringAsFixed(2)),
-    //       (double.parse(esforcoDetalhada.esforcoTotal) * 0.40)
-    //           .toStringAsFixed(2),
-    //       (prazoDetalhado.prazoTotal * 0.40).toStringAsFixed(2)
-    //     ],
-    //     [
-    //       "Testes",
-    //       "15%",
-    //       Formatadores.formatadorMonetario(
-    //           (custoDetalhado.valorTotalProjeto * 0.15).toStringAsFixed(2)),
-    //       (double.parse(esforcoDetalhada.esforcoTotal) * 0.15)
-    //           .toStringAsFixed(2),
-    //       (prazoDetalhado.prazoTotal * 0.15).toStringAsFixed(2)
-    //     ],
-    //     [
-    //       "Homologação",
-    //       "5%",
-    //       Formatadores.formatadorMonetario(
-    //           (custoDetalhado.valorTotalProjeto * 0.05).toStringAsFixed(2)),
-    //       (double.parse(esforcoDetalhada.esforcoTotal) * 0.05)
-    //           .toStringAsFixed(2),
-    //       (prazoDetalhado.prazoTotal * 0.050).toStringAsFixed(2)
-    //     ],
-    //     [
-    //       "Implantação",
-    //       "5%",
-    //       Formatadores.formatadorMonetario(
-    //           (custoDetalhado.valorTotalProjeto * 0.05).toStringAsFixed(2)),
-    //       (double.parse(esforcoDetalhada.esforcoTotal) * 0.05)
-    //           .toStringAsFixed(2),
-    //       (prazoDetalhado.prazoTotal * 0.050).toStringAsFixed(2)
-    //     ]
-    //   ],
-    //   columnSplitter: ' | ',
-    //   headerIncluded: true,
-    //   headerSeparator: '=',
-    // );
-
     final colum8 = dolumnify(
       [
         [
@@ -627,74 +556,6 @@ class FormarTextoCompartilhar {
           "Etapa: Homologação\nPercentual: 5%\nR\$/Etapa: ${Formatadores.formatadorMonetario((custoDetalhado.valorTotalProjeto * 0.05).toStringAsFixed(2))}\nEsforço(horas)/Etapa: ${(double.parse(esforcoDetalhada.esforcoTotal) * 0.05).toStringAsFixed(2)}\nDias/Etapa: ${((prazoDetalhado.prazoTotal * 0.05)).roundToDouble().toStringAsFixed(2)}\n"
           "Etapa: Implantação\nPercentual: 5%\nR\$/Etapa: ${Formatadores.formatadorMonetario((custoDetalhado.valorTotalProjeto * 0.05).toStringAsFixed(2))}\nEsforço(horas)/Etapa: ${(double.parse(esforcoDetalhada.esforcoTotal) * 0.05).toStringAsFixed(2)}\nDias/Etapa: ${((prazoDetalhado.prazoTotal * 0.05)).roundToDouble().toStringAsFixed(2)}\n"
     ];
-    // final columns7 = dolumnify(
-    //   [
-    //     [
-    //       'Etapa',
-    //       'Percentual',
-    //       'R\$/Etapa',
-    //       'Esforço(horas)/Etapa',
-    //       'Dias/Etapa',
-    //     ],
-    //     [
-    //       "Requisitos",
-    //       "25%",
-    //       Formatadores.formatadorMonetario(
-    //           (custoDetalhado.valorTotalProjeto * 0.25).toStringAsFixed(2)),
-    //       (double.parse(esforcoDetalhada.esforcoTotal) * 0.25)
-    //           .toStringAsFixed(2),
-    //       (prazoDetalhado.prazoTotal * 0.25).toStringAsFixed(2)
-    //     ],
-    //     [
-    //       "Design",
-    //       "10%",
-    //       Formatadores.formatadorMonetario(
-    //           (custoDetalhado.valorTotalProjeto * 0.10).toStringAsFixed(2)),
-    //       (double.parse(esforcoDetalhada.esforcoTotal) * 0.10)
-    //           .toStringAsFixed(2),
-    //       (prazoDetalhado.prazoTotal * 0.10).toStringAsFixed(2)
-    //     ],
-    //     [
-    //       "Codificação",
-    //       "40%",
-    //       Formatadores.formatadorMonetario(
-    //           (custoDetalhado.valorTotalProjeto * 0.40).toStringAsFixed(2)),
-    //       (double.parse(esforcoDetalhada.esforcoTotal) * 0.40)
-    //           .toStringAsFixed(2),
-    //       (prazoDetalhado.prazoTotal * 0.40).toStringAsFixed(2)
-    //     ],
-    //     [
-    //       "Testes",
-    //       "15%",
-    //       Formatadores.formatadorMonetario(
-    //           (custoDetalhado.valorTotalProjeto * 0.15).toStringAsFixed(2)),
-    //       (double.parse(esforcoDetalhada.esforcoTotal) * 0.15)
-    //           .toStringAsFixed(2),
-    //       (prazoDetalhado.prazoTotal * 0.15).toStringAsFixed(2)
-    //     ],
-    //     [
-    //       "Homologação",
-    //       "5%",
-    //       Formatadores.formatadorMonetario(
-    //           (custoDetalhado.valorTotalProjeto * 0.05).toStringAsFixed(2)),
-    //       (double.parse(esforcoDetalhada.esforcoTotal) * 0.05)
-    //           .toStringAsFixed(2),
-    //       (prazoDetalhado.prazoTotal * 0.050).toStringAsFixed(2)
-    //     ],
-    //     [
-    //       "Implantação",
-    //       "5%",
-    //       Formatadores.formatadorMonetario(
-    //           (custoDetalhado.valorTotalProjeto * 0.05).toStringAsFixed(2)),
-    //       (double.parse(esforcoDetalhada.esforcoTotal) * 0.05)
-    //           .toStringAsFixed(2),
-    //       (prazoDetalhado.prazoTotal * 0.050).toStringAsFixed(2)
-    //     ]
-    //   ],
-    //   columnSplitter: ' | ',
-    //   headerIncluded: true,
-    //   headerSeparator: '=',
-    // );
 
     final colum8 = dolumnify(
       [
@@ -926,75 +787,6 @@ class FormarTextoCompartilhar {
           "Etapa: Homologação\nPercentual: 5%\nR\$/Etapa: ${Formatadores.formatadorMonetario((custoDetalhado.valorTotalProjeto * 0.05).toStringAsFixed(2))}\nEsforço(horas)/Etapa: ${(double.parse(esforcoDetalhada.esforcoTotal) * 0.05).toStringAsFixed(2)}\nDias/Etapa: ${((prazoDetalhado.prazoTotal * 0.05)).roundToDouble().toStringAsFixed(2)}\n"
           "Etapa: Implantação\nPercentual: 5%\nR\$/Etapa: ${Formatadores.formatadorMonetario((custoDetalhado.valorTotalProjeto * 0.05).toStringAsFixed(2))}\nEsforço(horas)/Etapa: ${(double.parse(esforcoDetalhada.esforcoTotal) * 0.05).toStringAsFixed(2)}\nDias/Etapa: ${((prazoDetalhado.prazoTotal * 0.05)).roundToDouble().toStringAsFixed(2)}\n"
     ];
-
-    // final columns7 = dolumnify(
-    //   [
-    //     [
-    //       'Etapa',
-    //       'Percentual',
-    //       'R\$/Etapa',
-    //       'Esforço(horas)/Etapa',
-    //       'Dias/Etapa',
-    //     ],
-    //     [
-    //       "Requisitos",
-    //       "25%",
-    //       Formatadores.formatadorMonetario(
-    //           (custoDetalhado.valorTotalProjeto * 0.25).toStringAsFixed(2)),
-    //       (double.parse(esforcoDetalhada.esforcoTotal) * 0.25)
-    //           .toStringAsFixed(2),
-    //       (prazoDetalhado.prazoTotal * 0.25).toStringAsFixed(2)
-    //     ],
-    //     [
-    //       "Design",
-    //       "10%",
-    //       Formatadores.formatadorMonetario(
-    //           (custoDetalhado.valorTotalProjeto * 0.10).toStringAsFixed(2)),
-    //       (double.parse(esforcoDetalhada.esforcoTotal) * 0.10)
-    //           .toStringAsFixed(2),
-    //       (prazoDetalhado.prazoTotal * 0.10).toStringAsFixed(2)
-    //     ],
-    //     [
-    //       "Codificação",
-    //       "40%",
-    //       Formatadores.formatadorMonetario(
-    //           (custoDetalhado.valorTotalProjeto * 0.40).toStringAsFixed(2)),
-    //       (double.parse(esforcoDetalhada.esforcoTotal) * 0.40)
-    //           .toStringAsFixed(2),
-    //       (prazoDetalhado.prazoTotal * 0.40).toStringAsFixed(2)
-    //     ],
-    //     [
-    //       "Testes",
-    //       "15%",
-    //       Formatadores.formatadorMonetario(
-    //           (custoDetalhado.valorTotalProjeto * 0.15).toStringAsFixed(2)),
-    //       (double.parse(esforcoDetalhada.esforcoTotal) * 0.15)
-    //           .toStringAsFixed(2),
-    //       (prazoDetalhado.prazoTotal * 0.15).toStringAsFixed(2)
-    //     ],
-    //     [
-    //       "Homologação",
-    //       "5%",
-    //       Formatadores.formatadorMonetario(
-    //           (custoDetalhado.valorTotalProjeto * 0.05).toStringAsFixed(2)),
-    //       (double.parse(esforcoDetalhada.esforcoTotal) * 0.05)
-    //           .toStringAsFixed(2),
-    //       (prazoDetalhado.prazoTotal * 0.050).toStringAsFixed(2)
-    //     ],
-    //     [
-    //       "Implantação",
-    //       "5%",
-    //       Formatadores.formatadorMonetario(
-    //           (custoDetalhado.valorTotalProjeto * 0.05).toStringAsFixed(2)),
-    //       (double.parse(esforcoDetalhada.esforcoTotal) * 0.05)
-    //           .toStringAsFixed(2),
-    //       (prazoDetalhado.prazoTotal * 0.050).toStringAsFixed(2)
-    //     ]
-    //   ],
-    //   columnSplitter: ' | ',
-    //   headerIncluded: true,
-    //   headerSeparator: '=',
-    // );
 
     final colum8 = dolumnify(
       [

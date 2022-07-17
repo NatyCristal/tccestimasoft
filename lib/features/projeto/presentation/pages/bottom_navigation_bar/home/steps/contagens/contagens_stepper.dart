@@ -72,6 +72,7 @@ class _ContagensStepperState extends State<ContagensStepper> {
         elevation: 0,
         title: Text(
           widget.projeto.nomeProjeto,
+          maxLines: 3,
           style: const TextStyle(
             fontSize: tamanhoSubtitulo,
             color: corTituloTexto,

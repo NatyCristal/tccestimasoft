@@ -61,81 +61,6 @@ class EstimativaEquipePage extends StatelessWidget {
           children: [
             if (!storeEstimativaEquipe.isVisualizacao)
               const Text("Escolha a produção diária"),
-            // Observer(builder: (context) {
-            //   return DropdownSearch<String>(
-            //     mode: Mode.MENU,
-            //     showSelectedItems: true,
-            //     items: storeEstimativaEquipe.menuEsforco,
-            //     dropdownSearchDecoration: const InputDecoration(
-            //       labelText: "Esforço",
-            //     ),
-            //     popupItemDisabled: (String s) {
-            //       bool temIgual = false;
-
-            //       temIgual = s.contains(' 0 ');
-
-            //       for (var element in storeEstimativaEquipe.equipes) {
-            //         if (s.contains(element.esforco.split(" - ").last)) {
-            //           temIgual = true;
-            //         }
-            //       }
-
-            //       if (!s.contains(storeEstimativaEquipe.prazoSelecionado
-            //           .split(" - ")
-            //           .last)) {
-            //         temIgual = true;
-            //       }
-
-            //       return temIgual;
-            //     },
-            //     onChanged: (value) {
-            //       storeEstimativaEquipe.esforcoSelecionado = value.toString();
-            //       storeEstimativaEquipe.estimarEquipe();
-            //     },
-            //     emptyBuilder: (context, searchEntry) => const Center(
-            //         child: Text('Cadastre um esforço para continuar.',
-            //             style: TextStyle(color: Colors.blue))),
-            //   );
-            // }),
-            // const SizedBox(
-            //   height: 20,
-            // ),
-            // DropdownSearch<String>(
-            //   mode: Mode.MENU,
-            //   showSelectedItems: true,
-            //   items: storeEstimativaEquipe.menuPrazo,
-            //   dropdownSearchDecoration: const InputDecoration(
-            //     labelText: "Prazo",
-            //   ),
-            //   popupItemDisabled: (String s) {
-            //     bool temIgual = false;
-
-            //     temIgual = s.contains(' 0 ');
-            //     for (var element in storeEstimativaEquipe.equipes) {
-            //       if (s.contains(element.prazo) &&
-            //           !s.contains(storeEstimativaEquipe.esforcoSelecionado
-            //               .split(" - ")
-            //               .last)) {
-            //         temIgual = true;
-            //       }
-            //     }
-
-            //     if (!s.contains(storeEstimativaEquipe.esforcoSelecionado
-            //         .split(" - ")
-            //         .last)) {
-            //       temIgual = true;
-            //     }
-
-            //     return temIgual;
-            //   },
-            //   onChanged: (value) {
-            //     storeEstimativaEquipe.prazoSelecionado = value.toString();
-            //     storeEstimativaEquipe.estimarEquipe();
-            //   },
-            //   emptyBuilder: (context, searchEntry) => const Center(
-            //       child: Text('Cadastre um prazo para continuar.',
-            //           style: TextStyle(color: Colors.blue))),
-            // ),
             if (!storeEstimativaEquipe.isVisualizacao)
               const SizedBox(
                 height: 20,
@@ -160,24 +85,6 @@ class EstimativaEquipePage extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-            // Container(
-            //   alignment: Alignment.center,
-            //   height: 30,
-            //   decoration: BoxDecoration(
-            //       color: Colors.blue.withOpacity(0.2),
-            //       borderRadius: arredondamentoBordas),
-            //   padding: const EdgeInsets.symmetric(horizontal: 10),
-            //   width: TamanhoTela.width(context, 1),
-            //   child: Observer(builder: (context) {
-            //     return Text(
-            //       "Equipe Estimada ${storeEstimativaEquipe.equipeEstimadaValor.toStringAsFixed(2)} Recursos",
-            //       style: const TextStyle(
-            //           color: corCorpoTexto,
-            //           fontSize: tamanhoSubtitulo,
-            //           fontWeight: Fontes.weightTextoNormal),
-            //     );
-            //   }),
-            // ),
             if (!storeEstimativaEquipe.isVisualizacao)
               const SizedBox(
                 height: 15,
@@ -207,7 +114,6 @@ class EstimativaEquipePage extends StatelessWidget {
                     )
                   : const SizedBox();
             }),
-
             Observer(builder: (context) {
               return storeEstimativaEquipe.tamanhoEquipe > 0 &&
                       !storeEstimativaEquipe.isVisualizacao
@@ -237,7 +143,7 @@ class EstimativaEquipePage extends StatelessWidget {
                   ? const Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        "Continue para salvar",
+                        "Clique em continuar!",
                         style: TextStyle(
                             color: Colors.red,
                             fontWeight: Fontes.weightTextoNormal),
@@ -245,40 +151,6 @@ class EstimativaEquipePage extends StatelessWidget {
                     )
                   : const SizedBox();
             }),
-            // Observer(builder: (context) {
-            //   return BotaoPadrao(
-            //       corDeTextoBotao: corTextoSobCorPrimaria,
-            //       acao: () async {
-            //         if (storeEstimativaEquipe.equipes.isNotEmpty &&
-            //             storeEstimativaEquipe.alteracao) {
-            //           storeEstimativaEquipe.carregando = true;
-
-            //           for (var element in storeEstimativaEquipe.equipes) {
-            //             await controller.salvarEquipe(
-            //                 element,
-            //                 projetoEntitie.uidProjeto,
-            //                 Modular.get<UsuarioAutenticado>().store.uid,
-            //                 element.esforco.split(" - ").last);
-            //           }
-            //           storeEstimativaEquipe.equipesValidas = await controller
-            //               .estimativasController
-            //               .recuperarEquipe(
-            //             projetoEntitie.uidProjeto,
-            //             Modular.get<UsuarioAutenticado>().store.uid,
-            //           );
-
-            //           storeEstimativaEquipe.alteracao = false;
-            //           storeEstimativaEquipe.carregando = false;
-            //           AlertaSnack.exbirSnackBar(context, "Equipe salva!");
-            //         } else {
-            //           AlertaSnack.exbirSnackBar(context,
-            //               "Adicione uma estimativa de esforço para salvar.");
-            //         }
-            //       },
-            //       tituloBotao: "Salvar",
-            //       corBotao: corDeFundoBotaoPrimaria,
-            //       carregando: storeEstimativaEquipe.carregando);
-            // })
           ],
         ),
       ),

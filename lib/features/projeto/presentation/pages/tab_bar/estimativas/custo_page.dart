@@ -57,151 +57,6 @@ class EstimativaCustoPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Observer(builder: (context) {
-              //   return DropdownSearch<String>(
-              //     mode: Mode.MENU,
-              //     showSelectedItems: true,
-              //     items: [
-              //       "Indicativa - ${storeContagemIndicativa.contagemIndicativaValida.totalPf.toString()} PF",
-              //       "Estimada - ${storeContagemEstimada.contagemEstimadaValida.totalPF.toString()} PF",
-              //       "Detalhada - ${storeContagemDetalhada.contagemDetalhadaValida.totalPf.toString()} PF",
-              //     ],
-              //     dropdownSearchDecoration: const InputDecoration(
-              //       labelText: "Contagem de ponto de função",
-              //     ),
-              //     popupItemDisabled: (String s) {
-              //       bool temIgual = false;
-
-              //       temIgual = s.contains(' 0 ');
-
-              //       for (var element in storeEstimativaCusto.custos) {
-              //         if (s.contains(element.tipoContagem)) {
-              //           temIgual = true;
-              //         }
-              //       }
-
-              //       return temIgual;
-              //     },
-              //     onChanged: (value) {
-              //       storeEstimativaCusto.quantidadePFSelecionada = int.parse(
-              //           value
-              //               .toString()
-              //               .split(" - ")
-              //               .last
-              //               .replaceAll(" PF", ""));
-
-              //       storeEstimativaCusto.tipoContagem = value.toString();
-              //       storeEstimativaCusto.validarValorTotalProjeto();
-              //     },
-              //   );
-              // }),
-              // Observer(builder: (context) {
-              //   return DropdownSearch<String>(
-              //     mode: Mode.MENU,
-              //     showSelectedItems: true,
-              //     items: storeEstimativaCusto.exibirEsforcos(
-              //         Modular.get<ProjetoController>()
-              //             .estimativasController
-              //             .esforcos),
-              //     dropdownSearchDecoration: const InputDecoration(
-              //       labelText: "Esforço",
-              //     ),
-              //     popupItemDisabled: (String s) {
-              //       bool temIgual = false;
-
-              //       temIgual = s.contains(' 0 ');
-
-              //       for (var element in storeEstimativaCusto.custos) {
-              //         if (s.contains(element.tipoContagem)) {
-              //           temIgual = true;
-              //         }
-              //       }
-
-              //       if (!s.contains(
-              //           storeEstimativaCusto.tipoContagem.split(" - ").first)) {
-              //         temIgual = true;
-              //       }
-
-              //       return temIgual;
-              //     },
-              //     onChanged: (value) {
-              //       for (var element
-              //           in storeEstimativaEsforco.esforcosValidos) {
-              //         if (element.esforcoTotal ==
-              //             value.toString().split(" HH ").first) {
-              //           storeEstimativaCusto.esforcoEntitySelecionado = element;
-              //         }
-              //       }
-
-              //       double prazoFinal = 0;
-              //       for (var element in storeEstimativaPrazo.prazosValidos) {
-              //         if (element.contagemPontoDeFuncao
-              //             .split(" - ")
-              //             .first
-              //             .contains(storeEstimativaCusto.tipoContagem
-              //                 .split(" - ")
-              //                 .first)) {
-              //           prazoFinal = element.prazoTotal;
-              //         }
-              //       }
-
-              //       storeEstimativaCusto.prazo = prazoFinal / 30;
-              //       storeEstimativaCusto.validarValorTotalProjeto();
-              //     },
-              //     emptyBuilder: (context, searchEntry) => const Center(
-              //         child: Text('Cadastre um esforço para continuar.',
-              //             style: TextStyle(color: Colors.blue))),
-              //   );
-              // }),
-              // Observer(builder: (context) {
-              //   return DropdownSearch<String>(
-              //     mode: Mode.MENU,
-              //     showSelectedItems: true,
-              //     items: storeEstimativaCusto.exibirEquipe(
-              //       Modular.get<ProjetoController>()
-              //           .estimativasController
-              //           .equipe,
-              //     ),
-              //     dropdownSearchDecoration: const InputDecoration(
-              //       labelText: "Equipe",
-              //     ),
-              //     popupItemDisabled: (String s) {
-              //       bool temIgual = false;
-
-              //       temIgual = s.contains(' 0 ');
-
-              //       for (var element in storeEstimativaCusto.custos) {
-              //         if (s.contains(element.tipoContagem)) {
-              //           temIgual = true;
-              //         }
-              //       }
-
-              //       if (!s.contains(
-              //           storeEstimativaCusto.tipoContagem.split(" - ").first)) {
-              //         temIgual = true;
-              //       }
-
-              //       return temIgual;
-              //     },
-              //     onChanged: (value) {
-              //       for (var element in storeEstimativaEquipe.equipesValidas) {
-              //         if (element.equipeEstimada ==
-              //             value.toString().split(" HH ").first) {
-              //           storeEstimativaCusto.equipeEntitySelecionado = element;
-
-              //           //  storeEstimativaCusto.calcularDisponibiliadeEquipe();
-              //           storeEstimativaCusto.validarValorTotalProjeto();
-              //         }
-              //       }
-              //     },
-              //     emptyBuilder: (context, searchEntry) => const Center(
-              //         child: Text('Cadastre uma equipe para continuar.',
-              //             style: TextStyle(color: Colors.blue))),
-              //   );
-              // }),
-              // const SizedBox(
-              //   height: 20,
-              // ),
               if (!storeEstimativaCusto.isVisualizacao)
                 CardMembros(
                   storeEstimativaCusto: storeEstimativaCusto,
@@ -259,13 +114,9 @@ class EstimativaCustoPage extends StatelessWidget {
                               equipe: storeEstimativaCusto.equipe,
                               custosVariaisFixos:
                                   storeEstimativaCusto.custosVariaveis,
-                              //disponibilidadeEquipe: storeEstimativaCusto
-                              //   .disponibilidadeEquipe
-                              //    .toStringAsFixed(2),
                               custoTotalMensal: storeEstimativaCusto
                                   .custoTotalMensal
                                   .toStringAsFixed(2),
-                              // custoHora: storeEstimativaCusto.custoHora,
                               porcentagemLucro: storeEstimativaCusto
                                   .porcentagemLucro
                                   .toString(),
@@ -294,7 +145,6 @@ class EstimativaCustoPage extends StatelessWidget {
                   projetoEntitie: projetoEntitie,
                 );
               }),
-
               Observer(builder: (context) {
                 return storeEstimativaCusto.tamanhoListaCustos > 0 &&
                         !storeEstimativaCusto.isVisualizacao
@@ -322,50 +172,13 @@ class EstimativaCustoPage extends StatelessWidget {
               Observer(builder: (context) {
                 return storeEstimativaCusto.alteracao
                     ? const Text(
-                        "Continue para salvar!",
+                        "Clique em continuar!",
                         style: TextStyle(
                             color: Colors.red,
                             fontWeight: Fontes.weightTextoNormal),
                       )
                     : const SizedBox();
               }),
-              // Observer(builder: (context) {
-              //   return BotaoPadrao(
-              //       corDeTextoBotao: corTextoSobCorPrimaria,
-              //       acao: () async {
-              //         if (storeEstimativaCusto.custos.isNotEmpty &&
-              //             storeEstimativaCusto.alteracao) {
-              //           storeEstimativaCusto.carregando = true;
-              //           for (var element in storeEstimativaCusto.custos) {
-              //             await Modular.get<ProjetoController>().salvarCusto(
-              //                 element,
-              //                 projetoEntitie.uidProjeto,
-              //                 Modular.get<UsuarioAutenticado>().store.uid,
-              //                 storeEstimativaCusto.tipoContagem
-              //                     .split(" - ")
-              //                     .first);
-              //           }
-              //           storeEstimativaCusto.custosValidos =
-              //               await Modular.get<ProjetoController>()
-              //                   .estimativasController
-              //                   .recuperarCusto(
-              //                       projetoEntitie.uidProjeto,
-              //                       Modular.get<UsuarioAutenticado>()
-              //                           .store
-              //                           .uid);
-              //           storeEstimativaCusto.alteracao = false;
-              //           storeEstimativaCusto.carregando = false;
-              //           AlertaSnack.exbirSnackBar(
-              //               context, "Custo salvo com sucesso!");
-              //         } else {
-              //           AlertaSnack.exbirSnackBar(context,
-              //               "Não existem alterações para serem salvas!");
-              //         }
-              //       },
-              //       tituloBotao: "Salvar",
-              //       corBotao: corDeFundoBotaoPrimaria,
-              //       carregando: storeEstimativaCusto.carregando);
-              // })
             ],
           ),
         ),

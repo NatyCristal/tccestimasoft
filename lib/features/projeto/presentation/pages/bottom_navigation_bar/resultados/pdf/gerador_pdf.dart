@@ -448,16 +448,6 @@ class GeradorPdf {
       6: const pw.FixedColumnWidth(240),
     };
 
-    // Map<int, pw.FixedColumnWidth> mapTabela2 = {
-    //   0: const pw.FixedColumnWidth(100),
-    //   1: const pw.FixedColumnWidth(200),
-    //   2: const pw.FixedColumnWidth(250),
-    //   3: const pw.FixedColumnWidth(120),
-    //   4: const pw.FixedColumnWidth(120),
-    //   5: const pw.FixedColumnWidth(160),
-    //   6: const pw.FixedColumnWidth(240),
-    // };
-
     Map<int, pw.FixedColumnWidth> mapTabela3 = {};
     Map<int, pw.FixedColumnWidth> mapTabela4 = {};
 
@@ -480,21 +470,6 @@ class GeradorPdf {
             "Contribuição total das funções de dados: ",
             _storeIndicativa.contagemIndicativaValida.totalPf.toString() +
                 " PF"),
-        // ConstrutorPdf.subtitulo('1.2. Funções Transacionais'),
-        // ConstrutorPdf.tabela([
-        //   'Tipo',
-        //   'Função',
-        //   'Descrição',
-        //   '# ARs ',
-        //   '# TDs',
-        //   'Complex.',
-        //   'Comtribuição',
-        // ], _dadosFuncaoTransacional, mapTabela2),
-        // ConstrutorPdf.totalTabela(
-        //     "Contribuição total das funções transacionais: ",
-        //     _storeDetalhada.contagemDetalhadaValida.totalFuncaoTransacional
-        //             .toString() +
-        //         " PF"),
         ConstrutorPdf.subtitulo(
             "1.2. Pontos de Função não ajustados (brutos)'"),
         ConstrutorPdf.linhaComun(

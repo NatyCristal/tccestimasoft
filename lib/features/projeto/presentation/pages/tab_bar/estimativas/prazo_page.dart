@@ -70,52 +70,6 @@ class EstimativaPrazoPage extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-            // Observer(builder: (context) {
-            //   return Container(
-            //     padding: const EdgeInsets.all(10),
-            //     decoration: BoxDecoration(
-            //       borderRadius: arredondamentoBordas,
-            //       color: Colors.blue.withOpacity(0.2),
-            //     ),
-            //     child: Column(
-            //       children: [
-            //         Row(
-            //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //           children: [
-            //             const Text(
-            //               "Prazo Total",
-            //               style: TextStyle(
-            //                   color: corCorpoTexto,
-            //                   fontWeight: Fontes.weightTextoNormal),
-            //             ),
-            //             Text("${store.valorTotalEmDias} dias",
-            //                 style: const TextStyle(
-            //                     color: corCorpoTexto,
-            //                     fontWeight: Fontes.weightTextoNormal)),
-            //           ],
-            //         ),
-            //         const SizedBox(
-            //           height: 20,
-            //         ),
-            //         Row(
-            //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //           children: [
-            //             const Text(
-            //               "Prazo mínimo (região do impossível)",
-            //               style: TextStyle(
-            //                   color: corCorpoTexto,
-            //                   fontWeight: Fontes.weightTextoNormal),
-            //             ),
-            //             Text("${store.valorEmDiasReagiaoDoImpossivel} dias",
-            //                 style: const TextStyle(
-            //                     color: corCorpoTexto,
-            //                     fontWeight: Fontes.weightTextoNormal)),
-            //           ],
-            //         ),
-            //       ],
-            //     ),
-            //   );
-            // }),
             if (!store.isVisualizacao)
               const SizedBox(
                 height: 20,
@@ -145,7 +99,6 @@ class EstimativaPrazoPage extends StatelessWidget {
                 storeEstimativaPrazo: store,
               );
             }),
-
             Observer(builder: (context) {
               return store.tamanhoListaPrazo > 0 && !store.isVisualizacao
                   ? Align(
@@ -173,7 +126,7 @@ class EstimativaPrazoPage extends StatelessWidget {
                   ? const Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        "Salve as alterações!",
+                        "Clique em continuar!",
                         style: TextStyle(
                             color: Colors.red,
                             fontWeight: Fontes.weightTextoNormal),
@@ -181,38 +134,6 @@ class EstimativaPrazoPage extends StatelessWidget {
                     )
                   : const SizedBox();
             }),
-            // Observer(builder: (context) {
-            //   return BotaoPadrao(
-            //       corDeTextoBotao: corDeTextoBotaoPrimaria,
-            //       acao: () async {
-            //         if (store.prazos.isNotEmpty) {
-            //           store.carregando = true;
-
-            //           for (var element in store.prazos) {
-            //             await controller.salvarPrazp(
-            //                 element,
-            //                 projetoEntitie.uidProjeto,
-            //                 Modular.get<UsuarioAutenticado>().store.uid,
-            //                 element.contagemPontoDeFuncao.split(" - ").first);
-            //           }
-            //           store.prazosValidos = await controller
-            //               .estimativasController
-            //               .recuperarPrazos(projetoEntitie.uidProjeto,
-            //                   Modular.get<UsuarioAutenticado>().store.uid);
-            //           controller.estimativasController.prazos;
-
-            //           store.alteracao = false;
-            //           store.carregando = false;
-            //           AlertaSnack.exbirSnackBar(context, "Prazo salvo!");
-            //         } else {
-            //           AlertaSnack.exbirSnackBar(context,
-            //               "Adicione uma estimativa de prazo para salvar.");
-            //         }
-            //       },
-            //       tituloBotao: "Salvar",
-            //       corBotao: corDeFundoBotaoPrimaria,
-            //       carregando: store.carregando);
-            // }),
           ],
         ),
       ),

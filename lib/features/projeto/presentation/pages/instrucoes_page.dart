@@ -3,6 +3,7 @@ import 'package:estimasoft/core/shared/utils/cores_fontes.dart';
 import 'package:estimasoft/core/shared/utils/tamanho_tela.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class InformacoesInstrucoesPage extends StatefulWidget {
@@ -43,9 +44,32 @@ class _InformacoesInstrucoesPageState extends State<InformacoesInstrucoesPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                          // style: ButtonStyle(
+                          //     backgroundColor: MaterialStateProperty.all(
+                          //         corDeAcao.withOpacity(0.1))),
+                          onPressed: () async {
+                            SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+
+                            if (prefs.getBool('naoExibirNovamente')!) {
+                              Modular.to.canPop();
+                            }
+                            Modular.to.pushNamedAndRemoveUntil(
+                                "/projeto/exibicao-projetos",
+                                (Route<dynamic> route) => false);
+                          },
+                          child: const Text(
+                            "Não exibir novamente",
+                            style: TextStyle(color: corDeAcao),
+                          ),
+                        ),
+                      ),
                       Container(
                         alignment: Alignment.topCenter,
-                        height: 350,
+                        height: 320,
                         width: double.infinity,
                         decoration: const BoxDecoration(
                             image: DecorationImage(
@@ -94,6 +118,29 @@ class _InformacoesInstrucoesPageState extends State<InformacoesInstrucoesPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                          // style: ButtonStyle(
+                          //     backgroundColor: MaterialStateProperty.all(
+                          //         corDeAcao.withOpacity(0.1))),
+                          onPressed: () async {
+                            SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+
+                            if (prefs.getBool('naoExibirNovamente')!) {
+                              Modular.to.canPop();
+                            }
+                            Modular.to.pushNamedAndRemoveUntil(
+                                "/projeto/exibicao-projetos",
+                                (Route<dynamic> route) => false);
+                          },
+                          child: const Text(
+                            "Não exibir novamente",
+                            style: TextStyle(color: corDeAcao),
+                          ),
+                        ),
+                      ),
                       const Text(
                         "Procedimento de contagem de Pontos de função",
                         style: TextStyle(
@@ -101,7 +148,7 @@ class _InformacoesInstrucoesPageState extends State<InformacoesInstrucoesPage> {
                       ),
                       Container(
                         alignment: Alignment.topCenter,
-                        height: 350,
+                        height: 320,
                         width: double.infinity,
                         decoration: const BoxDecoration(
                             image: DecorationImage(
@@ -142,6 +189,29 @@ class _InformacoesInstrucoesPageState extends State<InformacoesInstrucoesPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                          // style: ButtonStyle(
+                          //     backgroundColor: MaterialStateProperty.all(
+                          //         corDeAcao.withOpacity(0.1))),
+                          onPressed: () async {
+                            SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+
+                            if (prefs.getBool('naoExibirNovamente')!) {
+                              Modular.to.canPop();
+                            }
+                            Modular.to.pushNamedAndRemoveUntil(
+                                "/projeto/exibicao-projetos",
+                                (Route<dynamic> route) => false);
+                          },
+                          child: const Text(
+                            "Não exibir novamente",
+                            style: TextStyle(color: corDeAcao),
+                          ),
+                        ),
+                      ),
                       const Text(
                         "Funções de dados",
                         style: TextStyle(
@@ -149,7 +219,7 @@ class _InformacoesInstrucoesPageState extends State<InformacoesInstrucoesPage> {
                       ),
                       Container(
                         alignment: Alignment.topCenter,
-                        height: 350,
+                        height: 320,
                         width: double.infinity,
                         decoration: const BoxDecoration(
                             image: DecorationImage(
@@ -214,6 +284,29 @@ class _InformacoesInstrucoesPageState extends State<InformacoesInstrucoesPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                          // style: ButtonStyle(
+                          //     backgroundColor: MaterialStateProperty.all(
+                          //         corDeAcao.withOpacity(0.1))),
+                          onPressed: () async {
+                            SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+
+                            if (prefs.getBool('naoExibirNovamente')!) {
+                              Modular.to.canPop();
+                            }
+                            Modular.to.pushNamedAndRemoveUntil(
+                                "/projeto/exibicao-projetos",
+                                (Route<dynamic> route) => false);
+                          },
+                          child: const Text(
+                            "Não exibir novamente",
+                            style: TextStyle(color: corDeAcao),
+                          ),
+                        ),
+                      ),
                       const Text(
                         "Função Transacional",
                         style: TextStyle(
@@ -302,6 +395,29 @@ class _InformacoesInstrucoesPageState extends State<InformacoesInstrucoesPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                          // style: ButtonStyle(
+                          //     backgroundColor: MaterialStateProperty.all(
+                          //         corDeAcao.withOpacity(0.1))),
+                          onPressed: () async {
+                            SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+
+                            if (prefs.getBool('naoExibirNovamente')!) {
+                              Modular.to.canPop();
+                            }
+                            Modular.to.pushNamedAndRemoveUntil(
+                                "/projeto/exibicao-projetos",
+                                (Route<dynamic> route) => false);
+                          },
+                          child: const Text(
+                            "Não exibir novamente",
+                            style: TextStyle(color: corDeAcao),
+                          ),
+                        ),
+                      ),
                       const Text(
                         "Contagens",
                         style: TextStyle(

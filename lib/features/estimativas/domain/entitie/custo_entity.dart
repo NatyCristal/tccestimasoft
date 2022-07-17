@@ -10,9 +10,7 @@ class CustoEntity {
   List<InsumoEstimativaCustoModel> custosVariaisFixos;
   double custoBasico;
 
-  //String disponibilidadeEquipe;
   String custoTotalMensal;
-  // double custoHora;
   String custoPF;
   String porcentagemLucro;
   double custoTotalProjeto;
@@ -27,9 +25,7 @@ class CustoEntity {
     required this.tipoContagem,
     required this.equipe,
     required this.custosVariaisFixos,
-    //required this.disponibilidadeEquipe,
     required this.custoTotalMensal,
-    // required this.custoHora,
     required this.porcentagemLucro,
     required this.custoTotalProjeto,
     required this.valorTotalProjeto,

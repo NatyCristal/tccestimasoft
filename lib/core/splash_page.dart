@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'auth/usuario_autenticado.dart';
 
 class SplashPage extends StatefulWidget {
@@ -14,12 +15,22 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 3)).then((_) {
+    Future.delayed(const Duration(seconds: 3)).then((_) async {
       final usuarioAutenticado = Modular.get<UsuarioAutenticado>();
       if (usuarioAutenticado.store.uid == "") {
         Modular.to.pushReplacementNamed('/login/');
       } else {
-        Modular.to.pushReplacementNamed('/projeto/');
+        final prefs = await SharedPreferences.getInstance();
+        if (prefs.getBool('naoExibirNovamente') == null) {
+          prefs.setBool('naoExibirNovamente', false);
+        }
+
+        if (prefs.getBool('naoExibirNovamente')!) {
+          Modular.to.pushNamedAndRemoveUntil(
+              "/projeto/exibicao-projetos", (Route<dynamic> route) => false);
+        } else {
+          Modular.to.pushReplacementNamed('/projeto/');
+        }
       }
     });
   }

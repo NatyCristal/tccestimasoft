@@ -25,23 +25,6 @@ class CardCustosGerais extends StatelessWidget {
         const SizedBox(
           height: 20,
         ),
-        // Row(
-        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //   children: [
-        //     const Text(
-        //       "Disponibilidade equipe",
-        //       style: TextStyle(
-        //           color: corCorpoTexto, fontWeight: Fontes.weightTextoNormal),
-        //     ),
-        //     Observer(builder: (context) {
-        //       return Text(
-        //         "${storeEstimativaCusto.disponibilidadeEquipe.toString()} Homem Hora",
-        //         style: const TextStyle(
-        //             color: corCorpoTexto, fontWeight: Fontes.weightTextoNormal),
-        //       );
-        //     }),
-        //   ],
-        // ),
         const SizedBox(
           height: 5,
         ),
@@ -72,28 +55,9 @@ class CardCustosGerais extends StatelessWidget {
         const SizedBox(
           height: 5,
         ),
-        // Row(
-        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //   children: [
-        //     const Text(
-        //       "Custo da hora",
-        //       style: TextStyle(
-        //           color: corCorpoTexto, fontWeight: Fontes.weightTextoNormal),
-        //     ),
-        //     Observer(builder: (context) {
-        //       return Text(
-        //         Formatadores.formatadorMonetario(
-        //             storeEstimativaCusto.custoHora.toStringAsFixed(2)),
-        //         style: const TextStyle(
-        //             color: corCorpoTexto, fontWeight: Fontes.weightTextoNormal),
-        //       );
-        //     }),
-        //   ],
-        // ),
         const SizedBox(
           height: 5,
         ),
-
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -126,25 +90,6 @@ class CardCustosGerais extends StatelessWidget {
             )
           ],
         ),
-
-        // Row(
-        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //   children: [
-        //     const Text(
-        //       "Custo do PF",
-        //       style: TextStyle(
-        //           color: corCorpoTexto, fontWeight: Fontes.weightTextoNormal),
-        //     ),
-        //     Observer(builder: (context) {
-        //       return Text(
-        //         Formatadores.formatadorMonetario(
-        //             storeEstimativaCusto.custoPF.toStringAsFixed(2)),
-        //         style: const TextStyle(
-        //             color: corCorpoTexto, fontWeight: Fontes.weightTextoNormal),
-        //       );
-        //     }),
-        //   ],
-        // ),
         const SizedBox(
           height: 20,
         ),
