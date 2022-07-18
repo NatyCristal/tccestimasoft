@@ -119,9 +119,17 @@ class SobrePage extends StatelessWidget {
                             height: 10,
                           ),
                           Text(
-                              "Prof. Dr Clayton Viera Fraga Filho\nNatália Soares da Silva"),
+                              "Prof. Dr. Clayton Viera Fraga Filho\nNatália Soares da Silva"),
                         ],
                       ),
+                    ),
+                    Container(
+                      height: 200,
+                      decoration: const BoxDecoration(
+                          image: DecorationImage(
+                              image:
+                                  AssetImage("assets/imagens/logo_ufes_1.png"),
+                              fit: BoxFit.contain)),
                     ),
                   ],
                 ),

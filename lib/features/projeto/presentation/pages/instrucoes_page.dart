@@ -56,6 +56,9 @@ class _InformacoesInstrucoesPageState extends State<InformacoesInstrucoesPage> {
 
                             if (prefs.getBool('naoExibirNovamente') == true) {
                               Modular.to.canPop();
+                              Modular.to.pushNamedAndRemoveUntil(
+                                  "/projeto/exibicao-projetos",
+                                  (Route<dynamic> route) => false);
                             } else {
                               prefs.setBool('naoExibirNovamente', true);
                               Modular.to.pushNamedAndRemoveUntil(
@@ -132,6 +135,9 @@ class _InformacoesInstrucoesPageState extends State<InformacoesInstrucoesPage> {
 
                             if (prefs.getBool('naoExibirNovamente') == true) {
                               Modular.to.canPop();
+                              Modular.to.pushNamed(
+                                "exibicao-projetos",
+                              );
                             } else {
                               prefs.setBool('naoExibirNovamente', true);
                               Modular.to.pushNamedAndRemoveUntil(
@@ -205,6 +211,9 @@ class _InformacoesInstrucoesPageState extends State<InformacoesInstrucoesPage> {
 
                             if (prefs.getBool('naoExibirNovamente') == true) {
                               Modular.to.canPop();
+                              Modular.to.pushNamedAndRemoveUntil(
+                                  "/projeto/exibicao-projetos",
+                                  (Route<dynamic> route) => false);
                             } else {
                               prefs.setBool('naoExibirNovamente', true);
                               Modular.to.pushNamedAndRemoveUntil(
@@ -302,6 +311,9 @@ class _InformacoesInstrucoesPageState extends State<InformacoesInstrucoesPage> {
 
                             if (prefs.getBool('naoExibirNovamente') == true) {
                               Modular.to.canPop();
+                              Modular.to.pushNamedAndRemoveUntil(
+                                  "/projeto/exibicao-projetos",
+                                  (Route<dynamic> route) => false);
                             } else {
                               prefs.setBool('naoExibirNovamente', true);
                               Modular.to.pushNamedAndRemoveUntil(
@@ -415,6 +427,9 @@ class _InformacoesInstrucoesPageState extends State<InformacoesInstrucoesPage> {
 
                             if (prefs.getBool('naoExibirNovamente') == true) {
                               Modular.to.canPop();
+                              Modular.to.pushNamedAndRemoveUntil(
+                                  "/projeto/exibicao-projetos",
+                                  (Route<dynamic> route) => false);
                             } else {
                               prefs.setBool('naoExibirNovamente', true);
                               Modular.to.pushNamedAndRemoveUntil(
@@ -531,8 +546,10 @@ class _InformacoesInstrucoesPageState extends State<InformacoesInstrucoesPage> {
                 children: [
                   TextButton(
                     onPressed: () {
+                      Modular.to.canPop();
                       Modular.to.pushNamedAndRemoveUntil(
-                          "exibicao-projetos", (Route<dynamic> route) => false);
+                          "/projeto/exibicao-projetos",
+                          (Route<dynamic> route) => false);
                     },
                     child: const Text(
                       "PULAR",
