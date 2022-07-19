@@ -1,6 +1,7 @@
 import 'package:estimasoft/features/login/data/models/login_usuario_firebase_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import 'Login_datasource.dart';
@@ -80,9 +81,9 @@ class LoginFirebaseDatasource extends LoginDatasource {
 
       user = userCredential.user;
     }
-    // if (googleSignInAccount == null) {
-    //   return throw PlatformException(code: 'SIGN_IN_CANCELLED');
-    // }
+    if (googleSignInAccount == null) {
+      return throw PlatformException(code: 'SIGN_IN_CANCELLED');
+    }
 
     LoginUsuarioFirebaseModel usuario = LoginUsuarioFirebaseModel(
       email: user?.email ?? "",
