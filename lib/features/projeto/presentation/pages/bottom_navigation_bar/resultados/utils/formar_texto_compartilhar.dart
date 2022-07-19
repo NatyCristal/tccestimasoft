@@ -235,8 +235,11 @@ class FormarTextoCompartilhar {
       }
     }
 
+    String descricao =
+        projetoEntitie.descricao.isNotEmpty ? projetoEntitie.descricao : "";
+
     String nomeDoProjeto = 'Nome do projeto: ${projetoEntitie.nomeProjeto}\n';
-    String descricaoProjeto = 'Descrição: ${projetoEntitie.descricao}\n';
+    String descricaoProjeto = 'Descrição: $descricao\n';
     String responsavelPelaContagem =
         'Responsável pela contagem: ${Modular.get<UsuarioAutenticado>().store.nome}\n\n';
 
@@ -346,12 +349,12 @@ class FormarTextoCompartilhar {
     ]);
 
     List<String> linhaColuna = [
-      "Etapa: Requisitos\nPercentual: 25%\nR\$/Etapa: ${Formatadores.formatadorMonetario((custoDetalhado.valorTotalProjeto * 0.25).toStringAsFixed(2))}\nEsforço(horas)/Etapa: ${(double.parse(esforcoDetalhada.esforcoTotal) * 0.25).toStringAsFixed(2)}\nDias/Etapa: ${((prazoDetalhado.prazoTotal * 0.25)).roundToDouble().toStringAsFixed(2)}\n"
-          "Etapa: Design\nPercentual: 10%\nR\$/Etapa: ${Formatadores.formatadorMonetario((custoDetalhado.valorTotalProjeto * 0.10).toStringAsFixed(2))}\nEsforço(horas)/Etapa: ${(double.parse(esforcoDetalhada.esforcoTotal) * 0.10).toStringAsFixed(2)}\nDias/Etapa: ${((prazoDetalhado.prazoTotal * 0.10)).roundToDouble().toStringAsFixed(2)}\n"
-          "Etapa: Codificação\nPercentual: 40%\nR\$/Etapa: ${Formatadores.formatadorMonetario((custoDetalhado.valorTotalProjeto * 0.40).toStringAsFixed(2))}\nEsforço(horas)/Etapa: ${(double.parse(esforcoDetalhada.esforcoTotal) * 0.40).toStringAsFixed(2)}\nDias/Etapa: ${((prazoDetalhado.prazoTotal * 0.40)).roundToDouble().toStringAsFixed(2)}\n"
-          "Etapa: Testes\nPercentual: 15%\nR\$/Etapa: ${Formatadores.formatadorMonetario((custoDetalhado.valorTotalProjeto * 0.15).toStringAsFixed(2))}\nEsforço(horas)/Etapa: ${(double.parse(esforcoDetalhada.esforcoTotal) * 0.15).toStringAsFixed(2)}\nDias/Etapa: ${((prazoDetalhado.prazoTotal * 0.15)).roundToDouble().toStringAsFixed(2)}\n"
-          "Etapa: Homologação\nPercentual: 5%\nR\$/Etapa: ${Formatadores.formatadorMonetario((custoDetalhado.valorTotalProjeto * 0.05).toStringAsFixed(2))}\nEsforço(horas)/Etapa: ${(double.parse(esforcoDetalhada.esforcoTotal) * 0.05).toStringAsFixed(2)}\nDias/Etapa: ${((prazoDetalhado.prazoTotal * 0.05)).roundToDouble().toStringAsFixed(2)}\n"
-          "Etapa: Implantação\nPercentual: 5%\nR\$/Etapa: ${Formatadores.formatadorMonetario((custoDetalhado.valorTotalProjeto * 0.05).toStringAsFixed(2))}\nEsforço(horas)/Etapa: ${(double.parse(esforcoDetalhada.esforcoTotal) * 0.05).toStringAsFixed(2)}\nDias/Etapa: ${((prazoDetalhado.prazoTotal * 0.05)).roundToDouble().toStringAsFixed(2)}\n"
+      "Etapa: Requisitos\nPercentual: 25%\nR\$/Etapa: ${Formatadores.formatadorMonetario((custoDetalhado.valorTotalProjeto * 0.25).toStringAsFixed(2))}\nEsforço(horas)/Etapa: ${(double.parse(esforcoDetalhada.esforcoTotal) * 0.25).toStringAsFixed(2)}\nDias/Etapa: ${((prazoDetalhado.prazoTotal * 0.25)).roundToDouble().toStringAsFixed(2)}\n\n"
+          "Etapa: Design\nPercentual: 10%\nR\$/Etapa: ${Formatadores.formatadorMonetario((custoDetalhado.valorTotalProjeto * 0.10).toStringAsFixed(2))}\nEsforço(horas)/Etapa: ${(double.parse(esforcoDetalhada.esforcoTotal) * 0.10).toStringAsFixed(2)}\nDias/Etapa: ${((prazoDetalhado.prazoTotal * 0.10)).roundToDouble().toStringAsFixed(2)}\n\n"
+          "Etapa: Codificação\nPercentual: 40%\nR\$/Etapa: ${Formatadores.formatadorMonetario((custoDetalhado.valorTotalProjeto * 0.40).toStringAsFixed(2))}\nEsforço(horas)/Etapa: ${(double.parse(esforcoDetalhada.esforcoTotal) * 0.40).toStringAsFixed(2)}\nDias/Etapa: ${((prazoDetalhado.prazoTotal * 0.40)).roundToDouble().toStringAsFixed(2)}\n\n"
+          "Etapa: Testes\nPercentual: 15%\nR\$/Etapa: ${Formatadores.formatadorMonetario((custoDetalhado.valorTotalProjeto * 0.15).toStringAsFixed(2))}\nEsforço(horas)/Etapa: ${(double.parse(esforcoDetalhada.esforcoTotal) * 0.15).toStringAsFixed(2)}\nDias/Etapa: ${((prazoDetalhado.prazoTotal * 0.15)).roundToDouble().toStringAsFixed(2)}\n\n"
+          "Etapa: Homologação\nPercentual: 5%\nR\$/Etapa: ${Formatadores.formatadorMonetario((custoDetalhado.valorTotalProjeto * 0.05).toStringAsFixed(2))}\nEsforço(horas)/Etapa: ${(double.parse(esforcoDetalhada.esforcoTotal) * 0.05).toStringAsFixed(2)}\nDias/Etapa: ${((prazoDetalhado.prazoTotal * 0.05)).roundToDouble().toStringAsFixed(2)}\n\n"
+          "Etapa: Implantação\nPercentual: 5%\nR\$/Etapa: ${Formatadores.formatadorMonetario((custoDetalhado.valorTotalProjeto * 0.05).toStringAsFixed(2))}\nEsforço(horas)/Etapa: ${(double.parse(esforcoDetalhada.esforcoTotal) * 0.05).toStringAsFixed(2)}\nDias/Etapa: ${((prazoDetalhado.prazoTotal * 0.05)).roundToDouble().toStringAsFixed(2)}\n\n"
     ];
     final colum8 = dolumnify(
       [
@@ -377,10 +380,12 @@ class FormarTextoCompartilhar {
         descricaoProjeto +
         responsavelPelaContagem +
         contagemDetalhada +
+        "\nFunções de dados\n\n" +
         storeDetalhada.contagemDetalhadaValida.funcaoDados.join("\n\n") +
         "\nContribuição total das funções de dados: " +
         storeDetalhada.contagemDetalhadaValida.totalFuncaoDados.toString() +
         " PF\n\n" +
+        "\nFunções transacionais\n\n" +
         storeDetalhada.contagemDetalhadaValida.funcaoTransacional.join("\n\n") +
         "\nContribuição total das funções transacionais: " +
         storeDetalhada.contagemDetalhadaValida.totalFuncaoTransacional
@@ -440,9 +445,11 @@ class FormarTextoCompartilhar {
         custoDetalhado = element;
       }
     }
+    String descricao =
+        projetoEntitie.descricao.isNotEmpty ? projetoEntitie.descricao : "";
 
     String nomeDoProjeto = 'Nome do projeto: ${projetoEntitie.nomeProjeto}\n';
-    String descricaoProjeto = 'Descrição: ${projetoEntitie.descricao}\n';
+    String descricaoProjeto = 'Descrição: $descricao\n';
     String responsavelPelaContagem =
         'Responsável pela contagem: ${Modular.get<UsuarioAutenticado>().store.nome}\n\n';
 
@@ -549,12 +556,12 @@ class FormarTextoCompartilhar {
     ]);
 
     List<String> linhaColuna = [
-      "Etapa: Requisitos\nPercentual: 25%\nR\$/Etapa: ${Formatadores.formatadorMonetario((custoDetalhado.valorTotalProjeto * 0.25).toStringAsFixed(2))}\nEsforço(horas)/Etapa: ${(double.parse(esforcoDetalhada.esforcoTotal) * 0.25).toStringAsFixed(2)}\nDias/Etapa: ${((prazoDetalhado.prazoTotal * 0.25)).roundToDouble().toStringAsFixed(2)}\n"
-          "Etapa: Design\nPercentual: 10%\nR\$/Etapa: ${Formatadores.formatadorMonetario((custoDetalhado.valorTotalProjeto * 0.10).toStringAsFixed(2))}\nEsforço(horas)/Etapa: ${(double.parse(esforcoDetalhada.esforcoTotal) * 0.10).toStringAsFixed(2)}\nDias/Etapa: ${((prazoDetalhado.prazoTotal * 0.10)).roundToDouble().toStringAsFixed(2)}\n"
-          "Etapa: Codificação\nPercentual: 40%\nR\$/Etapa: ${Formatadores.formatadorMonetario((custoDetalhado.valorTotalProjeto * 0.40).toStringAsFixed(2))}\nEsforço(horas)/Etapa: ${(double.parse(esforcoDetalhada.esforcoTotal) * 0.40).toStringAsFixed(2)}\nDias/Etapa: ${((prazoDetalhado.prazoTotal * 0.40)).roundToDouble().toStringAsFixed(2)}\n"
-          "Etapa: Testes\nPercentual: 15%\nR\$/Etapa: ${Formatadores.formatadorMonetario((custoDetalhado.valorTotalProjeto * 0.15).toStringAsFixed(2))}\nEsforço(horas)/Etapa: ${(double.parse(esforcoDetalhada.esforcoTotal) * 0.15).toStringAsFixed(2)}\nDias/Etapa: ${((prazoDetalhado.prazoTotal * 0.15)).roundToDouble().toStringAsFixed(2)}\n"
-          "Etapa: Homologação\nPercentual: 5%\nR\$/Etapa: ${Formatadores.formatadorMonetario((custoDetalhado.valorTotalProjeto * 0.05).toStringAsFixed(2))}\nEsforço(horas)/Etapa: ${(double.parse(esforcoDetalhada.esforcoTotal) * 0.05).toStringAsFixed(2)}\nDias/Etapa: ${((prazoDetalhado.prazoTotal * 0.05)).roundToDouble().toStringAsFixed(2)}\n"
-          "Etapa: Implantação\nPercentual: 5%\nR\$/Etapa: ${Formatadores.formatadorMonetario((custoDetalhado.valorTotalProjeto * 0.05).toStringAsFixed(2))}\nEsforço(horas)/Etapa: ${(double.parse(esforcoDetalhada.esforcoTotal) * 0.05).toStringAsFixed(2)}\nDias/Etapa: ${((prazoDetalhado.prazoTotal * 0.05)).roundToDouble().toStringAsFixed(2)}\n"
+      "Etapa: Requisitos\nPercentual: 25%\nR\$/Etapa: ${Formatadores.formatadorMonetario((custoDetalhado.valorTotalProjeto * 0.25).toStringAsFixed(2))}\nEsforço(horas)/Etapa: ${(double.parse(esforcoDetalhada.esforcoTotal) * 0.25).toStringAsFixed(2)}\nDias/Etapa: ${((prazoDetalhado.prazoTotal * 0.25)).roundToDouble().toStringAsFixed(2)}\n\n"
+          "Etapa: Design\nPercentual: 10%\nR\$/Etapa: ${Formatadores.formatadorMonetario((custoDetalhado.valorTotalProjeto * 0.10).toStringAsFixed(2))}\nEsforço(horas)/Etapa: ${(double.parse(esforcoDetalhada.esforcoTotal) * 0.10).toStringAsFixed(2)}\nDias/Etapa: ${((prazoDetalhado.prazoTotal * 0.10)).roundToDouble().toStringAsFixed(2)}\n\n"
+          "Etapa: Codificação\nPercentual: 40%\nR\$/Etapa: ${Formatadores.formatadorMonetario((custoDetalhado.valorTotalProjeto * 0.40).toStringAsFixed(2))}\nEsforço(horas)/Etapa: ${(double.parse(esforcoDetalhada.esforcoTotal) * 0.40).toStringAsFixed(2)}\nDias/Etapa: ${((prazoDetalhado.prazoTotal * 0.40)).roundToDouble().toStringAsFixed(2)}\n\n"
+          "Etapa: Testes\nPercentual: 15%\nR\$/Etapa: ${Formatadores.formatadorMonetario((custoDetalhado.valorTotalProjeto * 0.15).toStringAsFixed(2))}\nEsforço(horas)/Etapa: ${(double.parse(esforcoDetalhada.esforcoTotal) * 0.15).toStringAsFixed(2)}\nDias/Etapa: ${((prazoDetalhado.prazoTotal * 0.15)).roundToDouble().toStringAsFixed(2)}\n\n"
+          "Etapa: Homologação\nPercentual: 5%\nR\$/Etapa: ${Formatadores.formatadorMonetario((custoDetalhado.valorTotalProjeto * 0.05).toStringAsFixed(2))}\nEsforço(horas)/Etapa: ${(double.parse(esforcoDetalhada.esforcoTotal) * 0.05).toStringAsFixed(2)}\nDias/Etapa: ${((prazoDetalhado.prazoTotal * 0.05)).roundToDouble().toStringAsFixed(2)}\n\n"
+          "Etapa: Implantação\nPercentual: 5%\nR\$/Etapa: ${Formatadores.formatadorMonetario((custoDetalhado.valorTotalProjeto * 0.05).toStringAsFixed(2))}\nEsforço(horas)/Etapa: ${(double.parse(esforcoDetalhada.esforcoTotal) * 0.05).toStringAsFixed(2)}\nDias/Etapa: ${((prazoDetalhado.prazoTotal * 0.05)).roundToDouble().toStringAsFixed(2)}\n\n"
     ];
 
     final colum8 = dolumnify(
@@ -604,11 +611,13 @@ class FormarTextoCompartilhar {
         descricaoProjeto +
         responsavelPelaContagem +
         contagemDetalhada +
+        "\nFunções de dados\n\n" +
         storeEstimada.contagemEstimadaValida.ali.join("\n") +
         storeEstimada.contagemEstimadaValida.aie.join("\n\n") +
         "\nContribuição total das funções de dados: " +
         totalFuncaoDados.toString() +
         " PF\n\n" +
+        "\nFunções transacionais\n\n" +
         storeEstimada.contagemEstimadaValida.ce.join("\n") +
         storeEstimada.contagemEstimadaValida.ee.join("\n") +
         storeEstimada.contagemEstimadaValida.se.join("\n\n") +
@@ -668,9 +677,11 @@ class FormarTextoCompartilhar {
         custoDetalhado = element;
       }
     }
+    String descricao =
+        projetoEntitie.descricao.isNotEmpty ? projetoEntitie.descricao : "";
 
     String nomeDoProjeto = 'Nome do projeto: ${projetoEntitie.nomeProjeto}\n';
-    String descricaoProjeto = 'Descrição: ${projetoEntitie.descricao}\n';
+    String descricaoProjeto = 'Descrição: $descricao\n';
     String responsavelPelaContagem =
         'Responsável pela contagem: ${Modular.get<UsuarioAutenticado>().store.nome}\n\n';
 
@@ -780,12 +791,12 @@ class FormarTextoCompartilhar {
     ]);
 
     List<String> linhaColuna = [
-      "Etapa: Requisitos\nPercentual: 25%\nR\$/Etapa: ${Formatadores.formatadorMonetario((custoDetalhado.valorTotalProjeto * 0.25).toStringAsFixed(2))}\nEsforço(horas)/Etapa: ${(double.parse(esforcoDetalhada.esforcoTotal) * 0.25).toStringAsFixed(2)}\nDias/Etapa: ${((prazoDetalhado.prazoTotal * 0.25)).roundToDouble().toStringAsFixed(2)}\n"
-          "Etapa: Design\nPercentual: 10%\nR\$/Etapa: ${Formatadores.formatadorMonetario((custoDetalhado.valorTotalProjeto * 0.10).toStringAsFixed(2))}\nEsforço(horas)/Etapa: ${(double.parse(esforcoDetalhada.esforcoTotal) * 0.10).toStringAsFixed(2)}\nDias/Etapa: ${((prazoDetalhado.prazoTotal * 0.10)).roundToDouble().toStringAsFixed(2)}\n"
-          "Etapa: Codificação\nPercentual: 40%\nR\$/Etapa: ${Formatadores.formatadorMonetario((custoDetalhado.valorTotalProjeto * 0.40).toStringAsFixed(2))}\nEsforço(horas)/Etapa: ${(double.parse(esforcoDetalhada.esforcoTotal) * 0.40).toStringAsFixed(2)}\nDias/Etapa: ${((prazoDetalhado.prazoTotal * 0.40)).roundToDouble().toStringAsFixed(2)}\n"
-          "Etapa: Testes\nPercentual: 15%\nR\$/Etapa: ${Formatadores.formatadorMonetario((custoDetalhado.valorTotalProjeto * 0.15).toStringAsFixed(2))}\nEsforço(horas)/Etapa: ${(double.parse(esforcoDetalhada.esforcoTotal) * 0.15).toStringAsFixed(2)}\nDias/Etapa: ${((prazoDetalhado.prazoTotal * 0.15)).roundToDouble().toStringAsFixed(2)}\n"
-          "Etapa: Homologação\nPercentual: 5%\nR\$/Etapa: ${Formatadores.formatadorMonetario((custoDetalhado.valorTotalProjeto * 0.05).toStringAsFixed(2))}\nEsforço(horas)/Etapa: ${(double.parse(esforcoDetalhada.esforcoTotal) * 0.05).toStringAsFixed(2)}\nDias/Etapa: ${((prazoDetalhado.prazoTotal * 0.05)).roundToDouble().toStringAsFixed(2)}\n"
-          "Etapa: Implantação\nPercentual: 5%\nR\$/Etapa: ${Formatadores.formatadorMonetario((custoDetalhado.valorTotalProjeto * 0.05).toStringAsFixed(2))}\nEsforço(horas)/Etapa: ${(double.parse(esforcoDetalhada.esforcoTotal) * 0.05).toStringAsFixed(2)}\nDias/Etapa: ${((prazoDetalhado.prazoTotal * 0.05)).roundToDouble().toStringAsFixed(2)}\n"
+      "Etapa: Requisitos\nPercentual: 25%\nR\$/Etapa: ${Formatadores.formatadorMonetario((custoDetalhado.valorTotalProjeto * 0.25).toStringAsFixed(2))}\nEsforço(horas)/Etapa: ${(double.parse(esforcoDetalhada.esforcoTotal) * 0.25).toStringAsFixed(2)}\nDias/Etapa: ${((prazoDetalhado.prazoTotal * 0.25)).roundToDouble().toStringAsFixed(2)}\n\n"
+          "Etapa: Design\nPercentual: 10%\nR\$/Etapa: ${Formatadores.formatadorMonetario((custoDetalhado.valorTotalProjeto * 0.10).toStringAsFixed(2))}\nEsforço(horas)/Etapa: ${(double.parse(esforcoDetalhada.esforcoTotal) * 0.10).toStringAsFixed(2)}\nDias/Etapa: ${((prazoDetalhado.prazoTotal * 0.10)).roundToDouble().toStringAsFixed(2)}\n\n"
+          "Etapa: Codificação\nPercentual: 40%\nR\$/Etapa: ${Formatadores.formatadorMonetario((custoDetalhado.valorTotalProjeto * 0.40).toStringAsFixed(2))}\nEsforço(horas)/Etapa: ${(double.parse(esforcoDetalhada.esforcoTotal) * 0.40).toStringAsFixed(2)}\nDias/Etapa: ${((prazoDetalhado.prazoTotal * 0.40)).roundToDouble().toStringAsFixed(2)}\n\n"
+          "Etapa: Testes\nPercentual: 15%\nR\$/Etapa: ${Formatadores.formatadorMonetario((custoDetalhado.valorTotalProjeto * 0.15).toStringAsFixed(2))}\nEsforço(horas)/Etapa: ${(double.parse(esforcoDetalhada.esforcoTotal) * 0.15).toStringAsFixed(2)}\nDias/Etapa: ${((prazoDetalhado.prazoTotal * 0.15)).roundToDouble().toStringAsFixed(2)}\n\n"
+          "Etapa: Homologação\nPercentual: 5%\nR\$/Etapa: ${Formatadores.formatadorMonetario((custoDetalhado.valorTotalProjeto * 0.05).toStringAsFixed(2))}\nEsforço(horas)/Etapa: ${(double.parse(esforcoDetalhada.esforcoTotal) * 0.05).toStringAsFixed(2)}\nDias/Etapa: ${((prazoDetalhado.prazoTotal * 0.05)).roundToDouble().toStringAsFixed(2)}\n\n"
+          "Etapa: Implantação\nPercentual: 5%\nR\$/Etapa: ${Formatadores.formatadorMonetario((custoDetalhado.valorTotalProjeto * 0.05).toStringAsFixed(2))}\nEsforço(horas)/Etapa: ${(double.parse(esforcoDetalhada.esforcoTotal) * 0.05).toStringAsFixed(2)}\nDias/Etapa: ${((prazoDetalhado.prazoTotal * 0.05)).roundToDouble().toStringAsFixed(2)}\n\n"
     ];
 
     final colum8 = dolumnify(
@@ -809,11 +820,11 @@ class FormarTextoCompartilhar {
     );
 
     int totalFuncaoDados = 0;
-    for (var element in storeEstimada.contagemEstimadaValida.ali) {
+    for (var element in storeIndicativa.contagemIndicativaValida.ali) {
       totalFuncaoDados += element.quantidadePF;
     }
 
-    for (var element in storeEstimada.contagemEstimadaValida.aie) {
+    for (var element in storeIndicativa.contagemIndicativaValida.aie) {
       totalFuncaoDados += element.quantidadePF;
     }
 
@@ -821,8 +832,9 @@ class FormarTextoCompartilhar {
         descricaoProjeto +
         responsavelPelaContagem +
         contagemDetalhada +
-        storeEstimada.contagemEstimadaValida.ali.join("\n") +
-        storeEstimada.contagemEstimadaValida.aie.join("\n\n") +
+        "\nFunções de dados\n\n" +
+        storeIndicativa.contagemIndicativaValida.ali.join("\n") +
+        storeIndicativa.contagemIndicativaValida.aie.join("\n\n") +
         "\nContribuição total das funções de dados: " +
         totalFuncaoDados.toString() +
         " PF\n\n" +

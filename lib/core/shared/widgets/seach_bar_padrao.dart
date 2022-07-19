@@ -150,7 +150,7 @@ class _DefaultAppBarState extends State<DefaultAppBar>
                                 .notificacoesController
                                 .lerNoficicacoes();
                             Modular.to.pushNamed('notificacoes');
-                            widget.store.exibirNotificacao = true;
+                            widget.store.exibirNotificacao = false;
                           },
                         );
                 })

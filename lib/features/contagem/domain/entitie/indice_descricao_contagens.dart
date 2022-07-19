@@ -11,4 +11,9 @@ class IndiceDescricaoContagens {
     required this.quantidadePF,
     required this.tipoFuncao,
   });
+
+  @override
+  String toString() {
+    return 'Nome: $nomeFuncao\nDescrição: $descricao\nTipo: $tipoFuncao\nPonto de Função: $quantidadePF PF  \nComplexidade: $complexidade \n';
+  }
 }
