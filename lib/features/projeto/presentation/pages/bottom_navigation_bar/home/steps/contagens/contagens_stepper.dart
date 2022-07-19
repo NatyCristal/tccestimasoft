@@ -141,7 +141,9 @@ class _ContagensStepperState extends State<ContagensStepper> {
           break;
         }
         if (widget.storeIndicativa.alteracoes &&
-            !widget.storeProjetosIndexMenu.carregando) {
+            !widget.storeProjetosIndexMenu.carregando &&
+            (widget.storeIndicativa.aies.isNotEmpty ||
+                widget.storeIndicativa.alis.isNotEmpty)) {
           widget.storeProjetosIndexMenu.carregando = true;
 
           var retorno = await widget.controller.salvarContagem(
