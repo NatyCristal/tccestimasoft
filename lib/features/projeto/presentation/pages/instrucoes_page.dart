@@ -418,9 +418,6 @@ class _InformacoesInstrucoesPageState extends State<InformacoesInstrucoesPage> {
                       Align(
                         alignment: Alignment.centerRight,
                         child: TextButton(
-                          // style: ButtonStyle(
-                          //     backgroundColor: MaterialStateProperty.all(
-                          //         corDeAcao.withOpacity(0.1))),
                           onPressed: () async {
                             SharedPreferences prefs =
                                 await SharedPreferences.getInstance();

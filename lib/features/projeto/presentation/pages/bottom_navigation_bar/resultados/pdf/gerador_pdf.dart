@@ -97,7 +97,7 @@ class GeradorPdf {
           '# TRs',
           '# TDs',
           'Complex.',
-          'Comtribuição',
+          'Contribuição',
         ], _dadosFuncaoDeDados, mapTabela1),
         ConstrutorPdf.totalTabela(
             "Contribuição total das funções de dados: ",
@@ -112,7 +112,7 @@ class GeradorPdf {
           '# ARs ',
           '# TDs',
           'Complex.',
-          'Comtribuição',
+          'Contribuição',
         ], _dadosFuncaoTransacional, mapTabela2),
         ConstrutorPdf.totalTabela(
             "Contribuição total das funções transacionais: ",
@@ -131,15 +131,18 @@ class GeradorPdf {
             ['Dias úteis no mês', "21"],
             [
               'Produtividade diária (horas/dia)',
-              _equipeDetalhada.producaoDiaria
+              _equipeDetalhada.producaoDiaria.toStringAsFixed(2)
             ],
             [
               "Expoente t ${_prazoDetalhado.tipoSistema}",
-              _storePrazo.buscarExpoenteT(_prazoDetalhado.tipoSistema),
+              _storePrazo
+                  .buscarExpoenteT(_prazoDetalhado.tipoSistema)
+                  .toStringAsFixed(2),
             ],
             [
               "Custo unitário (R\$/PF)",
               Formatadores.formatadorMonetario(_custoDetalhado.custoPF)
+                  .toStringAsFixed(2)
             ]
           ],
         ),
@@ -191,7 +194,8 @@ class GeradorPdf {
             ['Prazo (em dias)', _prazoDetalhado.prazoTotal],
             [
               'Região do impossível (75%) (em semanas)',
-              double.parse(_prazoDetalhado.prazoMinimo) / 30 * 4
+              (double.parse(_prazoDetalhado.prazoMinimo) / 30 * 4)
+                  .toStringAsFixed(2)
             ],
             ['Tamanho da Equipe', _equipeDetalhada.equipeEstimada],
             [
@@ -218,7 +222,7 @@ class GeradorPdf {
             ],
             [
               'Percentual de reserva técnica do projeto',
-              _custoDetalhado.porcentagemLucro + "%"
+              _custoDetalhado.porcentagemLucro.toStringAsFixed(2) + "%"
             ],
             [
               'Valor reserva técnica',
@@ -464,7 +468,7 @@ class GeradorPdf {
           'Tipo',
           'Função',
           'Descrição',
-          'Comtribuição',
+          'Contribuição',
         ], _dadosFuncaoDeDados, mapTabela1),
         ConstrutorPdf.totalTabela(
             "Contribuição total das funções de dados: ",
@@ -482,15 +486,18 @@ class GeradorPdf {
             ['Dias úteis no mês', "21"],
             [
               'Produtividade diária (horas/dia)',
-              _equipeDetalhada.producaoDiaria
+              _equipeDetalhada.producaoDiaria.toStringAsFixed(2)
             ],
             [
               "Expoente t ${_prazoDetalhado.tipoSistema}",
-              _storePrazo.buscarExpoenteT(_prazoDetalhado.tipoSistema),
+              _storePrazo
+                  .buscarExpoenteT(_prazoDetalhado.tipoSistema)
+                  .toStringAsFixed(2),
             ],
             [
               "Custo unitário (R\$/PF)",
-              Formatadores.formatadorMonetario(_custoDetalhado.custoPF)
+              Formatadores.formatadorMonetario(
+                  _custoDetalhado.custoPF.toStringAsFixed(2))
             ]
           ],
         ),
@@ -542,9 +549,13 @@ class GeradorPdf {
             ['Prazo (em dias)', _prazoDetalhado.prazoTotal],
             [
               'Região do impossível (75%) (em semanas)',
-              double.parse(_prazoDetalhado.prazoMinimo) / 30 * 4
+              (double.parse(_prazoDetalhado.prazoMinimo) / 30 * 4)
+                  .toStringAsFixed(2)
             ],
-            ['Tamanho da Equipe', _equipeDetalhada.equipeEstimada],
+            [
+              'Tamanho da Equipe',
+              _equipeDetalhada.equipeEstimada.toStringAsFixed(2)
+            ],
             [
               'Valor do rateio de despesas para o projeto por mês',
               Formatadores.formatadorMonetario(_custoDetalhado
@@ -813,7 +824,7 @@ class GeradorPdf {
           'Função',
           'Descrição',
           'Complex.',
-          'Comtribuição',
+          'Contribuição',
         ], _dadosFuncaoDeDados, mapTabela1),
         ConstrutorPdf.totalTabela(
             "Contribuição total das funções de dados: ",
@@ -825,7 +836,7 @@ class GeradorPdf {
           'Função',
           'Descrição',
           'Complex.',
-          'Comtribuição',
+          'Contribuição',
         ], _dadosFuncaoTransacional, mapTabela2),
         ConstrutorPdf.totalTabela(
             "Contribuição total das funções transacionais: ",
@@ -904,7 +915,10 @@ class GeradorPdf {
               'Região do impossível (75%) (em semanas)',
               double.parse(_prazoDetalhado.prazoMinimo) / 30 * 4
             ],
-            ['Tamanho da Equipe', _equipeDetalhada.equipeEstimada],
+            [
+              'Tamanho da Equipe',
+              _equipeDetalhada.equipeEstimada.toStringAsFixed(2)
+            ],
             [
               'Valor do rateio de despesas para o projeto por mês',
               Formatadores.formatadorMonetario(_custoDetalhado
@@ -929,7 +943,7 @@ class GeradorPdf {
             ],
             [
               'Percentual de reserva técnica do projeto',
-              _custoDetalhado.porcentagemLucro + "%"
+              _custoDetalhado.porcentagemLucro.toStringAsFixed(2) + "%"
             ],
             [
               'Valor reserva técnica',
