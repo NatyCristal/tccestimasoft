@@ -535,7 +535,6 @@ class _InformacoesInstrucoesPageState extends State<InformacoesInstrucoesPage> {
                       "/projeto/exibicao-projetos",
                       (Route<dynamic> route) => false);
                 } else {
-                  prefs.setBool('naoExibirNovamente', true);
                   Modular.to.pushNamedAndRemoveUntil(
                       "/projeto/exibicao-projetos",
                       (Route<dynamic> route) => false);
