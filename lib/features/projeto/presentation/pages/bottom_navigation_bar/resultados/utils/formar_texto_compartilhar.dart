@@ -94,23 +94,23 @@ class FormarTextoCompartilhar {
     ]);
 
     final List<String> colums5 = [
-      'Esforço (horas): ',
+      'Esforço (horas) ',
       esforcoDetalhada.esforcoTotal +
           "\n"
-              'Prazo (em meses):',
+              'Prazo (em meses) ',
       (prazoDetalhado.prazoTotal / 30).toStringAsFixed(2) +
           "\n"
-              'Prazo (em semanas): ',
+              'Prazo (em semanas) ',
       (prazoDetalhado.prazoTotal / 30 * 4).toStringAsFixed(2) +
           "\n"
-              'Prazo (em dias)',
+              'Prazo (em dias) ',
       prazoDetalhado.prazoTotal.toString() + "\n",
-      'Região do impossível (75%) (em semanas): ',
+      'Região do impossível (75%) (em semanas) ',
       (double.parse(prazoDetalhado.prazoMinimo) / 30 * 4).toStringAsFixed(2) +
           "\n"
               'Tamanho da Equipe: ',
       equipeDetalhada.equipeEstimada + "\n",
-      'Valor do rateio de despesas para o projeto por mês: ',
+      'Valor do rateio de despesas para o projeto por mês ',
       Formatadores.formatadorMonetario(custoDetalhado
               .despesasTotaisDurantePrazoProjeto
               .toStringAsFixed(2)) +
@@ -301,7 +301,7 @@ class FormarTextoCompartilhar {
       ['Prazo (em dias)', prazoDetalhado.prazoTotal],
       [
         'Região do impossível (75%) (em semanas)',
-        double.parse(prazoDetalhado.prazoMinimo) / 30 * 4
+        (double.parse(prazoDetalhado.prazoMinimo) / 30 * 4).toStringAsFixed(2)
       ],
       ['Tamanho da Equipe', equipeDetalhada.equipeEstimada],
       [
@@ -511,7 +511,7 @@ class FormarTextoCompartilhar {
       ['Prazo (em dias)', prazoDetalhado.prazoTotal],
       [
         'Região do impossível (75%) (em semanas)',
-        double.parse(prazoDetalhado.prazoMinimo) / 30 * 4
+        (double.parse(prazoDetalhado.prazoMinimo) / 30 * 4).toStringAsFixed(2)
       ],
       ['Tamanho da Equipe', equipeDetalhada.equipeEstimada],
       [
@@ -743,7 +743,7 @@ class FormarTextoCompartilhar {
       ['Prazo (em dias)', prazoDetalhado.prazoTotal],
       [
         'Região do impossível (75%) (em semanas)',
-        double.parse(prazoDetalhado.prazoMinimo) / 30 * 4
+        (double.parse(prazoDetalhado.prazoMinimo) / 30 * 4).toStringAsFixed(2)
       ],
       ['Tamanho da Equipe', equipeDetalhada.equipeEstimada],
       [

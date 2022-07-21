@@ -131,7 +131,7 @@ class GeradorPdf {
             ['Dias úteis no mês', "21"],
             [
               'Produtividade diária (horas/dia)',
-              _equipeDetalhada.producaoDiaria.toStringAsFixed(2)
+              _equipeDetalhada.producaoDiaria
             ],
             [
               "Expoente t ${_prazoDetalhado.tipoSistema}",
@@ -142,7 +142,6 @@ class GeradorPdf {
             [
               "Custo unitário (R\$/PF)",
               Formatadores.formatadorMonetario(_custoDetalhado.custoPF)
-                  .toStringAsFixed(2)
             ]
           ],
         ),
@@ -222,7 +221,7 @@ class GeradorPdf {
             ],
             [
               'Percentual de reserva técnica do projeto',
-              _custoDetalhado.porcentagemLucro.toStringAsFixed(2) + "%"
+              _custoDetalhado.porcentagemLucro + "%"
             ],
             [
               'Valor reserva técnica',
@@ -486,7 +485,7 @@ class GeradorPdf {
             ['Dias úteis no mês', "21"],
             [
               'Produtividade diária (horas/dia)',
-              _equipeDetalhada.producaoDiaria.toStringAsFixed(2)
+              _equipeDetalhada.producaoDiaria
             ],
             [
               "Expoente t ${_prazoDetalhado.tipoSistema}",
@@ -496,8 +495,7 @@ class GeradorPdf {
             ],
             [
               "Custo unitário (R\$/PF)",
-              Formatadores.formatadorMonetario(
-                  _custoDetalhado.custoPF.toStringAsFixed(2))
+              Formatadores.formatadorMonetario(_custoDetalhado.custoPF)
             ]
           ],
         ),
@@ -552,10 +550,7 @@ class GeradorPdf {
               (double.parse(_prazoDetalhado.prazoMinimo) / 30 * 4)
                   .toStringAsFixed(2)
             ],
-            [
-              'Tamanho da Equipe',
-              _equipeDetalhada.equipeEstimada.toStringAsFixed(2)
-            ],
+            ['Tamanho da Equipe', _equipeDetalhada.equipeEstimada],
             [
               'Valor do rateio de despesas para o projeto por mês',
               Formatadores.formatadorMonetario(_custoDetalhado
@@ -915,10 +910,7 @@ class GeradorPdf {
               'Região do impossível (75%) (em semanas)',
               double.parse(_prazoDetalhado.prazoMinimo) / 30 * 4
             ],
-            [
-              'Tamanho da Equipe',
-              _equipeDetalhada.equipeEstimada.toStringAsFixed(2)
-            ],
+            ['Tamanho da Equipe', _equipeDetalhada.equipeEstimada],
             [
               'Valor do rateio de despesas para o projeto por mês',
               Formatadores.formatadorMonetario(_custoDetalhado
@@ -943,7 +935,7 @@ class GeradorPdf {
             ],
             [
               'Percentual de reserva técnica do projeto',
-              _custoDetalhado.porcentagemLucro.toStringAsFixed(2) + "%"
+              _custoDetalhado.porcentagemLucro + "%"
             ],
             [
               'Valor reserva técnica',
