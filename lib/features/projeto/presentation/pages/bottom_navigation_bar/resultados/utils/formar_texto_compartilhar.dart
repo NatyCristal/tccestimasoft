@@ -337,7 +337,7 @@ class FormarTextoCompartilhar {
                 .toStringAsFixed(2))
       ],
       [
-        'Despesas Rateadas para o projeto furante o\n prazo do seu desenvolvimento',
+        'Despesas Rateadas para o projeto durante o\n prazo do seu desenvolvimento',
         Formatadores.formatadorMonetario(
             custoDetalhado.despesasTotaisDurantePrazoProjeto.toStringAsFixed(2))
       ],
@@ -544,7 +544,7 @@ class FormarTextoCompartilhar {
                 .toStringAsFixed(2))
       ],
       [
-        'Despesas Rateadas para o projeto furante o\n prazo do seu desenvolvimento',
+        'Despesas Rateadas para o projeto durante o\n prazo do seu desenvolvimento',
         Formatadores.formatadorMonetario(
             custoDetalhado.despesasTotaisDurantePrazoProjeto.toStringAsFixed(2))
       ],
@@ -779,7 +779,7 @@ class FormarTextoCompartilhar {
                 .toStringAsFixed(2))
       ],
       [
-        'Despesas Rateadas para o projeto furante o\n prazo do seu desenvolvimento',
+        'Despesas Rateadas para o projeto durante o\n prazo do seu desenvolvimento',
         Formatadores.formatadorMonetario(
             custoDetalhado.despesasTotaisDurantePrazoProjeto.toStringAsFixed(2))
       ],

@@ -236,7 +236,7 @@ class GeradorPdf {
                   .toStringAsFixed(2))
             ],
             [
-              'Despesas Rateadas para o projeto furante o\n prazo do seu desenvolvimento',
+              'Despesas Rateadas para o projeto durante o\n prazo do seu desenvolvimento',
               Formatadores.formatadorMonetario(_custoDetalhado
                   .despesasTotaisDurantePrazoProjeto
                   .toStringAsFixed(2))
@@ -594,7 +594,7 @@ class GeradorPdf {
                   .toStringAsFixed(2))
             ],
             [
-              'Despesas Rateadas para o projeto furante o\n prazo do seu desenvolvimento',
+              'Despesas Rateadas para o projeto durante o\n prazo do seu desenvolvimento',
               Formatadores.formatadorMonetario(_custoDetalhado
                   .despesasTotaisDurantePrazoProjeto
                   .toStringAsFixed(2))
@@ -957,7 +957,7 @@ class GeradorPdf {
                   .toStringAsFixed(2))
             ],
             [
-              'Despesas Rateadas para o projeto furante o\n prazo do seu desenvolvimento',
+              'Despesas Rateadas para o projeto durante o\n prazo do seu desenvolvimento',
               Formatadores.formatadorMonetario(_custoDetalhado
                   .despesasTotaisDurantePrazoProjeto
                   .toStringAsFixed(2))

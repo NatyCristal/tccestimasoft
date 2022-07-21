@@ -526,9 +526,20 @@ class _InformacoesInstrucoesPageState extends State<InformacoesInstrucoesPage> {
                 backgroundColor: Colors.red,
                 minimumSize: const Size.fromHeight(80),
               ),
-              onPressed: () {
-                Modular.to.pushNamedAndRemoveUntil(
-                    "exibicao-projetos", (Route<dynamic> route) => false);
+              onPressed: () async {
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+
+                if (prefs.getBool('naoExibirNovamente') == true) {
+                  Modular.to.canPop();
+                  Modular.to.pushNamedAndRemoveUntil(
+                      "/projeto/exibicao-projetos",
+                      (Route<dynamic> route) => false);
+                } else {
+                  prefs.setBool('naoExibirNovamente', true);
+                  Modular.to.pushNamedAndRemoveUntil(
+                      "/projeto/exibicao-projetos",
+                      (Route<dynamic> route) => false);
+                }
               },
               child: const Text(
                 "VAMOS LÁ",
