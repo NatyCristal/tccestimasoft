@@ -1,7 +1,6 @@
 import 'package:estimasoft/core/shared/utils.dart';
 import 'package:estimasoft/core/shared/utils/tamanho_tela.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:url_launcher/link.dart';
 
 import '../../../../core/shared/utils/cores_fontes.dart';
@@ -38,35 +37,36 @@ class SobrePage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      "O EstimaSoft é um trabalho de conclusão de curso que foi desenvolvido para auxiliar a análise de ponto de função",
+                      "O Estimasoft é o resultado de um Trabalho de Conclusão de Curso (TCC) em Sistemas de Informação pela Universidade Federal do Espírito Santo.",
+                      textAlign: TextAlign.justify,
                       style: TextStyle(
                         color: corTituloTexto,
                       ),
                     ),
                     const SizedBox(
-                      height: 30,
+                      height: 20,
                     ),
-                    const Text(
-                      "Guia Prático em Análise ponto de função",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        Modular.to.pushNamed("exibir-pdf");
-                      },
-                      style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(
-                              corDeFundoBotaoPrimaria)),
-                      child: const Text(
-                        "Exibir Guia de Contgem",
-                        style: TextStyle(color: corDeTextoBotaoPrimaria),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 40,
+                    Row(
+                      children: [
+                        Container(
+                          width: 200,
+                          height: 200,
+                          decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage(
+                                      "assets/imagens/logo_ufes_1.png"),
+                                  fit: BoxFit.contain)),
+                        ),
+                        Container(
+                          height: 150,
+                          width: 150,
+                          decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage(
+                                      "assets/imagens/logo_ufes_2.png"),
+                                  fit: BoxFit.contain)),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -119,17 +119,9 @@ class SobrePage extends StatelessWidget {
                             height: 10,
                           ),
                           Text(
-                              "Prof. Dr. Clayton Viera Fraga Filho\nNatália Soares da Silva"),
+                              "Natália Soares da Silva\nProf. Dr. Clayton Viera Fraga Filho"),
                         ],
                       ),
-                    ),
-                    Container(
-                      height: 200,
-                      decoration: const BoxDecoration(
-                          image: DecorationImage(
-                              image:
-                                  AssetImage("assets/imagens/logo_ufes_1.png"),
-                              fit: BoxFit.contain)),
                     ),
                   ],
                 ),

@@ -508,6 +508,33 @@ class _InformacoesInstrucoesPageState extends State<InformacoesInstrucoesPage> {
                                   fontSize: 16,
                                   color: corTituloTexto.withOpacity(0.8)),
                             ),
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            const Text(
+                                "Para mais detalhes, clique para exibir o guia de contagem",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                )),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Align(
+                              alignment: Alignment.center,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  Modular.to.pushNamed("exibir-pdf");
+                                },
+                                style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(
+                                        corDeFundoBotaoPrimaria)),
+                                child: const Text(
+                                  "Exibir Guia de Contgem",
+                                  style:
+                                      TextStyle(color: corDeTextoBotaoPrimaria),
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                       )
