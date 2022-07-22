@@ -529,7 +529,7 @@ class _InformacoesInstrucoesPageState extends State<InformacoesInstrucoesPage> {
                                     backgroundColor: MaterialStateProperty.all(
                                         corDeFundoBotaoPrimaria)),
                                 child: const Text(
-                                  "Exibir Guia de Contgem",
+                                  "Exibir Guia de Contgems",
                                   style:
                                       TextStyle(color: corDeTextoBotaoPrimaria),
                                 ),

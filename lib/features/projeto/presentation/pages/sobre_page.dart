@@ -29,101 +29,99 @@ class SobrePage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: arredondamentoBordas,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "O Estimasoft é o resultado de um Trabalho de Conclusão de Curso (TCC) em Sistemas de Informação pela Universidade Federal do Espírito Santo.",
-                      textAlign: TextAlign.justify,
-                      style: TextStyle(
-                        color: corTituloTexto,
-                      ),
+              Column(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: arredondamentoBordas,
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
+                    child: Column(
                       children: [
-                        Container(
-                          width: 200,
-                          height: 200,
-                          decoration: const BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage(
-                                      "assets/imagens/logo_ufes_1.png"),
-                                  fit: BoxFit.contain)),
+                        const Text(
+                          "O Estimasoft é o resultado de um Trabalho de Conclusão de Curso (TCC) em Sistemas de Informação pela Universidade Federal do Espírito Santo.",
+                          textAlign: TextAlign.justify,
+                          style: TextStyle(
+                            color: corTituloTexto,
+                          ),
                         ),
-                        Container(
-                          height: 150,
-                          width: 150,
-                          decoration: const BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage(
-                                      "assets/imagens/logo_ufes_2.png"),
-                                  fit: BoxFit.contain)),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Align(
+                          alignment: Alignment.center,
+                          child: Container(
+                            height: 150,
+                            width: 150,
+                            decoration: const BoxDecoration(
+                                image: DecorationImage(
+                                    image: AssetImage(
+                                        "assets/imagens/logo_ufes_2.png"),
+                                    fit: BoxFit.contain)),
+                          ),
                         ),
                       ],
                     ),
-                  ],
-                ),
+                  ),
+                  SizedBox(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        Container(
+                          padding: paddingPagePrincipal,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              color: corDeAcao.withOpacity(0.3),
+                              borderRadius: arredondamentoBordas),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: const [
+                              Text(
+                                "Desenvolvido por:",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                  "Natália Soares da Silva\nProf. Dr. Clayton Viera Fraga Filho"),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                ],
               ),
               SizedBox(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Link(
-                      uri: Uri.parse(
-                          'https://www.gov.br/governodigital/pt-br/sisp/documentos/arquivos/guia-de-contagem-de-pontos-de-funcao-do-sisp-para-projetos-dw.pdf'),
-                      builder: (context, openLink) => GestureDetector(
-                        onTap: openLink,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
-                            Text(
-                              "Referências: ",
-                              style: TextStyle(
-                                  fontWeight: Fontes.weightTextoNormal),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              'https://www.gov.br/governodigital/pt-br/sisp/documentos/arquivos/guia-de-contagem-de-pontos-de-funcao-do-sisp-para-projetos-dw.pdf',
-                              style: TextStyle(color: Colors.blueAccent),
-                            ),
-                          ],
+                child: Link(
+                  uri: Uri.parse(
+                      'https://www.gov.br/governodigital/pt-br/sisp/documentos/arquivos/guia-de-contagem-de-pontos-de-funcao-do-sisp-para-projetos-dw.pdf'),
+                  builder: (context, openLink) => GestureDetector(
+                    onTap: openLink,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: const [
+                        Text(
+                          "Referências: ",
+                          style:
+                              TextStyle(fontWeight: Fontes.weightTextoNormal),
                         ),
-                      ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          'https://www.gov.br/governodigital/pt-br/sisp/documentos/arquivos/guia-de-contagem-de-pontos-de-funcao-do-sisp-para-projetos-dw.pdf',
+                          style: TextStyle(color: Colors.blueAccent),
+                        ),
+                      ],
                     ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Container(
-                      padding: paddingPagePrincipal,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                          color: corDeAcao.withOpacity(0.3),
-                          borderRadius: arredondamentoBordas),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text(
-                            "Desenvolvido por:",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                              "Natália Soares da Silva\nProf. Dr. Clayton Viera Fraga Filho"),
-                        ],
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ],
