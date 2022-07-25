@@ -199,9 +199,7 @@ class GeradorPdf {
             ['Tamanho da Equipe', _equipeDetalhada.equipeEstimada],
             [
               'Valor do rateio de despesas para o projeto por mês',
-              Formatadores.formatadorMonetario(_custoDetalhado
-                  .despesasTotaisDurantePrazoProjeto
-                  .toStringAsFixed(2))
+              Formatadores.formatadorMonetario(_custoDetalhado.custoTotalMensal)
             ],
           ],
         ),
@@ -553,9 +551,7 @@ class GeradorPdf {
             ['Tamanho da Equipe', _equipeDetalhada.equipeEstimada],
             [
               'Valor do rateio de despesas para o projeto por mês',
-              Formatadores.formatadorMonetario(_custoDetalhado
-                  .despesasTotaisDurantePrazoProjeto
-                  .toStringAsFixed(2))
+              Formatadores.formatadorMonetario(_custoDetalhado.custoTotalMensal)
             ],
           ],
         ),
@@ -913,9 +909,7 @@ class GeradorPdf {
             ['Tamanho da Equipe', _equipeDetalhada.equipeEstimada],
             [
               'Valor do rateio de despesas para o projeto por mês',
-              Formatadores.formatadorMonetario(_custoDetalhado
-                  .despesasTotaisDurantePrazoProjeto
-                  .toStringAsFixed(2))
+              Formatadores.formatadorMonetario(_custoDetalhado.custoTotalMensal)
             ],
           ],
         ),

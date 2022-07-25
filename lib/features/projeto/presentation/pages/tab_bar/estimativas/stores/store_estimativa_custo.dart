@@ -176,7 +176,7 @@ abstract class StoreEstimativaCustoBase with Store {
   calcularCustoHora() {
     custoBasico = (custoPF * quantidadePFSelecionada);
 
-    despesasTotaisDurantePrazoProjeto = custoTotalMensal * prazo;
+    despesasTotaisDurantePrazoProjeto = custoTotalMensal * (prazo / 30);
 
     custoProjeto = custoBasico + despesasTotaisDurantePrazoProjeto;
     validarValorTotalProjeto();
@@ -220,6 +220,7 @@ abstract class StoreEstimativaCustoBase with Store {
       custoTotalMensal += double.parse(valorCusto);
       tamanhoCustos = custosVariaveis.length;
       validarValorTotalProjeto();
+      calcularCustoHora();
       AlertaSnack.exbirSnackBar(context, "Custo adicionado");
     }
   }

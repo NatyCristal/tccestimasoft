@@ -90,6 +90,14 @@ class EstimativaCustoPage extends StatelessWidget {
                                   .singleWhere((element) => element
                                       .contagemPontoDeFuncao
                                       .contains(cont.split(" - ").first));
+                          storeEstimativaCusto.prazo = storeEstimativaPrazo
+                              .prazosValidos
+                              .singleWhere((element) => element
+                                  .contagemPontoDeFuncao
+                                  .contains(cont.split(" - ").first))
+                              .prazoTotal;
+
+                          print(storeEstimativaCusto.prazo);
 
                           storeEstimativaCusto.equipeEntitySelecionado =
                               storeEstimativaEquipe.equipesValidas.singleWhere(
@@ -100,6 +108,8 @@ class EstimativaCustoPage extends StatelessWidget {
 
                           storeEstimativaCusto.calcularCustoHora();
                           storeEstimativaCusto.validarValorTotalProjeto();
+                          print(storeEstimativaCusto
+                              .despesasTotaisDurantePrazoProjeto);
                           if (storeEstimativaCusto
                               .validarCamposPreenchidos(context)) {
                             CustoEntity novoCusto = CustoEntity(

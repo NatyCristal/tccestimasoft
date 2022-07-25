@@ -111,10 +111,7 @@ class FormarTextoCompartilhar {
               'Tamanho da Equipe: ',
       equipeDetalhada.equipeEstimada + "\n",
       'Valor do rateio de despesas para o projeto por mês ',
-      Formatadores.formatadorMonetario(custoDetalhado
-              .despesasTotaisDurantePrazoProjeto
-              .toStringAsFixed(2)) +
-          "\n"
+      Formatadores.formatadorMonetario(custoDetalhado.custoTotalMensal) + "\n"
     ];
 
     final List<String> colums6 = [
@@ -306,8 +303,7 @@ class FormarTextoCompartilhar {
       ['Tamanho da Equipe', equipeDetalhada.equipeEstimada],
       [
         'Valor do rateio de despesas para o projeto por mês',
-        Formatadores.formatadorMonetario(
-            custoDetalhado.despesasTotaisDurantePrazoProjeto.toStringAsFixed(2))
+        Formatadores.formatadorMonetario(custoDetalhado.custoTotalMensal)
       ],
     ]);
 
@@ -516,8 +512,7 @@ class FormarTextoCompartilhar {
       ['Tamanho da Equipe', equipeDetalhada.equipeEstimada],
       [
         'Valor do rateio de despesas para o projeto por mês',
-        Formatadores.formatadorMonetario(
-            custoDetalhado.despesasTotaisDurantePrazoProjeto.toStringAsFixed(2))
+        Formatadores.formatadorMonetario(custoDetalhado.custoTotalMensal)
       ],
     ]);
 
@@ -748,8 +743,7 @@ class FormarTextoCompartilhar {
       ['Tamanho da Equipe', equipeDetalhada.equipeEstimada],
       [
         'Valor do rateio de despesas para o projeto por mês',
-        Formatadores.formatadorMonetario(
-            custoDetalhado.despesasTotaisDurantePrazoProjeto.toStringAsFixed(2))
+        Formatadores.formatadorMonetario(custoDetalhado.custoTotalMensal)
       ],
     ]);
 
