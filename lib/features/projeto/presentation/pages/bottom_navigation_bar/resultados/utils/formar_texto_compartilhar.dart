@@ -743,7 +743,8 @@ class FormarTextoCompartilhar {
       ['Tamanho da Equipe', equipeDetalhada.equipeEstimada],
       [
         'Valor do rateio de despesas para o projeto por mês',
-        Formatadores.formatadorMonetario(custoDetalhado.custoTotalMensal)
+        Formatadores.formatadorMonetario(
+            Formatadores.formatadorMonetario(custoDetalhado.custoTotalMensal))
       ],
     ]);
 

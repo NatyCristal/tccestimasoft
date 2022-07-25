@@ -111,12 +111,8 @@ class _EstimativaEsforcoPageState extends State<EstimativaEsforcoPage> {
                                   .storeEstimativaEsforco.linguagemSelecionada,
                               dados);
 
-                      print(widget.storeEstimativaEsforco.pontoFuncaoHora);
-
                       widget.storeEstimativaEsforco.produtividadeEquipe =
                           widget.storeEstimativaEsforco.pontoFuncaoHora[1];
-
-                      //   widget.storeEstimativaEsforco.validarContagem();
                     },
                     showSearchBox: true,
                   ),

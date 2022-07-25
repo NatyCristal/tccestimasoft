@@ -77,8 +77,7 @@ abstract class StoreEstimativaEquipeBase with Store {
       equipeEstimadaValor = (double.parse(esforcoSelecionado)) /
           (21 *
               double.parse(producaoDiaria.split(" horas").first) *
-              (double.parse(prazoSelecionado)) /
-              30);
+              ((double.parse(prazoSelecionado)) / 30));
     }
   }
 
