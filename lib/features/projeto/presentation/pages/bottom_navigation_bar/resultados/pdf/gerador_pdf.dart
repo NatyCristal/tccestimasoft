@@ -119,8 +119,7 @@ class GeradorPdf {
             _storeDetalhada.contagemDetalhadaValida.totalFuncaoTransacional
                     .toString() +
                 " PF"),
-        ConstrutorPdf.subtitulo(
-            "1.3. Pontos de Função não ajustados (brutos)'"),
+        ConstrutorPdf.subtitulo("1.3. Pontos de Função não ajustados (brutos)"),
         ConstrutorPdf.linhaComun(
             "Tamanho funcional estimado ${_storeDetalhada.contagemDetalhadaValida.totalPf} PF"),
         ConstrutorPdf.tituloSessao('2. Parâmetros de entrada'),
@@ -471,8 +470,7 @@ class GeradorPdf {
             "Contribuição total das funções de dados: ",
             _storeIndicativa.contagemIndicativaValida.totalPf.toString() +
                 " PF"),
-        ConstrutorPdf.subtitulo(
-            "1.2. Pontos de Função não ajustados (brutos)'"),
+        ConstrutorPdf.subtitulo("1.2. Pontos de Função não ajustados (brutos)"),
         ConstrutorPdf.linhaComun(
             "Tamanho funcional estimado ${_storeIndicativa.contagemIndicativaValida.totalPf} PF"),
         ConstrutorPdf.tituloSessao('2. Parâmetros de entrada'),
@@ -832,8 +830,7 @@ class GeradorPdf {
         ConstrutorPdf.totalTabela(
             "Contribuição total das funções transacionais: ",
             valorTotalTransacionalEstimada.toString() + " PF"),
-        ConstrutorPdf.subtitulo(
-            "1.3. Pontos de Função não ajustados (brutos)'"),
+        ConstrutorPdf.subtitulo("1.3. Pontos de Função não ajustados (brutos)"),
         ConstrutorPdf.linhaComun(
             "Tamanho funcional estimado ${_storeEstimada.contagemEstimadaValida.totalPF} PF"),
         ConstrutorPdf.tituloSessao('2. Parâmetros de entrada'),
