@@ -181,7 +181,7 @@ class Alerta {
     return Alert(
       context: context,
       type: AlertType.warning,
-      title: "Escolha o tipo de contagem para gerar o PDF?",
+      title: "Escolha o tipo de contagem para compartilhar?",
       style: const AlertStyle(
         titleStyle: TextStyle(color: corTituloTexto, fontSize: 18),
       ),

@@ -68,9 +68,9 @@ class ExibicaoProjetosCompartilhadosPage extends StatelessWidget {
 }
 
 verificaQuantidadeDeProjetos(ProjetoController controller) {
-  if (controller.projetos.isEmpty) return 0;
-
   List<ProjetoEntitie> meusProjetos = [];
+  if (controller.projetos.isEmpty) return meusProjetos;
+
   UsuarioAutenticado usuarioAutenticado = Modular.get<UsuarioAutenticado>();
 
   for (var element in controller.projetos) {
