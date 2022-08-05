@@ -120,7 +120,7 @@ abstract class StoreEstimativaPrazoBase with Store {
     if (!contagemPF.contains(" 0 PF")) {
       String text = contagemPF;
       tamanhoPf = int.parse(text);
-      if (tamanhoPf <= 110) {
+      if (tamanhoPf <= 99) {
         prazoTotal = calcularTamanhoMinimo();
         valorTotalEmDias = prazoTotal.toString();
         regiaoDoImpossivel = (0.75 * prazoTotal);

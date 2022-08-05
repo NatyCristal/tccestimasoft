@@ -78,7 +78,7 @@ class FormarTextoCompartilhar {
                 .toStringAsFixed(2)),
       ],
       [
-        "Estimada",
+        "Estimativa",
         storeEstimada.contagemEstimadaValida.totalPF.toString(),
         Formatadores.formatadorMonetario((double.parse(custoDetalhado.custoPF) *
                 storeEstimada.contagemEstimadaValida.totalPF)
@@ -273,7 +273,7 @@ class FormarTextoCompartilhar {
                 .toStringAsFixed(2)),
       ],
       [
-        "Estimada",
+        "Estimativa",
         storeEstimada.contagemEstimadaValida.totalPF.toString(),
         Formatadores.formatadorMonetario((double.parse(custoDetalhado.custoPF) *
                 storeEstimada.contagemEstimadaValida.totalPF)
@@ -449,7 +449,7 @@ class FormarTextoCompartilhar {
     String responsavelPelaContagem =
         'Responsável pela contagem: ${Modular.get<UsuarioAutenticado>().store.nome}\n\n';
 
-    String contagemDetalhada = "\t1. Contagem Estimada\n\n";
+    String contagemDetalhada = "\t1. Contagem Estimativa\n\n";
 
     final columns3 = dolumnify(
       [
@@ -482,7 +482,7 @@ class FormarTextoCompartilhar {
                 .toStringAsFixed(2)),
       ],
       [
-        "Estimada",
+        "Estimativa",
         storeEstimada.contagemEstimadaValida.totalPF.toString(),
         Formatadores.formatadorMonetario((double.parse(custoDetalhado.custoPF) *
                 storeEstimada.contagemEstimadaValida.totalPF)
@@ -624,9 +624,9 @@ class FormarTextoCompartilhar {
         columns3.toString() +
         "\n\n\t3. Resumo por tipo de contagem\n\n" +
         colums4.toString() +
-        "\n\n\t4. Estimativas baseadas na contagem estimada\n\n" +
+        "\n\n\t4. Estimativas baseadas na contagem estimativa\n\n" +
         colums5.toString() +
-        "\n\n\t5. Estimativas de Custo para contagem estimada\n\n" +
+        "\n\n\t5. Estimativas de Custo para contagem estimativa\n\n" +
         colums6.toString() +
         "\n\n\t6. Distribuição do custo, esforço e prazo por etapa\n\n" +
         linhaColuna.join("\n\n") +
@@ -713,7 +713,7 @@ class FormarTextoCompartilhar {
                 .toStringAsFixed(2)),
       ],
       [
-        "Estimada",
+        "Estimativa",
         storeEstimada.contagemEstimadaValida.totalPF.toString(),
         Formatadores.formatadorMonetario((double.parse(custoDetalhado.custoPF) *
                 storeEstimada.contagemEstimadaValida.totalPF)

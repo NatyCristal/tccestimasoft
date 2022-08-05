@@ -252,7 +252,7 @@ class _ContagensStepperState extends State<ContagensStepper> {
       Step(
         isActive: _stepAtual >= 1,
         state: _stepAtual >= 2 ? StepState.complete : StepState.indexed,
-        title: _stepAtual == 1 ? const Text("Estimada") : const Text(""),
+        title: _stepAtual == 1 ? const Text("Estimativa") : const Text(""),
         content: ContagemEstimada(
           projetoUid: widget.projeto.uidProjeto,
           store: widget.storeEstimada,

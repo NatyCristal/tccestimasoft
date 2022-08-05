@@ -201,7 +201,7 @@ class Alerta {
           Observer(builder: (context) {
             return CheckboxListTile(
                 activeColor: corDeFundoBotaoPrimaria,
-                title: const Text("Estimada"),
+                title: const Text("Estimativa"),
                 value: store.estimada,
                 onChanged: (value) {
                   store.indicativa = false;

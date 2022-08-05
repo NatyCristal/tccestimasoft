@@ -47,7 +47,7 @@ class IndexResultado extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              "Para compartilhar as estimativas realize as contagens: Indicativa, Estimada e Detalhada. \n\n\nApós a contagem estime: Esforço, Prazo, Equipe e Custo para gerar o PDF e o texto para compartilhar",
+              "Para compartilhar as estimativas realize as contagens: Indicativa, Estimativa e Detalhada. \n\n\nApós a contagem estime: Esforço, Prazo, Equipe e Custo para gerar o PDF e o texto para compartilhar",
               style: TextStyle(fontSize: tamanhoSubtitulo),
             ),
             Observer(builder: (context) {

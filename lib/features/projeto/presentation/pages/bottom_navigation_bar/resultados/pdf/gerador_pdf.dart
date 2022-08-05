@@ -159,7 +159,7 @@ class GeradorPdf {
                     .toStringAsFixed(2)),
           ],
           [
-            "Estimada",
+            "Estimativa",
             _storeEstimada.contagemEstimadaValida.totalPF.toString(),
             Formatadores.formatadorMonetario(
                 (double.parse(_custoDetalhado.custoPF) *
@@ -806,7 +806,7 @@ class GeradorPdf {
         ConstrutorPdf.linha("Descrição: ", projeto.descricao),
         ConstrutorPdf.linha("Responsável pela contagem: ",
             Modular.get<UsuarioAutenticado>().store.nome),
-        ConstrutorPdf.tituloSessao("1. Contagem estimada"),
+        ConstrutorPdf.tituloSessao("1. Contagem estimativa"),
         ConstrutorPdf.subtitulo("1.1. Função de Dados"),
         ConstrutorPdf.tabela([
           'Tipo',
@@ -868,7 +868,7 @@ class GeradorPdf {
                     .toStringAsFixed(2)),
           ],
           [
-            "Estimada",
+            "Estimativa",
             _storeEstimada.contagemEstimadaValida.totalPF.toString(),
             Formatadores.formatadorMonetario(
                 (double.parse(_custoDetalhado.custoPF) *
@@ -885,7 +885,7 @@ class GeradorPdf {
           ]
         ], mapTabela3),
         ConstrutorPdf.tituloSessao(
-            '4. Estimativas baseadas na contagem Estimada'),
+            '4. Estimativas baseadas na contagem estimativa'),
         ConstrutorPdf.tabelaSemTitulo(
           [
             [],
@@ -901,7 +901,8 @@ class GeradorPdf {
             ['Prazo (em dias)', _prazoDetalhado.prazoTotal],
             [
               'Região do impossível (75%) (em semanas)',
-              double.parse(_prazoDetalhado.prazoMinimo) / 30 * 4
+              (double.parse(_prazoDetalhado.prazoMinimo) / 30 * 4)
+                  .toStringAsFixed(2)
             ],
             ['Tamanho da Equipe', _equipeDetalhada.equipeEstimada],
             [
@@ -911,7 +912,7 @@ class GeradorPdf {
           ],
         ),
         ConstrutorPdf.tituloSessao(
-            '5. Estimativas de Custo para contagem Estimada'),
+            '5. Estimativas de Custo para contagem Estimativa'),
         ConstrutorPdf.tabelaSemTitulo(
           [
             [],

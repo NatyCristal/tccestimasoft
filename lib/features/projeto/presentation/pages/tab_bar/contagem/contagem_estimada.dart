@@ -180,7 +180,7 @@ class ContagemEstimada extends StatelessWidget {
                 ),
                 Observer(builder: (context) {
                   return Text(
-                    "${store.totalPf + storeIndicativa.contagemIndicativaValida.aie.length * 7 + storeIndicativa.contagemIndicativaValida.ali.length * 7} PF",
+                    "${store.totalPf + storeIndicativa.contagemIndicativaValida.aie.length * 5 + storeIndicativa.contagemIndicativaValida.ali.length * 7} PF",
                     style: const TextStyle(
                       color: corTituloTexto,
                     ),
@@ -262,7 +262,7 @@ class ContagemEstimada extends StatelessWidget {
                 complexidade: "Baixa",
                 descricao: descricao,
                 nome: nomeFuncao,
-                pontoDeFuncao: 7,
+                pontoDeFuncao: 5,
                 tipo: "AIE",
               );
             },

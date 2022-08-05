@@ -480,7 +480,7 @@ class _InformacoesInstrucoesPageState extends State<InformacoesInstrucoesPage> {
                               height: 20,
                             ),
                             const Text(
-                              "Estimada",
+                              "Estimativa",
                               style: TextStyle(
                                   fontSize: 16,
                                   color: corTituloTexto,
